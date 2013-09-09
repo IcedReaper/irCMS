@@ -71,10 +71,20 @@
             		request.sesLink = url.ses;
             	}
             	
+            	var actualMenuId = application.cms.navigation.getMenuForSes(sesString=request.sesLink);
+            	
+            	if(actualMenuId == 0) {
+            		actualMenuId = application.cms.navigation.getMenuForSes(sesString='');
+            		
+            		if(actualMenuId == 0) {
+            			variables.errorHandler.processNotFound(themeName='icedreaper', type="Navigation", detail="Couldn't find a first page nor a page for #request.sesLink#");
+            		}
+            	}
+            	
             	request.actualMenu = createObject("component", "system.cfc.com.irCMS.cms.singleMenu").init(errorHandler = application.cms.errorHandler
                                                                                                           ,tablePrefix  = application.tablePrefix
                                                                                                           ,datasource   = application.datasource.user
-            	                                                                                          ,menuId       = application.cms.navigation.getMenuForSes(sesString=request.sesLink));
+            	                                                                                          ,menuId       = actualMenuId);
             	
             	if(request.actualMenu.load()) {
             		return true;

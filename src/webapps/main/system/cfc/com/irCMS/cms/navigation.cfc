@@ -7,7 +7,20 @@
     }
     
     public numeric function getMenuForSes(required string sesString) {
-        return 1;
+    	try {
+    	   var qGetMenu = new Query();
+    	   qGetMenu.setDatasource(variables.datasource);
+    	   qGetMenu.setSQL("SELECT menuId FROM #variables.tablePrefix#_menu WHERE ses=:sesLink");
+    	   qGetMenu.addParam(name="sesLink", value=arguments.sesString, cfsqltype="cf_sql_varchar");
+    	   
+    	   var menu = qGetMenu.execute().getResult();
+    	   
+    	   return menu.recordCount == 1 ? menu.menuId[1] : 0;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='icedreaper', message=e.message, detail=e.detail);
+        	return 0;
+        }
     }
     
     public boolean function editMenu(required singleUser user,required numeric menuId,required struct menuData) {
