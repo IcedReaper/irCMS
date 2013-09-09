@@ -9,9 +9,7 @@
     public string function getDescription();
     public string function getCanonical();
     public string function getKeywords();
+    public string function getContent();
     
     public array function getBreadcrum();
-    public array function getChildren();
-    
-    public string function getContent();
 }

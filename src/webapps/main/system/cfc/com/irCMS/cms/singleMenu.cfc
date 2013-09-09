@@ -13,27 +13,19 @@
     
     public boolean function load() {
     	try {
-            /*var qGetMenu = new Query();
+            var qGetMenu = new Query();
             qGetMenu.setDatasource(variables.datasource);
             qGetMenu.setSQL("SELECT m.*, c.content "
                            &"  FROM #variables.tablePrefix#_menu AS m "
                            &" INNER JOIN #variables.tablePrefix#_menuContent c ON m.menuId=c.menuId "
                            &" WHERE m.menuId=:menuId "
                            &"   AND c.version=:version");
-            qGetMenu.addParam(name="menuId", value=variables.menuId, cfsqltype="cf_sql_varchar");
+            qGetMenu.addParam(name="menuId", value=variables.menuId, cfsqltype="cf_sql_numeric");
             qGetMenu.addParam(name="version", value=variables.version, cfsqltype="cf_sql_varchar");
             
             variables.actualMenu = qGetMenu.execute().getResult();
             
-            return variables.actualMenu.recordCount == 1;*/
-            
-            variables.actualMenu.title[1]       = 'Titel';
-            variables.actualMenu.description[1] = 'Beschreibung';
-            variables.actualMenu.canonical[1]   = '';
-            variables.actualMenu.keywords[1]    = 'Schlüsselwörter';
-            variables.actualMenu.content[1]     = '[module template="article"]';
-            
-            return true;
+            return variables.actualMenu.recordCount == 1;
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='icedreaper', message=e.message, detail=e.detail);
@@ -58,13 +50,18 @@
     
     public array function getBreadcrum() {
         var breadcrum = [];
-        var parent    = getParent(variables.menuId);
-        var counter   = 0;
+        var parent    = {};
+        parent.menuId       = variables.actualMenu.menuId[1];
+        parent.parentMenuId = variables.actualMenu.parentMenuId[1];
+        parent.linkname     = variables.actualMenu.linkname[1];
+        parent.sesLink      = variables.actualMenu.ses[1];
+        var counter = 1;
+        breadcrum[counter] = parent;
         while(true) {
         	counter++;
-        	if(parent.menuId != 0) {
+        	if(parent.parentMenuId != 0) {
         		breadcrum[counter] = parent;
-        		parent = getParent(parent.menuId);
+        		parent = getParent(parent.parentMenuId);
         	}
         	else {
         		break;
@@ -81,19 +78,37 @@
         return finalBreadcrum;
     }
     
-    public array function getChildren() {
-        return [];
-    }
-    
     public string function getContent() {
         return cleanupArticle(content=variables.actualMenu.content[1], cleanArticle=true);
     }
     
     private struct function getParent(required string menuId) {
     	var parent = {};
-    	parent.menuId = 0;
-    	parent.name = "";
-    	parent.sesLink = "";
+    	parent.menuId       = 0;
+    	parent.parentMenuId = 0;
+    	parent.linkname     = "";
+    	parent.sesLink      = "";
+    	
+    	try {
+            var qGetParentMenu = new Query();
+            qGetParentMenu.setDatasource(variables.datasource);
+            qGetParentMenu.setSQL("SELECT m.menuId, m.linkname, m.ses, m.parentMenuId "
+                                 &"  FROM #variables.tablePrefix#_menu AS m "
+                                 &" WHERE m.menuId=:menuId ");
+            qGetParentMenu.addParam(name="menuId", value=variables.menuId, cfsqltype="cf_sql_numeric");
+            
+            var qParent = qGetParentMenu.execute().getResult();
+            
+            if(qParent.recordCount == 0) {
+                parent.menuId       = qParent.menuId[1];
+                parent.parentMenuId = qParent.parentMenuId[1];
+                parent.linkname     = qParent.linkname[1];
+                parent.sesLink      = qParent.ses[1];
+            }
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='icedreaper', message=e.message, detail=e.detail);
+        }
     	
     	return parent;
     }
@@ -132,7 +147,7 @@
                 
                 templateStart += 18;
                 templateEnd  = find('"', arguments.content, templateStart);
-                templateName = '/irCMS/themes/icedreaper/moduleTemplates/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'.cfm';
+                templateName = '/irCMS/themes/icedreaper/moduleTemplates/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
                 
                 attributeCollectionStart = find('attributeCollection="', arguments.content, templateEnd);
                 closingTag = find(']', arguments.content, templateEnd);
