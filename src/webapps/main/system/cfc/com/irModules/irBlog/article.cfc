@@ -1,7 +1,7 @@
 ﻿component {
     import "system.interfaces.com.irCMS.*";    
 
-    public singleArticle function init(required string datasource, required string tablePrefix, required numeric articleId) {
+    public article function init(required string datasource, required string tablePrefix, required numeric articleId) {
     	variables.datasource  = arguments.datasource;
     	variables.tablePrefix = arguments.tablePrefix;
     	variables.articleId   = arguments.articleId;
