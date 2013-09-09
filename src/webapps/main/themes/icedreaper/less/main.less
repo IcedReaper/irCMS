@@ -1,8 +1,10 @@
 @fontDefault: 'Condiment';
 @fontSpecial: 'New Rocker';
 
-@colorDefault: #18232F;
-@colorContrast: #EAEAEA;
+@colorDefault:           #011225;
+@colorDefaultHighlight:  #EA0000;
+@colorContrast:          #EAEAEA;
+@colorContrastHighlight: #00EA00;
 
 @small:   2px;
 @medium:  4px;
@@ -18,7 +20,7 @@
         font-variant: inherit;
         
         margin:  0px;
-        padding: 0px; 
+        padding: 0px;
     }
     
     body {
@@ -38,6 +40,36 @@
         }
         
         > section {
+            &.breadcrum {
+                a {
+                    color:           @colorContrast;
+                    text-decoration: none;
+                    transition:      color 0.5s linear;
+                    
+                    &:hover {
+                        color:           @colorContrastHighlight;
+                        text-decoration: underline;
+                    }
+                }
+                
+                ul {
+                    list-style: none;
+                    li {
+                        list-style: none;
+                    }
+                }
+            }
+            
+            a {
+                color:           @colorDefault;
+                text-decoration: none;
+                
+                &:hover {
+                    color:           @colorDefault;
+                    text-decoration: underline;
+                }
+            }
+            
             header {
                 background-color:  @colorContrast;
                 color:             @colorDefault;
@@ -49,16 +81,6 @@
                    -moz-border-radius-topright:  @borderRadiusDefault;
                         border-top-left-radius:  @borderRadiusDefault;
                         border-top-right-radius: @borderRadiusDefault;
-                
-                a {
-                    color:           @colorDefault;
-                    text-decoration: none;
-                    
-                    &:hover {
-                        color:           @colorDefault;
-                        text-decoration: underline;
-                    }
-                }
                 
                 h1 {
                     font-size:      30px;

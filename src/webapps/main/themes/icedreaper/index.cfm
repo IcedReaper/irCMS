@@ -12,6 +12,7 @@
     </head>
     <body>
         <cfinclude template="templates/navigation.cfm">
+		<cfinclude template="templates/breadcrum.cfm">
 		#request.actualMenu.getContent()#
     </body>
 </html>
