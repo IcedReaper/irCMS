@@ -1,5 +1,5 @@
 ﻿interface {
-    public user function init(required string tablePrefix, required string datasource);
+    public user function init(required string tablePrefix, required string datasource, required cryption cryptionApi);
     
     public boolean function createUser(required string userData);
     public boolean function activateUser(required userId);
@@ -7,7 +7,7 @@
     
     public array function getUserlist();
     
-    public boolean function login(required string username, required string password);
+    public numeric function login(required string username, required string password);
     public boolean function logout();
     
     public singleUser function getUser(required numeric userId);

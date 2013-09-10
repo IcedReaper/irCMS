@@ -1,4 +1,6 @@
 ﻿component {
+    this.sessionmanagement = true;
+    
     public boolean function onApplicationStart() {
     	application.tablePrefix = 'irCMS';
     	application.installSuccessfull = true;
@@ -13,6 +15,7 @@
     public boolean function applicationRestart() {
     	// tools
     	application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
+    	application.tools.cryption = createObject("component", "system.cfc.com.irCMS.tools.cryption").init(structSeparator=';');
     	
     	// cms
         application.cms.errorHandler = createObject("component", "system.cfc.com.irCMS.cms.errorHandler").init(tablePrefix = application.tablePrefix
@@ -22,8 +25,10 @@
     	application.cms.navigation = createObject("component", "system.cfc.com.irCMS.cms.navigation").init(tablePrefix = application.tablePrefix
                                                                                                           ,datasource  = application.datasource.user);
         
+        // user
         application.user.user = createObject("component", "system.cfc.com.irCMS.user.user").init(tablePrefix = application.tablePrefix
-                                                                                                ,datasource  = application.datasource.user);
+                                                                                                ,datasource  = application.datasource.user
+                                                                                                ,cryptionApi = application.tools.cryption);
         
         
         return true;
@@ -34,7 +39,6 @@
     }
     
     public boolean function onRequestStart(required string targetPage) {
-    	
     	if(isDefined("url.reload")) {
     		var reloadActions = listToArray(url.reload, ',');
     		for(var i = 1; i <= arrayLen(reloadActions); i++) {
@@ -51,12 +55,29 @@
     	}
     	
     	if(application.installSuccessfull) {
-        	/*if(isDefined("session") && structKeyExists(session, 'userId')) {
+            if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
+                var tmpUserId = application.user.user.login(username=form.username, password=form.password);
+                if(tmpUserId != 0) {
+                    session.userId = tmpUserId;
+                    // TODO: show wrong password page
+                }
+            }
+            if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userId')) {
+            	if(application.user.user.login(username=form.username, password=form.password)) {
+                	session.userId = 0;
+                	structClear(session);
+                }
+                else {
+                	variables.errorHandler.processNotFound(themeName='icedreaper', type="logout", detail="logout");
+                }
+            }
+            
+        	if(isDefined("session") && structKeyExists(session, 'userId')) {
         		request.userId = session.userId;
         	}
-        	else {*/
+        	else {
         		request.userId = 1;
-        	//}
+        	}
         	
         	request.actualUser = createObject("component", "system.cfc.com.irCMS.user.singleUser").init(errorHandler = application.cms.errorHandler
         	                                                                                           ,tablePrefix  = application.tablePrefix
