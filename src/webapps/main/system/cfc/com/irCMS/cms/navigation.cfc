@@ -23,28 +23,39 @@
         }
     }
     
-    public boolean function editMenu(required singleUser user,required numeric menuId,required struct menuData) {
+    public boolean function editMenu(required singleUser user, required numeric menuId, required struct menuData) {
         return true;
     }
     
-    public boolean function releaseMenu(required singleUser user,required numeric menuId, string version="actual") {
+    public boolean function releaseMenu(required singleUser user, required numeric menuId, string version="actual") {
         return true;
     }
     
-    public boolean function removeMenu(required singleUser user,required numeric menuId) {
+    public boolean function removeMenu(required singleUser user, required numeric menuId) {
         return true;
     }
     
-    public boolean function addMenu(required singleUser user,required struct menuData, numeric menuId="0") {
+    public boolean function addMenu(required singleUser user, required struct menuData, numeric menuId="0") {
         return true;
     }
     
-    public boolean function revokeMenu(required singleUser user,required numeric menuId, string version="actual") {
+    public boolean function revokeMenu(required singleUser user, required numeric menuId, string version="actual") {
         return true;
     }
     
-    public array function getHierarchy() {
-        return [];
+    public query function getHierarchy(required string position) {
+        var qryGetHierarchy = new Query();
+        qryGetHierarchy.setDatasource(variables.datasource);
+        var sql = "SELECT * FROM #variables.tablePrefix#_menu";
+        if(arguments.position != 'all') {
+            sql = sql & " WHERE position=:position ";
+        }
+        sql = sql & " ORDER BY position ASC, sortOrder ASC";
+        qryGetHierarchy.setSQL(sql);
+        if(arguments.position != 'all') {
+            qryGetHierarchy.addParam(name="position", value=arguments.position, cfsqltype="cf_sql_varchar");
+        }
+        return qryGetHierarchy.execute().getResult();
     }
     
     public string function getUserLink(required numeric userId) {
