@@ -25,20 +25,36 @@
     body {
         background-color: @colorLight;
         color:            @colorDark;
-        
-        width:  80%;
-        margin: 0 auto;
             
         a {
             color:           @colorDark;
             text-decoration: none;
+            transition:      color 0.5s linear;
             
             &:hover {
                 color:           @colorMedium;
                 text-decoration: underline;
             }
         }
-        
+
+        h1 {
+            font-size:     30px;
+            margin-top:    15px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size:     24px;
+            margin-top:    10px;
+            margin-bottom:  5px;
+        }
+
+        h3 {
+            font-size:     20px;
+            margin-top:     5px;
+            margin-bottom:  2px;
+        }
+
         > header {
             background-image: url('');
             height:           200px;
@@ -66,28 +82,86 @@
             > nav {
                 position: absolute;
                 bottom:   0px;
+
+                border-bottom: 2px solid @colorMedium;
+                width: 100%;
+
                 ul {
+                    width: 80%;
+                    margin: 0 auto;
+
                     li {
+                        list-style: none;
+                        float: left;
+                        padding: 2px 5px 0;
+                        margin:  2px 5px 0;
+
+                        border-top:    2px solid @colorMedium;
+                        border-left:   2px solid @colorMedium;
+                        border-right:  2px solid @colorMedium;
+                        border-bottom: 0px solid @colorMedium;
                         
+                        -webkit-border-top-left-radius:  @borderRadiusDefault;
+                        -webkit-border-top-right-radius: @borderRadiusDefault;
+                           -moz-border-radius-topleft:   @borderRadiusDefault;
+                           -moz-border-radius-topright:  @borderRadiusDefault;
+                                border-top-left-radius:  @borderRadiusDefault;
+                                border-top-right-radius: @borderRadiusDefault;
+
+                        &:first-child {
+                            margin-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        > footer {
+            > nav {
+                border-top: 2px solid @colorMedium;
+                width: 100%;
+
+                margin-top:20px;
+
+                ul {
+                    width: 80%;
+                    margin: 0 auto;
+
+                    li {
+                        list-style: none;
+                        float: left;
+                        padding: 2px 5px 0;
+                        margin:  0 5px 2px;
+
+                        border-top:    0px solid @colorMedium;
+                        border-left:   2px solid @colorMedium;
+                        border-right:  2px solid @colorMedium;
+                        border-bottom: 2px solid @colorMedium;
+                        
+                        -webkit-border-bottom-right-radius: @borderRadiusDefault;
+                        -webkit-border-bottom-left-radius: @borderRadiusDefault;
+                           -moz-border-radius-bottomright: @borderRadiusDefault;
+                           -moz-border-radius-bottomleft: @borderRadiusDefault;
+                                border-bottom-right-radius: @borderRadiusDefault;
+                                border-bottom-left-radius: @borderRadiusDefault;
+
+                        &:first-child {
+                            margin-left: 0;
+                        }
                     }
                 }
             }
         }
         
-        > section {
+        section {
             color: @colorDark;
+        
+            &.content {
+                width:  80%;
+                margin: 0 auto;
+            }
             
             &.breadcrum {
-                a {
-                    color:           @colorDark;
-                    text-decoration: none;
-                    transition:      color 0.5s linear;
-                    
-                    &:hover {
-                        color:           @colorMedium;
-                        text-decoration: underline;
-                    }
-                }
                 
                 ul {
                     list-style: none;
@@ -96,21 +170,19 @@
                     }
                 }
             }
-            
-            header {
+
+            &.textBlock {
                 margin-top: 10px;
-                padding:    0px 5px;
+                padding:     0px 15px 10px;
                 
-                border-top:   2px solid @colorMedium;
-                border-right: 2px solid @colorMedium;
-                border-left:  2px solid @colorMedium;
+                border: 2px solid @colorMedium;
                 
-                -webkit-border-top-left-radius:  @borderRadiusDefault;
-                -webkit-border-top-right-radius: @borderRadiusDefault;
-                   -moz-border-radius-topleft:   @borderRadiusDefault;
-                   -moz-border-radius-topright:  @borderRadiusDefault;
-                        border-top-left-radius:  @borderRadiusDefault;
-                        border-top-right-radius: @borderRadiusDefault;
+                -webkit-border-radius: @borderRadiusDefault;
+                -webkit-border-radius: @borderRadiusDefault;
+                   -moz-border-radius: @borderRadiusDefault;
+                   -moz-border-radius: @borderRadiusDefault;
+                        border-radius: @borderRadiusDefault;
+                        border-radius: @borderRadiusDefault;
                 
                 background: -moz-linear-gradient(top, @colorMedium 0%, @colorLight 80%); /* FF3.6+ */
                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @colorMedium), color-stop(80%,@colorLight)); /* Chrome,Safari4+ */
@@ -118,36 +190,68 @@
                 background: -o-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* Opera 11.10+ */
                 background: -ms-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* IE10+ */
                 background: linear-gradient(to bottom, @colorMedium 0%,@colorLight 80%); /* W3C */
-                
-                h1 {
-                    font-size:      30px;
-                    padding-top:    10px;
-                    padding-bottom:  5px;
-                }
-                h3 {
-                    &.subtitle {
-                        
-                    }
-                    
-                    &.creation {
-                        
+
+                ul {
+                    li {
+                        list-style: circle;
+                        margin-left: 20px;
                     }
                 }
             }
             
-            article {
-                padding: 10px 5px;
+            &.irBlog {
+                header {
+                    margin-top: 10px;
+                    padding:    0px 5px;
+                    
+                    border-top:   2px solid @colorMedium;
+                    border-right: 2px solid @colorMedium;
+                    border-left:  2px solid @colorMedium;
+                    
+                    -webkit-border-top-left-radius:  @borderRadiusDefault;
+                    -webkit-border-top-right-radius: @borderRadiusDefault;
+                       -moz-border-radius-topleft:   @borderRadiusDefault;
+                       -moz-border-radius-topright:  @borderRadiusDefault;
+                            border-top-left-radius:  @borderRadiusDefault;
+                            border-top-right-radius: @borderRadiusDefault;
+                    
+                    background: -moz-linear-gradient(top, @colorMedium 0%, @colorLight 80%); /* FF3.6+ */
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @colorMedium), color-stop(80%,@colorLight)); /* Chrome,Safari4+ */
+                    background: -webkit-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* Chrome10+,Safari5.1+ */
+                    background: -o-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* Opera 11.10+ */
+                    background: -ms-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* IE10+ */
+                    background: linear-gradient(to bottom, @colorMedium 0%,@colorLight 80%); /* W3C */
+                    
+                    h1 {
+                        font-size:      30px;
+                        padding-top:    10px;
+                        padding-bottom:  5px;
+                    }
+                    h3 {
+                        &.subtitle {
+                            
+                        }
+                        
+                        &.creation {
+                            
+                        }
+                    }
+                }
                 
-                border-right:  2px solid @colorMedium;
-                border-bottom: 2px solid @colorMedium;
-                border-left:   2px solid @colorMedium;
-                
-                -webkit-border-bottom-right-radius: @borderRadiusDefault;
-                -webkit-border-bottom-left-radius:  @borderRadiusDefault;
-                   -moz-border-radius-bottomright:  @borderRadiusDefault;
-                   -moz-border-radius-bottomleft:   @borderRadiusDefault;
-                        border-bottom-right-radius: @borderRadiusDefault;
-                        border-bottom-left-radius:  @borderRadiusDefault;
+                article {
+                    padding: 10px 5px;
+                    
+                    border-right:  2px solid @colorMedium;
+                    border-bottom: 2px solid @colorMedium;
+                    border-left:   2px solid @colorMedium;
+                    
+                    -webkit-border-bottom-right-radius: @borderRadiusDefault;
+                    -webkit-border-bottom-left-radius:  @borderRadiusDefault;
+                       -moz-border-radius-bottomright:  @borderRadiusDefault;
+                       -moz-border-radius-bottomleft:   @borderRadiusDefault;
+                            border-bottom-right-radius: @borderRadiusDefault;
+                            border-bottom-left-radius:  @borderRadiusDefault;
+                }
             }
         }
     }

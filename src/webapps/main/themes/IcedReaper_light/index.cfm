@@ -15,8 +15,13 @@
             <cfinclude template="templates/navigation.cfm">
 			<cfinclude template="templates/login.cfm">
 		</header>
-    	<cfinclude template="templates/breadcrum.cfm">
-		#request.actualMenu.getContent()#
+    	<!---<cfinclude template="templates/breadcrum.cfm">--->
+		<section class="content">
+            #request.actualMenu.getContent()#
+        </section>
+        <footer>
+            <cfinclude template="templates/footer.cfm">
+        </footer>
     </body>
 </html>
 </cfoutput>
