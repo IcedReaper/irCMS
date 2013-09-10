@@ -68,7 +68,8 @@
                 	structClear(session);
                 }
                 else {
-                	variables.errorHandler.processNotFound(themeName='icedreaper', type="logout", detail="logout");
+                	application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="logout", detail="logout");
+                    abort;
                 }
             }
             
@@ -76,7 +77,7 @@
         		request.userId = session.userId;
         	}
         	else {
-        		request.userId = 1;
+        		request.userId = 0;
         	}
         	
         	request.actualUser = createObject("component", "system.cfc.com.irCMS.user.singleUser").init(errorHandler = application.cms.errorHandler
@@ -98,7 +99,7 @@
             		actualMenuId = application.cms.navigation.getMenuForSes(sesString='');
             		
             		if(actualMenuId == 0) {
-            			variables.errorHandler.processNotFound(themeName='icedreaper', type="Navigation", detail="Couldn't find a first page nor a page for #request.sesLink#");
+            			application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="Navigation", detail="Couldn't find a first page nor a page for #request.sesLink#");
             		}
             	}
             	
@@ -111,11 +112,13 @@
             		return true;
             	}
             	else {
-                    variables.errorHandler.processNotFound(themeName='icedreaper', type="ses", detail=request.ses);
+                    application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.ses);
+                    abort;
             	}
             }
             else {
-                variables.errorHandler.processNotFound(themeName='icedreaper', type="user", detail=request.userId);
+                application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="user", detail=request.userId);
+                abort;
             }
         }
         else {
