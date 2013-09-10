@@ -9,7 +9,7 @@
         <h1>Willkommen bei der Installation des irCMS</h1>
         <cfflush>
 		
-        <cfif install.theme('icedreaper')>
+        <cfif install.theme('IcedReaper_dark')>
 			Theme installation successfull!
 		<cfelse>
 			Theme installation failed!
