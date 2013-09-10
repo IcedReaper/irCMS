@@ -36,8 +36,8 @@
         	return true;
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='icedreaper', message=e.message, detail=e.detail);
-            return false;
+            variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
+            abort;
         }
     }
     

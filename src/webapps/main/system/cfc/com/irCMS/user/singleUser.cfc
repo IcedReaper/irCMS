@@ -10,43 +10,20 @@
     
     public boolean function load() {
         try {
-        	variables.userData = {};
-        	variables.userData.username  = [];
-        	variables.userData.avatar    = [];
-        	variables.userData.title     = [];
-            variables.userData.email     = [];
-            variables.userData.postCount = [];
-            variables.userData.theme     = [];
-            
-            if(variables.userId == 0) {
-                variables.userData.username[1] = 'Gast';
-                variables.userData.avatar[1] = '';
-                variables.userData.title[1] = 'Gast';
-                variables.userData.email[1] = '';
-                variables.userData.postCount[1] = 0;
-                variables.userData.theme[1] = 'icedreaper';
-        	}
-        	else if(variables.userId == 1) {
-                variables.userData.username[1] = 'IcedReaper';
-                variables.userData.avatar[1] = '';
-                variables.userData.title[1] = 'Admin';
-                variables.userData.email[1] = '';
-                variables.userData.postCount[1] = 1;
-                variables.userData.theme[1] = 'icedreaper';
-        	}
-        	return true;
-        	
-        	/*var qGetUser = new Query();
+            var qGetUser = new Query();
             qGetUser.setDatasource(variables.datasource);
-            qGetUser.setSQL("SELECT * FROM #variables.tablePrefix#_User WHERE userId=:userId");
+            qGetUser.setSQL("SELECT u.*, t.themeName, t.active as themeActive "
+                           &"  FROM #variables.tablePrefix#_User u "
+                           &" INNER JOIN #variables.tablePrefix#_theme t ON u.themeId = t.themeId "
+                           &" WHERE u.userId=:userId");
             qGetUser.addParam(name="userId", value=variables.userId, cfsqltype="cf_sql_numeric");
             
             variables.userData = qGetUser.execute().getResult();
             
-            return variables.userData.recordCount == 1;*/
-        }
+            return variables.userData.recordCount == 1;
+    	}
         catch(any e) {
-        	variables.errorHandler.processError(themeName='icedreaper', message=e.message, detail=e.detail);
+        	variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
         }
     }
     
@@ -71,16 +48,41 @@
     }
     
     public string function getTheme() {
-        return variables.userData.theme[1];
+    	if(variables.userData.themeActive[1] == true) {
+            return variables.userData.themeName[1];
+        }
+        else {
+        	var qGetDefaultTheme = new Query();
+        	qGetDefaultTheme.setDatasource(variables.datasource);
+        	qGetDefaultTheme.setSQL("SELECT themeName FROM #variables.tablePrefix#_theme WHERE defaultTheme=:default");
+        	qGetDefaultTheme.addParam(name="default", value="true", cfsqltype="cf_sql_bit");
+        	
+        	var qryGetDefaultTheme = qGetDefaultTheme.execute().getResult();
+        	
+        	if(qryGetDefaultTheme.recordCount == 1) {
+        		return qryGetDefaultTheme.themeName[1];
+        	}
+        	else {
+                var qGetDefaultTheme = new Query();
+                qGetDefaultTheme.setDatasource(variables.datasource);
+                qGetDefaultTheme.setMaxRows(1);
+                qGetDefaultTheme.setSQL("SELECT themeName FROM #variables.tablePrefix#_theme WHERE active=:default");
+                qGetDefaultTheme.addParam(name="default", value="true", cfsqltype="cf_sql_bit");
+                
+                var qryGetDefaultTheme = qGetDefaultTheme.execute().getResult();
+                
+                if(qryGetDefaultTheme.recordCount == 1) {
+                    return qryGetDefaultTheme.themeName[1];
+                }
+                else {
+                    variables.errorHandler.processError(themeName='icedreaper_light', message="No Theme found!", detail="No default Theme nor any Theme found!");
+                    abort;
+                }
+        	}
+        }
     }
     
     public array function getPosts(boolean comments = false) {
-        /*var qGetPosts = new Query();
-        qGetPosts.setDatasource(variables.datasource);
-        qGetPosts.setSQL("SELECT * FROM #variables.tablePrefix#_posts WHERE userId=:userId");
-        qGetPosts.addParam(name="userId", value=variables.userId, cfsqltype="cf_sql_numeric");
-        qGetPosts.execute();*/
-        
         return [];
     }
     

@@ -51,12 +51,12 @@
     	}
     	
     	if(application.installSuccessfull) {
-        	if(isDefined("session") && structKeyExists(session, 'userId')) {
+        	/*if(isDefined("session") && structKeyExists(session, 'userId')) {
         		request.userId = session.userId;
         	}
-        	else {
-        		request.userId = 0;
-        	}
+        	else {*/
+        		request.userId = 1;
+        	//}
         	
         	request.actualUser = createObject("component", "system.cfc.com.irCMS.user.singleUser").init(errorHandler = application.cms.errorHandler
         	                                                                                           ,tablePrefix  = application.tablePrefix

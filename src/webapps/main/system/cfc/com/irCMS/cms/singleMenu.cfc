@@ -28,7 +28,8 @@
             return variables.actualMenu.recordCount == 1;
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='icedreaper', message=e.message, detail=e.detail);
+            variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
+            abort;
         }
     }
     
@@ -107,7 +108,8 @@
             }
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='icedreaper', message=e.message, detail=e.detail);
+            variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
+            abort;
         }
     	
     	return parent;
@@ -147,7 +149,7 @@
                 
                 templateStart += 18;
                 templateEnd  = find('"', arguments.content, templateStart);
-                templateName = '/irCMS/themes/icedreaper/moduleTemplates/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
+                templateName = '/irCMS/themes/icedreaper_light/moduleTemplates/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
                 
                 attributeCollectionStart = find('attributeCollection="', arguments.content, templateEnd);
                 closingTag = find(']', arguments.content, templateEnd);

@@ -40,7 +40,6 @@
     public void function processNotFound(required string themeName, required string type, required string detail) {
         if(clearBuffer()) {
         	include "/irCMS/themes/#arguments.themeName#/templates/notFound.cfm";
-        	abort;
         }
         else {
         	// error within an error -> nice :D
@@ -50,7 +49,6 @@
     public void function processError(required string themeName, required string message, required string detail) {
         if(clearBuffer()) {
             include "/irCMS/themes/#arguments.themeName#/templates/error.cfm";
-            abort;
         }
         else {
             // error within an error -> nice :D

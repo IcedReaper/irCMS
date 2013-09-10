@@ -18,8 +18,8 @@
     	   return menu.recordCount == 1 ? menu.menuId[1] : 0;
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='icedreaper', message=e.message, detail=e.detail);
-        	return 0;
+            variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
+        	abort;
         }
     }
     
