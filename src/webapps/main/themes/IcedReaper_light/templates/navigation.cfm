@@ -1,5 +1,6 @@
 ﻿<cfset request.navigation = application.cms.navigation.getHierarchy()>
-<header>
+<cfoutput>
     <nav>
+        Test
     </nav>
-</header>
+</cfoutput>
