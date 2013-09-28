@@ -1,8 +1,9 @@
 ﻿component  implements="system.interfaces.com.irCMS.user" {
-    public user function init(required string tablePrefix, required string datasource, required cryption cryptionApi) {
-    	variables.tablePrefix = arguments.tablePrefix;
-        variables.datasource  = arguments.datasource;
-        variables.cryptionApi = arguments.cryptionApi;
+    public user function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required cryption cryptionApi) {
+    	variables.tablePrefix  = arguments.tablePrefix;
+        variables.datasource   = arguments.datasource;
+        variables.cryptionApi  = arguments.cryptionApi;
+        variables.errorHandler = arguments.errorHandler;
     	
     	return this;
     }

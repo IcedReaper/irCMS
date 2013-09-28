@@ -39,7 +39,8 @@
     
     public void function processNotFound(required string themeName, required string type, required string detail) {
         if(clearBuffer()) {
-        	include "/irCMS/themes/#arguments.themeName#/templates/notFound.cfm";
+            writeDump(arguments);
+        	module template="/icedreaper/themes/#arguments.themeName#/templates/default/notFound.cfm";
         }
         else {
         	// error within an error -> nice :D
@@ -48,7 +49,8 @@
     
     public void function processError(required string themeName, required string message, required string detail) {
         if(clearBuffer()) {
-            include "/irCMS/themes/#arguments.themeName#/templates/error.cfm";
+            writeDump(arguments);
+            module template="/icedreaper/themes/#arguments.themeName#/templates/default/error.cfm";
         }
         else {
             // error within an error -> nice :D
@@ -63,7 +65,7 @@
             while (getMetaData(out).getName() == 'coldfusion.runtime.NeoBodyContent'){
                 out = out.getEnclosingWriter();
             }
-            out.clearBuffer();
+            //out.clearBuffer();
             return true;
         }
         catch(any e) {

@@ -2,17 +2,17 @@
     this.sessionmanagement = true;
     
     public boolean function onApplicationStart() {
-    	application.tablePrefix = 'irCMS';
-    	application.installSuccessfull = true;
-    	application.datasource.user = 'irCMS';
-    	application.datasource.admin = 'irCMS_admin';
-    	
-    	applicationRestart();
+        application.installSuccessfull = true;
+        
+        applicationRestart();
     	
         return true;
     }
     
     public boolean function applicationRestart() {
+        include "system/setup/databaseSettings.cfm";
+        include "system/setup/mappings.cfm";
+
     	// tools
     	application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
     	application.tools.cryption = createObject("component", "system.cfc.com.irCMS.tools.cryption").init(structSeparator=';');
@@ -22,13 +22,15 @@
                                                                                                               ,datasource  = application.datasource.user
                                                                                                               ,tools       = application.tools.tools);
         
-    	application.cms.navigation = createObject("component", "system.cfc.com.irCMS.cms.navigation").init(tablePrefix = application.tablePrefix
-                                                                                                          ,datasource  = application.datasource.user);
+    	application.cms.navigation = createObject("component", "system.cfc.com.irCMS.cms.navigation").init(errorHandler = application.cms.errorHandler
+                                                                                                          ,tablePrefix  = application.tablePrefix
+                                                                                                          ,datasource   = application.datasource.user);
         
         // user
-        application.user.user = createObject("component", "system.cfc.com.irCMS.user.user").init(tablePrefix = application.tablePrefix
-                                                                                                ,datasource  = application.datasource.user
-                                                                                                ,cryptionApi = application.tools.cryption);
+        application.user.user = createObject("component", "system.cfc.com.irCMS.user.user").init(errorHandler = application.cms.errorHandler
+                                                                                                ,tablePrefix  = application.tablePrefix
+                                                                                                ,datasource   = application.datasource.user
+                                                                                                ,cryptionApi  = application.tools.cryption);
         
         
         return true;
@@ -44,8 +46,8 @@
     		for(var i = 1; i <= arrayLen(reloadActions); i++) {
     			switch(reloadActions[i]) {
     				case 'applicationScope': {
-    					applicationRestart();
-    					break;
+                        applicationRestart();
+                        break;
     				}
     				default: {
     					break;
@@ -53,7 +55,7 @@
     			}
     		}
     	}
-    	
+
     	if(application.installSuccessfull) {
             if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
                 var tmpUserId = application.user.user.login(username=form.username, password=form.password);
@@ -72,6 +74,8 @@
                     abort;
                 }
             }
+
+            request.language = 'de';
             
         	if(isDefined("session") && structKeyExists(session, 'userId')) {
         		request.userId = session.userId;
@@ -86,33 +90,25 @@
         	                                                                                           ,userId       = request.userId);
         	
         	if(request.actualUser.load()) {
-            	if(! isDefined("url.ses") || url.ses == '') {
+                if(! isDefined("url.ses") || url.ses == '') {
             		request.sesLink = '/';
             	}
             	else {
             		request.sesLink = url.ses;
             	}
             	
-            	var actualMenuId = application.cms.navigation.getMenuForSes(sesString=request.sesLink);
+                request.navigationInformation = application.cms.navigation.getNavigationInformation(sesLink=request.sesLink, language=request.language);
+                if(request.navigationInformation.navigationId == 0) {
+                    application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.sesLink);
+                    abort;
+                }
+            	request.actualMenu = application.cms.navigation.getActualNavigation(request.navigationInformation);
             	
-            	if(actualMenuId == 0) {
-            		actualMenuId = application.cms.navigation.getMenuForSes(sesString='');
-            		
-            		if(actualMenuId == 0) {
-            			application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="Navigation", detail="Couldn't find a first page nor a page for #request.sesLink#");
-            		}
-            	}
-            	
-            	request.actualMenu = createObject("component", "system.cfc.com.irCMS.cms.singleMenu").init(errorHandler = application.cms.errorHandler
-                                                                                                          ,tablePrefix  = application.tablePrefix
-                                                                                                          ,datasource   = application.datasource.user
-            	                                                                                          ,menuId       = actualMenuId);
-            	
-            	if(request.actualMenu.load()) {
+            	if(request.actualMenu.loadNavigation()) {
             		return true;
             	}
             	else {
-                    application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.ses);
+                    application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.sesLink);
                     abort;
             	}
             }

@@ -1,57 +1,93 @@
-﻿component  implements="system.interfaces.com.irCMS.navigation" {
-    public navigation function init(required string tablePrefix, required string datasource) {
-        variables.tablePrefix = arguments.tablePrefix;
-        variables.datasource  = arguments.datasource;
+﻿component implements="system.interfaces.com.irCMS.navigation" {
+    public navigation function init(required errorHandler errorHandler, required string tablePrefix, required string datasource) {
+        variables.tablePrefix  = arguments.tablePrefix;
+        variables.datasource   = arguments.datasource;
+        variables.errorHandler = arguments.errorHandler;
         
         return this;
     }
-    
-    public numeric function getMenuForSes(required string sesString) {
-    	try {
-    	   var qGetMenu = new Query();
-    	   qGetMenu.setDatasource(variables.datasource);
-    	   qGetMenu.setSQL("SELECT menuId FROM #variables.tablePrefix#_menu WHERE ses=:sesLink");
-    	   qGetMenu.addParam(name="sesLink", value=arguments.sesString, cfsqltype="cf_sql_varchar");
-    	   
-    	   var menu = qGetMenu.execute().getResult();
-    	   
-    	   return menu.recordCount == 1 ? menu.menuId[1] : 0;
+
+    public struct function getNavigationInformation(required string sesLink, required string language) {
+        try {
+            var qryGetNavigationInformation = new Query();
+            qryGetNavigationInformation.setDatasource(variables.datasource);
+            qryGetNavigationInformation.setSQL("     SELECT cv.navigationId, cv.sesLink, "
+                                              &"            regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"//*/
+                                              &"       FROM #variables.tablePrefix#_ContentVersion cv"
+                                              &" INNER JOIN #variables.tablePrefix#_navigation     n  ON cv.navigationId=n.navigationId "
+                                              &"      WHERE n.language=:language ");
+            qryGetNavigationInformation.addParam(name="sesLink",  value=arguments.sesLink,  cfsqltype="cf_sql_varchar");
+            qryGetNavigationInformation.addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar");
+            
+            var qGetNavigationInformation = qryGetNavigationInformation.execute().getResult();
+            if(qGetNavigationInformation.recordCount == 1) {
+                return {
+                    entityMatches: qGetNavigationInformation.sesMatches[1],
+                    navigationId:  qGetNavigationInformation.navigationId[1],
+                    sesLink:       qGetNavigationInformation.sesLink[1]
+                };
+            }
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
-        	abort;
+            abort;
+        }
+        return {
+            entityMatches: [],
+            navigationId:  0,
+            sesLink:       ''
+        };
+    }
+
+    public navigationPoint function getActualNavigation(required struct navigationInformation) {
+        if(! isNull(arguments.navigationInformation.entityMatches) && ! isNull(arguments.navigationInformation.navigationId) && ! isNull(arguments.navigationInformation.sesLink)) {
+            return new navigationPoint(variables.errorHandler, variables.tablePrefix, variables.datasource, arguments.navigationInformation);
+        }
+        else {
+            return null;
         }
     }
     
-    public boolean function editMenu(required singleUser user, required numeric menuId, required struct menuData) {
+    public boolean function addNavigation(required singleUser user, required struct navigationData, numeric navigationId=0) {
+        return true;
+    }
+
+    public boolean function editNavigation(required singleUser user, required numeric navigationId, required struct navigationData) {
         return true;
     }
     
-    public boolean function releaseMenu(required singleUser user, required numeric menuId, string version="actual") {
+    public boolean function deleteNavigation(required singleUser user, required numeric navigationId) {
         return true;
     }
     
-    public boolean function removeMenu(required singleUser user, required numeric menuId) {
+    public boolean function releaseNavigation(required singleUser user, required numeric navigationId, required numeric version) {
         return true;
     }
     
-    public boolean function addMenu(required singleUser user, required struct menuData, numeric menuId="0") {
+    public boolean function revokeNavigation(required singleUser user, required numeric navigationId, required numeric version) {
         return true;
     }
     
-    public boolean function revokeMenu(required singleUser user, required numeric menuId, string version="actual") {
-        return true;
-    }
-    
-    public query function getHierarchy(required string position) {
+    public query function getHierarchy(required string position, required string language) {
         var qryGetHierarchy = new Query();
         qryGetHierarchy.setDatasource(variables.datasource);
-        var sql = "SELECT * FROM #variables.tablePrefix#_menu";
-        if(arguments.position != 'all') {
-            sql = sql & " WHERE position=:position ";
-        }
-        sql = sql & " ORDER BY position ASC, sortOrder ASC";
+        var sql = "         SELECT cv.navigationId, cv.contentVersionId, "
+                 &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkName, cv.sesLink, cv.entityRegExp, "
+                 &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity "
+                 &"           FROM irCMS_navigation     n "
+                 &"     INNER JOIN irCMS_contentVersion cv ON n.navigationId     = cv.navigationId "
+                 &"     INNER JOIN irCMS_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                 &"LEFT OUTER JOIN irCMS_module         m  ON cv.moduleId        = m.moduleId "
+                 &"          WHERE cs.online  = :online "
+                 &(arguments.position != 'all' ? " AND n.position = :position " : "")
+                 &"            AND n.language = :language "
+                 &"            AND n.active   = :active "
+                 &"            AND n.parentNavigationId IS NULL "
+                 &"       ORDER BY n.position, n.sortOrder ASC";
         qryGetHierarchy.setSQL(sql);
+        qryGetHierarchy.addParam(name="online",   value=true,               cfsqltype="cf_sql_bit");
+        qryGetHierarchy.addParam(name="active",   value=true,               cfsqltype="cf_sql_bit");
+        qryGetHierarchy.addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar");
         if(arguments.position != 'all') {
             qryGetHierarchy.addParam(name="position", value=arguments.position, cfsqltype="cf_sql_varchar");
         }
@@ -60,7 +96,7 @@
     
     public string function getUserLink(required numeric userId) {
     	if(arguments.userId != 0) {
-    	   return '?ses=user&view=detail&userId='&arguments.userId;
+    	   return '/User/'&arguments.userId; // replace by userName
     	}
     	else {
     	   return '';

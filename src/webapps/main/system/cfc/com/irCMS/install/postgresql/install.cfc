@@ -23,7 +23,7 @@
                            &"); "
                            &"INSERT INTO irCMS_theme (themeName, defaultTheme) VALUES (:themeName, :active); ");
         	qInstall.addParam(name="themeName", value=arguments.themeName, cfsqltype="cf_sql_varchar");
-            qInstall.addParam(name="active", value=true, cfsqltype="cf_sql_bit");
+          qInstall.addParam(name="active", value=true, cfsqltype="cf_sql_bit");
         	qInstall.execute();
             return false;
         }
@@ -46,13 +46,11 @@
                            &"    active boolean DEFAULT true, "
                            &"    themeid integer DEFAULT 1, "
                            &"    postcount integer DEFAULT 0, "
+                           &"    password text NOT NULL, "
                            
                            &"    CONSTRAINT 'PK_irCMS_user_userId' PRIMARY KEY (userid), "
                            &"    CONSTRAINT 'FK_irCMS_user_themeId' FOREIGN KEY (themeid) REFERENCES ircms_theme (themeid) ON UPDATE NO ACTION ON DELETE NO ACTION, "
                            &"    CONSTRAINT 'UK_irCMS_user_username' UNIQUE (username) "
-                           &") "
-                           &"WITH ( "
-                           &"    OIDS=FALSE "
                            &"); "
                            &"CREATE INDEX 'FKI_irCMS_user_themeId' ON ircms_user USING btree (themeid); "
                            
@@ -77,7 +75,7 @@
                            &"    errorId int default nextval('seq_ircms_error'::regclass) NOT NULL, "
                            &"    message TEXT NOT NULL, "
                            &"    detail TEXT NOT NULL, "
-                           &"    recDate timestamp with time zone, "
+                           &"    recDate timestamp with time zone DEFAULT now(), "
                             
                            &"    CONSTRAINT 'PK_irCMS_error_errorId' PRIMARY KEY (errorId) "
                            &");");
@@ -109,9 +107,6 @@
                            
                            &"    CONSTRAINT 'PK_irCMS_menu_menuId' PRIMARY KEY (menuid), "
                            &"    CONSTRAINT 'UK_irCMS_menu_ses' UNIQUE (ses) "
-                           &") "
-                           &"WITH ( "
-                           &"    OIDS=FALSE "
                            &"); "
                            &"CREATE INDEX 'IDX_irCMS_menu_activeLinks' ON ircms_menu USING btree (active, parentmenuid); "
                            &"CREATE INDEX 'IDX_irCMS_menu_parentMenuId' ON ircms_menu USING btree (parentmenuid); "
@@ -131,9 +126,6 @@
                            
                            &"    CONSTRAINT 'PK_irCMS_menuContent_menuContentId' PRIMARY KEY (menucontentid), "
                            &"    CONSTRAINT 'FK_irCMS_menuContent_menuId' FOREIGN KEY (menuid) REFERENCES ircms_menu (menuid) ON UPDATE NO ACTION ON DELETE NO ACTION "
-                           &") "
-                           &"WITH ( "
-                           &"    OIDS=FALSE "
                            &"); "
                             
                            &" CREATE INDEX 'FKI_irCMS_menuContent_menuId' ON ircms_menucontent USING btree (menuid); "
@@ -159,9 +151,6 @@
                            
                            &"     CONSTRAINT 'PK_irCMS_userGroup_groupId' PRIMARY KEY (groupId), "
                            &"     CONSTRAINT 'UK_irCMS_userGroup_groupName' UNIQUE (groupName) "
-                           &" ) "
-                           &" WITH ( "
-                           &"     OIDS=FALSE "
                            &" ); "
                             
                            &" INSERT INTO irCMS_userGroup (groupName, active) VALUES ('CMS', true); "
@@ -176,9 +165,6 @@
                            
                            &"     CONSTRAINT 'PK_irCMS_userRole_roleId' PRIMARY KEY (roleId), "
                            &"     CONSTRAINT 'UK_irCMS_userRole_roleName' UNIQUE (roleName) "
-                           &" ) "
-                           &" WITH ( "
-                           &"     OIDS=FALSE "
                            &" ); "
                             
                            &" INSERT INTO irCMS_userRole (roleName, active, roleValue) VALUES ('Guest',  true,   0); "
@@ -200,9 +186,6 @@
                            &"     CONSTRAINT 'FK_irCMS_userPermission_userId' FOREIGN KEY (userId) REFERENCES ircms_user (userId) ON UPDATE NO ACTION ON DELETE NO ACTION, "
                            &"     CONSTRAINT 'FK_irCMS_userPermission_groupId' FOREIGN KEY (groupId) REFERENCES ircms_userGroup (groupId) ON UPDATE NO ACTION ON DELETE NO ACTION, "
                            &"     CONSTRAINT 'FK_irCMS_userPermission_roleId' FOREIGN KEY (roleId) REFERENCES ircms_userRole (roleId) ON UPDATE NO ACTION ON DELETE NO ACTION "
-                           &" ) "
-                           &" WITH ( "
-                           &"     OIDS=FALSE "
                            &" ); "
                            &" CREATE INDEX 'FKI_irCMS_userPermission_userId' ON irCMS_userPermission USING btree (userId); "
                            &" CREATE INDEX 'FKI_irCMS_userPermission_groupId' ON irCMS_userPermission USING btree (groupId); "

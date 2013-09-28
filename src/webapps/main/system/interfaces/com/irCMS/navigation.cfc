@@ -1,16 +1,20 @@
 ﻿interface {
-    public navigation function init(required string tablePrefix, required string datasource);
+    public navigation function init(required errorHandler errorHandler, required string tablePrefix, required string datasource);
+
+
+    public struct function getNavigationInformation(required string sesLink, required string language);
+    public navigationPoint function getActualNavigation(required struct navigationInformation);
+
+
+    public boolean function addNavigation(required singleUser user, required struct navigationData, numeric navigationId=0);
+    public boolean function editNavigation(required singleUser user, required numeric navigationId, required struct navigationData);
+    public boolean function deleteNavigation(required singleUser user, required numeric navigationId);
+    public boolean function releaseNavigation(required singleUser user, required numeric navigationId, required numeric version);
+    public boolean function revokeNavigation(required singleUser user, required numeric navigationId, required numeric version);
     
-    public query function getHierarchy(required string position);
+
+    public query function getHierarchy(required string position, required string language);
     
-    public boolean function addMenu(required singleUser user, required struct menuData, numeric menuId=0);
-    public boolean function removeMenu(required singleUser user, required numeric menuId);
-    public boolean function editMenu(required singleUser user, required numeric menuId, required struct menuData);
-    
-    public boolean function revokeMenu(required singleUser user, required numeric menuId, string version='actual');
-    public boolean function releaseMenu(required singleUser user, required numeric menuId, string version='actual');
-    
-    public numeric function getMenuForSes(required string sesString);
-    
+
     public string function getUserLink(required numeric userId);
 }

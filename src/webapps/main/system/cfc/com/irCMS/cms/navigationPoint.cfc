@@ -1,27 +1,33 @@
-﻿component implements="system.interfaces.com.irCMS.singleMenu" {
-    public singleMenu function init(required errorHandler errorHandler, required string tablePrefix
-                                   ,required string datasource,         required numeric menuId
-                                   ,         string version='actual') {
+﻿component implements="system.interfaces.com.irCMS.navigationPoint" {
+    public navigationPoint function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required struct navigationInformation) {
     	variables.errorHandler = arguments.errorHandler;
-        variables.tablePrefix  = arguments.tablePrefix;
-        variables.datasource   = arguments.datasource;
-    	variables.menuId       = arguments.menuId;
-    	variables.version      = arguments.version;
-    	
+        variables.tablePrefix    = arguments.tablePrefix;
+        variables.datasource     = arguments.datasource;
+    	variables.navigationId   = arguments.navigationInformation.navigationId;
+        variables.sesLink        = arguments.navigationInformation.sesLink;
+        variables.entity         = arrayLen(arguments.navigationInformation.entityMatches) > 1 ? arguments.navigationInformation.entityMatches[2] : '';
+        
     	return this;
     }
     
-    public boolean function load() {
+    public boolean function loadNavigation() {
     	try {
             var qGetMenu = new Query();
             qGetMenu.setDatasource(variables.datasource);
-            qGetMenu.setSQL("SELECT m.*, c.content "
-                           &"  FROM #variables.tablePrefix#_menu AS m "
-                           &" INNER JOIN #variables.tablePrefix#_menuContent c ON m.menuId=c.menuId "
-                           &" WHERE m.menuId=:menuId "
-                           &"   AND c.version=:version");
-            qGetMenu.addParam(name="menuId", value=variables.menuId, cfsqltype="cf_sql_numeric");
-            qGetMenu.addParam(name="version", value=variables.version, cfsqltype="cf_sql_varchar");
+            qGetMenu.setSQL("         SELECT cv.navigationId, cv.contentVersionId, "
+                           &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
+                           &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity "
+                           &"           FROM irCMS_navigation     n "
+                           &"     INNER JOIN irCMS_contentVersion cv ON n.navigationId     = cv.navigationId "
+                           &"     INNER JOIN irCMS_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                           &"LEFT OUTER JOIN irCMS_module         m  ON cv.moduleId        = m.moduleId "
+                           &"          WHERE cs.online      = :online "
+                           &"            AND n.active       = :active "
+                           &"            AND n.navigationId = :navigationId "
+                           &"       ORDER BY n.sortOrder ASC");
+            qGetMenu.addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric");
+            qGetMenu.addParam(name="online",       value=true,                   cfsqltype="cf_sql_bit");
+            qGetMenu.addParam(name="active",       value=true,                   cfsqltype="cf_sql_bit");
             
             variables.actualMenu = qGetMenu.execute().getResult();
             
@@ -48,21 +54,25 @@
     public string function getKeywords() {
         return variables.actualMenu.keywords[1];
     }
+
+    public string function getEntity() {
+        return variables.entity;
+    }
     
     public array function getBreadcrum() {
         var breadcrum = [];
         var parent    = {};
-        parent.menuId       = variables.actualMenu.menuId[1];
-        parent.parentMenuId = variables.actualMenu.parentMenuId[1];
-        parent.linkname     = variables.actualMenu.linkname[1];
-        parent.sesLink      = variables.actualMenu.ses[1];
+        parent.navigationId       = variables.actualMenu.navigationId[1];
+        parent.parentnavigationId = variables.actualMenu.parentNvigationId[1];
+        parent.linkname           = variables.actualMenu.linkName[1];
+        parent.sesLink            = variables.actualMenu.sesLink[1];
         var counter = 1;
         breadcrum[counter] = parent;
         while(true) {
         	counter++;
-        	if(parent.parentMenuId != 0) {
+        	if(parent.parentNavigationId != 0) {
         		breadcrum[counter] = parent;
-        		parent = getParent(parent.parentMenuId);
+        		parent = getParent(parent.parentnavigationId);
         	}
         	else {
         		break;
@@ -79,32 +89,28 @@
         return finalBreadcrum;
     }
     
-    public string function getContent() {
-        return cleanupArticle(content=variables.actualMenu.content[1], cleanArticle=true);
-    }
-    
-    private struct function getParent(required string menuId) {
+    private struct function getParent(required string navigationId) {
     	var parent = {};
-    	parent.menuId       = 0;
-    	parent.parentMenuId = 0;
-    	parent.linkname     = "";
-    	parent.sesLink      = "";
+    	parent.navigationId       = 0;
+    	parent.parentnavigationId = 0;
+    	parent.linkname           = "";
+    	parent.sesLink            = "";
     	
     	try {
             var qGetParentMenu = new Query();
             qGetParentMenu.setDatasource(variables.datasource);
-            qGetParentMenu.setSQL("SELECT m.menuId, m.linkname, m.ses, m.parentMenuId "
-                                 &"  FROM #variables.tablePrefix#_menu AS m "
-                                 &" WHERE m.menuId=:menuId ");
-            qGetParentMenu.addParam(name="menuId", value=variables.menuId, cfsqltype="cf_sql_numeric");
+            qGetParentMenu.setSQL("SELECT m.navigationId, m.linkname, m.sesLink, m.parentnavigationId "
+                                 &"  FROM #variables.tablePrefix#_navigation AS n "
+                                 &" WHERE m.navigationId=:navigationId ");
+            qGetParentMenu.addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric");
             
             var qParent = qGetParentMenu.execute().getResult();
             
             if(qParent.recordCount == 0) {
-                parent.menuId       = qParent.menuId[1];
-                parent.parentMenuId = qParent.parentMenuId[1];
-                parent.linkname     = qParent.linkname[1];
-                parent.sesLink      = qParent.ses[1];
+                parent.navigationId       = qParent.navigationId[1];
+                parent.parentNavigationId = qParent.parentNavigationId[1];
+                parent.linkname           = qParent.linkname[1];
+                parent.sesLink            = qParent.ses[1];
             }
         }
         catch(any e) {
@@ -113,6 +119,13 @@
         }
     	
     	return parent;
+    }
+    
+    public string function getContent() {
+        if(variables.actualMenu.showContentForEntity[1] == false && variables.entity != '') {
+            return '';
+        }
+        return cleanupArticle(content=variables.actualMenu.content[1], cleanArticle=true);
     }
     
     private string function cleanupArticle(required string content, required boolean cleanArticle) {
@@ -149,7 +162,7 @@
                 
                 templateStart += 18;
                 templateEnd  = find('"', arguments.content, templateStart);
-                templateName = '/irCMS/themes/icedreaper_light/moduleTemplates/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
+                templateName = '/irCMS/themes/icedreaper_light/templates/modules/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
                 
                 attributeCollectionStart = find('attributeCollection="', arguments.content, templateEnd);
                 closingTag = find(']', arguments.content, templateEnd);

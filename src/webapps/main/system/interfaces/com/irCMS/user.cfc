@@ -1,5 +1,5 @@
 ﻿interface {
-    public user function init(required string tablePrefix, required string datasource, required cryption cryptionApi);
+    public user function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required cryption cryptionApi);
     
     public boolean function createUser(required string userData);
     public boolean function activateUser(required userId);
