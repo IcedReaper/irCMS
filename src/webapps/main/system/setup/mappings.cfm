@@ -1,3 +1,3 @@
 <cfscript>
-    this.mappings['/'] = getDirectoryFromPath(getCurrentTemplatePath());
+    application.mappings['/'] = getDirectoryFromPath(getCurrentTemplatePath());
 </cfscript>
