@@ -1,4 +1,4 @@
-﻿component implements="system.interfaces.com.irCMS.navigationPoint" {
+﻿component /*implements="system.interfaces.com.irCMS.navigationPoint"*/ {
     public navigationPoint function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required struct navigationInformation) {
     	variables.errorHandler = arguments.errorHandler;
         variables.tablePrefix    = arguments.tablePrefix;
@@ -114,7 +114,7 @@
             }
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
+            variables.errorHandler.processError(themeName='IcedReaper_light', message=e.message, detail=e.detail);
             abort;
         }
     	
@@ -122,10 +122,34 @@
     }
     
     public string function getContent() {
-        if(variables.actualMenu.showContentForEntity[1] == false && variables.entity != '') {
-            return '';
+        if(! variables.actualMenu.showContentForEntity[1] && this.getEntity() != '') {
+            if(variables.actualMenu.path[1] != '') {
+                try {
+                    var moduleContent       = "";
+                    var moduleAttributes    = deserializeJSON(variables.actualMenu.moduleAttributes);
+                    if(moduleAttributes == '') {
+                        moduleAttributes = {};
+                    }
+                    moduleAttributes.entity = this.getEntity();
+
+                    saveContent variable="moduleContent" {
+                        module template='/icedreaper/themes/IcedReaper_light/templates/modules/'&variables.actualMenu.path[1]&'/index.cfm' attributeCollection=moduleAttributes;
+                    }
+                    return moduleContent;
+                }
+                catch(eny e) {
+                    variables.errorHandler.processError(themeName='IcedReaper_light', message=e.message, type=e.type);
+                    abort;
+                }
+            }
+            else {
+                variables.errorHandler.processError(themeName='IcedReaper_light', message='No Module Path was found, but a module should be loaded', type='Missing Path');
+                abort;
+            }
         }
-        return cleanupArticle(content=variables.actualMenu.content[1], cleanArticle=true);
+        else {
+            return cleanupArticle(content=variables.actualMenu.content[1], cleanArticle=true);
+        }
     }
     
     private string function cleanupArticle(required string content, required boolean cleanArticle) {
@@ -162,7 +186,7 @@
                 
                 templateStart += 18;
                 templateEnd  = find('"', arguments.content, templateStart);
-                templateName = '/irCMS/themes/icedreaper_light/templates/modules/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
+                templateName = '/icedreaper/themes/IcedReaper_light/templates/modules/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
                 
                 attributeCollectionStart = find('attributeCollection="', arguments.content, templateEnd);
                 closingTag = find(']', arguments.content, templateEnd);
@@ -185,7 +209,7 @@
                     }
                 }
                 saveContent variable="module" {
-                    module template=templateName attributes=tmpAttributeCollection;
+                    module template=templateName tmpAttributeCollection=tmpAttributeCollection;
                 }
                 writeOutput(trim(module));
                 
