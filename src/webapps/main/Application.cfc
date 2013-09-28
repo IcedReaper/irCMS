@@ -11,7 +11,7 @@
     
     public boolean function applicationRestart() {
         include "system/setup/databaseSettings.cfm";
-        include "system/setup/mappings.cfm";
+        application.mappings['/'] = getDirectoryFromPath(getCurrentTemplatePath());
 
     	// tools
     	application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
@@ -41,7 +41,7 @@
     }
     
     public boolean function onRequestStart(required string targetPage) {
-    	if(isDefined("url.reload")) {
+        if(isDefined("url.reload")) {
     		var reloadActions = listToArray(url.reload, ',');
     		for(var i = 1; i <= arrayLen(reloadActions); i++) {
     			switch(reloadActions[i]) {
