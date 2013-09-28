@@ -11,7 +11,6 @@
     
     public boolean function applicationRestart() {
         include "system/setup/databaseSettings.cfm";
-        application.mappings['/'] = getDirectoryFromPath(getCurrentTemplatePath());
 
     	// tools
     	application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
