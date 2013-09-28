@@ -1,0 +1,10 @@
+Modules
+
+Online: (Will be shown as Module)
+- Blog
+- Rating (CD / DVD / Concert - what ever Rating)
+- Gallery
+
+Offline: (Will not be shown as Module in Module overview)
+- Modules
+- Themes

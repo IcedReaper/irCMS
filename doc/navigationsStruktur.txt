@@ -1,0 +1,72 @@
+Navigationsstruktur für irCMS:
+/													Module: Article
+
+/About+irCMS										Module: Article
+/About+irCMS/Features								Module: Article
+/About+irCMS/Admin+Tools							Module: Article
+/About+irCMS/Editor									Module: Article
+
+/Modules											Module: Article
+/Modules/Module+List								Module: Modules - Overview
+/Modules/Module+List/Modulename						Module: Modules - Specific Entry Modulename e.g. irBlog | irRating
+													Should be opened by /Modules/Module+List and the Modulename should by set as specific Entry
+eg. /Modules/Module+List/irBlog							Module: Modules - Specific Entry irBlog
+eg. /Modules/Module+List/irRating						Module: Modules - Specific Entry irRating
+/Modules/Top+Modules								with Module: Modules - Top
+/Modules/How+To+Develop+New+Modules					Module: Article
+/Modules/Add+Module 								Module: Article
+
+/Themes												Module: Article
+/Themes/Theme+List									Module: Themes - Overview
+/Themes/Theme+List/Themename						Module: Themes - Specific Entry Themename e.g. IcedReaper_light | IcedReaper_dark
+													Should be opened by /Themes/Theme+List and the Themename should by set as specific Entry
+eg. /Themes/Theme+List/IcedReaper_light					Module: Themes - Specific Entry IcedReaper_light
+eg. /Themes/Theme+List/IcedReaper_dark					Module: Themes - Specific Entry IcedReaper_dark
+eg. /Themes/Theme+List/IcedReaper_bloody				Module: Themes - Specific Entry IcedReaper_bloody
+/Themes/Top+Themes									Module: Themes - Top
+/Themes/How+To+Develop+New+Themes					Module: Article
+/Themes/Add+Theme 									Module: Article
+
+/Developer											Module: Article
+/Developer/Blog 									Module: Blog
+/Developer/Blog/Blogentryname						Module: Blog - Specific Entry
+													Should be opened by /Developer/Blog and the Blogentryname should by set as specific Entry
+/Developer/Blog/Categories
+/Developer/Blog/Categories/New+Features*
+
+/*In+Use+By
+
+/Impressum 											Article
+
+
+
+
+
+Navigationsstruktur für Icedreaper.com:
+/																		Article
+
+/Blog 																	Module: Blog - Overview
+/Blog/Hallo+Welt														Module: Blog - Specific Entry
+
+/Bewertungen															Article with Module: Rating and Show = Last X
+/Bewertungen/CD 														Module: Rating with param Type = CD
+/Bewertungen/CD/Amon+Amarth+-+Deceiver+Of+The+Gods						Module: Rating with param Type = CD  and Show = Specific Entry
+/Bewertungen/DVD/Die+Hard+4.0											Module: Rating with param Type = DVD and Show = Specific Entry
+/Bewertungen/CD/Tipp+Des+Monats											Module: Rating with param Type = CD  and Show = Top
+/Bewertungen/DVD/Tipp+Des+Monats										Module: Rating with param Type = DVD and Show = Top
+
+/Gallery																Article with Module: Gallery and Show = Last X
+/Gallery/Beachvolleyball/Deutsche+Meisterschaften+2013					Module: Gallery with Show = Specific Entry and Page = 1
+/Gallery/Beachvolleyball/Deutsche+Meisterschaften+2013/Seite+2			Module: Gallery with Show = Specific Entry and Page = 2
+/Gallery/Leichtathletik/DLV+Mehrkampfmeeting+Ratingen+2013
+/Gallery/Leichtathletik/DLV+Mehrkampfmeeting+Ratingen+2013/Seite+1
+/Gallery/Leichtathletik/DLV+Mehrkampfmeeting+Ratingen+2013/Seite+2
+/Gallery/Leichtathletik/DLV+Mehrkampfmeeting+Ratingen+2013/Seite+X
+/Gallery/Case-Modding/Open+Vision
+
+/Portfolio																Article
+/Portfolio/Programmierungen												Article
+/Portfolio/Case-Modding													Article
+/Portfolio/...
+
+/Impressum																Article

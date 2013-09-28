@@ -1,0 +1,66 @@
+Case Studies:
+
+DB Data:
+
+ID  | SES                   | entityRegExp          | Content               | Modulepath (over linked module)
+-----------------------------------------------------------------------------------------------------
+1   | /Modules              | null                  | Dies ist ein Text...  | null
+2   | /Modules/Module+List  | (.*)                  | null                  | moduleList/index.cfm
+
+
+===============================================================================================
+
+	SES: /Modules
+
+	SELECT * FROM navigation WHERE ses = /Modules
+
+	Result Found (#1)
+
+	=> Render Content of Navigation
+
+
+-----------------
+
+
+	SES: /Modules/Module+List
+
+	SELECT * FROM navigation WHERE ses = /Modules/Module+List
+
+	Result Found (#2)
+
+	=> Open Modulepath
+
+
+------------------
+
+
+	SES: /Modules/Module+List/irBlog (irBlog variable)
+
+	SELECT * FROM navigation WHERE ses = /Modules/Module+List/irBlog
+
+	No Result Found
+
+	SELECT regExp_matches('/Modules/Module+List/irBlog', '('||t.SES||')' || t.entityRegExp) from navigation as t
+
+	Result Found (#2)
+	=> [/Modules/Module+List, /irBlog]
+
+	=> Render Content of Navigation (Open Module)
+
+	=> Load Options with Result[1] (/irBlog)
+
+
+-------------------
+
+
+	SES: /Modules/Module+List+2/irBlog (irBlog variable)
+
+	SELECT * FROM navigation WHERE ses = /Modules/Module+List+2/irBlog
+
+	No Result Found
+
+	SELECT regExp_matches('/Modules/Module+List/irBlog', '('||t.SES||')' || t.entityRegExp) from navigation as t
+
+	No Result Found
+	
+	Show 404 Error Message

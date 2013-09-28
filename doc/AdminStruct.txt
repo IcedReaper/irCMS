@@ -1,0 +1,36 @@
+/Admin
+/Admin/User
+/Admin/User/IcedReaper*
+/Admin/User/IcedReaper*/Permissions
+
+/Admin/Editor
+/Admin/Editor/New
+/Admin/Editor/About+irCMS*
+
+/Admin/Permissions
+/Admin/Permissions/New
+/Admin/Permissions/RoleName*
+/Admin/Permissions/GroupName*
+
+/Admin/ModuleName*
+/Admin/ModuleName*/New
+/Admin/ModuleName*/EntryName*
+
+/Admin/Errorlog
+/Admin/Errorlog/EntryId*
+
+
+
+Menu:
+ID    | Name              | SES             | RegExp
+--------------------------------------------------
+1     | Admin Overview    | /Admin          |
+2     | User              | /Admin/User     | (.*)
+
+
+
+SQL:
+SELECT regExp_matches('/Admin/Editor/About+irCMS', '('||t.SES||')' || t.RegExp) from test as t
+
+Result:
+[/Admin/Editor,/About+irCMS]
