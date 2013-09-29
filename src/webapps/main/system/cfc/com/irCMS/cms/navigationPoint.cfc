@@ -1,12 +1,12 @@
 ﻿component /*implements="system.interfaces.com.irCMS.navigationPoint"*/ {
     public navigationPoint function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required struct navigationInformation) {
     	variables.errorHandler = arguments.errorHandler;
-        variables.tablePrefix    = arguments.tablePrefix;
-        variables.datasource     = arguments.datasource;
-    	variables.navigationId   = arguments.navigationInformation.navigationId;
-        variables.sesLink        = arguments.navigationInformation.sesLink;
-        variables.entity         = arrayLen(arguments.navigationInformation.entityMatches) > 1 ? arguments.navigationInformation.entityMatches[2] : '';
-        
+        variables.tablePrefix  = arguments.tablePrefix;
+        variables.datasource   = arguments.datasource;
+    	variables.navigationId = arguments.navigationInformation.navigationId;
+        variables.sesLink      = arguments.navigationInformation.sesLink;
+        variables.entities     = duplicate(arguments.navigationInformation.entityMatches);
+
     	return this;
     }
     
@@ -14,7 +14,7 @@
     	try {
             var qGetMenu = new Query();
             qGetMenu.setDatasource(variables.datasource);
-            qGetMenu.setSQL("         SELECT cv.navigationId, cv.contentVersionId, "
+            qGetMenu.setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
                            &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
                            &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity "
                            &"           FROM irCMS_navigation     n "
@@ -55,8 +55,8 @@
         return variables.actualMenu.keywords[1];
     }
 
-    public string function getEntity() {
-        return variables.entity;
+    public array function getEntities() {
+        return variables.entities;
     }
     
     public array function getBreadcrum() {
@@ -120,46 +120,51 @@
     	
     	return parent;
     }
-    
-    public string function getContent() {
-        if(! variables.actualMenu.showContentForEntity[1] && this.getEntity() != '') {
-            if(variables.actualMenu.path[1] != '') {
-                try {
-                    var moduleContent       = "";
-                    var moduleAttributes    = deserializeJSON(variables.actualMenu.moduleAttributes);
-                    if(moduleAttributes == '') {
-                        moduleAttributes = {};
-                    }
-                    moduleAttributes.entity = this.getEntity();
 
-                    saveContent variable="moduleContent" {
-                        module template='/icedreaper/themes/IcedReaper_light/templates/modules/'&variables.actualMenu.path[1]&'/index.cfm' attributeCollection=moduleAttributes;
-                    }
-                    return moduleContent;
+    public string function getModuleContent() {
+        if(variables.actualMenu.path[1] != '') {
+            try {
+                var moduleContent       = "";
+                var moduleAttributes    = deserializeJSON(variables.actualMenu.moduleAttributes);
+                if(moduleAttributes == '') {
+                    moduleAttributes = {};
                 }
-                catch(eny e) {
-                    variables.errorHandler.processError(themeName='IcedReaper_light', message=e.message, type=e.type);
-                    abort;
+                moduleAttributes.entities = this.getEntities();
+
+                saveContent variable="moduleContent" {
+                    module template='/icedreaper/themes/IcedReaper_light/templates/modules/'&variables.actualMenu.path[1]&'/index.cfm' attributeCollection=moduleAttributes;
                 }
+                return moduleContent;
             }
-            else {
-                variables.errorHandler.processError(themeName='IcedReaper_light', message='No Module Path was found, but a module should be loaded', type='Missing Path');
+            catch(eny e) {
+                variables.errorHandler.processError(themeName='IcedReaper_light', message=e.message, type=e.type);
                 abort;
             }
         }
         else {
-            return cleanupArticle(content=variables.actualMenu.content[1], cleanArticle=true);
+            variables.errorHandler.processError(themeName='IcedReaper_light', message='No Module Path was found, but a module should be loaded', type='Missing Path');
+            abort;
         }
     }
+
+    public boolean function checkShowContent() {
+        return (variables.actualMenu.showContentForEntity && arrayLen(this.getEntities) > 0) || arrayLen(this.getEntities()) == 0;
+    }
+
+    public boolean function checkShowModule() {
+        return (variables.actualMenu.moduleId != '');
+    }
     
-    private string function cleanupArticle(required string content, required boolean cleanArticle) {
+    public string function getContent(required boolean cleanArticle) {
+        var content = variables.actualMenu.content[1];
+
         if(arguments.cleanArticle) {
             // evaluate cf vars
-            arguments.content = evaluate(DE(arguments.content));
+            content = evaluate(DE(content));
             // replace all irCF Tags
-            arguments.content = replaceModules(arguments.content);
+            content = replaceModules(content);
         }
-        return arguments.content;
+        return content;
     }
     
     private string function replaceModules(required string content) {

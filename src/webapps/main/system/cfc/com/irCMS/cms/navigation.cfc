@@ -20,9 +20,10 @@
             qryGetNavigationInformation.addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar");
             
             var qGetNavigationInformation = qryGetNavigationInformation.execute().getResult();
+
             if(qGetNavigationInformation.recordCount == 1) {
                 return {
-                    entityMatches: qGetNavigationInformation.sesMatches[1],
+                    entityMatches: this.cleanEntityMatches(arrayMerge([], qGetNavigationInformation.sesMatches[1])),
                     navigationId:  qGetNavigationInformation.navigationId[1],
                     sesLink:       qGetNavigationInformation.sesLink[1]
                 };
@@ -37,6 +38,27 @@
             navigationId:  0,
             sesLink:       ''
         };
+    }
+
+    private array function cleanEntityMatches(required array sesMatches) {
+        var cleanedMatches = duplicate(arguments.sesMatches);
+        // delete the SES
+        arrayDeleteAt(cleanedMatches, 1);
+        
+        // remove blank entries
+        for(var i = arrayLen(cleanedMatches); i >= 1; i--) {
+            if(cleanedMatches[i] == '') {
+                arrayDeleteAt(cleanedMatches, i);
+            }
+        }
+
+        // split matches into their sibblings
+        var splitMatches = [];
+        cleanedMatches.each(function(item) {
+            splitMatches.append(listToArray(item, '/'), true);
+        });
+        
+        return splitMatches;
     }
 
     public navigationPoint function getActualNavigation(required struct navigationInformation) {

@@ -18,11 +18,12 @@
 		</header>
     	<!---<cfinclude template="templates/default/breadcrum.cfm">--->
 		<section class="content">
-            <h2>Content:</h2>
-            #request.actualMenu.getContent()#
-
-            <h2>Entity:</h2>
-            #request.actualMenu.getEntity()#
+            <cfif request.actualMenu.checkShowContent()>
+                #request.actualMenu.getContent(cleanArticle=false)#
+            </cfif>
+            <cfif request.actualMenu.checkShowModule()>
+                #request.actualMenu.getModuleContent()#
+            </cfif>
         </section>
         <footer>
             <cfinclude template="templates/default/footer.cfm">
