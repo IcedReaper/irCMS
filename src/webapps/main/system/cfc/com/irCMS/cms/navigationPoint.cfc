@@ -129,6 +129,7 @@
                 if(moduleAttributes == '') {
                     moduleAttributes = {};
                 }
+                moduleAttributes.sesLink  = variables.sesLink;
                 moduleAttributes.entities = this.getEntities();
 
                 saveContent variable="moduleContent" {
