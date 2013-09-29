@@ -28,7 +28,9 @@ component {
                 results[i].name         = qFilterModules.entityName[i];
                 results[i].creator      = qFilterModules.modUsername[i] == '' ? qFilterModules.userName[i] : qFilterModules.modUsername[i];
                 results[i].userId       = qFilterModules.modUsername[i] == '' ? qFilterModules.userId[i]   : 0;
-                results[i].creationDate = qFilterModules.creationDate[i];
+
+                var localDate = dateConvert('utc2local', qFilterModules.creationDate[i]);
+                results[i].creationDate = dateFormat(localDate, 'DD.MMM YYYY') & ' ' & timeFormat(localDate, 'HH:MM:SS');
                 results[i].tags         = [];
 
                 var qryGetTags = new Query();
