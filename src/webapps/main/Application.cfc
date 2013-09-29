@@ -11,6 +11,7 @@
     
     public boolean function applicationRestart() {
         include "system/setup/databaseSettings.cfm";
+        application.rootComponentPath = "icedreaper.";
 
     	// tools
     	application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
