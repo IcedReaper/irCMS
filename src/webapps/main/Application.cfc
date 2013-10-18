@@ -67,24 +67,8 @@
     	}
 
     	if(application.installSuccessfull) {
-            if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
-                var tmpUserId = application.user.user.login(username=form.username, password=form.password);
-                if(tmpUserId != 0) {
-                    session.userId = tmpUserId;
-                    // TODO: show wrong password page
-                }
-            }
-            if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userId')) {
-            	if(application.user.user.login(username=form.username, password=form.password)) {
-                	session.userId = 0;
-                	structClear(session);
-                }
-                else {
-                	application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="logout", detail="logout");
-                    abort;
-                }
-            }
-
+            this.handleLoginOut();
+            
             request.language = 'de';
             
         	if(isDefined("session") && structKeyExists(session, 'userId')) {
@@ -94,33 +78,14 @@
         		request.userId = 0;
         	}
         	
-        	request.actualUser = createObject("component", "system.cfc.com.irCMS.user.singleUser").init(errorHandler = application.cms.errorHandler
-        	                                                                                           ,tablePrefix  = application.tablePrefix
-        	                                                                                           ,datasource   = application.datasource.user
-        	                                                                                           ,userId       = request.userId);
-        	
-        	if(request.actualUser.load()) {
-                if(! isDefined("url.ses") || url.ses == '') {
-            		request.sesLink = '/';
-            	}
-            	else {
-            		request.sesLink = url.ses;
-            	}
-            	
-                request.navigationInformation = application.cms.navigation.getNavigationInformation(sesLink=request.sesLink, language=request.language);
-                if(request.navigationInformation.navigationId == 0) {
+            if(this.handleActualUser()) {
+                if(this.handleSes()) {
+                    return true;
+                }
+                else {
                     application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.sesLink);
                     abort;
                 }
-            	request.actualMenu = application.cms.navigation.getActualNavigation(request.navigationInformation);
-            	
-            	if(request.actualMenu.loadNavigation()) {
-            		return true;
-            	}
-            	else {
-                    application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.sesLink);
-                    abort;
-            	}
             }
             else {
                 application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="user", detail=request.userId);
@@ -131,6 +96,54 @@
         	// todo: 
         	// initSetup();
         }
+    }
+
+    private boolean function handleLoginOut() {
+        if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
+            var tmpUserId = application.user.user.login(username=form.username, password=form.password);
+            if(tmpUserId != 0) {
+                session.userId = tmpUserId;
+                // TODO: show wrong password page
+            }
+        }
+        if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userId')) {
+            if(application.user.user.login(username=form.username, password=form.password)) {
+                session.userId = 0;
+                structClear(session);
+            }
+            else {
+                application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="logout", detail="logout");
+                abort;
+            }
+        }
+        return true;
+    }
+
+    private boolean function handleActualUser() {
+        request.actualUser = createObject("component", "system.cfc.com.irCMS.user.singleUser").init(errorHandler = application.cms.errorHandler
+                                                                                                   ,tablePrefix  = application.tablePrefix
+                                                                                                   ,datasource   = application.datasource.user
+                                                                                                   ,userId       = request.userId);
+        
+        return request.actualUser.load();
+    }
+
+    private boolean function handleSes() {
+        if(! isDefined("url.ses") || url.ses == '') {
+            request.sesLink = '/';
+        }
+        else {
+            request.sesLink = url.ses;
+        }
+        
+        request.navigationInformation = application.cms.navigation.getNavigationInformation(sesLink=request.sesLink, language=request.language);
+        if(request.navigationInformation.navigationId == 0) {
+            application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.sesLink);
+            abort;
+        }
+        request.actualMenu = application.cms.navigation.getActualNavigation(request.navigationInformation);
+        
+        return request.actualMenu.loadNavigation();
     }
 
     private boolean function initCfStatic() {
