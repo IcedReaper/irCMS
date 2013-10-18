@@ -21,6 +21,9 @@
     	application.tools.cryption = createObject("component", "system.cfc.com.irCMS.tools.cryption").init(structSeparator=';');
     	
     	// cms
+        application.cms.core = createObject("component", "system.cfc.com.irCMS.cms.cmsCore").init(tablePrefix = application.tablePrefix
+                                                                                                 ,datasource  = application.datasource.user);
+
         application.cms.errorHandler = createObject("component", "system.cfc.com.irCMS.cms.errorHandler").init(tablePrefix = application.tablePrefix
                                                                                                               ,datasource  = application.datasource.user
                                                                                                               ,tools       = application.tools.tools);
@@ -35,11 +38,7 @@
                                                                                                 ,datasource   = application.datasource.user
                                                                                                 ,cryptionApi  = application.tools.cryption);
         
-        application.themes = {};
-        application.themes.icedreaper_light = {};
-        application.themes.icedreaper_light.cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/IcedReaper_light')
-                                                                                                              ,staticUrl           = "/themes/IcedReaper_light/"
-                                                                                                              ,includeAllByDefault = false);
+        this.initCfStatic();
 
         return true;
     }
@@ -128,6 +127,27 @@
         else {
         	// todo: 
         	// initSetup();
+        }
+    }
+
+    private boolean function initCfStatic() {
+        try {
+            var qThemes = application.cms.core.getThemes();
+
+            application.themes = {};
+
+            for(var i = 1; i <= qThemes.getRecordCount(); i++) {
+                application.themes['icedreaper_light'] = {};
+                application.themes['icedreaper_light'].cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/#qThemes.themeName[i]#')
+                                                                                                                         ,staticUrl           = "/themes/#qThemes.themeName[i]#/"
+                                                                                                                         ,includeAllByDefault = false);
+            }
+
+            return true;
+        }
+        catch(any e) {
+            writeDump(e);abort;
+            return false;
         }
     }
 }
