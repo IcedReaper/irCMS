@@ -14,6 +14,9 @@
         <cfelse>
     		Sie sind momentan Eingeloggt als #request.actualUser.getUsername()#<br>
     		<a href="?logout">Ausloggen</a>
+            <cfif application.security.permission.hasPermission(userId=session.userId, groupName='CMS', roleName='Reader')>
+                <a href="/Admin">Zum Adminpanel</a>
+            </cfif>
     	</cfif>
     </div>
 </cfoutput>
