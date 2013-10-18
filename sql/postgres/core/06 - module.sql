@@ -2,9 +2,10 @@
 	moduleId         serial,
 	moduleName       text,
 	path             text,
-	active           boolean DEFAULT true,
-	userId           integer NOT NULL,
-	installationDate timestamp with time zone DEFAULT now(),
+	active           boolean                           DEFAULT true,
+	userId           integer                  NOT NULL,
+	installationDate timestamp with time zone          DEFAULT now(),
+	systemModule     boolean                  NOT NULL DEFAULT false,
 
 	CONSTRAINT "PK_irCMS_module_moduleId"       PRIMARY KEY (moduleId),
 	CONSTRAINT "UK_irCMS_module_moduleName"     UNIQUE      (moduleName),
