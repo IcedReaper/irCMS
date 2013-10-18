@@ -10,8 +10,7 @@
     }
     
     public boolean function applicationRestart() {
-        this.mappings = /*[*/{ '/org':    expandPath("./system/libs/") }/*,
-                         { '/system': expandPath("/system/") }]*/;
+        this.mappings = {'/org': expandPath("./system/libs/")};
 
         include "system/setup/databaseSettings.cfm";
         application.rootComponentPath = "icedreaper.";
@@ -37,6 +36,10 @@
                                                                                                 ,tablePrefix  = application.tablePrefix
                                                                                                 ,datasource   = application.datasource.user
                                                                                                 ,cryptionApi  = application.tools.cryption);
+
+        application.security.permission = createObject("component", "system.cfc.com.irCMS.security.permission").init(errorHandler = application.cms.errorHandler
+                                                                                                                    ,tablePrefix  = application.tablePrefix
+                                                                                                                    ,datasource   = application.datasource.user);
         
         this.initCfStatic();
 

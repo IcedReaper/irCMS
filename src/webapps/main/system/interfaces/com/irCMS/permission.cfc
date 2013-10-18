@@ -1,7 +1,7 @@
 ﻿interface {
-    public permission function init(required string tablePrefix, required string datasource, required user userApi);
+    public permission function init(required errorHandler errorHandler, required string datasource, required string tablePrefix);
     
-    public boolean function hasPermission(required string permissionName, required numeric userId);
+    public boolean function hasPermission(required numeric userId, required string groupName, required string roleName);
     
     public boolean function permissionIdExists();
     public boolean function permissionNameExists();
