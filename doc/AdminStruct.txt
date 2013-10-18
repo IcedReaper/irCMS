@@ -12,9 +12,9 @@
 /Admin/Permissions/RoleName*
 /Admin/Permissions/GroupName*
 
-/Admin/ModuleName*
-/Admin/ModuleName*/New
-/Admin/ModuleName*/EntryName*
+/Admin/Module
+/Admin/Module/New
+/Admin/Module/EntryName*
 
 /Admin/Errorlog
 /Admin/Errorlog/EntryId*
