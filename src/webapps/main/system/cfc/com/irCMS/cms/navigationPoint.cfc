@@ -15,7 +15,7 @@
             variables.actualMenu = new Query().setDatasource(variables.datasource)
                                               .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
                                                      &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
-                                                     &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity "
+                                                     &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity, n.nameOfNavigationToShow "
                                                      &"           FROM irCMS_navigation     n "
                                                      &"     INNER JOIN irCMS_contentVersion cv ON n.navigationId     = cv.navigationId "
                                                      &"     INNER JOIN irCMS_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
@@ -223,5 +223,15 @@
         }
         
         return articleContent;
+    }
+
+    public string function getTopNavigationName() {
+        try {
+            return variables.actualMenu.nameOfNavigationToShow[1];
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='IcedReaper_light', message='No Module Path was found, but a module should be loaded', type='Missing Path');
+            abort;
+        }
     }
 }

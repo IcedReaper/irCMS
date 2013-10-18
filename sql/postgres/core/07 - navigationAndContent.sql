@@ -1,10 +1,11 @@
 ﻿CREATE TABLE ircms_navigation (
-	navigationid       serial,
-	parentNavigationId integer,
-	active             boolean          DEFAULT false,
-	language           char(2)          NOT NULL,
-	position           text             DEFAULT 'header'::text,
-	sortorder          integer NOT NULL DEFAULT 1,
+	navigationid           serial,
+	parentNavigationId     integer,
+	active                 boolean          DEFAULT false,
+	language               char(2) NOT NULL,
+	position               text             DEFAULT 'header'::text,
+	sortorder              integer NOT NULL DEFAULT 1,
+	nameOfNavigationToShow text    NOT NULL default 'header'::text,
 
 	CONSTRAINT "PK_irCMS_navigation_navigationId"       PRIMARY KEY (navigationid),
 	CONSTRAINT "FK_irCMS_navigation_parentNavigationId" FOREIGN KEY (parentNavigationId) REFERENCES ircms_navigation (navigationid) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION

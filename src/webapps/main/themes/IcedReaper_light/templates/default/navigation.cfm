@@ -1,4 +1,5 @@
-﻿<cfset request.headerNavigation = application.cms.navigation.getHierarchy(position='header', language=request.language)>
+﻿<cfparam name="attributes.position" default="header">
+<cfset request.headerNavigation = application.cms.navigation.getHierarchy(position=attributes.position, language=request.language)>
 <cfoutput>
     <nav>
     	<ul>
