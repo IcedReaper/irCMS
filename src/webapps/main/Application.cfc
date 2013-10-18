@@ -10,6 +10,9 @@
     }
     
     public boolean function applicationRestart() {
+        this.mappings = /*[*/{ '/org':    expandPath("./system/libs/") }/*,
+                         { '/system': expandPath("/system/") }]*/;
+
         include "system/setup/databaseSettings.cfm";
         application.rootComponentPath = "icedreaper.";
 
@@ -32,7 +35,12 @@
                                                                                                 ,datasource   = application.datasource.user
                                                                                                 ,cryptionApi  = application.tools.cryption);
         
-        
+        application.themes = {};
+        application.themes.icedreaper_light = {};
+        application.themes.icedreaper_light.cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/IcedReaper_light')
+                                                                                                              ,staticUrl           = "/themes/IcedReaper_light/"
+                                                                                                              ,includeAllByDefault = false);
+
         return true;
     }
     

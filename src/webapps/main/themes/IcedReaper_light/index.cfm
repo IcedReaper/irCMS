@@ -1,4 +1,8 @@
-﻿<cfoutput>
+﻿<cfscript>
+    application.themes.icedreaper_light.cfstatic.include('/js/core/')
+                                                .include('/css/core/');
+</cfscript>
+<cfoutput>
 <!DOCTYPE html>
 <html lang="de" class="icedreaper">
     <head>
@@ -9,7 +13,7 @@
         <link rel="canonical" href="#request.actualMenu.getCanonical()#" />--->
         
         <link href='http://fonts.googleapis.com/css?family=Condiment|New+Rocker' rel='stylesheet' type='text/css'>
-        <link type="text/css" rel="stylesheet" id="mainStyle" href="/themes/IcedReaper_light/css/main.css">
+        #application.themes.icedreaper_light.cfstatic.renderIncludes('css')#
     </head>
     <body>
         <header>
@@ -28,6 +32,7 @@
         <footer>
             <cfinclude template="templates/default/footer.cfm">
         </footer>
+        #application.themes.icedreaper_light.cfstatic.renderIncludes('js')#
     </body>
 </html>
 </cfoutput>
