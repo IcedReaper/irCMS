@@ -36,7 +36,7 @@
                                        .execute()
                                        .getResult();
              
-             return qGetLoginqGetLogin.recordCount == 1 && qGetLogin.active[1] == true ? qGetLogin.userId[1] : 0;
+             return qGetLogin.recordCount == 1 && qGetLogin.active[1] == true ? qGetLogin.userId[1] : 0;
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
