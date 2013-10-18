@@ -10,15 +10,14 @@
     
     public boolean function load() {
         try {
-            var qGetUser = new Query();
-            qGetUser.setDatasource(variables.datasource);
-            qGetUser.setSQL("SELECT u.*, t.themeName, t.active as themeActive "
-                           &"  FROM #variables.tablePrefix#_User u "
-                           &" INNER JOIN #variables.tablePrefix#_theme t ON u.themeId = t.themeId "
-                           &" WHERE u.userId=:userId");
-            qGetUser.addParam(name="userId", value=variables.userId, cfsqltype="cf_sql_numeric");
-            
-            variables.userData = qGetUser.execute().getResult();
+            variables.userData = new Query().setDatasource(variables.datasource)
+                                            .setSQL("SELECT u.*, t.themeName, t.active as themeActive "
+                                                   &"  FROM #variables.tablePrefix#_User u "
+                                                   &" INNER JOIN #variables.tablePrefix#_theme t ON u.themeId = t.themeId "
+                                                   &" WHERE u.userId=:userId")
+                                            .addParam(name="userId", value=variables.userId, cfsqltype="cf_sql_numeric")
+                                            .execute()
+                                            .getResult();
             
             return variables.userData.recordCount == 1;
     	}
@@ -53,27 +52,25 @@
             return variables.userData.themeName[1];
         }
         else {
-        	var qGetDefaultTheme = new Query();
-        	qGetDefaultTheme.setDatasource(variables.datasource);
-        	qGetDefaultTheme.setSQL("SELECT themeName FROM #variables.tablePrefix#_theme WHERE defaultTheme=:default");
-        	qGetDefaultTheme.addParam(name="default", value="true", cfsqltype="cf_sql_bit");
+        	var qGetDefaultTheme = new Query().setDatasource(variables.datasource)
+                                              .setSQL("SELECT themeName FROM #variables.tablePrefix#_theme WHERE defaultTheme=:default")
+                                              .addParam(name="default", value="true", cfsqltype="cf_sql_bit")
+                                              .execute()
+                                              .getResult();
         	
-        	var qryGetDefaultTheme = qGetDefaultTheme.execute().getResult();
-        	
-        	if(qryGetDefaultTheme.recordCount == 1) {
-        		return qryGetDefaultTheme.themeName[1];
+        	if(qGetDefaultTheme.recordCount == 1) {
+        		return qGetDefaultTheme.themeName[1];
         	}
         	else {
-                var qGetDefaultTheme = new Query();
-                qGetDefaultTheme.setDatasource(variables.datasource);
-                qGetDefaultTheme.setMaxRows(1);
-                qGetDefaultTheme.setSQL("SELECT themeName FROM #variables.tablePrefix#_theme WHERE active=:default");
-                qGetDefaultTheme.addParam(name="default", value="true", cfsqltype="cf_sql_bit");
+                var qGetDefaultTheme = new Query().setDatasource(variables.datasource)
+                                                  .setMaxRows(1)
+                                                  .setSQL("SELECT themeName FROM #variables.tablePrefix#_theme WHERE active=:default")
+                                                  .addParam(name="default", value="true", cfsqltype="cf_sql_bit")
+                                                  .execute()
+                                                  .getResult();
                 
-                var qryGetDefaultTheme = qGetDefaultTheme.execute().getResult();
-                
-                if(qryGetDefaultTheme.recordCount == 1) {
-                    return qryGetDefaultTheme.themeName[1];
+                if(qGetDefaultTheme.recordCount == 1) {
+                    return qGetDefaultTheme.themeName[1];
                 }
                 else {
                     variables.errorHandler.processError(themeName='icedreaper_light', message="No Theme found!", detail="No default Theme nor any Theme found!");

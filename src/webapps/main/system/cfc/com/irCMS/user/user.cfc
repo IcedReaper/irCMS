@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.user" {
+﻿component implements="system.interfaces.com.irCMS.user" {
     public user function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required cryption cryptionApi) {
     	variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
@@ -26,18 +26,17 @@
     
     public numeric function login(required string username, required string password) {
         try {
-        	var qGetLogin = new Query();
-        	 qGetLogin.setDatasource(variables.datasource);
-        	 qGetLogin.setSQL("SELECT userId, active "
-        	                 &"  FROM #variables.tablePrefix#_user "
-        	                 &" WHERE username=:username "
-        	                 &"   AND password=:password");
-        	 qGetLogin.addParam(name="username", value=arguments.username,                                        cfsqltype="cf_sql_varchar");
-             qGetLogin.addParam(name="password", value=variables.cryptionApi.encrypt(rawData=arguments.password), cfsqltype="cf_sql_varchar");
+        	var qGetLogin = new Query().setDatasource(variables.datasource)
+                                       .setSQL("SELECT userId, active "
+        	                                  &"  FROM #variables.tablePrefix#_user "
+        	                                  &" WHERE username=:username "
+        	                                  &"   AND password=:password")
+                                       .addParam(name="username", value=arguments.username,                                        cfsqltype="cf_sql_varchar")
+                                       .addParam(name="password", value=variables.cryptionApi.encrypt(rawData=arguments.password), cfsqltype="cf_sql_varchar")
+                                       .execute()
+                                       .getResult();
              
-             var qryGetLogin = qGetLogin.execute().getResult();
-             
-             return qryGetLogin.recordCount == 1 && qryGetLogin.active[1] == true ? qryGetLogin.userId[1] : 0;
+             return qGetLoginqGetLogin.recordCount == 1 && qGetLogin.active[1] == true ? qGetLogin.userId[1] : 0;
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);

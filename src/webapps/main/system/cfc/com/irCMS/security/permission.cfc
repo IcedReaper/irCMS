@@ -3,7 +3,7 @@
     
 	public permission function init(required string datasource,required user userApi) {
         variables.datasource = arguments.datasource;
-        variables.userAPI = arguments.userApi;
+        variables.userAPI    = arguments.userApi;
         
         return this;
     }

@@ -12,14 +12,13 @@
     		if(arguments.errorId == 0) {
         		
         	}
-            var qInsError = new Query();
-            qInsError.setDatasource(variables.datasource);
-            qInsError.setSQL("INSERT INTO #variables.tablePrefix#_errorLog (errorId, message, detail, recDate) VALUES (:errorId, :message, :detail, :recDate)");
-            qInsError.addParam(name="errorId", value=arguments.errorId, cfsqltype="cf_sql_numeric");
-            qInsError.addParam(name="message", value=arguments.message, cfsqltype="cf_sql_varchar");
-            qInsError.addParam(name="detail",  value=arguments.detail,  cfsqltype="cf_sql_varchar");
-            qInsError.addParam(name="recDate", value=now(),             cfsqltype="cf_sql_timeStamp");
-            qInsError.execute();
+            var qInsError = new Query().setDatasource(variables.datasource)
+                                       .setSQL("INSERT INTO #variables.tablePrefix#_errorLog (errorId, message, detail, recDate) VALUES (:errorId, :message, :detail, :recDate)")
+                                       .addParam(name="errorId", value=arguments.errorId, cfsqltype="cf_sql_numeric")
+                                       .addParam(name="message", value=arguments.message, cfsqltype="cf_sql_varchar")
+                                       .addParam(name="detail",  value=arguments.detail,  cfsqltype="cf_sql_varchar")
+                                       .addParam(name="recDate", value=now(),             cfsqltype="cf_sql_timeStamp")
+                                       .execute();
             
             return true;
         }
@@ -31,10 +30,10 @@
     }
     
     public query function getError() {
-    	var qGetError = new Query();
-    	qGetError.setDatasource(variables.datasource);
-    	qGetError.setSQL("SELECT * FROM #variables.tablePrefix#_errorLog ORDER BY recDate DESC");
-    	return qGetError.execute().getResult();
+    	return new Query().setDatasource(variables.datasource)
+                          .setSQL("SELECT * FROM #variables.tablePrefix#_errorLog ORDER BY recDate DESC")
+                          .execute()
+                          .getResult();
     }
     
     public void function processNotFound(required string themeName, required string type, required string detail) {

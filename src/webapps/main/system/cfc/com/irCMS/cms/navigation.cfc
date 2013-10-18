@@ -9,17 +9,16 @@
 
     public struct function getNavigationInformation(required string sesLink, required string language) {
         try {
-            var qryGetNavigationInformation = new Query();
-            qryGetNavigationInformation.setDatasource(variables.datasource);
-            qryGetNavigationInformation.setSQL("     SELECT cv.navigationId, cv.sesLink, "
-                                              &"            regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"//*/
-                                              &"       FROM #variables.tablePrefix#_ContentVersion cv"
-                                              &" INNER JOIN #variables.tablePrefix#_navigation     n  ON cv.navigationId=n.navigationId "
-                                              &"      WHERE n.language=:language ");
-            qryGetNavigationInformation.addParam(name="sesLink",  value=arguments.sesLink,  cfsqltype="cf_sql_varchar");
-            qryGetNavigationInformation.addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar");
-            
-            var qGetNavigationInformation = qryGetNavigationInformation.execute().getResult();
+            var qGetNavigationInformation = new Query().setDatasource(variables.datasource)
+                                                       .setSQL("     SELECT cv.navigationId, cv.sesLink, "
+                                                              &"            regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"//*/
+                                                              &"       FROM #variables.tablePrefix#_ContentVersion cv"
+                                                              &" INNER JOIN #variables.tablePrefix#_navigation     n  ON cv.navigationId=n.navigationId "
+                                                              &"      WHERE n.language=:language ")
+                                                       .addParam(name="sesLink",  value=arguments.sesLink,  cfsqltype="cf_sql_varchar")
+                                                       .addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar")
+                                                       .execute()
+                                                       .getResult();
 
             if(qGetNavigationInformation.recordCount == 1) {
                 return {
@@ -91,8 +90,6 @@
     }
     
     public query function getHierarchy(required string position, required string language) {
-        var qryGetHierarchy = new Query();
-        qryGetHierarchy.setDatasource(variables.datasource);
         var sql = "         SELECT cv.navigationId, cv.contentVersionId, "
                  &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkName, cv.sesLink, cv.entityRegExp, "
                  &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity "
@@ -106,14 +103,15 @@
                  &"            AND n.active   = :active "
                  &"            AND n.parentNavigationId IS NULL "
                  &"       ORDER BY n.position, n.sortOrder ASC";
-        qryGetHierarchy.setSQL(sql);
-        qryGetHierarchy.addParam(name="online",   value=true,               cfsqltype="cf_sql_bit");
-        qryGetHierarchy.addParam(name="active",   value=true,               cfsqltype="cf_sql_bit");
-        qryGetHierarchy.addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar");
-        if(arguments.position != 'all') {
-            qryGetHierarchy.addParam(name="position", value=arguments.position, cfsqltype="cf_sql_varchar");
-        }
-        return qryGetHierarchy.execute().getResult();
+
+        return new Query().setDatasource(variables.datasource)
+                          .setSQL(sql)
+                          .addParam(name="online",   value=true,               cfsqltype="cf_sql_bit")
+                          .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
+                          .addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar")
+                          .addParam(name="position", value=arguments.position, cfsqltype="cf_sql_varchar")
+                          .execute()
+                          .getResult();
     }
     
     public string function getUserLink(required numeric userId) {

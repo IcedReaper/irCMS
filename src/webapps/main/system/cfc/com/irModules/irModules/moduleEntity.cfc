@@ -10,13 +10,13 @@ component {
 
     public boolean function loadEntity() {
         try {
-            var qryGetEntity = new Query();
-            qryGetEntity.setDatasource(variables.datasource);
-            qryGetEntity.setSQL("SELECT * FROM #variables.tablePrefix#_irModules_entity WHERE entityName=:entityName AND active=:active");
-            qryGetEntity.addParam(name="entityName", value=variables.entityName, cfsqltype="cf_sql_varchar");
-            qryGetEntity.addParam(name="active",     value=true                  cfsqltype="cf_sql_bit");
-
-            variables.entity = qryGetEntity.execute().getResult();
+            variables.entity = new Query().setDatasource(variables.datasource)
+                                          .setSQL("SELECT * FROM #variables.tablePrefix#_irModules_entity WHERE entityName=:entityName AND active=:active")
+                                          .addParam(name="entityName", value=variables.entityName, cfsqltype="cf_sql_varchar")
+                                          .addParam(name="active",     value=true                  cfsqltype="cf_sql_bit")
+                                          .execute()
+                                          .getResult();
+            
             return variables.entity.recordCount == 1;
         }
         catch(any e) {

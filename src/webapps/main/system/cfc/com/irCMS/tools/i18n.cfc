@@ -14,20 +14,20 @@
     public boolean function reload() {
     	try {
         	var translationReload = {};
-        	var qGetKeys = new Query();
-        	qGetKeys.setDatasource(variables.datasource);
-        	qGetKeys.setSQL("SELECT * FROM #variables.tablePrefix#_i18nKey WHERE active=:active");
-        	qGetKeys.addParam(name="active", value=1, cfsqltype="cf_sql_varchar");
-        	var qryKeys = qGetKeys.execute().getResult();
+        	var qGetKeys = new Query().setDatasource(variables.datasource)
+                                      .setSQL("SELECT * FROM #variables.tablePrefix#_i18nKey WHERE active=:active")
+                                      .addParam(name="active", value=1, cfsqltype="cf_sql_varchar")
+                                      .execute()
+                                      .getResult();
         	
-        	for(var i = 1; i <= qryKeys.recordCount; i++) {
-        		translationReload[qryKeys.keyName] = {};
-        		var qGetTranslation = new Query();
-        		qGetTranslation.setDatasource(variables.datasource);
-        		qGetTranslation.setSQL("SELECT * FROM #variables.tablePrefix#_i18nTranslation WHERE keyName=:keyName");
-        		qGetTranslation.addParam(name="keyName", value=qryKeys.keyName, cfsqltype="cf_sql_varchar");
-        		var qryTranslation = qGetTranslation.execute().getResult();
-        		translationReload[qryKeys.keyName][qryTranslation.iso639] = qryTranslation.translation;
+        	for(var i = 1; i <= qGetKeys.recordCount; i++) {
+        		translationReload[qGetKeys.keyName] = {};
+        		var qGetTranslation = new Query().setDatasource(variables.datasource)
+                                                 .setSQL("SELECT * FROM #variables.tablePrefix#_i18nTranslation WHERE keyName=:keyName")
+                                                 .addParam(name="keyName", value=qGetKeys.keyName, cfsqltype="cf_sql_varchar")
+                                                 .execute()
+                                                 .getResult();
+        		translationReload[qGetKeys.keyName][qGetTranslation.iso639] = qGetTranslation.translation;
         	}
         	
         	variables.translation = '';
