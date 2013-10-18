@@ -27,8 +27,6 @@
             return qCheckPermission.getRecordCount() == 1;
         }
         catch(any e) {
-            writeDump(e);
-            abort;
             variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
             return false;
         }
