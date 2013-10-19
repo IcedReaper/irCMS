@@ -4,7 +4,7 @@
 
     writedump(var="#attributes#");
 
-    application.themes[request.themeName].cfstatic.include('/js/modules/irGallery.less');
+    application.themes[request.themeName].cfstatic.include('/css/modules/irGallery/default.less');
 
     //include template="/themes/#request.themeName#/templates/modules/irGallery/dspOverview.cfm";
 </cfscript>

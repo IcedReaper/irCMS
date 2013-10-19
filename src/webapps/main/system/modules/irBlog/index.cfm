@@ -8,7 +8,7 @@
                                                                                              ,tablePrefix = application.tablePrefix
                                                                                              ,articleId   = 1)>
 
-    application.themes[request.themeName].cfstatic.include('/js/modules/irBlog.less');
+    application.themes[request.themeName].cfstatic.include('/css/modules/irBlog/main.less');
 
     include template="/themes/#request.themeName#/templates/modules/irBlog/dspEntry.cfm";
 </cfscript>

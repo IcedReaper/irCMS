@@ -5,7 +5,7 @@
 
     writedump(var="#attributes#");
 
-    application.themes[request.themeName].cfstatic.include('/js/modules/irModules.less');
+    application.themes[request.themeName].cfstatic.include('/css/modules/irModules/main.less');
     
     switch(attributes.entities.len()) {
         case 0: {

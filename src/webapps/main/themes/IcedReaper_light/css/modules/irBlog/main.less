@@ -1,0 +1,62 @@
+@import '../../core/inc_definitions.less';
+
+.icedreaper {
+    body {
+        section {
+            &.irBlog {
+                header {
+                    margin-top: 10px;
+                    padding:    0px 5px;
+                    
+                    border-top:   2px solid @colorMedium;
+                    border-right: 2px solid @colorMedium;
+                    border-left:  2px solid @colorMedium;
+                    
+                    -webkit-border-top-left-radius:  @borderRadiusDefault;
+                    -webkit-border-top-right-radius: @borderRadiusDefault;
+                       -moz-border-radius-topleft:   @borderRadiusDefault;
+                       -moz-border-radius-topright:  @borderRadiusDefault;
+                            border-top-left-radius:  @borderRadiusDefault;
+                            border-top-right-radius: @borderRadiusDefault;
+                    
+                    background: -moz-linear-gradient(top, @colorMedium 0%, @colorLight 80%); /* FF3.6+ */
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @colorMedium), color-stop(80%,@colorLight)); /* Chrome,Safari4+ */
+                    background: -webkit-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* Chrome10+,Safari5.1+ */
+                    background: -o-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* Opera 11.10+ */
+                    background: -ms-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* IE10+ */
+                    background: linear-gradient(to bottom, @colorMedium 0%,@colorLight 80%); /* W3C */
+                    
+                    h1 {
+                        font-size:      30px;
+                        padding-top:    10px;
+                        padding-bottom:  5px;
+                    }
+                    h3 {
+                        &.subtitle {
+                            
+                        }
+                        
+                        &.creation {
+                            
+                        }
+                    }
+                }
+                
+                article {
+                    padding: 10px 5px;
+                    
+                    border-right:  2px solid @colorMedium;
+                    border-bottom: 2px solid @colorMedium;
+                    border-left:   2px solid @colorMedium;
+                    
+                    -webkit-border-bottom-right-radius: @borderRadiusDefault;
+                    -webkit-border-bottom-left-radius:  @borderRadiusDefault;
+                       -moz-border-radius-bottomright:  @borderRadiusDefault;
+                       -moz-border-radius-bottomleft:   @borderRadiusDefault;
+                            border-bottom-right-radius: @borderRadiusDefault;
+                            border-bottom-left-radius:  @borderRadiusDefault;
+                }
+            }
+        }
+    }
+}

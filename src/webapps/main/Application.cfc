@@ -162,7 +162,9 @@
                 application.themes['icedreaper_light'] = {};
                 application.themes['icedreaper_light'].cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/#qThemes.themeName[i]#')
                                                                                                                          ,staticUrl           = "/themes/#qThemes.themeName[i]#/"
-                                                                                                                         ,includeAllByDefault = false);
+                                                                                                                         ,includeAllByDefault = false
+                                                                                                                         ,checkForUpdates     = true
+                                                                                                                         ,excludePattern      = '.*/inc_.*');
             }
 
             return true;

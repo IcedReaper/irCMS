@@ -1,0 +1,31 @@
+> footer {
+    > nav {
+        border-top: 2px solid @colorMedium;
+        width: 100%;
+
+        margin-top:20px;
+
+        ul {
+            width: 80%;
+            margin: 0 auto;
+
+            li {
+                list-style: none;
+                float: left;
+                padding: 2px 5px 0;
+                margin:  0 5px 2px;
+
+                border-top:    0px solid @colorMedium;
+                border-left:   2px solid @colorMedium;
+                border-right:  2px solid @colorMedium;
+                border-bottom: 2px solid @colorMedium;
+                
+                .borderRadius(@borderRadiusDefault);
+
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}

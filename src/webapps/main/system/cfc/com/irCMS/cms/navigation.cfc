@@ -89,37 +89,48 @@
         return true;
     }
     
-    public query function getHierarchy(required string position, required string language) {
-        var sql = "         SELECT cv.navigationId, cv.contentVersionId, "
-                 &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkName, cv.sesLink, cv.entityRegExp, "
-                 &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity "
-                 &"           FROM irCMS_navigation     n "
-                 &"     INNER JOIN irCMS_contentVersion cv ON n.navigationId     = cv.navigationId "
-                 &"     INNER JOIN irCMS_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
-                 &"LEFT OUTER JOIN irCMS_module         m  ON cv.moduleId        = m.moduleId "
-                 &"          WHERE cs.online  = :online "
-                 &(arguments.position != 'all' ? " AND n.position = :position " : "")
-                 &"            AND n.language = :language "
-                 &"            AND n.active   = :active "
-                 &"            AND n.parentNavigationId IS NULL "
-                 &"       ORDER BY n.position, n.sortOrder ASC";
+    public array function getHierarchy(required string position, required string language, required numeric parentNavigationId) cachedWithin="#createTimespan(0,0,1,0)#" {
+        var hierarchy = [];
 
-        return new Query().setDatasource(variables.datasource)
-                          .setSQL(sql)
-                          .addParam(name="online",   value=true,               cfsqltype="cf_sql_bit")
-                          .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
-                          .addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar")
-                          .addParam(name="position", value=arguments.position, cfsqltype="cf_sql_varchar")
-                          .execute()
-                          .getResult();
+        var qGetTopLevel = new Query().setDatasource(variables.datasource)
+                                      .setSQL("         SELECT cv.navigationId, cv.contentVersionId, "
+                                             &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkName, cv.sesLink, cv.entityRegExp, "
+                                             &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity "
+                                             &"           FROM irCMS_navigation     n "
+                                             &"     INNER JOIN irCMS_contentVersion cv ON n.navigationId     = cv.navigationId "
+                                             &"     INNER JOIN irCMS_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                                             &"LEFT OUTER JOIN irCMS_module         m  ON cv.moduleId        = m.moduleId "
+                                             &"          WHERE cs.online            = :online "
+                                             &"            AND n.position           = :position "
+                                             &"            AND n.language           = :language "
+                                             &"            AND n.active             = :active "
+                                             &"            AND n.parentNavigationId " & (arguments.parentNavigationId == 0 ? " is null " : "= :parentNavigationId ")
+                                             &"       ORDER BY n.position, n.sortOrder ASC")
+                                      .addParam(name="online",             value=true,                         cfsqltype="cf_sql_bit")
+                                      .addParam(name="active",             value=true,                         cfsqltype="cf_sql_bit")
+                                      .addParam(name="language",           value=arguments.language,           cfsqltype="cf_sql_varchar")
+                                      .addParam(name="position",           value=arguments.position,           cfsqltype="cf_sql_varchar")
+                                      .addParam(name="parentNavigationId", value=arguments.parentNavigationId, cfsqltype="cf_sql_numeric")
+                                      .execute()
+                                      .getResult();
+
+        for(var i = 1; i <= qGetTopLevel.getRecordCount(); i++) {
+            hierarchy[i] = {};
+            hierarchy[i].linkname = qGetTopLevel.linkName[i];
+            hierarchy[i].sesLink  = qGetTopLevel.sesLink[i];
+            hierarchy[i].title    = qGetTopLevel.title[i];
+            hierarchy[i].children = this.getHierarchy(position=arguments.position, language=arguments.language, parentNavigationId=qGetTopLevel.navigationId[i]);
+        }
+
+        return hierarchy;
     }
     
     public string function getUserLink(required numeric userId) {
-    	if(arguments.userId != 0) {
-    	   return '/User/'&arguments.userId; // replace by userName
-    	}
-    	else {
-    	   return '';
+          if(arguments.userId != 0) {
+              return '/User/'&arguments.userId; // replace by userName
+          }
+          else {
+              return '';
         }
     }
 }

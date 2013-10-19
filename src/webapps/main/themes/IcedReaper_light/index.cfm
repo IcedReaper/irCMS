@@ -1,6 +1,6 @@
 ﻿<cfscript>
     application.themes.icedreaper_light.cfstatic.include('/js/core/')
-                                                .include('/css/core/');
+                                                .include('/css/core/main.less');
 </cfscript>
 <cfoutput>
 <!DOCTYPE html>

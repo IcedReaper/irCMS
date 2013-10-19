@@ -13,7 +13,7 @@
     public boolean function revokeNavigation(required singleUser user, required numeric navigationId, required numeric version);
     
 
-    public query function getHierarchy(required string position, required string language);
+    public array function getHierarchy(required string position, required string language, required numeric parentNavigationId);
     
 
     public string function getUserLink(required numeric userId);
