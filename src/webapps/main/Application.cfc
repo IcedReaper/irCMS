@@ -85,7 +85,13 @@
         	
             if(this.handleActualUser()) {
                 if(this.handleSes()) {
-                    return true;
+                    if(this.renderContent()) {
+                        return true;
+                    }
+                    else {
+                        application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="renderContent", detail=request.sesLink);
+                        abort;
+                    }
                 }
                 else {
                     application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.sesLink);
@@ -154,6 +160,24 @@
         request.actualMenu = application.cms.navigation.getActualNavigation(request.navigationInformation);
         
         return request.actualMenu.loadNavigation();
+    }
+
+    private boolean function renderContent() {
+        try {
+            saveContent variable="request.content" {
+                if(request.actualMenu.checkShowContent()) {
+                    writeOutput(request.actualMenu.getContent(cleanArticle=false));
+                }
+                if(request.actualMenu.checkShowModule()) {
+                    writeOutput(request.actualMenu.getModuleContent());
+                }
+            }
+
+            return true;
+        }
+        catch(any e) {
+            return false;
+        }
     }
 
     private boolean function initCfStatic() {

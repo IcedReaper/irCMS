@@ -22,12 +22,7 @@
 		</header>
     	<!---<cfinclude template="templates/default/breadcrum.cfm">--->
 		<section class="content">
-            <cfif request.actualMenu.checkShowContent()>
-                #request.actualMenu.getContent(cleanArticle=false)#
-            </cfif>
-            <cfif request.actualMenu.checkShowModule()>
-                #request.actualMenu.getModuleContent()#
-            </cfif>
+            #request.content#
         </section>
         <footer>
             <cfinclude template="templates/default/footer.cfm">
