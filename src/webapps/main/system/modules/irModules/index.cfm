@@ -22,7 +22,7 @@
             break;
         }
         case 1: {
-            switch(#attributes.entities[1]) {
+            switch(attributes.entities[1]) {
                 case 'Tags': {
                     include template="tagOverview.cfm";
                     break;
