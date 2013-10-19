@@ -60,6 +60,10 @@
                         this.applicationRestart();
                         break;
     				}
+                    case 'clearCache': {
+                        application.tools.tools.clearQueryCache();
+                        break;
+                    }
     				default: {
     					break;
     				}
@@ -163,7 +167,6 @@
                 application.themes['icedreaper_light'].cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/#qThemes.themeName[i]#')
                                                                                                                          ,staticUrl           = "/themes/#qThemes.themeName[i]#/"
                                                                                                                          ,includeAllByDefault = false
-                                                                                                                         ,checkForUpdates     = true
                                                                                                                          ,excludePattern      = '.*/inc_.*');
             }
 

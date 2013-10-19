@@ -38,4 +38,14 @@
         
         return result;
     }
+
+    public boolean function clearQueryCache() {
+        try {
+            createObject('java','coldfusion.server.ServiceFactory').getDataSourceService().purgeQueryCache();
+            return true;
+        }
+        catch(any e) {
+            return false;
+        }
+    }
 }
