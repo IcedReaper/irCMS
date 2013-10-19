@@ -16,18 +16,14 @@ section {
         }
     }
 
-    &.textBlock {
-        margin-top: 10px;
-        padding:     0px 15px 10px;
-        border:      2px solid @colorMedium;
-
-        .borderRadius(@borderRadiusDefault);
-        .gradient(top, @colorMedium 0%, @colorLight 80%);
-
-        ul {
-            li {
-                list-style: circle;
-                margin-left: 20px;
+        article {
+            &.heroImage {
+                background-size: 100% auto;
+                background-position: center;
+                background-repeat: no-repeat;
+                .borderRadius(@borderRadiusDefault);
+                height: 400px;
+                width: 100%;
             }
         }
     }
