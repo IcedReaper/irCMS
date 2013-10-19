@@ -6,33 +6,33 @@
         <cfcase value="0">
             <cfswitch expression="#attributes.show#">
                 <cfcase value="Top">
-                    <cfinclude template="dspTop.cfm">
+                    <cfinclude template="top.cfm">
                 </cfcase>
                 <cfdefaultCase>
-                    <cfinclude template="dspOverview.cfm">
+                    <cfinclude template="overview.cfm">
                 </cfdefaultCase>
             </cfswitch>
         </cfcase>
         <cfcase value="1">
             <cfswitch expression="#attributes.entities[1]#">
                 <cfcase value="Tags">
-                    <cfinclude template="dspTagOverview.cfm">
+                    <cfinclude template="tagOverview.cfm">
                 </cfcase>
                 <cfdefaultcase>
-                    <cfinclude template="dspDetail.cfm">
+                    <cfinclude template="detail.cfm">
                 </cfdefaultcase>
             </cfswitch>
         </cfcase>
         <cfcase value="2">
             <cfswitch expression="#attributes.entities[1]#">
                 <cfcase value="Tags">
-                    <cfinclude template="dspTag.cfm">
+                    <cfinclude template="tag.cfm">
                 </cfcase>
                 <cfcase value="Ersteller">
-                    <cfinclude template="dspCreator.cfm">
+                    <cfinclude template="creator.cfm">
                 </cfcase>
                 <cfcase value="Seite">
-                    <cfinclude template="dspOverview.cfm">
+                    <cfinclude template="overview.cfm">
                 </cfcase>
             </cfswitch>
         </cfcase>

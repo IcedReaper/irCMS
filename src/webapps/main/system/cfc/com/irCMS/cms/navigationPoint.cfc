@@ -1,4 +1,4 @@
-﻿component /*implements="system.interfaces.com.irCMS.navigationPoint"*/ {
+﻿component implements="system.interfaces.com.irCMS.navigationPoint" {
     public navigationPoint function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required struct navigationInformation) {
     	variables.errorHandler = arguments.errorHandler;
         variables.tablePrefix  = arguments.tablePrefix;
@@ -132,7 +132,7 @@
                 moduleAttributes.entities = this.getEntities();
 
                 saveContent variable="moduleContent" {
-                    module template='/icedreaper/themes/IcedReaper_light/templates/modules/'&variables.actualMenu.path[1]&'/index.cfm' attributeCollection=moduleAttributes;
+                    module template='/system/modules/'&variables.actualMenu.path[1]&'/index.cfm' attributeCollection=moduleAttributes;
                 }
                 return moduleContent;
             }
@@ -191,7 +191,7 @@
                 
                 templateStart += 18;
                 templateEnd  = find('"', arguments.content, templateStart);
-                templateName = '/icedreaper/themes/IcedReaper_light/templates/modules/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
+                templateName = '/system/modules/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
                 
                 attributeCollectionStart = find('attributeCollection="', arguments.content, templateEnd);
                 closingTag = find(']', arguments.content, templateEnd);

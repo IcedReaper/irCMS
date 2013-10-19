@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.singleUser" {
+﻿component implements="system.interfaces.com.irCMS.singleUser" {
     public singleUser function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required numeric userId) {
     	variables.errorHandler = arguments.errorHandler;
         variables.tablePrefix  = arguments.tablePrefix;

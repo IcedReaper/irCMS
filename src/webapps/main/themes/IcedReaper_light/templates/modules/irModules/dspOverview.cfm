@@ -1,11 +1,3 @@
-<cfset moduleOverview = createObject("component", "#application.rootComponentPath#system.cfc.com.irModules.irModules.moduleOverview").init(errorHandler=application.cms.errorHandler, datasource=application.datasource.user, tablePrefix=application.tablePrefix)>
-<cfif arrayLen(attributes.entities) EQ 2 AND attributes.entities[1] EQ 'Seite'>
-    <cfset page = attributes.entities[2]>
-<cfelse>
-    <cfset page = 1>
-</cfif>
-<cfset overview = moduleOverview.filter(pageNumber=page, numberPerPage=20)>
-
 <table>
     <thead>
         <th>Name</th>

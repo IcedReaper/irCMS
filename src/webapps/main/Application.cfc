@@ -1,5 +1,8 @@
 ﻿component {
     this.sessionmanagement = true;
+    this.mappings = {'/org':    expandPath("./system/libs/"),
+                     '/system': expandPath("./system/"),
+                     '/themes': expandPath("./themes/")};
     
     public boolean function onApplicationStart() {
         application.installSuccessfull = true;
@@ -9,11 +12,9 @@
         return true;
     }
     
-    public boolean function applicationRestart() {
-        this.mappings = {'/org': expandPath("./system/libs/")};
-
+    private boolean function applicationRestart() {
         include "system/setup/databaseSettings.cfm";
-        application.rootComponentPath = "icedreaper.";
+        application.rootPath = "icedreaper";
 
     	// tools
     	application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
@@ -56,7 +57,7 @@
     		for(var i = 1; i <= arrayLen(reloadActions); i++) {
     			switch(reloadActions[i]) {
     				case 'applicationScope': {
-                        applicationRestart();
+                        this.applicationRestart();
                         break;
     				}
     				default: {
@@ -125,7 +126,12 @@
                                                                                                    ,datasource   = application.datasource.user
                                                                                                    ,userId       = request.userId);
         
-        return request.actualUser.load();
+        var success = request.actualUser.load();
+
+        if(success) {
+            request.themeName = request.actualUser.getTheme();
+        }
+        return success;
     }
 
     private boolean function handleSes() {
