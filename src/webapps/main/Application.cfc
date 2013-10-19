@@ -46,6 +46,30 @@
 
         return true;
     }
+
+    private boolean function initCfStatic() {
+        try {
+            var qThemes = application.cms.core.getThemes();
+
+            application.themes = {};
+
+            for(var i = 1; i <= qThemes.getRecordCount(); i++) {
+                application.themes['icedreaper_light'] = {};
+                application.themes['icedreaper_light'].cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/#qThemes.themeName[i]#')
+                                                                                                                         ,staticUrl           = "/themes/#qThemes.themeName[i]#/"
+                                                                                                                         ,includeAllByDefault = false
+                                                                                                                         ,forceCompilation    = true
+                                                                                                                         ,checkForUpdates     = true
+                                                                                                                         ,excludePattern      = '.*/inc_.*');
+            }
+
+            return true;
+        }
+        catch(any e) {
+            writeDump(e);abort;
+            return false;
+        }
+    }
     
     public boolean function onSessionStart() {
     	return true;
@@ -62,6 +86,10 @@
     				}
                     case 'clearCache': {
                         application.tools.tools.clearQueryCache();
+                        break;
+                    }
+                    case 'cfstatic': {
+                        this.initCfStatic();
                         break;
                     }
     				default: {
@@ -180,28 +208,6 @@
         }
         catch(any e) {
             throw(type="Error while loading and rendering content", detail="renderContent");
-        }
-    }
-
-    private boolean function initCfStatic() {
-        try {
-            var qThemes = application.cms.core.getThemes();
-
-            application.themes = {};
-
-            for(var i = 1; i <= qThemes.getRecordCount(); i++) {
-                application.themes['icedreaper_light'] = {};
-                application.themes['icedreaper_light'].cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/#qThemes.themeName[i]#')
-                                                                                                                         ,staticUrl           = "/themes/#qThemes.themeName[i]#/"
-                                                                                                                         ,includeAllByDefault = false
-                                                                                                                         ,excludePattern      = '.*/inc_.*');
-            }
-
-            return true;
-        }
-        catch(any e) {
-            writeDump(e);abort;
-            return false;
         }
     }
 }
