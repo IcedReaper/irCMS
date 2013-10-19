@@ -83,23 +83,15 @@
         		request.userId = 0;
         	}
         	
-            if(this.handleActualUser()) {
-                if(this.handleSes()) {
-                    if(this.renderContent()) {
-                        return true;
-                    }
-                    else {
-                        application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="renderContent", detail=request.sesLink);
-                        abort;
-                    }
-                }
-                else {
-                    application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.sesLink);
-                    abort;
-                }
+            try {
+                this.handleActualUser();
+                this.handleSes();
+                this.renderContent();
+
+                return true;
             }
-            else {
-                application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="user", detail=request.userId);
+            catch(any e) {
+                application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type=e.type, detail=e.detail);
                 abort;
             }
         }
@@ -110,24 +102,28 @@
     }
 
     private boolean function handleLoginOut() {
-        if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
-            var tmpUserId = application.user.user.login(username=form.username, password=form.password);
-            if(tmpUserId != 0) {
-                session.userId = tmpUserId;
-                // TODO: show wrong password page
+        try {
+            if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
+                var tmpUserId = application.user.user.login(username=form.username, password=form.password);
+                if(tmpUserId != 0) {
+                    session.userId = tmpUserId;
+                    // TODO: show wrong password page
+                }
             }
+            if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userId')) {
+                if(application.user.user.login(username=form.username, password=form.password)) {
+                    session.userId = 0;
+                    structClear(session);
+                }
+                else {
+                    throw(type="error whiling logout", detail="handleLoginOut");
+                }
+            }
+            return true;
         }
-        if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userId')) {
-            if(application.user.user.login(username=form.username, password=form.password)) {
-                session.userId = 0;
-                structClear(session);
-            }
-            else {
-                application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="logout", detail="logout");
-                abort;
-            }
+        catch(any e) {
+            throw(type="error", detail="handleLoginOut");
         }
-        return true;
     }
 
     private boolean function handleActualUser() {
@@ -140,8 +136,11 @@
 
         if(success) {
             request.themeName = request.actualUser.getTheme();
+            return true;
         }
-        return success;
+        else {
+            throw(type="User load failed", detail="handleActualUser");
+        }
     }
 
     private boolean function handleSes() {
@@ -154,12 +153,16 @@
         
         request.navigationInformation = application.cms.navigation.getNavigationInformation(sesLink=request.sesLink, language=request.language);
         if(request.navigationInformation.navigationId == 0) {
-            application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type="ses", detail=request.sesLink);
-            abort;
+            throw(type="Ses not found", detail="handleSes");
         }
         request.actualMenu = application.cms.navigation.getActualNavigation(request.navigationInformation);
         
-        return request.actualMenu.loadNavigation();
+        if(request.actualMenu.loadNavigation()) {
+            return true;
+        }
+        else {
+            throw(type="Navigation load failed", detail="handleSes");
+        }
     }
 
     private boolean function renderContent() {
@@ -176,7 +179,7 @@
             return true;
         }
         catch(any e) {
-            return false;
+            throw(type="Error while loading and rendering content", detail="renderContent");
         }
     }
 
