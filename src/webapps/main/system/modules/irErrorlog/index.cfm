@@ -1,6 +1,10 @@
-<cfparam name="attributes.entities" default="[]">
-<cfparam name="attributes.show"     default="All">
+<cfscript>
+    param name="attributes.entities" default="[]";
+    param name="attributes.show"     default="All";
 
-<cfdump var="#attributes#">
+    writedump(var="#attributes#");
 
-<!---<cfinclude template="/themes/#request.themeName#/templates/modules/irErrorLog/dspError.cfm">--->
+    application.themes[request.themeName].cfstatic.include('/js/modules/irErrorLog.less');
+
+    //include template="/themes/#request.themeName#/templates/modules/irEditor/dspEditor.cfm";
+</cfscript>

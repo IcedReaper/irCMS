@@ -1,6 +1,10 @@
-<cfparam name="attributes.entities" default="[]">
-<cfparam name="attributes.show"     default="All">
+<cfscript>
+    param name="attributes.entities" default="[]";
+    param name="attributes.show"     default="All";
 
-<cfdump var="#attributes#">
+    writedump(var="#attributes#");
 
-<!---<cfinclude template="/themes/#request.themeName#/templates/modules/irGallery/dspOverview.cfm">--->
+    application.themes[request.themeName].cfstatic.include('/js/modules/irGallery.less');
+
+    //include template="/themes/#request.themeName#/templates/modules/irGallery/dspOverview.cfm";
+</cfscript>

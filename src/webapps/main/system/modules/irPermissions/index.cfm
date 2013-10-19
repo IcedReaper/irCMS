@@ -1,6 +1,10 @@
-<cfparam name="attributes.entities" default="[]">
-<cfparam name="attributes.show"     default="All">
+<cfscript>
+    param name="attributes.entities" default="[]";
+    param name="attributes.show"     default="All";
 
-<cfdump var="#attributes#">
+    writedump(var="#attributes#");
 
-<!---<cfinclude template="/themes/#request.themeName#/templates/modules/irPermissions/dspOverview.cfm">--->
+    application.themes[request.themeName].cfstatic.include('/js/modules/irPermissions.less');
+
+    //include template="/themes/#request.themeName#/templates/modules/irPermissions/dspOverview.cfm";
+</cfscript>
