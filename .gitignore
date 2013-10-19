@@ -2,3 +2,5 @@
 .settings/org.eclipse.core.resources.prefs
 .settings/org.eclipse.ltk.core.refactoring.prefs
 settings.xml
+conf/ircms.sublime-project
+conf/ircms.sublime-workspace
