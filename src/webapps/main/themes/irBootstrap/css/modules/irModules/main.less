@@ -1,0 +1,43 @@
+@import '../../core/inc_definitions.less';
+
+.IcedReaper_light {
+    body {
+        section {
+            &.irModules {
+                table {
+                    border-spacing:  0;
+                    border-collapse: collapse;
+                    width:           100%;
+
+                    thead {
+                        border-left:  @colorMedium 1px solid;
+                        border-right: @colorMedium 1px solid;
+                        
+                        th {
+                            background: -moz-linear-gradient(top, @colorMedium 0%, @colorLight 80%); /* FF3.6+ */
+                            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @colorMedium), color-stop(80%,@colorLight)); /* Chrome,Safari4+ */
+                            background: -webkit-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* Chrome10+,Safari5.1+ */
+                            background: -o-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* Opera 11.10+ */
+                            background: -ms-linear-gradient(top, @colorMedium 0%,@colorLight 80%); /* IE10+ */
+                            background: linear-gradient(to bottom, @colorMedium 0%,@colorLight 80%); /* W3C */
+
+                            margin:  0;
+                            padding: 2px;
+                        }
+                    }
+                    tbody {
+                        border-left:  @colorMedium 1px solid;
+                        border-right: @colorMedium 1px solid;
+
+                        td {
+                            margin:         0;
+                            padding:        2px;
+                            vertical-align: top;
+                            border-bottom:  @colorMedium 1px solid;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
