@@ -1,10 +1,7 @@
 ﻿<cfscript>
     application.themes.irBootstrap.cfstatic.include('/js/core/')
                                            .include('/css/bootstrap/bootstrap.less')
-                                           .include('/css/core/main.less')
-                                           .include( '/system/js/jquery/jquery-2.0.3.min.js')
-                                           .include( '/system/js/bootstrap/bootstrap.js')
-                                           .include( '/system/js/modernizr/modernizr-2.6.2-respond-1.1.0.min.js');;
+                                           .include('/css/core/main.less');
 </cfscript>
 <cfoutput>
 <!DOCTYPE html>
@@ -21,13 +18,7 @@
         <meta name="viewport" content="width=device-width">
 
         #application.themes.irBootstrap.cfstatic.renderIncludes('css')#
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <script src="/system/js/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/system/js/modernizr/modernizr-2.6.2-respond-1.1.0.min.js" charset="utf-8"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -35,9 +26,8 @@
         <![endif]-->
         <header>
             <cfmodule template="templates/default/navigation.cfm" position="#request.actualMenu.getTopNavigationName()#">
-            <!---<cfinclude template="templates/default/login.cfm">--->
         </header>
-        <section class="content">
+        <section class="container">
             #request.content#
         </section>
 
@@ -46,6 +36,8 @@
         </footer>
         <!---<cfinclude template="templates/default/footer.cfm">--->
 
+        <script src="/system/js/jquery/jquery-2.0.3.min.js" charset="utf-8"></script>
+        <script src="/system/js/bootstrap/bootstrap.min.js" charset="utf-8"></script>
         #application.themes.irBootstrap.cfstatic.renderIncludes('js')#
 
         <!---<script>
