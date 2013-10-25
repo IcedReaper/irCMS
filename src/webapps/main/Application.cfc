@@ -114,20 +114,10 @@
     	}
 
     	if(application.installSuccessfull) {
-            this.handleLoginOut();
             
-            request.language = 'de';
-            
-        	if(isDefined("session") && structKeyExists(session, 'userName')) {
-        		request.userName = session.userName;
-                request.loggedIn = true;
-        	}
-        	else {
-        		request.userName = "Guest";
-                request.loggedIn = false;
-        	}
-        	
             try {
+                this.handleLoginOut();
+                this.handleDefaultVariables();
                 this.handleActualUser();
                 this.handleSes();
                 this.renderContent();
@@ -143,6 +133,23 @@
         	// todo: 
         	// initSetup();
         }
+    }
+
+    private boolean function handleDefaultVariables() {
+        request.language = 'de';
+        
+        if(isDefined("session") && structKeyExists(session, 'userName')) {
+            request.userName   = session.userName;
+            request.isLoggedIn = true;
+        }
+        else {
+            request.userName   = "Guest";
+            request.isLoggedIn = false;
+        }
+
+        request.moduleClass = '';
+
+        return true;
     }
 
     private boolean function handleLoginOut() {

@@ -27,9 +27,10 @@
         <header>
             <cfmodule template="templates/default/navigation.cfm" position="#request.actualMenu.getTopNavigationName()#">
         </header>
-        <section class="container">
+
+        <div class="container #request.moduleClass#">
             #request.content#
-        </section>
+        </div>
 
         <footer>
             <p>&copy; IcedReaper 2013</p>

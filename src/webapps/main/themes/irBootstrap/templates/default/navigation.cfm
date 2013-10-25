@@ -27,7 +27,7 @@
                         </li>
                     </cfloop>
                 </ul>
-                <cfif NOT request.loggedIn>
+                <cfif NOT request.isLoggedIn>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="##" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
