@@ -27,7 +27,7 @@
                         </li>
                     </cfloop>
                 </ul>
-                <cfif request.userId eq 0>
+                <cfif NOT request.loggedIn>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="##" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
@@ -57,10 +57,10 @@
                 <cfelse>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="##" class="dropdown-toggle" data-toggle="dropdown">#request.actualUser.getUsername()# <b class="caret"></b></a>
+                            <a href="##" class="dropdown-toggle" data-toggle="dropdown">#session.userName# <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="">Userpanel</a></li>
-                                <cfif application.security.permission.hasPermission(userId=session.userId, groupName='CMS', roleName='Reader')>
+                                <cfif application.security.permission.hasPermission(userName=session.userName, groupName='CMS', roleName='Reader')>
                                     <li><a href="/Admin">Zum Adminpanel</a></li>
                                 </cfif>
                                 <li><a href="?logout">Ausloggen</a></li>
