@@ -26,11 +26,11 @@ component implements="system.interfaces.com.irCMS.irUser" {
     }
     
     public string function getUsername() {
-        return variables.userData.username[1];
+        return variables.userData.userName[1];
     }
     
     public string function getAvatar() {
-        return variables.userData.avatar[1];
+        return '/static/modules/irUser/'&variables.userData.avatar[1];
     }
     
     public string function getTitle() {
@@ -41,8 +41,57 @@ component implements="system.interfaces.com.irCMS.irUser" {
         return variables.userData.email[1];
     }
     
+    public string function isEmailPublic() {
+        return variables.userData.emailPublic[1];
+    }
+    
     public numeric function getPostCount() {
         return variables.userData.postCount[1];
+    }
+
+    public string function getJoinDate() {
+        return variables.userData.joinDate[1];
+    }
+
+    public string function getGender() {
+        return variables.userData.gender[1];
+    }
+
+    public string function getHomepage() {
+        return variables.userData.homepage[1];
+    }
+
+    public string function getTwitterLink() {
+        return variables.userData.twitterLink[1];
+    }
+
+    public string function getFacebookLink() {
+        return variables.userData.facebookLink[1];
+    }
+
+    public string function getGithubLink() {
+        return variables.userData.githubLink[1];
+    }
+
+    public string function getHobbies() {
+        return variables.userData.hobbies[1];
+    }
+
+    public string function getData(required string columnName) {
+        if(variables.userData.keyExists(arguments.columnName)) {
+            return variables.userData[arguments.columnName][1];
+        }
+        else {
+            return 'Userdata not found';
+        }
+    }
+
+    public boolean function showBuddies() {
+        return variables.userData.showBuddies[1];
+    }
+
+    public array function getBuddylist() {
+        return [];
     }
     
     public string function getTheme() {
