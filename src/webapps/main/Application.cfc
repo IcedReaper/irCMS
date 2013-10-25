@@ -16,11 +16,10 @@
         include "system/setup/databaseSettings.cfm";
         application.rootPath = "icedreaper";
 
-    	// tools
     	application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
     	application.tools.cryption = createObject("component", "system.cfc.com.irCMS.tools.cryption").init(structSeparator=';');
     	
-    	// cms
+
         application.cms.core = createObject("component", "system.cfc.com.irCMS.cms.cmsCore").init(tablePrefix = application.tablePrefix
                                                                                                  ,datasource  = application.datasource.user);
 
@@ -32,11 +31,12 @@
                                                                                                           ,tablePrefix  = application.tablePrefix
                                                                                                           ,datasource   = application.datasource.user);
         
-        // user
-        application.user.user = createObject("component", "system.cfc.com.irCMS.user.user").init(errorHandler = application.cms.errorHandler
-                                                                                                ,tablePrefix  = application.tablePrefix
-                                                                                                ,datasource   = application.datasource.user
-                                                                                                ,cryptionApi  = application.tools.cryption);
+
+        application.user.userController = createObject("component", "system.cfc.com.irCMS.user.irUserController").init(errorHandler = application.cms.errorHandler
+                                                                                                                      ,tablePrefix = application.tablePrefix
+                                                                                                                      ,datasource  = application.datasource.user
+                                                                                                                      ,cryptionApi = application.tools.cryption);
+ 
 
         application.security.permission = createObject("component", "system.cfc.com.irCMS.security.permission").init(errorHandler = application.cms.errorHandler
                                                                                                                     ,tablePrefix  = application.tablePrefix
@@ -104,11 +104,13 @@
             
             request.language = 'de';
             
-        	if(isDefined("session") && structKeyExists(session, 'userId')) {
-        		request.userId = session.userId;
+        	if(isDefined("session") && structKeyExists(session, 'userName')) {
+        		request.userName = session.userName;
+                request.loggedIn = true;
         	}
         	else {
-        		request.userId = 0;
+        		request.userName = "Guest";
+                request.loggedIn = false;
         	}
         	
             try {
@@ -119,7 +121,7 @@
                 return true;
             }
             catch(any e) {
-                application.cms.errorHandler.processNotFound(themeName='icedreaper_light', type=e.type, detail=e.detail);
+                application.cms.errorHandler.processNotFound(themeName='irBootstrap', type=e.type, detail=e.detail);
                 abort;
             }
         }
@@ -132,15 +134,17 @@
     private boolean function handleLoginOut() {
         try {
             if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
-                var tmpUserId = application.user.user.login(username=form.username, password=form.password);
-                if(tmpUserId != 0) {
-                    session.userId = tmpUserId;
+                var tmpUserName = application.user.userController.login(username=form.username, password=form.password);
+                if(tmpUserName != "Guest") {
+                    session.userName = tmpUserName;
+                }
+                else {
                     // TODO: show wrong password page
                 }
             }
-            if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userId')) {
-                if(application.user.user.login(username=form.username, password=form.password)) {
-                    session.userId = 0;
+            if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userName')) {
+                if(application.user.userController.login(username=form.username, password=form.password)) {
+                    session.userName = "Guest";
                     structClear(session);
                 }
                 else {
@@ -155,10 +159,10 @@
     }
 
     private boolean function handleActualUser() {
-        request.actualUser = createObject("component", "system.cfc.com.irCMS.user.singleUser").init(errorHandler = application.cms.errorHandler
-                                                                                                   ,tablePrefix  = application.tablePrefix
-                                                                                                   ,datasource   = application.datasource.user
-                                                                                                   ,userId       = request.userId);
+        request.actualUser = createObject("component", "system.cfc.com.irCMS.user.irUser").init(errorHandler = application.cms.errorHandler
+                                                                                               ,tablePrefix  = application.tablePrefix
+                                                                                               ,datasource   = application.datasource.user
+                                                                                               ,userName     = request.userName);
         
         var success = request.actualUser.load();
 

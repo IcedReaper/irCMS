@@ -1,5 +1,5 @@
-﻿component implements="system.interfaces.com.irCMS.user" {
-    public user function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required cryption cryptionApi) {
+﻿component implements="system.interfaces.com.irCMS.irUserController" {
+    public irUserController function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required cryption cryptionApi) {
     	variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
         variables.cryptionApi  = arguments.cryptionApi;
@@ -39,40 +39,12 @@
              return qGetLogin.recordCount == 1 && qGetLogin.active[1] == true ? qGetLogin.userId[1] : 0;
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
             abort;
         }
     }
     
     public boolean function logout() {
         return true;
-    }
-    
-    public singleUser function getUser(required numeric userId) {
-    	
-    }
-    
-    public string function getUsername(required string userId) {
-        return 'IcedReaper';
-    }
-    
-    public string function getAvatar(required string userId) {
-        return '';
-    }
-    
-    public string function getTitle(required string userId) {
-        return '';
-    }
-    
-    public string function getEmail(required string userId) {
-        return '';
-    }
-    
-    public numeric function getPostCount(required string userId) {
-        return '';
-    }
-    
-    public string function getTheme(required string userId) {
-        return '';
     }
 }
