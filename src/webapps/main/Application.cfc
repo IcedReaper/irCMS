@@ -16,10 +16,23 @@
         include "system/setup/databaseSettings.cfm";
         application.rootPath = "icedreaper";
 
-    	application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
-    	application.tools.cryption = createObject("component", "system.cfc.com.irCMS.tools.cryption").init(structSeparator=';');
-    	
+    	this.initCoreTools();
+        this.initCoreCMS();
+        this.initCoreUser();
+        this.initCoreSecurity();
 
+        this.initCfStatic();
+
+        return true;
+    }
+
+    private boolean function initCoreTools() {
+        application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
+        application.tools.cryption = createObject("component", "system.cfc.com.irCMS.tools.cryption").init(structSeparator=';');
+        return true;
+    }
+
+    private boolean function initCoreCMS() {
         application.cms.core = createObject("component", "system.cfc.com.irCMS.cms.cmsCore").init(tablePrefix = application.tablePrefix
                                                                                                  ,datasource  = application.datasource.user);
 
@@ -27,23 +40,24 @@
                                                                                                               ,datasource  = application.datasource.user
                                                                                                               ,tools       = application.tools.tools);
         
-    	application.cms.navigation = createObject("component", "system.cfc.com.irCMS.cms.navigation").init(errorHandler = application.cms.errorHandler
+        application.cms.navigation = createObject("component", "system.cfc.com.irCMS.cms.navigation").init(errorHandler = application.cms.errorHandler
                                                                                                           ,tablePrefix  = application.tablePrefix
                                                                                                           ,datasource   = application.datasource.user);
-        
+        return true;
+    }
 
+    private boolean function initCoreUser() {
         application.user.userController = createObject("component", "system.cfc.com.irCMS.user.irUserController").init(errorHandler = application.cms.errorHandler
                                                                                                                       ,tablePrefix = application.tablePrefix
                                                                                                                       ,datasource  = application.datasource.user
                                                                                                                       ,cryptionApi = application.tools.cryption);
- 
+        return true;
+    }
 
+    private boolean function initCoreSecurity() {
         application.security.permission = createObject("component", "system.cfc.com.irCMS.security.permission").init(errorHandler = application.cms.errorHandler
                                                                                                                     ,tablePrefix  = application.tablePrefix
                                                                                                                     ,datasource   = application.datasource.user);
-        
-        this.initCfStatic();
-
         return true;
     }
 
