@@ -82,3 +82,27 @@ CREATE TABLE irCMS_contentHistory (
 CREATE INDEX "IDX_irCMS_contentHistory_contentVersionLanguage" ON irCMS_contentHistory USING btree (contentVersionId, language);
 CREATE INDEX "FKI_irCMS_contentHistory_contentVersionId"       ON irCMS_contentHistory USING btree (contentVersionId);
 CREATE INDEX "FKI_irCMS_contentHistory_userId"                 ON irCMS_contentHistory USING btree (userId);
+
+## Default Settings
+
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 1, true, 'de', 'header', 1, 'header');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 2, true, 'de', 'admin',  1, 'admin');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 3, true, 'de', 'admin',  2, 'admin');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 4, true, 'de', 'admin',  3, 'admin');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 5, true, 'de', 'admin',  4, 'admin');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 6, true, 'de', 'admin',  5, 'admin');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 7, true, 'de', 'admin',  6, 'admin');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 8, true, 'de', 'admin',  7, 'admin');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES ( 9, true, 'de', 'admin',  8, 'admin');
+INSERT INTO irCMS_navigation (navigationId, active, language, postion, sortOrder, nameOfNavigationToShow) VALUES (10, true, 'de', 'hidden', 1, 'header');
+
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 1, 1, 6, '', null, null,               'Willkommen',     '/',                  1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 2, 1, 6, '', null, '{"Show":"Admin"}', 'Adminpanel',     '/Admin',             1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 3, 1, 6, '', 6,    '{"Show":"Admin"}', 'Userübersicht',  '/Admin/User',        1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 4, 1, 6, '', 7,    '{"Show":"Admin"}', 'Editor',         '/Admin/Editor',      1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 5, 1, 6, '', 8,    '{"Show":"Admin"}', 'Berechtigungen', '/Admin/Permissions', 1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 6, 1, 6, '', 4,    '{"Show":"Admin"}', 'Module',         '/Admin/Module',      1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 6, 1, 6, '', 4,    '{"Show":"Admin"}', 'Themes',         '/Admin/Themes',      1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 8, 1, 6, '', 9,    '{"Show":"Admin"}', 'Errorlog',       '/Admin/Errorlog',    1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES ( 9, 1, 6, '', null, '{"Show":"Admin"}', 'Seiten',         '/Admin/Pages',       1);
+INSERT INTO irCMS_contentVersion (navigationId, version, contentVersionId, content, moduleId, moduleAttributes, linkName, sesLink, userId) VALUES (10, 1, 6, '', 6,    null,               'User',           '/',                  1);
