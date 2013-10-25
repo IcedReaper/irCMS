@@ -33,7 +33,7 @@
             return variables.actualMenu.recordCount == 1;
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
             abort;
         }
     }
@@ -112,7 +112,7 @@
             }
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='IcedReaper_light', message=e.message, detail=e.detail);
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
             abort;
         }
     	
@@ -137,12 +137,12 @@
                 return moduleContent;
             }
             catch(eny e) {
-                variables.errorHandler.processError(themeName='IcedReaper_light', message=e.message, type=e.type);
+                variables.errorHandler.processError(themeName='irBootstrap', message=e.message, type=e.type);
                 abort;
             }
         }
         else {
-            variables.errorHandler.processError(themeName='IcedReaper_light', message='No Module Path was found, but a module should be loaded', type='Missing Path');
+            variables.errorHandler.processError(themeName='irBootstrap', message='No Module Path was found, but a module should be loaded', type='Missing Path');
             abort;
         }
     }
@@ -230,7 +230,7 @@
             return variables.actualMenu.nameOfNavigationToShow[1];
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='IcedReaper_light', message='No Module Path was found, but a module should be loaded', type='Missing Path');
+            variables.errorHandler.processError(themeName='irBootstrap', message='No Module Path was found, but a module should be loaded', type='Missing Path');
             abort;
         }
     }

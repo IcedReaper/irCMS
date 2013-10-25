@@ -20,7 +20,7 @@
         }
         catch(any e) {
             return qFallback = queryNew('themeName', 'varchar').addRow(1)
-                                                               .setCell('themeName', 'IcedReaper_light');
+                                                               .setCell('themeName', 'irBootstrap');
         }
     }
 }

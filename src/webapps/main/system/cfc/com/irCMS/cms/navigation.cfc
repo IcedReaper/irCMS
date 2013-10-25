@@ -29,7 +29,7 @@
             }
         }
         catch(any e) {
-            variables.errorHandler.processError(themeName='icedreaper_light', message=e.message, detail=e.detail);
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
             abort;
         }
         return {
