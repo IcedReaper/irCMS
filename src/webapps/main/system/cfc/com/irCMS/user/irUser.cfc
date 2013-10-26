@@ -49,8 +49,13 @@ component implements="system.interfaces.com.irCMS.irUser" {
         return variables.userData.postCount[1];
     }
 
-    public string function getJoinDate() {
-        return variables.userData.joinDate[1];
+    public string function getJoinDate(required boolean convertToLocal = true) {
+        if(arguments.convertToLocal) {
+            return dateConvert('utc2local', variables.userData.joinDate[1]);
+        }
+        else {
+            return variables.userData.joinDate[1];
+        }
     }
 
     public string function getGender() {
@@ -127,7 +132,7 @@ component implements="system.interfaces.com.irCMS.irUser" {
         }
     }
     
-    public array function getPosts(boolean comments = false) {
+    public array function getPosts(required boolean comments = false) {
         return [];
     }
     

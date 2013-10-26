@@ -10,7 +10,7 @@
     public string  function isEmailPublic();
     public numeric function getPostCount();
     public string  function getTheme();
-    public string  function getJoinDate();
+    public string  function getJoinDate(required boolean convertToLocal = true);
     public string  function getgender();
     public string  function getHomepage();
     public string  function getTwitterLink();
@@ -21,7 +21,7 @@
     public boolean function showBuddies();
     public array   function getBuddylist();
     
-    public array   function getPosts(boolean comments = false);
+    public array   function getPosts(required boolean comments = false);
     
     public boolean function hasPermission(required string permissionName);
 }
