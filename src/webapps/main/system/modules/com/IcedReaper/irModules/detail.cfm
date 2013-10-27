@@ -1,0 +1,1 @@
+<cfinclude template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irModules/dspDetail.cfm">

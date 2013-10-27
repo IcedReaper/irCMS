@@ -1,1 +1,0 @@
-<cfinclude template="/themes/#request.themeName#/templates/modules/irModules/dspTag.cfm">
