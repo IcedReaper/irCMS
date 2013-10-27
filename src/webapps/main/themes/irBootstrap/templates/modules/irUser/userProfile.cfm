@@ -1,4 +1,5 @@
 <cfset request.moduleClass = "userProfile">
+<cfset request.pageTitle   = "Profilseite von #attributes.moduleData.userData.getUsername()#">
 <cfoutput>
     <div class="form-group">
         <div class="col-md-12">
