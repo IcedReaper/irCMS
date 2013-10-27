@@ -13,8 +13,7 @@
     }
     
     private boolean function applicationRestart() {
-        include "system/setup/databaseSettings.cfm";
-        application.rootPath = "icedreaper";
+        include "system/appSetup/databaseSettings.cfm";
 
     	this.initCoreTools();
         this.initCoreCMS();
@@ -81,7 +80,6 @@
                                                                                                                              ,checkForUpdates     = true
                                                                                                                              ,excludePattern      = '.*/inc_.*');
             }
-
             return true;
         }
         catch(any e) {
