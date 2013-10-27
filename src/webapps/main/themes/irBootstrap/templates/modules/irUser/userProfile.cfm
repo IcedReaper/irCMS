@@ -75,7 +75,7 @@
                                     <input class="form-control" name="homepage" value="#attributes.moduleData.userData.getHomepage()#">
                                 <cfelse>
                                     <cfif attributes.moduleData.userData.getHomepage() NEQ "">
-                                        <p class="form-control-static"><a href="http://#attributes.moduleData.userData.getHomepage()#">#attributes.moduleData.userData.getHomepage()#</a></p>
+                                        <p class="form-control-static"><a href="http://#attributes.moduleData.userData.getHomepage()#">#attributes.moduleData.userData.getHomepage()# <i class="glyphicon glyphicon-link"></i></a></p>
                                     </cfif>
                                 </cfif>
                             </div>
@@ -87,7 +87,7 @@
                                     <input class="form-control" name="facebook" value="#attributes.moduleData.userData.getFacebookLink()#">
                                 <cfelse>
                                     <cfif attributes.moduleData.userData.getFacebookLink() NEQ "">
-                                        <p class="form-control-static"><a href="https://www.facebook.com/#attributes.moduleData.userData.getFacebookLink()#">#attributes.moduleData.userData.getUsername()# auf Facebook</a></p>
+                                        <p class="form-control-static"><a href="https://www.facebook.com/#attributes.moduleData.userData.getFacebookLink()#">#attributes.moduleData.userData.getUsername()# auf Facebook <i class="glyphicon glyphicon-link"></i></a></p>
                                     </cfif>
                                 </cfif>
                             </div>
@@ -99,7 +99,7 @@
                                     <input class="form-control" name="twitter" value="#attributes.moduleData.userData.getTwitterLink()#">
                                 <cfelse>
                                     <cfif attributes.moduleData.userData.getTwitterLink() NEQ "">
-                                        <p class="form-control-static"><a href="https://www.twitter/#attributes.moduleData.userData.getTwitterLink()#">#attributes.moduleData.userData.getUsername()# auf Twitter</a></p>
+                                        <p class="form-control-static"><a href="https://www.twitter/#attributes.moduleData.userData.getTwitterLink()#">#attributes.moduleData.userData.getUsername()# auf Twitter <i class="glyphicon glyphicon-link"></i></a></p>
                                     </cfif>
                                 </cfif>
                             </div>
@@ -111,7 +111,7 @@
                                     <input class="form-control" name="github" value="#attributes.moduleData.userData.getGithubLink()#">
                                 <cfelse>
                                     <cfif attributes.moduleData.userData.getGithubLink() NEQ "">
-                                        <p class="form-control-static"><a href="http://www.github.com/#attributes.moduleData.userData.getGithubLink()#">#attributes.moduleData.userData.getUsername()# auf Github</a></p>
+                                        <p class="form-control-static"><a href="http://www.github.com/#attributes.moduleData.userData.getGithubLink()#">#attributes.moduleData.userData.getUsername()# auf Github <i class="glyphicon glyphicon-link"></i></a></p>
                                     </cfif>
                                 </cfif>
                             </div>
