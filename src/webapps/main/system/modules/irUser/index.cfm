@@ -9,20 +9,19 @@
 
     switch(attributes.entities.len()) {
         case 0: {
-            switch(attributes.show) {
-                case 'Top': {
-                    include template="mostActive.cfm";
-                    break;
-                }
-                default: {
-                    include template="overview.cfm";
-                    break;
-                }
-            }
+            include template="overview.cfm";
             break;
         }
         case 1: {
             switch(attributes.entities[1]) {
+                case 'Suche': {
+                    include template="search.cfm";
+                    break;
+                }
+                case 'Übersicht': {
+                    include template="overview.cfm";
+                    break;
+                }
                 default: {
                     include template="showUserProfile.cfm";
                 }
@@ -31,9 +30,6 @@
         }
         case 2: {
             switch(attributes.entities[2]) {
-                case 'Groups': {
-                    include template="userGroups.cfm";
-                }
                 default: {
                     break;
                 }
