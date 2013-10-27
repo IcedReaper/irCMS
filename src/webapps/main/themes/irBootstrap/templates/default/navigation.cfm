@@ -2,17 +2,17 @@
 <cfset headerNavigation = application.cms.navigation.getHierarchy(position=attributes.position, language=request.language, parentNavigationId=0)>
 <cfoutput>
     <header>
-        <div class="navbar navbar-inverse navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
-                <div class="navbar-header">
+                <header class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="/">irCMS</a>
-                </div>
-                <div class="navbar-collapse collapse">
+                </header>
+                <section class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <cfloop from="1" to="#headerNavigation.len()#" index="headerNavIndex">
                             <li class="<cfif headerNavigation[headerNavIndex].sesLink eq request.sesLink>class=active</cfif> <cfif headerNavigation[headerNavIndex].children.len() GT 0>dropdown</cfif>">
@@ -69,8 +69,8 @@
                             </li>
                         </ul>
                     </cfif>
-                </div>
+                </section>
             </div>
-        </div>
+        </nav>
     </header>
 </cfoutput>
