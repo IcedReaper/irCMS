@@ -11,12 +11,17 @@
         try {
             var qGetNavigationInformation = new Query().setDatasource(variables.datasource)
                                                        .setSQL("     SELECT cv.navigationId, cv.sesLink, "
-                                                              &"            regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"//*/
-                                                              &"       FROM #variables.tablePrefix#_ContentVersion cv"
+                                                              &"            regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"
+                                                              &"       FROM #variables.tablePrefix#_ContentVersion cv "
                                                               &" INNER JOIN #variables.tablePrefix#_navigation     n  ON cv.navigationId=n.navigationId "
-                                                              &"      WHERE n.language=:language ")
+                                                              &" INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                                                              &"      WHERE cs.online  = :online "
+                                                              &"        AND n.active   = :active "
+                                                              &"        AND n.language = :language ")
                                                        .addParam(name="sesLink",  value=arguments.sesLink,  cfsqltype="cf_sql_varchar")
                                                        .addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar")
+                                                       .addParam(name="online",   value=true,               cfsqltype="cf_sql_bit")
+                                                       .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
                                                        .execute()
                                                        .getResult();
 

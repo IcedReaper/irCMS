@@ -85,7 +85,6 @@
             return true;
         }
         catch(any e) {
-            writeDump(e);abort;
             return false;
         }
     }
