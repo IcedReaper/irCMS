@@ -30,10 +30,7 @@
             #request.content#
         </div>
 
-        <footer>
-            <p>&copy; IcedReaper 2013</p>
-        </footer>
-        <!---<cfinclude template="templates/default/footer.cfm">--->
+        <cfinclude template="templates/default/footer.cfm">
 
         <script src="/system/js/jquery/jquery-2.0.3.min.js" charset="utf-8"></script>
         <script src="/system/js/bootstrap/bootstrap.min.js" charset="utf-8"></script>
