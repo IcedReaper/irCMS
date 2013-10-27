@@ -12,11 +12,11 @@
         
     }
     
-    public boolean function activateUser(required userId) {
+    public boolean function activateUser(required string userName) {
         
     }
     
-    public boolean function deactivateUser(required userId) {
+    public boolean function deactivateUser(required string userName) {
         
     }
     
@@ -24,10 +24,10 @@
         
     }
     
-    public numeric function login(required string username, required string password) {
+    public boolean function login(required string username, required string password) {
         try {
         	var qGetLogin = new Query().setDatasource(variables.datasource)
-                                       .setSQL("SELECT userId, active "
+                                       .setSQL("SELECT userName, active "
         	                                  &"  FROM #variables.tablePrefix#_user "
         	                                  &" WHERE username=:username "
         	                                  &"   AND password=:password")
@@ -36,7 +36,7 @@
                                        .execute()
                                        .getResult();
              
-             return qGetLogin.recordCount == 1 && qGetLogin.active[1] == true ? qGetLogin.userId[1] : 0;
+             return qGetLogin.recordCount == 1;
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);

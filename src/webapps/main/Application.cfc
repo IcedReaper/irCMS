@@ -160,11 +160,11 @@
     private boolean function handleLoginOut() {
         try {
             if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
-                var tmpUserName = application.user.controller.login(username=form.username, password=form.password);
-                if(tmpUserName != "Guest") {
-                    session.userName = tmpUserName;
+                if(application.user.controller.login(username = form.username, password = form.password)) {
+                    session.userName = form.username;
                 }
                 else {
+                    session.userName = "Guest";
                     // TODO: show wrong password page
                 }
             }
