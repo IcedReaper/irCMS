@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.cryption" {
+﻿component  implements="system.interfaces.com.irCMS.tools.cryption" {
     public cryption function init(required string structSeparator) {
         variables.structSeparator = arguments.structSeparator;
         

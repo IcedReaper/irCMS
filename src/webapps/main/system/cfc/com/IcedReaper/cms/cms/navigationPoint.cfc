@@ -1,4 +1,4 @@
-﻿component implements="system.interfaces.com.irCMS.navigationPoint" {
+﻿component implements="system.interfaces.com.irCMS.cms.navigationPoint" {
     public navigationPoint function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required struct navigationInformation) {
     	variables.errorHandler = arguments.errorHandler;
         variables.tablePrefix  = arguments.tablePrefix;

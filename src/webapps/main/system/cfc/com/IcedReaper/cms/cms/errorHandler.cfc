@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.errorHandler" {
+﻿component  implements="system.interfaces.com.irCMS.cms.errorHandler" {
     public errorHandler function init(required string tablePrefix, required string datasource) {
         variables.tablePrefix = arguments.tablePrefix;
         variables.datasource  = arguments.datasource;

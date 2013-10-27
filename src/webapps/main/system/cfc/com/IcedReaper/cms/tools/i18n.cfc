@@ -1,4 +1,4 @@
-﻿component implements="src.webapps.main.system.interfaces.com.irCMS.i18n" {
+﻿component implements="system.interfaces.com.irCMS.tools.i18n" {
     public i18n function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required string fallbackLanguage) {
     	variables.errorHandler     = arguments.errorHandler;
         variables.tablePrefix      = arguments.tablePrefix;

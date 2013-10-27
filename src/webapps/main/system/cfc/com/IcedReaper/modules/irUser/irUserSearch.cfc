@@ -1,4 +1,4 @@
-component implements="system.interfaces.com.irCMS.userSearch" {
+component implements="system.interfaces.com.irCMS.user.userSearch" {
     public userSearch function init(required errorHandler errorHandler, required cryption cryptionApi, required string tablePrefix, required string datasource) {
         variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;

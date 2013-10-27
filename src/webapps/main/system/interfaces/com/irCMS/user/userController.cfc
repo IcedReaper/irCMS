@@ -1,5 +1,5 @@
 ﻿interface {
-    public irUserController function init(required errorHandler errorHandler, required cryption cryptionApi, required string tablePrefix, required string datasource);
+    public userController function init(required errorHandler errorHandler, required cryption cryptionApi, required string tablePrefix, required string datasource);
     
     public boolean function createUser(required string userData);
     public boolean function activateUser(required userId);

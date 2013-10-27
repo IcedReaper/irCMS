@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.permission" {
+﻿component  implements="system.interfaces.com.irCMS.security.permission" {
     import "system.interfaces.com.irCMS.*";
       
     public permission function init(required errorHandler errorHandler, required string datasource, required string tablePrefix) {

@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.tools" {
+﻿component  implements="system.interfaces.com.irCMS.tools.tools" {
     public tools function init() {
         return this;
     }

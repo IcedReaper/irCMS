@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.validator" {
+﻿component  implements="system.interfaces.com.irCMS.tools.validator" {
     public validator function init(required string datasource) {
         variables.datasource = arguments.datasource;
         

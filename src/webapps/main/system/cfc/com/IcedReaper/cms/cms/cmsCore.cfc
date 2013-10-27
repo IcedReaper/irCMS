@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.cmsCore" {
+﻿component  implements="system.interfaces.com.irCMS.cms.cmsCore" {
     public cmsCore function init(required string tablePrefix, required string datasource) {
         variables.datasource  = arguments.datasource;
         variables.tablePrefix = arguments.tablePrefix;

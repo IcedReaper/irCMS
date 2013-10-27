@@ -27,42 +27,42 @@
     }
 
     private boolean function initCoreTools() {
-        application.tools.tools    = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
-        application.tools.cryption = createObject("component", "system.cfc.com.irCMS.tools.cryption").init(structSeparator=';');
+        application.tools.tools    = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
+        application.tools.cryption = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(structSeparator=';');
         return true;
     }
 
     private boolean function initCoreCMS() {
-        application.cms.core = createObject("component", "system.cfc.com.irCMS.cms.cmsCore").init(tablePrefix = application.tablePrefix
-                                                                                                 ,datasource  = application.datasource.user);
+        application.cms.core = createObject("component", "system.cfc.com.IcedReaper.cms.cms.cmsCore").init(tablePrefix = application.tablePrefix
+                                                                                                          ,datasource  = application.datasource.user);
 
-        application.cms.errorHandler = createObject("component", "system.cfc.com.irCMS.cms.errorHandler").init(tablePrefix = application.tablePrefix
-                                                                                                              ,datasource  = application.datasource.user
-                                                                                                              ,tools       = application.tools.tools);
+        application.cms.errorHandler = createObject("component", "system.cfc.com.IcedReaper.cms.cms.errorHandler").init(tablePrefix = application.tablePrefix
+                                                                                                                       ,datasource  = application.datasource.user
+                                                                                                                       ,tools       = application.tools.tools);
         
-        application.cms.navigation = createObject("component", "system.cfc.com.irCMS.cms.navigation").init(errorHandler = application.cms.errorHandler
-                                                                                                          ,tablePrefix  = application.tablePrefix
-                                                                                                          ,datasource   = application.datasource.user);
+        application.cms.navigation = createObject("component", "system.cfc.com.IcedReaper.cms.cms.navigation").init(errorHandler = application.cms.errorHandler
+                                                                                                                   ,tablePrefix  = application.tablePrefix
+                                                                                                                   ,datasource   = application.datasource.user);
         return true;
     }
 
     private boolean function initCoreUser() {
-        application.user.controller = createObject("component", "system.cfc.com.irCMS.user.irUserController").init(errorHandler = application.cms.errorHandler
-                                                                                                                  ,tablePrefix  = application.tablePrefix
-                                                                                                                  ,datasource   = application.datasource.user
-                                                                                                                  ,cryptionApi  = application.tools.cryption);
+        application.user.controller = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUserController").init(errorHandler = application.cms.errorHandler
+                                                                                                                                 ,tablePrefix  = application.tablePrefix
+                                                                                                                                 ,datasource   = application.datasource.user
+                                                                                                                                 ,cryptionApi  = application.tools.cryption);
 
-        application.user.search = createObject("component", "system.cfc.com.irCMS.user.irUserSearch").init(errorHandler = application.cms.errorHandler
-                                                                                                          ,cryptionApi  = application.tools.cryption
-                                                                                                          ,tablePrefix  = application.tablePrefix
-                                                                                                          ,datasource   = application.datasource.user);
+        application.user.search = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUserSearch").init(errorHandler = application.cms.errorHandler
+                                                                                                                         ,cryptionApi  = application.tools.cryption
+                                                                                                                         ,tablePrefix  = application.tablePrefix
+                                                                                                                         ,datasource   = application.datasource.user);
         return true;
     }
 
     private boolean function initCoreSecurity() {
-        application.security.permission = createObject("component", "system.cfc.com.irCMS.security.permission").init(errorHandler = application.cms.errorHandler
-                                                                                                                    ,tablePrefix  = application.tablePrefix
-                                                                                                                    ,datasource   = application.datasource.user);
+        application.security.permission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(errorHandler = application.cms.errorHandler
+                                                                                                                             ,tablePrefix  = application.tablePrefix
+                                                                                                                             ,datasource   = application.datasource.user);
         return true;
     }
 
@@ -186,10 +186,10 @@
     }
 
     private boolean function handleActualUser() {
-        request.actualUser = createObject("component", "system.cfc.com.irCMS.user.irUser").init(errorHandler = application.cms.errorHandler
-                                                                                               ,tablePrefix  = application.tablePrefix
-                                                                                               ,datasource   = application.datasource.user
-                                                                                               ,userName     = request.userName);
+        request.actualUser = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUser").init(errorHandler = application.cms.errorHandler
+                                                                                                              ,tablePrefix  = application.tablePrefix
+                                                                                                              ,datasource   = application.datasource.user
+                                                                                                              ,userName     = request.userName);
         
         var success = request.actualUser.load();
 

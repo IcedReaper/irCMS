@@ -1,5 +1,5 @@
-component implements="system.interfaces.com.irCMS.irUser" {
-    public irUser function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required string userName) {
+component implements="system.interfaces.com.irCMS.user.user" {
+    public user function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required string userName) {
         variables.errorHandler = arguments.errorHandler;
         variables.datasource   = arguments.datasource;
         variables.tablePrefix  = arguments.tablePrefix;

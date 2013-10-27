@@ -1,4 +1,4 @@
-<cfset moduleOverview = createObject("component", "system.cfc.com.irModules.irModules.moduleOverview").init(errorHandler = application.cms.errorHandler
+<cfset moduleOverview = createObject("component", "system.cfc.com.IcedReaper.modules.irModules.moduleOverview").init(errorHandler = application.cms.errorHandler
                                                                                                            ,datasource   = application.datasource.user
                                                                                                            ,tablePrefix  = application.tablePrefix)>
 <cfif arrayLen(attributes.entities) EQ 2 AND attributes.entities[1] EQ 'Seite'>
