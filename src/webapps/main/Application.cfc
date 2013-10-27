@@ -47,10 +47,10 @@
     }
 
     private boolean function initCoreUser() {
-        application.user.userController = createObject("component", "system.cfc.com.irCMS.user.irUserController").init(errorHandler = application.cms.errorHandler
-                                                                                                                      ,tablePrefix  = application.tablePrefix
-                                                                                                                      ,datasource   = application.datasource.user
-                                                                                                                      ,cryptionApi  = application.tools.cryption);
+        application.user.controller = createObject("component", "system.cfc.com.irCMS.user.irUserController").init(errorHandler = application.cms.errorHandler
+                                                                                                                  ,tablePrefix  = application.tablePrefix
+                                                                                                                  ,datasource   = application.datasource.user
+                                                                                                                  ,cryptionApi  = application.tools.cryption);
 
         application.user.search = createObject("component", "system.cfc.com.irCMS.user.irUserSearch").init(errorHandler = application.cms.errorHandler
                                                                                                           ,cryptionApi  = application.tools.cryption
@@ -161,7 +161,7 @@
     private boolean function handleLoginOut() {
         try {
             if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
-                var tmpUserName = application.user.userController.login(username=form.username, password=form.password);
+                var tmpUserName = application.user.controller.login(username=form.username, password=form.password);
                 if(tmpUserName != "Guest") {
                     session.userName = tmpUserName;
                 }
@@ -170,7 +170,7 @@
                 }
             }
             if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userName')) {
-                if(application.user.userController.login(username=form.username, password=form.password)) {
+                if(application.user.controller.login(username=form.username, password=form.password)) {
                     session.userName = "Guest";
                     structClear(session);
                 }
