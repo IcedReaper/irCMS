@@ -27,7 +27,7 @@
     }
 
     private boolean function initCoreTools() {
-        application.tools.tools = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
+        application.tools.tools    = createObject("component", "system.cfc.com.irCMS.tools.tools").init();
         application.tools.cryption = createObject("component", "system.cfc.com.irCMS.tools.cryption").init(structSeparator=';');
         return true;
     }
@@ -148,6 +148,7 @@
         }
 
         request.moduleClass = '';
+        request.pageTitle   = '';
 
         return true;
     }
@@ -234,5 +235,11 @@
         catch(any e) {
             throw(type="Error while loading and rendering content", detail="renderContent");
         }
+    }
+
+    public boolean function setPageTitle(required string pageTitle) {
+        request.pageTitle = arguments.pageTitle;
+
+        return true;
     }
 }

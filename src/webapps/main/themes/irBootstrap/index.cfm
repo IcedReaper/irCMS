@@ -12,7 +12,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>#request.actualMenu.getTitle()#</title>
+        <title><cfif request.pageTitle EQ "">#request.actualMenu.getTitle()#<cfelse>#request.pageTitle#</cfif></title>
         <meta name="description" content="#request.actualMenu.getDescription()#" />
         <meta name="keywords" content="#request.actualMenu.getKeywords()#" />
         <meta name="viewport" content="width=device-width">
