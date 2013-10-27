@@ -29,6 +29,13 @@
             }
         }
         default: {
+            // e.g. Search/Page/2
+            switch(attributes.entities[1]) {
+                case 'Suche': {
+                    include template="search.cfm";
+                    break;
+                }
+            }
             break;
         }
     }

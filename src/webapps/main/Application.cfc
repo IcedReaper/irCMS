@@ -48,9 +48,14 @@
 
     private boolean function initCoreUser() {
         application.user.userController = createObject("component", "system.cfc.com.irCMS.user.irUserController").init(errorHandler = application.cms.errorHandler
-                                                                                                                      ,tablePrefix = application.tablePrefix
-                                                                                                                      ,datasource  = application.datasource.user
-                                                                                                                      ,cryptionApi = application.tools.cryption);
+                                                                                                                      ,tablePrefix  = application.tablePrefix
+                                                                                                                      ,datasource   = application.datasource.user
+                                                                                                                      ,cryptionApi  = application.tools.cryption);
+
+        application.user.search = createObject("component", "system.cfc.com.irCMS.user.irUserSearch").init(errorHandler = application.cms.errorHandler
+                                                                                                          ,cryptionApi  = application.tools.cryption
+                                                                                                          ,tablePrefix  = application.tablePrefix
+                                                                                                          ,datasource   = application.datasource.user);
         return true;
     }
 
