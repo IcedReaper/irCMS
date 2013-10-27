@@ -1,4 +1,6 @@
 <cfscript>
+    attributes.moduleData.isMyUser = request.actualUser.getUsername() == attributes.entities[1];
+    attributes.moduleData.userName = attributes.entities[1];
     attributes.moduleData.userData = createObject('component', 'system.cfc.com.irCMS.user.irUser').init(errorHandler = application.cms.errorHandler
                                                                                                        ,datasource   = application.datasource.user
                                                                                                        ,tablePrefix  = application.tablePrefix
