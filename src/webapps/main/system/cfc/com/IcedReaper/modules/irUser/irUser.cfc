@@ -17,6 +17,7 @@ component implements="system.interfaces.com.irCMS.user.user" {
                                                    &" WHERE u.userName = :userName")
                                             .addParam(name="userName", value=variables.userName, cfsqltype="cf_sql_varchar")
                                             .execute().getResult();
+            
             return variables.userData.getRecordCount() == 1;
         }
         catch(any e) {
