@@ -2,12 +2,12 @@
     import "system.interfaces.com.irCMS.*";
       
     public permission function init(required errorHandler errorHandler, required string datasource, required string tablePrefix) {
-          variables.errorHandler = arguments.errorHandler;
-          variables.datasource   = arguments.datasource;
-          variables.tablePrefix  = arguments.tablePrefix;
+        variables.errorHandler = arguments.errorHandler;
+        variables.datasource   = arguments.datasource;
+        variables.tablePrefix  = arguments.tablePrefix;
           
-          return this;
-      }
+        return this;
+    }
       
       public boolean function hasPermission(required string userName, required string groupName, required string roleName) {
           try {
@@ -19,18 +19,18 @@
                                                        &"     WHERE p.userId      = (SELECT userId FROM #variables.tablePrefix#_user WHERE userName = :userName) "
                                                        &"       AND pg.groupName  = :groupName "
                                                        &"       AND pr.sortOrder >= (SELECT sortOrder FROM #variables.tablePrefix#_permissionRole role WHERE role.roleName = :roleName)")
-                                                .addParam(name="userName",  value=arguments.userName,  cfsqltype="cf_sql_numeric")
+                                                .addParam(name="userName",  value=arguments.userName,  cfsqltype="cf_sql_varchar")
                                                 .addParam(name="groupName", value=arguments.groupName, cfsqltype="cf_sql_varchar")
                                                 .addParam(name="roleName",  value=arguments.roleName,  cfsqltype="cf_sql_varchar")
                                                 .execute()
                                                 .getResult();
               return qCheckPermission.getRecordCount() == 1;
-          }
-          catch(any e) {
-              variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-              return false;
-          }
-      }
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            return false;
+        }
+    }
       
     public boolean function addPermission() {
           
