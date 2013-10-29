@@ -58,9 +58,14 @@
                     <cfelse>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="##" class="dropdown-toggle" data-toggle="dropdown">#session.userName# <b class="caret"></b></a>
+                                <a href="##" class="dropdown-toggle" data-toggle="dropdown">
+                                    <cfif request.actualUser.getAvatar() NEQ "">
+                                        <img src="#request.actualUser.getAvatar()#" class="avatar">
+                                    </cfif>
+                                    #session.userName# <b class="caret"></b>
+                                </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="">Userpanel</a></li>
+                                    <li><a href="/User/#session.userName#">Userpanel</a></li>
                                     <cfif application.security.permission.hasPermission(userName=session.userName, groupName='CMS', roleName='Reader')>
                                         <li><a href="/Admin">Zum Adminpanel</a></li>
                                     </cfif>

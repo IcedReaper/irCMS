@@ -7,13 +7,20 @@
 
     body {
         background:    radial-gradient(ellipse farthest-corner at left top, rgba(0, 132, 194, 0.8) 0%, rgba(0, 47, 69, 0.8) 100%) repeat scroll 0 0%, url("../img/bgnoise_lg_dark.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
-        
-        .navbar-inverse {
-            color: #999999;
-        }
 
-        .navbar-static-bottom {
-            margin: 20px 0 0 0;
+        .navbar {        
+            &-inverse {
+                color: #999999;
+            }
+
+            &-static-bottom {
+                margin: 20px 0 0 0;
+            }
+
+            .avatar {
+                height:      15px;
+                margin-right: 5px;
+            }
         }
         
         @import 'inc_section.less';
