@@ -20,6 +20,7 @@
     public string  function getData(required string columnName);
     public boolean function showBuddies();
     public array   function getBuddylist();
+    public boolean function isMyBuddy(required string userName);
     
     public array   function getPosts(required boolean comments = false);
     

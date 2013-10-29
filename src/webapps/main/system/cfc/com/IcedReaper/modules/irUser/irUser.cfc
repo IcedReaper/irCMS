@@ -14,7 +14,7 @@ component implements="system.interfaces.com.irCMS.user.user" {
                                             .setSQL("SELECT u.*, t.themeName, t.active as themeActive "
                                                    &"  FROM #variables.tablePrefix#_User u "
                                                    &" INNER JOIN #variables.tablePrefix#_theme t ON u.themeId = t.themeId "
-                                                   &" WHERE u.userName = :userName")
+                                                   &" WHERE u.userName = :userName ")
                                             .addParam(name="userName", value=variables.userName, cfsqltype="cf_sql_varchar")
                                             .execute().getResult();
             
@@ -98,6 +98,15 @@ component implements="system.interfaces.com.irCMS.user.user" {
 
     public array function getBuddylist() {
         return [];
+    }
+
+    public boolean function isMyBuddy(required string userName) {
+        if(variables.userData.userName[1] == arguments.userName) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     public string function getTheme() {
