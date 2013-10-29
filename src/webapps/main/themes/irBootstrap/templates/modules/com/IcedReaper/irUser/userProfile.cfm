@@ -19,6 +19,26 @@
         </div>
         <div class="col-md-6">
             <section class="widget">
+                <cfif isDefined('attributes.userUpdate')>
+                    <cfif attributes.userUpdate.success>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-success">
+                                    Ihr Profil wurde erfolgreich aktualisiert.
+                                </div>
+                            </div>
+                        </div>
+                    <cfelse>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger">
+                                    Während des Speicherns konnte ein oder mehrere Felder nicht korrekt validiert werden.<br>
+                                    Bitte gucken Sie sich unten die rot markierten Felder an und korrigieren Sie diese.
+                                </div>
+                            </div>
+                        </div>
+                    </cfif>
+                </cfif>
                 <form id="userData" class="form-horizontal" role="form" <cfif attributes.moduleData.isMyUser>action="#request.sesLink#" method="post"</cfif>
                     <fieldset>
                         <legend>Allgemeine Infos</legend>
@@ -28,7 +48,15 @@
                                 <p class="form-control-static">#DateFormat(attributes.moduleData.userData.getJoinDate(), "DD. MMM YYYY")# #TimeFormat(attributes.moduleData.userData.getJoinDate(), "HH:MM")#</p>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <cfif attributes.moduleData.isMyUser>
+                            <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.title>has-error</cfif>">
+                                <label class="col-lg-3 control-label">Titel</label>
+                                <div class="col-lg-9">
+                                    <input type="text" maxLength="50" class="form-control" name="title" value="#attributes.moduleData.userData.getTitle()#">
+                                </div>
+                            </div>
+                        </cfif>
+                        <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.gender>has-error</cfif>">
                             <label class="col-lg-3 control-label">Geschlecht</label>
                             <div class="col-lg-9">
                                 <cfif attributes.moduleData.isMyUser>
@@ -36,7 +64,7 @@
                                         <div class="col-md-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="gender" value="None">
+                                                    <input type="radio" name="gender" value="None" <cfif attributes.moduleData.userData.getGender() EQ 'None'>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Keine Angabe">
                                             </div>
@@ -46,7 +74,7 @@
                                         <div class="col-md-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="gender" value="Male">
+                                                    <input type="radio" name="gender" value="Male" <cfif attributes.moduleData.userData.getGender() EQ 'Male'>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Männlich">
                                             </div>
@@ -56,7 +84,7 @@
                                         <div class="col-md-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="gender" value="Female">
+                                                    <input type="radio" name="gender" value="Female" <cfif attributes.moduleData.userData.getGender() EQ 'Female'>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Weiblich">
                                             </div>
@@ -68,7 +96,7 @@
                             </div>
                         </div>
                         <cfif request.isLoggedIn || attributes.moduleData.userData.isEmailPublic()>
-                            <div class="form-group">
+                            <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.email>has-error</cfif>">
                                 <label class="col-lg-3 control-label" for="email">Email</label>
                                 <div class="col-lg-9">
                                     <cfif attributes.moduleData.isMyUser>
@@ -85,7 +113,7 @@
                                 </div>
                             </div>
                         </cfif>
-                        <div class="form-group">
+                        <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.hobbies>has-error</cfif>">
                             <label class="col-lg-3 control-label" for="hobbies">Hobbies</label>
                             <div class="col-lg-9">
                                 <cfif attributes.moduleData.isMyUser>
@@ -98,7 +126,7 @@
                     </fieldset>
                     <fieldset>
                         <legend>Social Media Info</legend>
-                        <div class="form-group">
+                        <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.homepage>has-error</cfif>">
                             <label class="col-lg-3 control-label" for="homepage">Homepage</label>
                             <div class="col-lg-9">
                                 <cfif attributes.moduleData.isMyUser>
@@ -110,7 +138,7 @@
                                 </cfif>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.facebook>has-error</cfif>">
                             <label class="col-lg-3 control-label" for="facebook">Facebook</label>
                             <div class="col-lg-9">
                                 <cfif attributes.moduleData.isMyUser>
@@ -122,7 +150,7 @@
                                 </cfif>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.twitter>has-error</cfif>">
                             <label class="col-lg-3 control-label">Twitter</label>
                             <div class="col-lg-9">
                                 <cfif attributes.moduleData.isMyUser>
@@ -134,7 +162,7 @@
                                 </cfif>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.github>has-error</cfif>">
                             <label class="col-lg-3 control-label">Github</label>
                             <div class="col-lg-9">
                                 <cfif attributes.moduleData.isMyUser>
@@ -148,7 +176,84 @@
                         </div>
                     </fieldset>
                     <cfif attributes.moduleData.isMyUser>
-                        <div class="form-group">
+                        <fieldset>
+                            <legend>Profileinstellungen</legend>
+                            <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.emailPublic>has-error</cfif>">
+                                <label class="col-lg-3 control-label">Email veröffentlichen?</label>
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="emailPublic" value="false" <cfif attributes.moduleData.userData.isEmailPublic() EQ false>checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="Nein">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="emailPublic" value="true" <cfif attributes.moduleData.userData.isEmailPublic() EQ true>checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="Ja">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.themeId>has-error</cfif>">
+                                <label class="col-lg-3 control-label">Theme</label>
+                                <div class="col-lg-9">
+                                    <cfset qThemes = application.cms.core.getThemes()>
+                                    <cfloop query="qThemes">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="radio" name="themeId" value="#qThemes.themeId#" <cfif attributes.moduleData.userData.getThemeId() EQ qThemes.themeId>checked="checked"</cfif>>
+                                                    </span>
+                                                    <input type="text" class="form-control" disabled="disabled" value="#qThemes.themeName#">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </cfloop>
+                                </div>
+                            </div>
+                            <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.password>has-error</cfif>">
+                                <label class="col-lg-3 control-label">Passwort</label>
+                                <div class="col-lg-9">
+                                    <input type="password" maxLength="50" class="form-control" name="password">
+                                </div>
+                            </div>
+                            <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.showBuddies>has-error</cfif>">
+                                <label class="col-lg-3 control-label">Buddies veröffentlichen?</label>
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="showBuddies" value="false" <cfif attributes.moduleData.userData.showBuddies() EQ false>checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="Nein">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="showBuddies" value="true" <cfif attributes.moduleData.userData.showBuddies() EQ true>checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="Ja">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.title>has-error</cfif>">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success pull-right">Speichern</button>
                             </div>
