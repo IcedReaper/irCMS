@@ -51,7 +51,7 @@
         application.user.controller = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUserController").init(errorHandler = application.cms.errorHandler
                                                                                                                                  ,cryptionApi  = application.tools.cryption
                                                                                                                                  ,tablePrefix  = application.tablePrefix
-                                                                                                                                 ,datasource   = application.datasource.user);
+                                                                                                                                 ,datasource   = application.datasource.admin);
 
         application.user.search = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUserSearch").init(errorHandler = application.cms.errorHandler
                                                                                                                          ,cryptionApi  = application.tools.cryption
