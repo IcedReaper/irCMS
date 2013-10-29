@@ -2,12 +2,12 @@
 <cfset headerNavigation = application.cms.navigation.getHierarchy(position='header', language=request.language, parentNavigationId=0)>
 <cfoutput>
     <footer>
-        <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <nav class="navbar navbar-inverse navbar-static-bottom">
             <div class="container">    
                 <div class="row">
                     <div class="col-lg-12">
                         <cfloop from="1" to="#headerNavigation.len()#" index="headerNavIndex">
-                            <div class="col-md-#(12/headerNavigation.len())#">
+                            <div class="col-xs-4 col-sm-4 col-md-2">
                                 <ul class="list-unstyled">
                                     <li>#headerNavigation[headerNavIndex].linkname#</li>
                                     <li><a href="#headerNavigation[headerNavIndex].sesLink#" title="#headerNavigation[headerNavIndex].title#">#headerNavigation[headerNavIndex].linkname#</a></li>
