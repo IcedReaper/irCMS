@@ -29,10 +29,12 @@
         	var qGetLogin = new Query().setDatasource(variables.datasource)
                                        .setSQL("SELECT userName, active "
         	                                  &"  FROM #variables.tablePrefix#_user "
-        	                                  &" WHERE username=:username "
-        	                                  &"   AND password=:password")
+        	                                  &" WHERE username = :username "
+        	                                  &"   AND password = :password"
+                                              &"   AND active   = :active")
                                        .addParam(name="username", value=arguments.username,                                        cfsqltype="cf_sql_varchar")
                                        .addParam(name="password", value=variables.cryptionApi.encrypt(rawData=arguments.password), cfsqltype="cf_sql_varchar")
+                                       .addParam(name="active",   value=true,                                                      cfsqltype="cf_sql_bit")
                                        .execute()
                                        .getResult();
              
