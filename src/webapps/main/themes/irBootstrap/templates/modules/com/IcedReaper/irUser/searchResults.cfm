@@ -1,12 +1,14 @@
-<cfset request.pageTitle = "Usersuchergebnisse für '#form.username#'">
+<cfif isDefined("form.username")>
+    <cfset request.pageTitle = "Usersuchergebnisse für '#form.username#'">
+<cfelse>
+    <cfset request.pageTitle = "Übersicht über die Aktivsten User">
+</cfif>
 <cfoutput>
     <cfif attributes.moduleData.searchResults.len() GT 0>
         <div class="row">
             <div class="col-md-12">
                 <header class="widget">
-                    <h2>
-                        Suchergebnisse
-                    </h2>
+                    <h2><cfif isDefined("form.username")>Suchergebnisse<cfelse>Userübersicht</cfif></h2>
                 </header>
             </div>
         </div>
