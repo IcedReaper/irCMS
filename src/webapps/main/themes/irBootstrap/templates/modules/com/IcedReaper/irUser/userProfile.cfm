@@ -39,7 +39,7 @@
                         </div>
                     </cfif>
                 </cfif>
-                <form id="userData" class="form-horizontal" role="form" <cfif attributes.moduleData.isMyUser>action="#request.sesLink#" method="post"</cfif>
+                <form id="userData" class="form-horizontal" role="form" <cfif attributes.moduleData.isMyUser>action="#request.sesLink#" method="post"</cfif>>
                     <fieldset>
                         <legend>Allgemeine Infos</legend>
                         <div class="form-group">
@@ -253,7 +253,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.title>has-error</cfif>">
+                        <div class="form-group">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success pull-right">Speichern</button>
                             </div>
