@@ -21,6 +21,7 @@
     public boolean function showBuddies();
     public array   function getBuddylist();
     public boolean function isMyBuddy(required string userName);
+    public numeric function getThemeId();
     
     public array   function getPosts(required boolean comments = false);
     

@@ -108,6 +108,10 @@ component implements="system.interfaces.com.irCMS.user.user" {
             return false;
         }
     }
+
+    public numeric function getThemeId() {
+        return variables.userData.themeId[1];
+    }
     
     public string function getTheme() {
         if(variables.userData.themeActive[1] == true) {
