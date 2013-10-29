@@ -9,23 +9,13 @@
     	return this;
     }
     
-    public boolean function createUser(required string userData) {
-        try {
-
-        }
-        catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            return false;
-        }
-    }
-    
     public boolean function activateUser(required string userName) {
         try {
 
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            return false;
+            abort;
         }
     }
     
@@ -35,7 +25,66 @@
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            return false;
+            abort;
+        }
+    }
+    
+    public struct function createUser(required struct userData) {
+        try {
+            var formValidation            = {};
+            formValidation.username       = isDefined("arguments.userData.username")       ? variables.formValidator.validate(content=arguments.userData.username,       ruleName='Username') : false;
+            formValidation.password       = isDefined("arguments.userData.password")       ? variables.formValidator.validate(content=arguments.userData.password,       ruleName='Password') : false;
+            formValidation.passwordRetype = isDefined("arguments.userData.passwordRetype") ? variables.formValidator.validate(content=arguments.userData.passwordRetype, ruleName='Password') : false;
+            formValidation.gender         = isDefined("arguments.userData.gender")         ? variables.formValidator.validate(content=arguments.userData.gender,         ruleName='Gender')   : false;
+            formValidation.email          = isDefined("arguments.userData.email")          ? variables.formValidator.validate(content=arguments.userData.email,          ruleName='Email')    : false;
+
+            formValidation.passwordRetype = formValidation.password && formValidation.passwordRetype && arguments.userData.password == arguments.userData.passwordRetype;
+
+            formValidation.username = formValidation.userNameAvailable = new Query().setDatasource(variables.datasource)
+                                                                                    .setSQL("SELECT userId FROM #variables.tablePrefix#_user WHERE UPPER(userName)=:userName")
+                                                                                    .addParam(name="userName", value=ucase(arguments.userData.username), cfsqltype="cf_sql_varchar")
+                                                                                    .execute()
+                                                                                    .getResult()
+                                                                                    .getRecordCount() == 0;
+
+            if(formValidation.email) {
+                formValidation.email = new Query().setDatasource(variables.datasource)
+                                                  .setSQL("SELECT userId FROM #variables.tablePrefix#_user WHERE UPPER(email)=:email")
+                                                  .addParam(name="email", value=ucase(arguments.userData.email), cfsqltype="cf_sql_varchar")
+                                                  .execute()
+                                                  .getResult()
+                                                  .getRecordCount() == 0;
+            }
+
+            formValidation.success = this.allSuccessfull(formValidation);
+
+            if(formValidation.success) {
+                new Query().setDatasource(variables.datasource)
+                           .setSQL("INSERT INTO #variables.tablePrefix#_user "
+                                  &"            ( "
+                                  &"                userName, "
+                                  &"                password, "
+                                  &"                gender, "
+                                  &"                email"
+                                  &"            ) "
+                                  &"     VALUES ( "
+                                  &"                :userName, "
+                                  &"                :password, "
+                                  &"                :gender, "
+                                  &"                :email"
+                                  &"            ) ")
+                           .addParam(name="username", value=arguments.userData.username, cfsqltype="cf_sql_varchar")
+                           .addParam(name="password", value=arguments.userData.password, cfsqltype="cf_sql_varchar")
+                           .addParam(name="gender",   value=arguments.userData.gender,   cfsqltype="cf_sql_varchar")
+                           .addParam(name="email",    value=arguments.userData.email,    cfsqltype="cf_sql_varchar")
+                           .execute();
+            }
+
+            return formValidation;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
         }
     }
 
@@ -54,6 +103,15 @@
             formValidation.themeId     = true;// TODO validate if themeId exists
             formValidation.password    = isDefined("arguments.userData.password")    ? variables.formValidator.validate(content=arguments.userData.password,    ruleName='Password') : false;
             formValidation.showBuddies = isDefined("arguments.userData.showBuddies") ? variables.formValidator.validate(content=arguments.userData.showBuddies, ruleName='Boolean')  : false;
+            
+            if(formValidation.email) {
+                formValidation.email = new Query().setDatasource(variables.datasource)
+                                                  .setSQL("SELECT userId FROM #variables.tablePrefix#_user WHERE UPPER(email)=:email")
+                                                  .addParam(name="email", value=ucase(arguments.userData.email), cfsqltype="cf_sql_varchar")
+                                                  .execute()
+                                                  .getResult()
+                                                  .getRecordCount() == 0;
+            }
 
             formValidation.success = this.allSuccessfull(formValidation);
 
@@ -62,35 +120,35 @@
                 if(arguments.userData.password != '') {
                     passwordAddition = "       password     = :password, ";
                 }
-                var qUpdUser = new Query().setDatasource(variables.datasource)
-                                          .setSQL("UPDATE #variables.tablePrefix#_user "
-                                                 &"   SET email        = :email, "
-                                                 &"       emailPublic  = :emailPublic, "
-                                                 &"       themeid      = :themeid, "
-                                                 &"       title        = :title, "
-                                                 &"       gender       = :gender, "
-                                                 &"       homepage     = :homepage, "
-                                                 &"       twitterLink  = :twitterLink, "
-                                                 &"       facebookLink = :facebookLink, "
-                                                 &"       githubLink   = :githubLink, "
-                                                 &"       hobbies      = :hobbies, "
-                                                 &"       showBuddies  = :showBuddies "
-                                                 &passwordAddition
-                                                 &" WHERE userName     = :userName")
-                                          .addParam(name="email",        value=arguments.userData.email,       cfsqltype="cf_sql_varchar")
-                                          .addParam(name="emailPublic",  value=arguments.userData.emailPublic, cfsqltype="cf_sql_bit")
-                                          .addParam(name="themeid",      value=arguments.userData.themeId,     cfsqltype="cf_sql_numeric")
-                                          .addParam(name="password",     value=arguments.userData.password,    cfsqltype="cf_sql_varchar")
-                                          .addParam(name="title",        value=arguments.userData.title,       cfsqltype="cf_sql_varchar")
-                                          .addParam(name="gender",       value=arguments.userData.gender,      cfsqltype="cf_sql_varchar")
-                                          .addParam(name="homepage",     value=arguments.userData.homepage,    cfsqltype="cf_sql_varchar")
-                                          .addParam(name="twitterLink",  value=arguments.userData.twitter,     cfsqltype="cf_sql_varchar")
-                                          .addParam(name="facebookLink", value=arguments.userData.facebook,    cfsqltype="cf_sql_varchar")
-                                          .addParam(name="githubLink",   value=arguments.userData.github,      cfsqltype="cf_sql_varchar")
-                                          .addParam(name="hobbies",      value=arguments.userData.hobbies,     cfsqltype="cf_sql_varchar")
-                                          .addParam(name="showBuddies",  value=arguments.userData.showBuddies, cfsqltype="cf_sql_bit")
-                                          .addParam(name="userName",     value=arguments.userName,             cfsqltype="cf_sql_varchar")
-                                          .execute();
+                new Query().setDatasource(variables.datasource)
+                           .setSQL("UPDATE #variables.tablePrefix#_user "
+                                  &"   SET email        = :email, "
+                                  &"       emailPublic  = :emailPublic, "
+                                  &"       themeid      = :themeid, "
+                                  &"       title        = :title, "
+                                  &"       gender       = :gender, "
+                                  &"       homepage     = :homepage, "
+                                  &"       twitterLink  = :twitterLink, "
+                                  &"       facebookLink = :facebookLink, "
+                                  &"       githubLink   = :githubLink, "
+                                  &"       hobbies      = :hobbies, "
+                                  &"       showBuddies  = :showBuddies "
+                                  &passwordAddition
+                                  &" WHERE userName     = :userName")
+                           .addParam(name="email",        value=arguments.userData.email,       cfsqltype="cf_sql_varchar")
+                           .addParam(name="emailPublic",  value=arguments.userData.emailPublic, cfsqltype="cf_sql_bit")
+                           .addParam(name="themeid",      value=arguments.userData.themeId,     cfsqltype="cf_sql_numeric")
+                           .addParam(name="password",     value=arguments.userData.password,    cfsqltype="cf_sql_varchar")
+                           .addParam(name="title",        value=arguments.userData.title,       cfsqltype="cf_sql_varchar")
+                           .addParam(name="gender",       value=arguments.userData.gender,      cfsqltype="cf_sql_varchar")
+                           .addParam(name="homepage",     value=arguments.userData.homepage,    cfsqltype="cf_sql_varchar")
+                           .addParam(name="twitterLink",  value=arguments.userData.twitter,     cfsqltype="cf_sql_varchar")
+                           .addParam(name="facebookLink", value=arguments.userData.facebook,    cfsqltype="cf_sql_varchar")
+                           .addParam(name="githubLink",   value=arguments.userData.github,      cfsqltype="cf_sql_varchar")
+                           .addParam(name="hobbies",      value=arguments.userData.hobbies,     cfsqltype="cf_sql_varchar")
+                           .addParam(name="showBuddies",  value=arguments.userData.showBuddies, cfsqltype="cf_sql_bit")
+                           .addParam(name="userName",     value=arguments.userName,             cfsqltype="cf_sql_varchar")
+                           .execute();
             }
 
             return formValidation;
