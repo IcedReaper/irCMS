@@ -6,7 +6,7 @@
                                                                                                                     ,tablePrefix  = application.tablePrefix
                                                                                                                     ,userName     = attributes.moduleData.userName);
     if(attributes.moduleData.userData.load()) {
-        include template="/themes/#request.themeName#/templates/modules/irUser/userProfile.cfm";
+        include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/userProfile.cfm";
     }
     else {
         include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/userNotFound.cfm";
