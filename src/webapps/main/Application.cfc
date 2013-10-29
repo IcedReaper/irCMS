@@ -26,8 +26,10 @@
     }
 
     private boolean function initCoreTools() {
-        application.tools.tools    = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
-        application.tools.cryption = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(structSeparator=';');
+        application.tools.tools         = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
+        application.tools.cryption      = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(structSeparator=';');
+        application.tools.formValidator = createObject("component", "system.cfc.com.IcedReaper.cms.tools.validator").init(tablePrefix = application.tablePrefix
+                                                                                                                         ,datasource  = application.datasource.user);
         return true;
     }
 
@@ -47,9 +49,9 @@
 
     private boolean function initCoreUser() {
         application.user.controller = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUserController").init(errorHandler = application.cms.errorHandler
+                                                                                                                                 ,cryptionApi  = application.tools.cryption
                                                                                                                                  ,tablePrefix  = application.tablePrefix
-                                                                                                                                 ,datasource   = application.datasource.user
-                                                                                                                                 ,cryptionApi  = application.tools.cryption);
+                                                                                                                                 ,datasource   = application.datasource.user);
 
         application.user.search = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUserSearch").init(errorHandler = application.cms.errorHandler
                                                                                                                          ,cryptionApi  = application.tools.cryption
