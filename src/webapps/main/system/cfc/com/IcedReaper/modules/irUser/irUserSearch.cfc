@@ -19,7 +19,7 @@ component implements="system.interfaces.com.irCMS.user.userSearch" {
                                       .setSQL("SELECT * "
                                              &"  FROM #variables.tablePrefix#_user "
                                              &" WHERE userName LIKE :userName "
-                                             &"   AND active=:active")
+                                             &"   AND active   =    :active")
                                       .addParam(name="userName", value='%' & arguments.userName & '%', cfsqltype="cf_sql_varchar")
                                       .addParam(name="active",   value=true,                           cfsqltype="cf_sql_bit")
                                       .execute()
