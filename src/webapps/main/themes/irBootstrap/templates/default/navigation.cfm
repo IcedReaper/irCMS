@@ -47,11 +47,11 @@
                                         <li>
                                             <button type="submit" value="login" class="btn btn-success">Sign in</button>
                                         </li>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <button type="submit" value="register" class="btn btn-default">Registrieren</button>
-                                        </li>
                                     </form>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a type="submit" value="register" class="btn btn-default" href="/User/Registrieren">Registrieren</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
