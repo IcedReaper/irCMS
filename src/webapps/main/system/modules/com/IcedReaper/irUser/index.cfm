@@ -12,7 +12,6 @@
         case 1: {
             switch(attributes.entities[1]) {
                 case 'Suche': {
-                    attributes.moduleData.page = 1;
                     include template="search.cfm";
                     break;
                 }
