@@ -15,6 +15,10 @@
                     include template="search.cfm";
                     break;
                 }
+                case 'Registrieren': {
+                    include template="register.cfm";
+                    break;
+                }
                 default: {
                     include template="showUserProfile.cfm";
                 }
