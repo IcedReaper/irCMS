@@ -12,6 +12,7 @@
         case 1: {
             switch(attributes.entities[1]) {
                 case 'Suche': {
+                    attributes.moduleData.page = 1;
                     include template="search.cfm";
                     break;
                 }
@@ -21,21 +22,7 @@
             }
             break;
         }
-        case 2: {
-            switch(attributes.entities[2]) {
-                default: {
-                    break;
-                }
-            }
-        }
         default: {
-            // e.g. Search/Page/2
-            switch(attributes.entities[1]) {
-                case 'Suche': {
-                    include template="search.cfm";
-                    break;
-                }
-            }
             break;
         }
     }
