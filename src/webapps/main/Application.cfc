@@ -44,6 +44,10 @@
         application.cms.navigation = createObject("component", "system.cfc.com.IcedReaper.cms.cms.navigation").init(errorHandler = application.cms.errorHandler
                                                                                                                    ,tablePrefix  = application.tablePrefix
                                                                                                                    ,datasource   = application.datasource.user);
+        
+        application.cms.themeController = createObject("component", "system.cfc.com.IcedReaper.cms.cms.themeController").init(errorHandler = application.cms.errorHandler
+                                                                                                                             ,tablePrefix  = application.tablePrefix
+                                                                                                                             ,datasource   = application.datasource.user);
         return true;
     }
 
