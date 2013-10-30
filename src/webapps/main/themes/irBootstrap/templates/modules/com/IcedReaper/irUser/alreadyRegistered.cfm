@@ -11,7 +11,7 @@
             <div class="alert alert-success">
                 Sie sind bereits eingeloggt.<br>
                 Gehen Sie hier auf Ihr Profil oder auf die Startseite.<br>
-                <a type="button" class="btn btn-default" type="button" class="btn btn-default" href="/User/#request.username#">Ihr Profil</a>
+                <a type="button" class="btn btn-default" href="/User/#request.username#">Ihr Profil</a>
                 <a type="button" class="btn btn-default" href="/">Zur Startseite</a>
             </div>
         </div>
