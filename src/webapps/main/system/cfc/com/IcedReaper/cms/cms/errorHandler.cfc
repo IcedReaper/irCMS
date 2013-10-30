@@ -1,5 +1,5 @@
 ﻿component  implements="system.interfaces.com.irCMS.cms.errorHandler" {
-    public errorHandler function init(required string tablePrefix, required string datasource) {
+    public errorHandler function init(required string tablePrefix, required string datasource, required tools tools) {
         variables.tablePrefix = arguments.tablePrefix;
         variables.datasource  = arguments.datasource;
         variables.tools       = arguments.tools;
@@ -7,31 +7,35 @@
         return this;
     }
     
-    public boolean function logError(required string message, required string detail, numeric errorId=0) {
+    public boolean function logError(required string message, required string detail) {
     	try {
-    		if(arguments.errorId == 0) {
-        		
-        	}
-            var qInsError = new Query().setDatasource(variables.datasource)
-                                       .setSQL("INSERT INTO #variables.tablePrefix#_errorLog (errorId, message, detail, recDate) VALUES (:errorId, :message, :detail, :recDate)")
-                                       .addParam(name="errorId", value=arguments.errorId, cfsqltype="cf_sql_numeric")
-                                       .addParam(name="message", value=arguments.message, cfsqltype="cf_sql_varchar")
-                                       .addParam(name="detail",  value=arguments.detail,  cfsqltype="cf_sql_varchar")
-                                       .addParam(name="recDate", value=now(),             cfsqltype="cf_sql_timeStamp")
-                                       .execute();
+    		new Query().setDatasource(variables.datasource)
+                       .setSQL("INSERT INTO #variables.tablePrefix#_errorLog (message, detail, recDate) VALUES (:message, :detail, :recDate)")
+                       .addParam(name="message", value=arguments.message, cfsqltype="cf_sql_varchar")
+                       .addParam(name="detail",  value=arguments.detail,  cfsqltype="cf_sql_varchar")
+                       .addParam(name="recDate", value=now(),             cfsqltype="cf_sql_timeStamp")
+                       .execute();
             
             return true;
         }
         catch(any e) {
-            // error within an error -> nice :D
+        	writeDump(e);
+        	abort;
+            // error within an error -> nice one :D
             
             return false;
         }
     }
     
-    public query function getError() {
+    public query function getError(required numeric pageNumber, required numeric errorsPerPage) {
     	return new Query().setDatasource(variables.datasource)
-                          .setSQL("SELECT * FROM #variables.tablePrefix#_errorLog ORDER BY recDate DESC")
+                          .setSQL("   SELECT * "
+                                 &"     FROM #variables.tablePrefix#_errorLog "
+                                 &" ORDER BY recDate DESC "
+                                 &"   OFFSET :offset "
+                                 &"    LIMIT :perPage")
+                          .addParam(name="offset",  value=(arguments.pageNumber-1) * arguments.errorsPerPage, cfsqltype="cf_sql_numeric")
+                          .addParam(name="perPage", value=errorsPerPage,                                      cfsqltype="cf_sql_numeric")
                           .execute()
                           .getResult();
     }
@@ -48,6 +52,7 @@
     
     public void function processError(required string themeName, required string message, required string detail) {
         if(clearBuffer()) {
+        	this.logError(message=arguments.message, detail=arguments.detail);
             writeDump(arguments);
             module template="/icedreaper/themes/#arguments.themeName#/templates/default/error.cfm";
         }
