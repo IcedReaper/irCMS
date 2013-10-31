@@ -11,7 +11,10 @@ component {
     public boolean function loadEntity() {
         try {
             variables.entity = new Query().setDatasource(variables.datasource)
-                                          .setSQL("SELECT * FROM #variables.tablePrefix#_irModules_entity WHERE entityName=:entityName AND active=:active")
+                                          .setSQL("SELECT * "
+                                                 &"  FROM #variables.tablePrefix#_modules_irModules_entity "
+                                                 &" WHERE entityName = :entityName "
+                                                 &"   AND active     = :active")
                                           .addParam(name="entityName", value=variables.entityName, cfsqltype="cf_sql_varchar")
                                           .addParam(name="active",     value=true                  cfsqltype="cf_sql_bit")
                                           .execute()

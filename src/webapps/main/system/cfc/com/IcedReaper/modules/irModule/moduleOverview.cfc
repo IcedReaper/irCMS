@@ -11,8 +11,8 @@ component {
         try {
             var qFilterModules = new Query().setDatasource(variables.datasource)
                                             .setSQL("         SELECT mod.entityId, mod.entityName, mod.userName modUsername, mod.creationDate, usr.userName, usr.userId "
-                                                   &"           FROM irCMS_irModules_entity mod "
-                                                   &"     INNER JOIN irCMS_irModules_status status ON mod.statusId = status.statusId "
+                                                   &"           FROM irCMS_modules_irModule_entity mod "
+                                                   &"     INNER JOIN irCMS_modules_irModule_status status ON mod.statusId = status.statusId "
                                                    &"LEFT OUTER JOIN irCMS_user             usr    ON mod.userId   = usr.userId "
                                                    &"          WHERE status.online = :online "
                                                    &"          LIMIT :numberPerPage OFFSET :from ")
@@ -35,9 +35,9 @@ component {
 
                 var qGetTags = new Query().setDatasource(variables.datasource)
                                             .setSQL("    SELECT tagName "
-                                                   &"      FROM irCMS_irModules_tag tag "
-                                                   &"INNER JOIN irCMS_irModules_entityTag entityTag ON tag.tagId = entityTag.tagId "
-                                                   &"     WHERE entityTag.entityId=:entityId")
+                                                   &"      FROM irCMS_modules_irModule_tag tag "
+                                                   &"INNER JOIN irCMS_modules_irModule_entityTag entityTag ON tag.tagId = entityTag.tagId "
+                                                   &"     WHERE entityTag.entityId = :entityId")
                                             .addParam(name="entityId", value=qFilterModules.entityId[i], cfsqltype="cf_sql_numeric")
                                             .execute()
                                             .getResult();
