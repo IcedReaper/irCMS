@@ -38,7 +38,7 @@
                                                                                                           ,datasource  = application.datasource.user);
 
         application.cms.errorHandler = createObject("component", "system.cfc.com.IcedReaper.cms.cms.errorHandler").init(tablePrefix = application.tablePrefix
-                                                                                                                       ,datasource  = application.datasource.user
+                                                                                                                       ,datasource  = application.datasource.admin
                                                                                                                        ,tools       = application.tools.tools);
         
         application.cms.navigation = createObject("component", "system.cfc.com.IcedReaper.cms.cms.navigation").init(errorHandler = application.cms.errorHandler
