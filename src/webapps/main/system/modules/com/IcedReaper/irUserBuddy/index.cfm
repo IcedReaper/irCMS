@@ -8,7 +8,7 @@
                                                                                                                ,userName     = attributes.userName);
         
         if(attributes.userName != 'Guest' && attributes.userData.load()) {
-            include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUserBuddies/showBuddies.cfm";
+            include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUserBuddy/showBuddies.cfm";
         }
 	}
 </cfscript>
