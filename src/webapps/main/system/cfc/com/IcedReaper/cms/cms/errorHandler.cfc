@@ -43,7 +43,7 @@
     public void function processNotFound(required string themeName, required string type, required string detail) {
         if(clearBuffer()) {
             writeDump(arguments);
-        	module template="/icedreaper/themes/#arguments.themeName#/templates/default/notFound.cfm";
+        	module template="/icedreaper/themes/#arguments.themeName#/templates/core/notFound.cfm";
         }
         else {
         	// error within an error -> nice :D
@@ -54,7 +54,7 @@
         if(clearBuffer()) {
         	this.logError(message=arguments.message, detail=arguments.detail);
             writeDump(arguments);
-            module template="/icedreaper/themes/#arguments.themeName#/templates/default/error.cfm";
+            module template="/icedreaper/themes/#arguments.themeName#/templates/core/error.cfm";
         }
         else {
             // error within an error -> nice :D

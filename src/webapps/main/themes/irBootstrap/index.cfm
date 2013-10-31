@@ -24,13 +24,13 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-        <cfmodule template="templates/default/navigation.cfm" position="#request.actualMenu.getTopNavigationName()#">
+        <cfmodule template="templates/core/navigation.cfm" position="#request.actualMenu.getTopNavigationName()#">
         
         <div class="container #request.moduleClass#">
             #request.content#
         </div>
 
-        <cfinclude template="templates/default/footer.cfm">
+        <cfinclude template="templates/core/footer.cfm">
 
         <script src="/system/js/jquery/jquery-2.0.3.min.js" charset="utf-8"></script>
         <script src="/system/js/bootstrap/bootstrap.min.js" charset="utf-8"></script>
