@@ -34,12 +34,13 @@
     }
 
     private boolean function initCoreCMS() {
-        application.cms.core = createObject("component", "system.cfc.com.IcedReaper.cms.cms.cmsCore").init(tablePrefix = application.tablePrefix
-                                                                                                          ,datasource  = application.datasource.user);
-
         application.cms.errorHandler = createObject("component", "system.cfc.com.IcedReaper.cms.cms.errorHandler").init(tablePrefix = application.tablePrefix
                                                                                                                        ,datasource  = application.datasource.admin
                                                                                                                        ,tools       = application.tools.tools);
+
+        application.cms.core = createObject("component", "system.cfc.com.IcedReaper.cms.cms.cmsCore").init(errorHandler = application.cms.errorHandler
+                                                                                                          ,tablePrefix = application.tablePrefix
+                                                                                                          ,datasource  = application.datasource.user);
         
         application.cms.navigation = createObject("component", "system.cfc.com.IcedReaper.cms.cms.navigation").init(errorHandler = application.cms.errorHandler
                                                                                                                    ,tablePrefix  = application.tablePrefix

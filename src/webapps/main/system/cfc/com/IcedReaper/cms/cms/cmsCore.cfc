@@ -1,7 +1,8 @@
 ﻿component  implements="system.interfaces.com.irCMS.cms.cmsCore" {
-    public cmsCore function init(required string tablePrefix, required string datasource) {
-        variables.datasource  = arguments.datasource;
-        variables.tablePrefix = arguments.tablePrefix;
+    public cmsCore function init(required errorHandler errorHandler, required string tablePrefix, required string datasource) {
+        variables.datasource   = arguments.datasource;
+        variables.tablePrefix  = arguments.tablePrefix;
+        variables.errorHandler = arguments.errorHandler;
 
         return this;
     }
@@ -29,10 +30,10 @@
     		var qryModule = new Query().setDatasource(variables.datasource)
     		                           .setSQL("SELECT path "
     		                                  &"  FROM #variables.tablePrefix#_module "
-    		                                  &" WHERE moduleName=:moduleName "
-    		                                  &"   AND active=:active ")
+    		                                  &" WHERE moduleName = :moduleName "
+    		                                  &"   AND active     = :active ")
     		                           .addParam(name="moduleName", value=arguments.moduleName, cfsqltype="cf_sql_varchar")
-    		                           .addParam(name="active",     value=true,                 cfsqltype="cf_sql_varchar")
+    		                           .addParam(name="active",     value=true,                 cfsqltype="cf_sql_bit")
     		                           .execute()
     		                           .getResult();
     	   return qryModule.getRecordCount() == 1 ? qryModule.path[1] : '';
