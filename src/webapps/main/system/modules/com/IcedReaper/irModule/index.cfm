@@ -1,11 +1,11 @@
-<section class="irModules">
+<section class="irModule">
 <cfscript>
     param name="attributes.entities" default="[]";
     param name="attributes.show"     default="All";
 
     writedump(var="#attributes#");
 
-    application.themes[request.themeName].cfstatic.include('/css/modules/com/Icedreaper/irModules/main.less');
+    application.themes[request.themeName].cfstatic.include('/css/modules/com/Icedreaper/irModule/main.less');
     
     switch(attributes.entities.len()) {
         case 0: {
