@@ -19,8 +19,8 @@
                               .getResult();
         }
         catch(any e) {
-            return qFallback = queryNew('themeName', 'varchar').addRow(1)
-                                                               .setCell('themeName', 'irBootstrap');
+            return queryNew('themeName', 'varchar').addRow(1)
+                                                   .setCell('themeName', 'irBootstrap');
         }
     }
 }
