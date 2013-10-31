@@ -19,8 +19,8 @@
                               .getResult();
         }
         catch(any e) {
-            return queryNew('themeName', 'varchar').addRow(1)
-                                                   .setCell('themeName', 'irBootstrap');
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
         }
     }
 }
