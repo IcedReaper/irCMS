@@ -4,7 +4,7 @@
 
     application.themes[request.themeName].cfstatic.include('/css/modules/com/Icedreaper/irThemes/main.less');
     
-    if(application.security.permission.hasPermission(userName=request.userName, groupName='Theme', roleName='Reader')) {
+    if(application.security.permission.hasPermission(userName=request.userName, groupName='irTheme', roleName='Reader')) {
         switch(attributes.entities.len()) {
         	case 0: {
         		include template="overview.cfm";
