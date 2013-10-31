@@ -19,6 +19,8 @@ CREATE TABLE irCMS_modules_irRating_type (
 	CONSTRAINT "UK_irCMS_modules_irRating_type_typeName" UNIQUE      (typeName),
 	CONSTRAINT "FK_irCMS_modules_irRating_type_userId"   FOREIGN KEY (userId) REFERENCES irCMS_user (userId) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+CREATE INDEX "IDX_irCMS_modules_irRating_type_typeName" ON irCMS_modules_irRating_type USING btree (typeName);
+CREATE INDEX "FKI_irCMS_modules_irRating_type_userId"   ON irCMS_modules_irRating_type USING btree (userId);
 
 CREATE TABLE irCMS_modules_irRating_rating (
     ratingId     serial,
@@ -35,6 +37,9 @@ CREATE TABLE irCMS_modules_irRating_rating (
 	CONSTRAINT "UK_irCMS_modules_irRating_tag_tagName"     UNIQUE      (headline),
 	CONSTRAINT "FK_irCMS_modules_irRating_rating_userId"   FOREIGN KEY (userId)   REFERENCES irCMS_user (userId) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+CREATE INDEX "IDX_irCMS_modules_irRating_rating_headline" ON irCMS_modules_irRating_rating USING btree (headline);
+CREATE INDEX "FKI_irCMS_modules_irRating_rating_userId"   ON irCMS_modules_irRating_rating USING btree (userId);
+CREATE INDEX "FKI_irCMS_modules_irRating_rating_typeId"   ON irCMS_modules_irRating_rating USING btree (typeId);
 
 CREATE TABLE irCMS_modules_irRating_tag (
     tagId        serial,
@@ -46,6 +51,8 @@ CREATE TABLE irCMS_modules_irRating_tag (
 	CONSTRAINT "UK_irCMS_modules_irRating_tag_tagName" UNIQUE      (tagName),
 	CONSTRAINT "FK_irCMS_modules_irRating_tag_userId"  FOREIGN KEY (userId) REFERENCES irCMS_user (userId) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+CREATE INDEX "IDX_irCMS_modules_irRating_tag_tagName" ON irCMS_modules_irRating_tag USING btree (tagName);
+CREATE INDEX "FKI_irCMS_modules_irRating_tag_userId"  ON irCMS_modules_irRating_tag USING btree (userId);
 
 CREATE TABLE irCMS_modules_irRating_ratingTag (
     ratingTagId serial,
@@ -57,3 +64,5 @@ CREATE TABLE irCMS_modules_irRating_ratingTag (
 	CONSTRAINT "FK_irCMS_modules_irRating_ratingTag_ratingId"    FOREIGN KEY (ratingId)        REFERENCES irCMS_modules_irRating_rating (ratingId) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
 	CONSTRAINT "FK_irCMS_modules_irRating_ratingTag_tagId"       FOREIGN KEY (tagId)           REFERENCES irCMS_modules_irRating_tag    (tagId)    MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+CREATE INDEX "FKI_irCMS_modules_irRating_ratingTag_ratingId" ON irCMS_modules_irRating_type USING btree (ratingId);
+CREATE INDEX "FKI_irCMS_modules_irRating_ratingTag_tagId"    ON irCMS_modules_irRating_type USING btree (tagId);
