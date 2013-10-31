@@ -23,4 +23,23 @@
             abort;
         }
     }
+    
+    public string function getModulePath(required string moduleName) {
+    	try {
+    		var qryModule = new Query().setDatasource(variables.datasource)
+    		                           .setSQL("SELECT path "
+    		                                  &"  FROM #variables.tablePrefix#_module "
+    		                                  &" WHERE moduleName=:moduleName "
+    		                                  &"   AND active=:active ")
+    		                           .addParam(name="moduleName", value=arguments.moduleName, cfsqltype="cf_sql_varchar")
+    		                           .addParam(name="active",     value=true,                 cfsqltype="cf_sql_varchar")
+    		                           .execute()
+    		                           .getResult();
+    	   return qryModule.getRecordCount() == 1 ? qryModule.path[1] : '';
+    	}
+    	catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
 }
