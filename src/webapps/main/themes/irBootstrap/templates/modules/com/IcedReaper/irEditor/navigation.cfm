@@ -6,10 +6,11 @@
                 <cfif attributes.navigationId EQ 0>
                     <li><a href="/Admin/Pages/Neu">Neue Seite</a></li>
                 <cfelse>
-                    <li><a href="/Admin/Pages/#attributes.navigationId#/Neue Version">Neue Version</a></li>
+                    <li><a href="/Admin/Pages/#attributes.navigationId#/Neue Majorversion">Neue Majorversion</a></li>
+                    <li><a href="/Admin/Pages/#attributes.navigationId#/Neue Minorversion/#attributes.version#">Neue Minorversion</a></li>
                     <cfif attributes.pageToShow.isEditable()>
-                        <li><a href="/Admin/Pages/#attributes.navigationId#/2.0/Freigeben">Version freigeben</a></li>
-                        <li><a href="/Admin/Pages/#attributes.navigationId#/2.0/Löschen">Version löschen</a></li>
+                        <li><a href="/Admin/Pages/#attributes.navigationId#/#attributes.version#/Freigeben">Version freigeben</a></li>
+                        <li><a href="/Admin/Pages/#attributes.navigationId#/#attributes.version#/Löschen">Version löschen</a></li>
                     </cfif>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="##">

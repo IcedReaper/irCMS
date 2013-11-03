@@ -2,14 +2,12 @@
     param name="attributes.entities" default="[]";
     param name="attributes.show"     default="All";
 
-    writeDump(attributes);
-
     application.themes[request.themeName].cfstatic.include('/css/modules/com/Icedreaper/irEditor/main.less');
 
 
     attributes.navigationController = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationController").init(errorHandler = application.cms.errorHandler
                                                                                                                                        ,tablePrefix  = application.tablePrefix
-                                                                                                                                       ,datasource   = application.datasource.user);
+                                                                                                                                       ,datasource   = application.datasource.admin);
 
     if(application.security.permission.hasPermission(userName=request.userName, groupName='irEditor', roleName='Reader')) {
         switch(attributes.entities.len()) {
@@ -29,8 +27,16 @@
             }
             case 2: {
                 switch(attributes.entities[2]) {
-                    case 'Neue Version': {
-                        // e.g. */navigationId+/NewVersion
+                    case 'Neue Majorversion': {
+                        // e.g. */navigationId+/Neue Majorversion
+                        // create new version of the page
+                        attributes.newVersion = attributes.navigationController.createNewMajorVersion(userId = 1, navigationId = attributes.entities[1]);
+
+                        location url="/Admin/Pages/#attributes.entities[1]#/#attributes.newVersion#.0" addToken=false;
+                        break;
+                    }
+                    case 'Neue Minorversion': {
+                        // e.g. */navigationId+/Neue Minorversion
                         // create new version of the page
                         break;
                     }
