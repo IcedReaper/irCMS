@@ -196,9 +196,7 @@
                                                                                                               ,datasource   = application.datasource.user
                                                                                                               ,userName     = request.userName);
         
-        var success = request.actualUser.load();
-
-        if(success) {
+        if(request.actualUser.load()) {
             request.themeName = request.actualUser.getTheme();
             return true;
         }
@@ -215,11 +213,11 @@
             request.sesLink = url.ses;
         }
         
-        request.navigationInformation = application.cms.navigation.getNavigationInformation(sesLink=request.sesLink, language=request.language);
-        if(request.navigationInformation.navigationId == 0) {
+        var navigationInformation = application.cms.navigation.getNavigationInformation(sesLink=request.sesLink, language=request.language);
+        if(navigationInformation.navigationId == 0) {
             throw(type="Ses not found", detail="handleSes");
         }
-        request.actualMenu = application.cms.navigation.getActualNavigation(request.navigationInformation);
+        request.actualMenu = application.cms.navigation.getActualNavigation(navigationInformation);
         
         if(request.actualMenu.loadNavigation()) {
             return true;
