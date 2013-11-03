@@ -19,6 +19,7 @@ CREATE TABLE irCMS_contentStatus (
 	sortOrder       integer NOT NULL,
 	readyToRelease  boolean          DEFAULT false,
 	online          boolean NOT NULL DEFAULT false,
+	editable        boolean NOT NULL DEFAULT false,
 
 	CONSTRAINT "PK_irCMS_contentStatus_contentStatusId" PRIMARY KEY (contentStatusId),
 	CONSTRAINT "UK_irCMS_contentStatus_statusName"      UNIQUE      (statusName),
