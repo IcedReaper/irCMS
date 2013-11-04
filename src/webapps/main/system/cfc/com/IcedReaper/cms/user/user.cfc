@@ -150,7 +150,21 @@ component implements="system.interfaces.com.irCMS.user.user" {
         return [];
     }
     
-    public boolean function hasPermission(required string permissionName) {
-        return false;
+    public boolean function hasPermission(required string groupName, required string roleName) cachedWithin="#createTimespan(0, 0, 1, 0)#" {
+    	try {
+    		if(arguments.groupName == '' || arguments.roleName == '') {
+    			return false;
+    		}
+    		
+    		var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.permission.permission").init(errorHandler = variables.errorHandler
+    		                                                                                                       ,datasource   = variables.datasource
+    		                                                                                                       ,tablePrefix  = variables.tablePrefix);
+    		
+    		return oPermission.hasPermission(userName=variables.userName, groupName=arguments.groupName, roleName=arguments.roleName);
+    	}
+    	catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            return false;
+    	}
     }
 }

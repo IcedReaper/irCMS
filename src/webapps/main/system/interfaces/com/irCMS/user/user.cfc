@@ -25,5 +25,5 @@
     
     public array   function getPosts(required boolean comments = false);
     
-    public boolean function hasPermission(required string permissionName);
+    public boolean function hasPermission(required string groupName, required string roleName);
 }
