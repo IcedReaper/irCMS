@@ -3,9 +3,15 @@
     
     public boolean function hasPermission(required string userName, required string groupName, required string roleName);
     
-    public boolean function permissionIdExists();
-    public boolean function permissionNameExists();
+    // group functions
+    public boolean function groupAdd(required string groupName);
+    public boolean function groupRemove(required string groupName);
+    public numeric function groupGetId(required string groupName);
+    public boolean function groupExists(required string groupName);
     
-    public boolean function addPermission();
-    public boolean function removePermission();
+    // role functions
+    public boolean function roleAdd(required string roleName);
+    public boolean function roleRemove(required string roleName);
+    public numeric function roleGetId(required string roleName);
+    public boolean function roleExists(required string roleName);
 }

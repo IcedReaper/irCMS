@@ -28,23 +28,99 @@
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            return false;
+            abort;
         }
     }
       
-    public boolean function addPermission() {
-          
+    public boolean function groupAdd(required string groupName) {
+        try {
+        	return true;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
     }
 
-    public boolean function removePermission() {
-          
+    public boolean function groupRemove(required string groupName) {
+        try {
+            return true;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
     }
 
-    public boolean function permissionIdExists() {
-          
+    public numeric function groupGetId(required string groupName) {
+        try {
+            var qryGroup = new Query().setDatasource(variables.datasource)
+                                      .setSQL("SELECT permissionGroupId FROM #variables.tablePrefix#_permissionGroup WHERE groupName=:groupName")
+                                      .addParam(name="groupName", value=arguments.groupName, cfsqltype="cf_sql_varchar")
+                                      .execute()
+                                      .getResult();
+            
+            return qryGroup.getRecordCount() == 1 ? qryGroup.permissionGroupId[1] : 0;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
     }
-	
-    public boolean function permissionNameExists() {
-        
+
+    public boolean function groupExists(required string groupName) {
+        try {
+            return true;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
+      
+    public boolean function roleAdd(required string roleName) {
+        try {
+            return true;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
+
+    public boolean function roleRemove(required string roleName) {
+        try {
+            return true;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
+
+    public numeric function roleGetId(required string roleName) {
+        try {
+            var qryRole = new Query().setDatasource(variables.datasource)
+                                     .setSQL("SELECT permissionRoleId FROM #variables.tablePrefix#_permissionRole WHERE roleName=:roleName")
+                                     .addParam(name="roleName", value=arguments.roleName, cfsqltype="cf_sql_varchar")
+                                     .execute()
+                                     .getResult();
+            
+            return qryRole.getRecordCount() == 1 ? qryGroup.permissionRoleId[1] : 0;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
+
+    public boolean function roleExists(required string roleName) {
+        try {
+            return true;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
     }
 }
