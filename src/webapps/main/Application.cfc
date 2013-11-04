@@ -188,7 +188,7 @@
                 }
                 else {
                     session.userName = "Guest";
-                    // TODO: show wrong password page
+                    include template="/themes/#application.cms.core.getDefaultThemeName()#/templates/core/wrongLogin.cfm";
                 }
             }
             if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userName')) {
