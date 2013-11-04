@@ -11,4 +11,10 @@
     
     public boolean function login(required string username, required string password);
     public boolean function logout();
+    
+    public numeric function getId(required string userName);
+    public boolean function exists(required string userName);
+    
+    public boolean function grantPermission(required string userName, required string groupName, required string roleName);
+    public boolean function refusePermission(required string userName, required string groupName, required string roleName);
 }

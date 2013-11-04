@@ -197,4 +197,99 @@
     public boolean function logout() {
         return true;
     }
+    
+    public numeric function getId(required string userName) {
+        try {
+            var qryUser = new Query().setDatasource(variables.datasource)
+                                     .setSQL("SELECT userId "
+                                            &"  FROM #variables.tablePrefix#_user "
+                                            &" WHERE userName=:userName "
+                                            &"   AND active=:active ")
+                                     .addParam(name="userName", value=arguments.userName, cfsqltype="cf_sql_numeric")
+                                     .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
+                                     .execute()
+                                     .getResult();
+            
+            return qryUser.getRecordCount() == 1 ? qryUser.userId[1] : 0;
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
+    
+    public boolean function exists(required string userName) {
+        return this.getId(userName = arguments.userName) != 0;
+    }
+    
+    public boolean function grantPermission(required string userName, required string groupName, required string roleName) {
+        try {
+            var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(errorHandler = variables.errorHandler
+                                                                                                                 ,datasource   = variables.datasource
+                                                                                                                 ,tablePrefix  = variables.tablePrefix);
+            
+        	var userId  = this.getId(userName = arguments.userName);
+        	var groupId = oPermission.groupGetId(groupName = arguments.groupName);
+        	var roleId  = oPermission.roleGetId(roleName = arguments.roleName);
+        	
+        	if(userId != 0 && groupId != 0 && roleId != 0) {
+            	new Query().setDatasource(variables.datasource)
+            	           .setSQL("INSERT INTO #variables.tablePrefix#_permission"
+            	                  &"            ( "
+            	                  &"              userId, "
+            	                  &"              permissionGroupId, "
+                                  &"              permissionRoleId "
+            	                  &"            ) "
+            	                  &"     VALUES ( "
+                                  &"              :userId, "
+                                  &"              :groupId, "
+                                  &"              :roleId "
+            	                  &"            ) ")
+            	           .addParam(name="userId",  value=userId,  cfsqltype="cf_sql_numeric")
+                           .addParam(name="groupId", value=groupId, cfsqltype="cf_sql_numeric")
+                           .addParam(name="roleId",  value=roleId,  cfsqltype="cf_sql_numeric")
+            	           .execute();
+                return true;
+            }
+            else {
+            	return false;
+            }
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
+    
+    public boolean function refusePermission(required string userName, required string groupName, required string roleName) {
+        try {
+            var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(errorHandler = variables.errorHandler
+                                                                                                                 ,datasource   = variables.datasource
+                                                                                                                 ,tablePrefix  = variables.tablePrefix);
+            
+            var userId  = this.getId(userName = arguments.userName);
+            var groupId = oPermission.groupGetId(groupName = arguments.groupName);
+            var roleId  = oPermission.roleGetId(roleName = arguments.roleName);
+            
+            if(userId != 0 && groupId != 0 && roleId != 0) {
+                new Query().setDatasource(variables.datasource)
+                           .setSQL("DELETE FROM #variables.tablePrefix#_permission "
+                                  &"      WHERE userId            = :userId "
+                                  &"        AND permissionGroupId = :groupId "
+                                  &"        AND permissionRoleId  = :roleId ")
+                           .addParam(name="userId",  value=userId,  cfsqltype="cf_sql_numeric")
+                           .addParam(name="groupId", value=groupId, cfsqltype="cf_sql_numeric")
+                           .addParam(name="roleId",  value=roleId,  cfsqltype="cf_sql_numeric")
+                           .execute();
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
 }
