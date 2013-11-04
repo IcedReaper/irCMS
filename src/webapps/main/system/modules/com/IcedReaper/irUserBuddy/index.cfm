@@ -2,7 +2,7 @@
 	param name="attributes.userName" default="";
 	
 	if(attributes.userName != '') {
-		attributes.userData = createObject('component', 'system.cfc.com.IcedReaper.modules.irUser.irUser').init(errorHandler = application.cms.errorHandler
+		attributes.userData = createObject('component', 'system.cfc.com.IcedReaper.cms.user.user').init(errorHandler = application.cms.errorHandler
                                                                                                                ,datasource   = application.datasource.user
                                                                                                                ,tablePrefix  = application.tablePrefix
                                                                                                                ,userName     = attributes.userName);

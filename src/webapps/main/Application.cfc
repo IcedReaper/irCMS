@@ -57,16 +57,16 @@
     }
 
     private boolean function initCoreUser() {
-        application.user.controller = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUserController").init(errorHandler  = application.cms.errorHandler
-                                                                                                                                 ,cryptionApi   = application.tools.cryption
-                                                                                                                                 ,formValidator = application.tools.formValidator
-                                                                                                                                 ,tablePrefix   = application.tablePrefix
-                                                                                                                                 ,datasource    = application.datasource.admin);
+        application.user.controller = createObject("component", "system.cfc.com.IcedReaper.modules.user.userController").init(errorHandler  = application.cms.errorHandler
+                                                                                                                             ,cryptionApi   = application.tools.cryption
+                                                                                                                             ,formValidator = application.tools.formValidator
+                                                                                                                             ,tablePrefix   = application.tablePrefix
+                                                                                                                             ,datasource    = application.datasource.admin);
 
-        application.user.search = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUserSearch").init(errorHandler = application.cms.errorHandler
-                                                                                                                         ,cryptionApi  = application.tools.cryption
-                                                                                                                         ,tablePrefix  = application.tablePrefix
-                                                                                                                         ,datasource   = application.datasource.user);
+        application.user.search = createObject("component", "system.cfc.com.IcedReaper.modules.user.userSearch").init(errorHandler = application.cms.errorHandler
+                                                                                                                     ,cryptionApi  = application.tools.cryption
+                                                                                                                     ,tablePrefix  = application.tablePrefix
+                                                                                                                     ,datasource   = application.datasource.user);
         return true;
     }
 
@@ -208,10 +208,10 @@
     }
 
     private boolean function handleActualUser() {
-        request.actualUser = createObject("component", "system.cfc.com.IcedReaper.modules.irUser.irUser").init(errorHandler = application.cms.errorHandler
-                                                                                                              ,tablePrefix  = application.tablePrefix
-                                                                                                              ,datasource   = application.datasource.user
-                                                                                                              ,userName     = request.userName);
+        request.actualUser = createObject("component", "system.cfc.com.IcedReaper.modules.user.user").init(errorHandler = application.cms.errorHandler
+                                                                                                          ,tablePrefix  = application.tablePrefix
+                                                                                                          ,datasource   = application.datasource.user
+                                                                                                          ,userName     = request.userName);
         
         if(request.actualUser.load()) {
             request.themeName = request.actualUser.getTheme();
