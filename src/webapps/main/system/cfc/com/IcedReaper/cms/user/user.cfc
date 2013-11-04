@@ -156,9 +156,9 @@ component implements="system.interfaces.com.irCMS.user.user" {
     			return false;
     		}
     		
-    		var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.permission.permission").init(errorHandler = variables.errorHandler
-    		                                                                                                       ,datasource   = variables.datasource
-    		                                                                                                       ,tablePrefix  = variables.tablePrefix);
+    		var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(errorHandler = variables.errorHandler
+    		                                                                                                     ,datasource   = variables.datasource
+    		                                                                                                     ,tablePrefix  = variables.tablePrefix);
     		
     		return oPermission.hasPermission(userName=variables.userName, groupName=arguments.groupName, roleName=arguments.roleName);
     	}
