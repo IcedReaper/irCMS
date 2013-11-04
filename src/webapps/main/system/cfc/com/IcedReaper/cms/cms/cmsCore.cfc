@@ -14,10 +14,31 @@
     public query function getThemes() {
         try {
             return new Query().setDatasource(variables.datasource)
-                              .setSQL("SELECT themeId, themeName FROM #variables.tablePrefix#_theme WHERE active=:active")
+                              .setSQL("SELECT themeId, themeName "
+                                     &"  FROM #variables.tablePrefix#_theme "
+                                     &" WHERE active = :active ")
                               .addParam(name="active", value=true, cfsqltype="cf_sql_bit")
                               .execute()
                               .getResult();
+        }
+        catch(any e) {
+            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+            abort;
+        }
+    }
+
+    public string function getDefaultThemeName() {
+        try {
+            return new Query().setDatasource(variables.datasource)
+                              .setSQL("SELECT themeName "
+                                     &"  FROM #variables.tablePrefix#_theme "
+                                     &" WHERE active = :active "
+                                     &"   AND defaultTheme = :default ")
+                              .addParam(name="active",  value=true, cfsqltype="cf_sql_bit")
+                              .addParam(name="default", value=true, cfsqltype="cf_sql_bit")
+                              .execute()
+                              .getResult()
+                              .themeName[1];
         }
         catch(any e) {
             variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
