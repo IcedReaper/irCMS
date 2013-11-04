@@ -160,6 +160,13 @@
             request.userName   = "Guest";
             request.isLoggedIn = false;
         }
+        
+        if(! isDefined("url.ses") || url.ses == '') {
+            request.sesLink = '/';
+        }
+        else {
+            request.sesLink = url.ses;
+        }
 
         request.moduleClass = '';
         request.pageTitle   = '';
@@ -210,13 +217,6 @@
     }
 
     private boolean function handleSes() {
-        if(! isDefined("url.ses") || url.ses == '') {
-            request.sesLink = '/';
-        }
-        else {
-            request.sesLink = url.ses;
-        }
-        
         var navigationInformation = application.cms.navigation.getNavigationInformation(sesLink=request.sesLink, language=request.language);
         if(navigationInformation.navigationId == 0) {
             throw(type="Ses not found", detail="handleSes");
