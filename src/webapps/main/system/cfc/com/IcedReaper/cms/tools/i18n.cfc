@@ -1,7 +1,6 @@
 ﻿component implements="system.interfaces.com.irCMS.tools.i18n" {
-    public i18n function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required string fallbackLanguage) {
-    	variables.errorHandler     = arguments.errorHandler;
-        variables.tablePrefix      = arguments.tablePrefix;
+    public i18n function init(required string tablePrefix, required string datasource, required string fallbackLanguage) {
+    	variables.tablePrefix      = arguments.tablePrefix;
         variables.datasource       = arguments.datasource;
         variables.fallbackLanguage = arguments.fallbackLanguage;
     	variables.translation  = {};
@@ -12,33 +11,27 @@
     }
     
     public boolean function reload() {
-    	try {
-        	var translationReload = {};
-        	var qGetKeys = new Query().setDatasource(variables.datasource)
-                                      .setSQL("SELECT * FROM #variables.tablePrefix#_i18nKey WHERE active=:active")
-                                      .addParam(name="active", value=1, cfsqltype="cf_sql_varchar")
-                                      .execute()
-                                      .getResult();
-        	
-        	for(var i = 1; i <= qGetKeys.recordCount; i++) {
-        		translationReload[qGetKeys.keyName] = {};
-        		var qGetTranslation = new Query().setDatasource(variables.datasource)
-                                                 .setSQL("SELECT * FROM #variables.tablePrefix#_i18nTranslation WHERE keyName=:keyName")
-                                                 .addParam(name="keyName", value=qGetKeys.keyName, cfsqltype="cf_sql_varchar")
-                                                 .execute()
-                                                 .getResult();
-        		translationReload[qGetKeys.keyName][qGetTranslation.iso639] = qGetTranslation.translation;
-        	}
-        	
-        	variables.translation = '';
-        	variables.translation = duplicate(translationReload);
-        	
-        	return true;
-        }
-        catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            abort;
-        }
+		var translationReload = {};
+    	var qGetKeys = new Query().setDatasource(variables.datasource)
+                                  .setSQL("SELECT * FROM #variables.tablePrefix#_i18nKey WHERE active=:active")
+                                  .addParam(name="active", value=1, cfsqltype="cf_sql_varchar")
+                                  .execute()
+                                  .getResult();
+    	
+    	for(var i = 1; i <= qGetKeys.recordCount; i++) {
+    		translationReload[qGetKeys.keyName] = {};
+            var qGetTranslation = new Query().setDatasource(variables.datasource)
+                                             .setSQL("SELECT * FROM #variables.tablePrefix#_i18nTranslation WHERE keyName=:keyName")
+                                             .addParam(name="keyName", value=qGetKeys.keyName, cfsqltype="cf_sql_varchar")
+                                             .execute()
+                                             .getResult();
+    		translationReload[qGetKeys.keyName][qGetTranslation.iso639] = qGetTranslation.translation;
+    	}
+    	
+    	variables.translation = '';
+    	variables.translation = duplicate(translationReload);
+    	
+    	return true;
     }
     
     public numeric function addKey(required string keyName) {

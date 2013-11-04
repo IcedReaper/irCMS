@@ -5,9 +5,8 @@
     application.themes[request.themeName].cfstatic.include('/css/modules/com/Icedreaper/irEditor/main.less');
 
 
-    attributes.navigationController = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationController").init(errorHandler = application.cms.errorHandler
-                                                                                                                                       ,tablePrefix  = application.tablePrefix
-                                                                                                                                       ,datasource   = application.datasource.admin);
+    attributes.navigationController = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationController").init(tablePrefix = application.tablePrefix
+                                                                                                                                       ,datasource  = application.datasource.admin);
 
     if(application.security.permission.hasPermission(userName=request.userName, groupName='irEditor', roleName='Reader')) {
         switch(attributes.entities.len()) {

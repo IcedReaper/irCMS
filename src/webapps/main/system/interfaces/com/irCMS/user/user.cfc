@@ -1,5 +1,5 @@
 ﻿interface {
-    public user function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required string userName);
+    public user function init(required string tablePrefix, required string datasource, required string userName);
     
     public boolean function load();
     

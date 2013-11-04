@@ -1,7 +1,6 @@
 ﻿component implements="system.interfaces.com.irCMS.cms.navigationPoint" {
-    public navigationPoint function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required struct navigationInformation) {
-    	variables.errorHandler = arguments.errorHandler;
-        variables.tablePrefix  = arguments.tablePrefix;
+    public navigationPoint function init(required string tablePrefix, required string datasource, required struct navigationInformation) {
+    	variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
     	variables.navigationId = arguments.navigationInformation.navigationId;
         variables.sesLink      = arguments.navigationInformation.sesLink;
@@ -11,31 +10,25 @@
     }
     
     public boolean function loadNavigation() {
-    	try {
-            variables.actualMenu = new Query().setDatasource(variables.datasource)
-                                              .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
-                                                     &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
-                                                     &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity, n.nameOfNavigationToShow "
-                                                     &"           FROM #variables.tablePrefix#_navigation     n "
-                                                     &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
-                                                     &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
-                                                     &"LEFT OUTER JOIN #variables.tablePrefix#_module         m  ON cv.moduleId        = m.moduleId "
-                                                     &"          WHERE cs.online      = :online "
-                                                     &"            AND n.active       = :active "
-                                                     &"            AND n.navigationId = :navigationId "
-                                                     &"       ORDER BY n.sortOrder ASC")
-                                              .addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric")
-                                              .addParam(name="online",       value=true,                   cfsqltype="cf_sql_bit")
-                                              .addParam(name="active",       value=true,                   cfsqltype="cf_sql_bit")
-                                              .execute()
-                                              .getResult();
-            
-            return variables.actualMenu.recordCount == 1;
-        }
-        catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            abort;
-        }
+	    variables.actualMenu = new Query().setDatasource(variables.datasource)
+                                          .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
+                                                 &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
+                                                 &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity, n.nameOfNavigationToShow "
+                                                 &"           FROM #variables.tablePrefix#_navigation     n "
+                                                 &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
+                                                 &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                                                 &"LEFT OUTER JOIN #variables.tablePrefix#_module         m  ON cv.moduleId        = m.moduleId "
+                                                 &"          WHERE cs.online      = :online "
+                                                 &"            AND n.active       = :active "
+                                                 &"            AND n.navigationId = :navigationId "
+                                                 &"       ORDER BY n.sortOrder ASC")
+                                          .addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric")
+                                          .addParam(name="online",       value=true,                   cfsqltype="cf_sql_bit")
+                                          .addParam(name="active",       value=true,                   cfsqltype="cf_sql_bit")
+                                          .execute()
+                                          .getResult();
+        
+        return variables.actualMenu.recordCount == 1;
     }
     
     public string function getTitle() {
@@ -95,25 +88,19 @@
     	parent.linkname           = "";
     	parent.sesLink            = "";
     	
-    	try {
-            var qParent = new Query().setDatasource(variables.datasource)
-                                     .setSQL("SELECT m.navigationId, m.linkname, m.sesLink, m.parentnavigationId "
-                                            &"  FROM #variables.tablePrefix#_navigation AS n "
-                                            &" WHERE m.navigationId=:navigationId ")
-                                     .addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric")
-                                     .execute()
-                                     .getResult();
-            
-            if(qParent.recordCount == 0) {
-                parent.navigationId       = qParent.navigationId[1];
-                parent.parentNavigationId = qParent.parentNavigationId[1];
-                parent.linkname           = qParent.linkname[1];
-                parent.sesLink            = qParent.ses[1];
-            }
-        }
-        catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            abort;
+        var qParent = new Query().setDatasource(variables.datasource)
+                                 .setSQL("SELECT m.navigationId, m.linkname, m.sesLink, m.parentnavigationId "
+                                        &"  FROM #variables.tablePrefix#_navigation AS n "
+                                        &" WHERE m.navigationId=:navigationId ")
+                                 .addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric")
+                                 .execute()
+                                 .getResult();
+        
+        if(qParent.recordCount == 0) {
+            parent.navigationId       = qParent.navigationId[1];
+            parent.parentNavigationId = qParent.parentNavigationId[1];
+            parent.linkname           = qParent.linkname[1];
+            parent.sesLink            = qParent.ses[1];
         }
     	
     	return parent;
@@ -121,29 +108,22 @@
 
     public string function getModuleContent() {
         if(variables.actualMenu.path[1] != '') {
-            try {
-                var moduleContent    = "";
-                var moduleAttributes = {};
-                if(variables.actualMenu.moduleAttributes != '') {
-                    var moduleAttributes    = deserializeJSON(variables.actualMenu.moduleAttributes);
-                }
-                
-                moduleAttributes.sesLink  = variables.sesLink;
-                moduleAttributes.entities = this.getEntities();
+            var moduleContent    = "";
+            var moduleAttributes = {};
+            if(variables.actualMenu.moduleAttributes != '') {
+                var moduleAttributes    = deserializeJSON(variables.actualMenu.moduleAttributes);
+            }
+            
+            moduleAttributes.sesLink  = variables.sesLink;
+            moduleAttributes.entities = this.getEntities();
 
-                saveContent variable="moduleContent" {
-                    module template='/system/modules/'&variables.actualMenu.path[1]&'/index.cfm' attributeCollection=moduleAttributes;
-                }
-                return moduleContent;
+            saveContent variable="moduleContent" {
+                module template='/system/modules/'&variables.actualMenu.path[1]&'/index.cfm' attributeCollection=moduleAttributes;
             }
-            catch(eny e) {
-                variables.errorHandler.processError(themeName='irBootstrap', message=e.message, type=e.type);
-                abort;
-            }
+            return moduleContent;
         }
         else {
-            variables.errorHandler.processError(themeName='irBootstrap', message='No Module Path was found, but a module should be loaded', type='Missing Path');
-            abort;
+            throw(errorType="notFound", type=e.type, detail=e.detail);
         }
     }
 
@@ -226,12 +206,6 @@
     }
 
     public string function getTopNavigationName() {
-        try {
-            return variables.actualMenu.nameOfNavigationToShow[1];
-        }
-        catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message='No Module Path was found, but a module should be loaded', type='Missing Path');
-            abort;
-        }
+        return variables.actualMenu.nameOfNavigationToShow[1];
     }
 }

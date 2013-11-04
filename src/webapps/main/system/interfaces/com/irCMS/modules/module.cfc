@@ -1,5 +1,5 @@
 component {
-    public module function init(required errorHandler errorHandler, required string datasource, required string tablePrefix);
+    public module function init(required string datasource, required string tablePrefix);
     
     public array function searchByTag(required string tagName);
     public array function searchByHeadline(required string headline);

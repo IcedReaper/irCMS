@@ -1,6 +1,5 @@
 component implements="system.interfaces.com.irCMS.user.user" {
-    public user function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required string userName) {
-        variables.errorHandler = arguments.errorHandler;
+    public user function init(required string tablePrefix, required string datasource, required string userName) {
         variables.datasource   = arguments.datasource;
         variables.tablePrefix  = arguments.tablePrefix;
         variables.userName     = arguments.userName;
@@ -9,21 +8,15 @@ component implements="system.interfaces.com.irCMS.user.user" {
     }
 
     public boolean function load() {
-        try {
-            variables.userData = new Query().setDatasource(variables.datasource)
-                                            .setSQL("SELECT u.*, t.themeName, t.active as themeActive "
-                                                   &"  FROM #variables.tablePrefix#_User u "
-                                                   &" INNER JOIN #variables.tablePrefix#_theme t ON u.themeId = t.themeId "
-                                                   &" WHERE u.userName = :userName ")
-                                            .addParam(name="userName", value=variables.userName, cfsqltype="cf_sql_varchar")
-                                            .execute().getResult();
-            
-            return variables.userData.getRecordCount() == 1;
-        }
-        catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            return false;
-        }
+        variables.userData = new Query().setDatasource(variables.datasource)
+                                        .setSQL("SELECT u.*, t.themeName, t.active as themeActive "
+                                               &"  FROM #variables.tablePrefix#_User u "
+                                               &" INNER JOIN #variables.tablePrefix#_theme t ON u.themeId = t.themeId "
+                                               &" WHERE u.userName = :userName ")
+                                        .addParam(name="userName", value=variables.userName, cfsqltype="cf_sql_varchar")
+                                        .execute().getResult();
+        
+        return variables.userData.getRecordCount() == 1;
     }
     
     public string function getUsername() {
@@ -139,8 +132,7 @@ component implements="system.interfaces.com.irCMS.user.user" {
                     return qGetDefaultTheme.themeName[1];
                 }
                 else {
-                    variables.errorHandler.processError(themeName='irBootstrap', message="No Theme found!", detail="No default Theme nor any Theme found!");
-                    abort;
+                    throw(type="notFound", message="No Theme was found", detail="");
                 }
             }
         }
@@ -151,20 +143,13 @@ component implements="system.interfaces.com.irCMS.user.user" {
     }
     
     public boolean function hasPermission(required string groupName, required string roleName) cachedWithin="#createTimespan(0, 0, 1, 0)#" {
-    	try {
-    		if(arguments.groupName == '' || arguments.roleName == '') {
-    			return false;
-    		}
-    		
-    		var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(errorHandler = variables.errorHandler
-    		                                                                                                     ,datasource   = variables.datasource
-    		                                                                                                     ,tablePrefix  = variables.tablePrefix);
-    		
-    		return oPermission.hasPermission(userName=variables.userName, groupName=arguments.groupName, roleName=arguments.roleName);
-    	}
-    	catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
+        if(arguments.groupName == '' || arguments.roleName == '') {
             return false;
-    	}
+        }
+
+        var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(datasource   = variables.datasource
+                                                                                                             ,tablePrefix  = variables.tablePrefix);
+
+       return oPermission.hasPermission(userName=variables.userName, groupName=arguments.groupName, roleName=arguments.roleName);
     }
 }

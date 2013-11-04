@@ -1,5 +1,5 @@
 ﻿interface {
-    public navigation function init(required errorHandler errorHandler, required string tablePrefix, required string datasource);
+    public navigation function init(required string tablePrefix, required string datasource);
 
 
     public struct function getNavigationInformation(required string sesLink, required string language);

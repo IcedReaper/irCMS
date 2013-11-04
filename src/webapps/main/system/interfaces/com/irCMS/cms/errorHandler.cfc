@@ -4,6 +4,6 @@
     public boolean function logError(required string message, required string detail);
     public query function getError(required numeric pageNumber, required numeric errorsPerPage);
     
-    public void function processNotFound(required string themeName, required string type, required string detail);
+    public void function processNotFound(required string themeName, required string message, required string detail);
     public void function processError(required string themeName, required string message, required string detail);
 }

@@ -1,5 +1,5 @@
 ﻿interface {
-    public navigationPoint function init(required errorHandler errorHandler, required string  tablePrefix,required string datasource, required struct navigationInformation);
+    public navigationPoint function init(required string  tablePrefix,required string datasource, required struct navigationInformation);
     
     public boolean function loadNavigation();
     

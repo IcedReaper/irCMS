@@ -2,8 +2,7 @@
     attributes.navigationId = attributes.entities[1];
     attributes.version      = attributes.entities[2];
 
-    attributes.pageToShow = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationVersion").init(errorHandler = application.cms.errorHandler
-                                                                                                                          ,tablePrefix  = application.tablePrefix
+    attributes.pageToShow = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationVersion").init(tablePrefix  = application.tablePrefix
                                                                                                                           ,datasource   = application.datasource.user
                                                                                                                           ,navigationId = attributes.navigationId
                                                                                                                           ,version      = attributes.version);

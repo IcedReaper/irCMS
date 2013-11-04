@@ -1,5 +1,5 @@
 ﻿interface {
-    public i18n function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required string fallbackLanguage);
+    public i18n function init(required string tablePrefix, required string datasource, required string fallbackLanguage);
     
     public boolean function reload();
     

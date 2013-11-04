@@ -1,6 +1,5 @@
 component {
-    public navigationVersion function init(required errorHandler errorHandler, required string tablePrefix, required string datasource, required numeric navigationId, required numeric version) {
-        variables.errorHandler = arguments.errorHandler;
+    public navigationVersion function init(required string tablePrefix, required string datasource, required numeric navigationId, required numeric version) {
         variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
         variables.navigationId = arguments.navigationId;
@@ -10,30 +9,24 @@ component {
     }
     
     public boolean function load() {
-        try {
-            variables.actualMenu = new Query().setDatasource(variables.datasource)
-                                              .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
-                                                     &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
-                                                     &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity, n.nameOfNavigationToShow, "
-                                                     &"                cs.online, n.active, cv.versionComment, cs.editable "
-                                                     &"           FROM #variables.tablePrefix#_navigation     n "
-                                                     &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
-                                                     &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
-                                                     &"LEFT OUTER JOIN #variables.tablePrefix#_module         m  ON cv.moduleId        = m.moduleId "
-                                                     &"          WHERE cv.navigationId = :navigationId "
-                                                     &"            AND cv.version      = :version"
-                                                     &"       ORDER BY n.sortOrder ASC")
-                                              .addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric")
-                                              .addParam(name="version",      value=variables.version,      cfsqltype="cf_sql_float",  scale="2")
-                                              .execute()
-                                              .getResult();
-            
-            return variables.actualMenu.recordCount == 1;
-        }
-        catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            abort;
-        }
+        variables.actualMenu = new Query().setDatasource(variables.datasource)
+                                          .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
+                                                 &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
+                                                 &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity, n.nameOfNavigationToShow, "
+                                                 &"                cs.online, n.active, cv.versionComment, cs.editable "
+                                                 &"           FROM #variables.tablePrefix#_navigation     n "
+                                                 &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
+                                                 &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                                                 &"LEFT OUTER JOIN #variables.tablePrefix#_module         m  ON cv.moduleId        = m.moduleId "
+                                                 &"          WHERE cv.navigationId = :navigationId "
+                                                 &"            AND cv.version      = :version"
+                                                 &"       ORDER BY n.sortOrder ASC")
+                                          .addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric")
+                                          .addParam(name="version",      value=variables.version,      cfsqltype="cf_sql_float",  scale="2")
+                                          .execute()
+                                          .getResult();
+        
+        return variables.actualMenu.recordCount == 1;
     }
 
     public boolean function isActive() {

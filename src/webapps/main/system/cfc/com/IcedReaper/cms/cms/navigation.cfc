@@ -1,47 +1,38 @@
 ﻿component implements="system.interfaces.com.irCMS.cms.navigation" {
-    public navigation function init(required errorHandler errorHandler, required string tablePrefix, required string datasource) {
+    public navigation function init(required string tablePrefix, required string datasource) {
         variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
-        variables.errorHandler = arguments.errorHandler;
         
         return this;
     }
 
     public struct function getNavigationInformation(required string sesLink, required string language) {
-        try {
-            var qGetNavigationInformation = new Query().setDatasource(variables.datasource)
-                                                       .setSQL("     SELECT cv.navigationId, cv.sesLink, "
-                                                              &"            regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"
-                                                              &"       FROM #variables.tablePrefix#_ContentVersion cv "
-                                                              &" INNER JOIN #variables.tablePrefix#_navigation     n  ON cv.navigationId=n.navigationId "
-                                                              &" INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
-                                                              &"      WHERE cs.online  = :online "
-                                                              &"        AND n.active   = :active "
-                                                              &"        AND n.language = :language ")
-                                                       .addParam(name="sesLink",  value=arguments.sesLink,  cfsqltype="cf_sql_varchar")
-                                                       .addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar")
-                                                       .addParam(name="online",   value=true,               cfsqltype="cf_sql_bit")
-                                                       .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
-                                                       .execute()
-                                                       .getResult();
+        var qGetNavigationInformation = new Query().setDatasource(variables.datasource)
+                                                   .setSQL("     SELECT cv.navigationId, cv.sesLink, "
+                                                          &"            regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"
+                                                          &"       FROM #variables.tablePrefix#_ContentVersion cv "
+                                                          &" INNER JOIN #variables.tablePrefix#_navigation     n  ON cv.navigationId=n.navigationId "
+                                                          &" INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                                                          &"      WHERE cs.online  = :online "
+                                                          &"        AND n.active   = :active "
+                                                          &"        AND n.language = :language ")
+                                                   .addParam(name="sesLink",  value=arguments.sesLink,  cfsqltype="cf_sql_varchar")
+                                                   .addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar")
+                                                   .addParam(name="online",   value=true,               cfsqltype="cf_sql_bit")
+                                                   .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
+                                                   .execute()
+                                                   .getResult();
 
-            if(qGetNavigationInformation.recordCount == 1) {
-                return {
-                    entityMatches: this.cleanEntityMatches(arrayMerge([], qGetNavigationInformation.sesMatches[1])),
-                    navigationId:  qGetNavigationInformation.navigationId[1],
-                    sesLink:       qGetNavigationInformation.sesLink[1]
-                };
-            }
+        if(qGetNavigationInformation.recordCount == 1) {
+            return {
+                entityMatches: this.cleanEntityMatches(arrayMerge([], qGetNavigationInformation.sesMatches[1])),
+                navigationId:  qGetNavigationInformation.navigationId[1],
+                sesLink:       qGetNavigationInformation.sesLink[1]
+            };
         }
-        catch(any e) {
-            variables.errorHandler.processError(themeName='irBootstrap', message=e.message, detail=e.detail);
-            abort;
+        else {
+            throw(type="notFound", message="No navigation was found", detail=arguments.sesLink);
         }
-        return {
-            entityMatches: [],
-            navigationId:  0,
-            sesLink:       ''
-        };
     }
 
     private array function cleanEntityMatches(required array sesMatches) {
@@ -67,7 +58,7 @@
 
     public navigationPoint function getActualNavigation(required struct navigationInformation) {
         if(! isNull(arguments.navigationInformation.entityMatches) && ! isNull(arguments.navigationInformation.navigationId) && ! isNull(arguments.navigationInformation.sesLink)) {
-            return new navigationPoint(variables.errorHandler, variables.tablePrefix, variables.datasource, arguments.navigationInformation);
+            return new navigationPoint(variables.tablePrefix, variables.datasource, arguments.navigationInformation);
         }
         else {
             return null;
