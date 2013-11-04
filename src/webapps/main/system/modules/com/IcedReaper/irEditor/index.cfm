@@ -32,7 +32,7 @@
                         // create new version of the page
                         attributes.newVersion = attributes.navigationController.createNewMajorVersion(userId = 1, navigationId = attributes.entities[1]);
 
-                        location url="/Admin/Pages/#attributes.entities[1]#/#attributes.newVersion#.0" addToken=false;
+                        location(url="/Admin/Pages/#attributes.entities[1]#/#attributes.newVersion#.0", addToken=false);
                         break;
                     }
                     case 'Neue Minorversion': {
