@@ -104,31 +104,11 @@
     }
     
     public boolean function onRequestStart(required string targetPage) {
-        if(isDefined("url.reload")) {
-    		var reloadActions = listToArray(url.reload, ',');
-    		for(var i = 1; i <= arrayLen(reloadActions); i++) {
-    			switch(reloadActions[i]) {
-    				case 'applicationScope': {
-                        this.applicationRestart();
-                        break;
-    				}
-                    case 'clearCache': {
-                        application.tools.tools.clearQueryCache();
-                        break;
-                    }
-                    case 'cfstatic': {
-                        this.initCfStatic();
-                        break;
-                    }
-    				default: {
-    					break;
-    				}
-    			}
-    		}
+    	if(isDefined("url.reload")) {
+    	    this.handleReload(reload=url.reload);
     	}
 
     	if(application.installSuccessfull) {
-            
             try {
                 this.handleLoginOut();
                 this.handleDefaultVariables();
@@ -147,6 +127,31 @@
         	// todo: 
         	// initSetup();
         }
+    }
+    
+    private boolean function handleReload(required string reload) {
+	    var reloadActions = listToArray(arguments.reload, ',');
+        for(var i = 1; i <= arrayLen(reloadActions); i++) {
+            switch(reloadActions[i]) {
+                case 'applicationScope': {
+                    this.applicationRestart();
+                    break;
+                }
+                case 'clearCache': {
+                    application.tools.tools.clearQueryCache();
+                    break;
+                }
+                case 'cfstatic': {
+                    this.initCfStatic();
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+        }
+        
+        return true;
     }
 
     private boolean function handleDefaultVariables() {
