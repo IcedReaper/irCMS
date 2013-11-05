@@ -1,4 +1,4 @@
-﻿component  implements="system.interfaces.com.irCMS.tools.validatorCRUD" {
+﻿component implements="system.interfaces.com.irCMS.tools.validatorCRUD" {
     public validatorCRUD function init(required string tablePrefix, required string datasource) {
         variables.datasource  = arguments.datasource;
         variables.tablePrefix = arguments.tablePrefix;
