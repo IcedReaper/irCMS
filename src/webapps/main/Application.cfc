@@ -135,27 +135,28 @@
     }
     
     private boolean function handleReload(required string reload) {
-	    var reloadActions = listToArray(arguments.reload, ',');
-        for(var i = 1; i <= arrayLen(reloadActions); i++) {
-            switch(reloadActions[i]) {
-                case 'applicationScope': {
-                    this.applicationRestart();
-                    break;
-                }
-                case 'clearCache': {
-                    application.tools.tools.clearQueryCache();
-                    break;
-                }
-                case 'cfstatic': {
-                    this.initCfStatic();
-                    break;
-                }
-                default: {
-                    break;
+	    if(application.installSuccessfull) {
+            var reloadActions = listToArray(arguments.reload, ',');
+            for(var i = 1; i <= arrayLen(reloadActions); i++) {
+                switch(reloadActions[i]) {
+                    case 'applicationScope': { this.applicationRestart(); break; } // will reload all other
+                    case 'cfstatic':         { this.initCfStatic();       break; }
+                    case 'tools':            { this.initCoreTools();      break; }
+                    case 'validation':       { this.initValidation();     break; }
+                    case 'cms':              { this.initCoreCMS();        break; }
+                    case 'user':             { this.initCoreUser();       break; }
+                    case 'security':         { this.initCoreSecurity();   break; }
+                    
+                    case 'clearCache': {
+                        application.tools.tools.clearQueryCache();
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
             }
         }
-        
         return true;
     }
 
