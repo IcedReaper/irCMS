@@ -111,8 +111,8 @@
         	}
 
         	if(application.installSuccessfull) {
-                this.handleLoginOut();
                 this.handleDefaultVariables();
+                this.handleLoginOut();
                 this.handleActualUser();
                 this.handleSes();
                 this.renderContent();
