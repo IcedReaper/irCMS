@@ -47,7 +47,7 @@
     }
     
     public boolean function validate(required string content, required string ruleName, required boolean mandatory = true, string country, string language) {
-        if(arguments.mandatory && arguments.content.len() == 0) {
+        if(arguments.mandatory && arguments.content.length() == 0) {
         	return false;
         }
         
@@ -56,16 +56,10 @@
         }
         
         if(! isNull(arguments.country) && variables.validationRules[arguments.ruleName].keyExists(arguments.country)) {
-        	return false;
-        }
-        else {
-        	return this.doValidation(data = arguments.content, rule = variables.validationRules[arguments.ruleName][arguments.country].rule);
+            return this.doValidation(data = arguments.content, rule = variables.validationRules[arguments.ruleName][arguments.country].rule);
         }
         
         if(! isNull(arguments.language) && variables.validationRules[arguments.ruleName].keyExists(arguments.language)) {
-            return false;
-        }
-        else {
             return this.doValidation(data = arguments.content, rule = variables.validationRules[arguments.ruleName][arguments.language].rule);
         }
         
