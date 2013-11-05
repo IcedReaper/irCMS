@@ -6,7 +6,7 @@
         return this;
     }
     
-    public boolean function validate(required string content, required string ruleName, string iso3166, string iso639) {
+    public boolean function validate(required string content, required string ruleName, required boolean mandatory = true, string iso3166, string iso639,) {
         return true;
     }
     

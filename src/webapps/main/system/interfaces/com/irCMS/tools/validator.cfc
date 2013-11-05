@@ -1,7 +1,7 @@
 ﻿interface {
     public validator function init(required string tablePrefix, required string datasource);
     
-    public boolean function validate(required string content, required string ruleName, string iso3166, string iso639);
+    public boolean function validate(required string content, required string ruleName, required boolean mandatory, string iso3166, string iso639);
     
     public boolean function ruleExists(required string rule);
     public boolean function ruleNameExists(required string ruleName);
