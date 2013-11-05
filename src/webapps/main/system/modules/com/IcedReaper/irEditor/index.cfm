@@ -6,7 +6,7 @@
 
 
     attributes.navigationCRUD = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationCRUD").init(tablePrefix = application.tablePrefix
-                                                                                                                                       ,datasource  = application.datasource.admin);
+                                                                                                                           ,datasource  = application.datasource.admin);
 
     if(request.actualUser.hasPermission(groupName='irEditor', roleName='Reader')) {
         switch(attributes.entities.len()) {
