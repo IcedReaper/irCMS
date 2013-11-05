@@ -92,4 +92,8 @@ component {
     public string function getModuleAttributes() {
         return variables.actualMenu.moduleAttributes[1];
     }
+
+    public boolean function showContentForEntity() {
+        return variables.actualMenu.showContentForEntity[1];
+    }
 }
