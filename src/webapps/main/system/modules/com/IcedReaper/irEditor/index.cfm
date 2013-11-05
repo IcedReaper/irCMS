@@ -8,7 +8,7 @@
     attributes.navigationCRUD = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationCRUD").init(tablePrefix = application.tablePrefix
                                                                                                                                        ,datasource  = application.datasource.admin);
 
-    if(application.security.permission.hasPermission(userName=request.userName, groupName='irEditor', roleName='Reader')) {
+    if(request.actualUser.hasPermission(groupName='irEditor', roleName='Reader')) {
         switch(attributes.entities.len()) {
             case 0: {
                 include template="dashboard.cfm";
