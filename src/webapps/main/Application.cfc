@@ -38,7 +38,7 @@
                                                                                                                                ,datasource  = application.datasource.user);
                                                                                                                          
         application.validation.validatorCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.validation.validatorCRUD").init(tablePrefix = application.tablePrefix
-                                                                                                                                       ,datasource  = application.datasource.user);
+                                                                                                                                       ,datasource  = application.datasource.admin);
         
         return true;
     }
@@ -53,13 +53,13 @@
         
         application.cms.navigationCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.cms.navigationCRUD").init(formValidator = application.validation.validator
                                                                                                                            ,tablePrefix   = application.tablePrefix
-                                                                                                                           ,datasource    = application.datasource.user);
+                                                                                                                           ,datasource    = application.datasource.admin);
         
         application.cms.themeCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.cms.themeCRUD").init(tablePrefix  = application.tablePrefix
-                                                                                                                 ,datasource   = application.datasource.user);
+                                                                                                                 ,datasource   = application.datasource.admin);
         
         application.cms.moduleCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.cms.moduleCRUD").init(tablePrefix  = application.tablePrefix
-                                                                                                                   ,datasource   = application.datasource.user);
+                                                                                                                   ,datasource   = application.datasource.admin);
         return true;
     }
 
