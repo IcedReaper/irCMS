@@ -70,11 +70,44 @@ component {
         return modules;
     }
 
-    public boolean function install() {
-        return true;
+    public boolean function install(required struct moduleData, required numeric userId) {
+    	if(fileExists('/system/modules/#arguments.moduleData.modulePath#/index.cfm')) {
+    		new Query().setDatasource(variables.datasource)
+    		           .setSQL("INSERT INTO #variables.tablePrefix#_module "
+    		                  &"            ("
+    		                  &"              moduleName, "
+                              &"              path, "
+                              &"              userId, "
+                              &"              systemModule "
+    		                  &"            )"
+                              &"     VALUES ("
+                              &"              :moduleName, "
+                              &"              :path, "
+                              &"              :userId, "
+                              &"              :systemModule "
+                              &"            )")
+    		           .addParam(name="moduleName",   value=arguments.moduleData.moduleName,   cfsqltype="cf_sql_varchar")
+                       .addParam(name="path",         value=arguments.moduleData.modulePath,   cfsqltype="cf_sql_varchar")
+                       .addParam(name="userId",       value=arguments.userId,                  cfsqltype="cf_sql_numeric")
+                       .addParam(name="systemModule", value=arguments.moduleData.systemModule, cfsqltype="cf_sql_bit")
+    		           .execute();
+    		
+            return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 
-    public boolean function deInstall() {
+    public boolean function deInstall(required string moduleName) {
+        new Query().setDatasource(variables.datasource)
+                   .setSQL("UPDATE #variables.tablePrefix#_module "
+                          &"   SET active=:inActive "
+                          &" WHERE moduleName=:moduleName ")
+                   .addParam(name="moduleName",   value=arguments.moduleName, cfsqltype="cf_sql_varchar")
+                   .addParam(name="inActive",     value=false,                cfsqltype="cf_sql_varchar")
+                   .execute();
+        
         return true;
     }
 }
