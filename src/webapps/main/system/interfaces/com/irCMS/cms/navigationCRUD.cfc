@@ -1,5 +1,5 @@
 ﻿interface {
-    public navigation function init(required validator formValidator, required string tablePrefix, required string datasource);
+    public navigationCRUD function init(required validator formValidator, required string tablePrefix, required string datasource);
 
     public struct function getNavigationInformation(required string sesLink, required string language);
     public navigationPoint function getActualNavigation(required struct navigationInformation);

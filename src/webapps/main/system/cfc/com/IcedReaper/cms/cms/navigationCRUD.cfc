@@ -1,5 +1,5 @@
-﻿component implements="system.interfaces.com.irCMS.cms.navigation" {
-    public navigation function init(required validator formValidator, required string tablePrefix, required string datasource) {
+﻿component implements="system.interfaces.com.irCMS.cms.navigationCRUD" {
+    public navigationCRUD function init(required validator formValidator, required string tablePrefix, required string datasource) {
         variables.formValidator = arguments.formValidator;
         variables.tablePrefix   = arguments.tablePrefix;
         variables.datasource    = arguments.datasource;

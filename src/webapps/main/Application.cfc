@@ -45,9 +45,9 @@
         application.cms.core = createObject("component", "system.cfc.com.IcedReaper.cms.cms.cmsCore").init(tablePrefix = application.tablePrefix
                                                                                                           ,datasource  = application.datasource.user);
         
-        application.cms.navigation = createObject("component", "system.cfc.com.IcedReaper.cms.cms.navigation").init(formValidator = application.tools.formValidator
-                                                                                                                   ,tablePrefix   = application.tablePrefix
-                                                                                                                   ,datasource    = application.datasource.user);
+        application.cms.navigationCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.cms.navigationCRUD").init(formValidator = application.tools.formValidator
+                                                                                                                           ,tablePrefix   = application.tablePrefix
+                                                                                                                           ,datasource    = application.datasource.user);
         
         application.cms.themeCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.cms.themeCRUD").init(tablePrefix  = application.tablePrefix
                                                                                                                  ,datasource   = application.datasource.user);
