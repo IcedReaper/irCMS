@@ -30,7 +30,7 @@ component {
         return versions;
     }
 
-    public numeric function createNewMajorVersion(required numeric userId, required numeric navigationId) {
+    public struct function createNewMajorVersion(required navigation coreNavigation, required numeric userId, required numeric navigationId) {
         var qryGetLastVersion = new Query().setDatasource(variables.datasource)
                                            .setSQL("  SELECT * "
                                                   &"    FROM #variables.tablePrefix#_contentVersion "
@@ -51,61 +51,32 @@ component {
                                      .execute()
                                      .getResult()
                                      .contentStatusId[1];
-
-        new Query().setDatasource(variables.datasource)
-                   .setSQL("INSERT INTO #variables.tablePrefix#_contentVersion "
-                          &"            ( "
-                          &"              navigationId, "
-                          &"              version, "
-                          &"              contentStatusId, "
-                          &"              content, "
-                          &"              moduleId, "
-                          &"              moduleAttributes, "
-                          &"              linkName, "
-                          &"              sesLink, "
-                          &"              entityRegExp, "
-                          &"              title, "
-                          &"              description, "
-                          &"              keywords, "
-                          &"              canonical, "
-                          &"              userId, "
-                          &"              showContentForEntity "
-                          &"            ) "
-                          &"     VALUES ( "
-                          &"              :navigationId, "
-                          &"              :version, "
-                          &"              :contentStatusId, "
-                          &"              :content, "
-                          &"              :moduleId, "
-                          &"              :moduleAttributes, "
-                          &"              :linkName, "
-                          &"              :sesLink, "
-                          &"              :entityRegExp, "
-                          &"              :title, "
-                          &"              :description, "
-                          &"              :keywords, "
-                          &"              :canonical, "
-                          &"              :userId, "
-                          &"              :showContentForEntity "
-                          &"            ) ")
-                   .addParam(name="navigationId",         value=arguments.navigationId,                    cfsqltype="cf_sql_numeric")
-                   .addParam(name="version",              value=majorVersion,                              cfsqltype="cf_sql_float",   scale="2")
-                   .addParam(name="contentStatusId",      value=draftStatus,                               cfsqltype="cf_sql_numeric")
-                   .addParam(name="content",              value=qryGetLastVersion.content[1],              cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.content[1]              == '' ? true : false#")
-                   .addParam(name="moduleId",             value=qryGetLastVersion.moduleId[1],             cfsqltype="cf_sql_numeric", null="#qryGetLastVersion.moduleId[1]             == '' ? true : false#")
-                   .addParam(name="moduleAttributes",     value=qryGetLastVersion.moduleAttributes[1],     cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.moduleAttributes[1]     == '' ? true : false#")
-                   .addParam(name="linkName",             value=qryGetLastVersion.linkName[1],             cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.linkName[1]             == '' ? true : false#")
-                   .addParam(name="sesLink",              value=qryGetLastVersion.sesLink[1],              cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.sesLink[1]              == '' ? true : false#")
-                   .addParam(name="entityRegExp",         value=qryGetLastVersion.entityRegExp[1],         cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.entityRegExp[1]         == '' ? true : false#")
-                   .addParam(name="title",                value=qryGetLastVersion.title[1],                cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.title[1]                == '' ? true : false#")
-                   .addParam(name="description",          value=qryGetLastVersion.description[1],          cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.description[1]          == '' ? true : false#")
-                   .addParam(name="keywords",             value=qryGetLastVersion.keywords[1],             cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.keywords[1]             == '' ? true : false#")
-                   .addParam(name="canonical",            value=qryGetLastVersion.canonical[1],            cfsqltype="cf_sql_varchar", null="#qryGetLastVersion.canonical[1]            == '' ? true : false#")
-                   .addParam(name="userId",               value=arguments.userId,                          cfsqltype="cf_sql_numeric")
-                   .addParam(name="showContentForEntity", value=qryGetLastVersion.showContentForEntity[1], cfsqltype="cf_sql_bit",     null="#qryGetLastVersion.showContentForEntity[1] == '' ? true : false#")
-                   .execute();
-
-        return majorVersion;
+        
+        var contentVersionData = {
+            arguments.versionData.version:              majorVersion,
+            arguments.versionData.contentStatusId:      draftStatus,
+            arguments.versionData.content:              qryGetLastVersion.content[1],
+            arguments.versionData.moduleId:             qryGetLastVersion.moduleId[1],
+            arguments.versionData.moduleAttributes:     qryGetLastVersion.moduleAttributes[1],
+            arguments.versionData.linkName:             qryGetLastVersion.linkName[1],
+            arguments.versionData.sesLink:              qryGetLastVersion.sesLink[1],
+            arguments.versionData.entityRegExp:         qryGetLastVersion.entityRegExp[1],
+            arguments.versionData.title:                qryGetLastVersion.title[1],
+            arguments.versionData.description:          qryGetLastVersion.description[1],
+            arguments.versionData.keywords:             qryGetLastVersion.keywords[1],
+            arguments.versionData.canonical:            qryGetLastVersion.canonical[1],
+            arguments.versionData.showContentForEntity: qryGetLastVersion.showContentForEntity[1]
+        };
+        
+        var validation = arguments.coreNavigation.addContentVersion(navigationId, userId, versionData);
+        
+        if(validation.success) {
+            validation.majorVersion = majorversion;
+        }
+        else {
+            validation.majorVersion = 0;
+        }
+        return validation;
     }
 
     public numeric function createNewMinorVersion(required numeric navigationId, required numeric version) {

@@ -73,16 +73,16 @@
         var formValidation         = {};
         formValidation.email       = isDefined("arguments.userData.email")       ? variables.formValidator.validate(content=arguments.userData.email,       ruleName='Email')    : false;
         formValidation.title       = isDefined("arguments.userData.title")       ? variables.formValidator.validate(content=arguments.userData.title,       ruleName='String')   : false;
-        formValidation.facebook    = isDefined("arguments.userData.facebook")    ? variables.formValidator.validate(content=arguments.userData.facebook,    ruleName='String')   : false;
         formValidation.gender      = isDefined("arguments.userData.gender")      ? variables.formValidator.validate(content=arguments.userData.gender,      ruleName='Gender')   : false;
-        formValidation.github      = isDefined("arguments.userData.github")      ? variables.formValidator.validate(content=arguments.userData.github,      ruleName='String')   : false;
-        formValidation.hobbies     = isDefined("arguments.userData.hobbies")     ? variables.formValidator.validate(content=arguments.userData.hobbies,     ruleName='String')   : false;
-        formValidation.homepage    = isDefined("arguments.userData.homepage")    ? variables.formValidator.validate(content=arguments.userData.homepage,    ruleName='Homepage') : false;
-        formValidation.twitter     = isDefined("arguments.userData.twitter")     ? variables.formValidator.validate(content=arguments.userData.twitter,     ruleName='String')   : false;
         formValidation.emailPublic = isDefined("arguments.userData.emailPublic") ? variables.formValidator.validate(content=arguments.userData.emailPublic, ruleName='Boolean')  : false;
         formValidation.themeId     = true;// TODO validate if themeId exists
         formValidation.password    = isDefined("arguments.userData.password")    ? variables.formValidator.validate(content=arguments.userData.password,    ruleName='Password') : false;
         formValidation.showBuddies = isDefined("arguments.userData.showBuddies") ? variables.formValidator.validate(content=arguments.userData.showBuddies, ruleName='Boolean')  : false;
+        formValidation.facebook    = isDefined("arguments.userData.facebook")    ? variables.formValidator.validate(content=arguments.userData.facebook,    ruleName='String',   mandatory=false) : false;
+        formValidation.github      = isDefined("arguments.userData.github")      ? variables.formValidator.validate(content=arguments.userData.github,      ruleName='String',   mandatory=false) : false;
+        formValidation.hobbies     = isDefined("arguments.userData.hobbies")     ? variables.formValidator.validate(content=arguments.userData.hobbies,     ruleName='String',   mandatory=false) : false;
+        formValidation.homepage    = isDefined("arguments.userData.homepage")    ? variables.formValidator.validate(content=arguments.userData.homepage,    ruleName='Homepage', mandatory=false) : false;
+        formValidation.twitter     = isDefined("arguments.userData.twitter")     ? variables.formValidator.validate(content=arguments.userData.twitter,     ruleName='String',   mandatory=false) : false;
         
         if(formValidation.email) {
             formValidation.email = new Query().setDatasource(variables.datasource)

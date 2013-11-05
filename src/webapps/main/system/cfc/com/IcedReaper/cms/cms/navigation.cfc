@@ -1,7 +1,8 @@
 ﻿component implements="system.interfaces.com.irCMS.cms.navigation" {
-    public navigation function init(required string tablePrefix, required string datasource) {
-        variables.tablePrefix  = arguments.tablePrefix;
-        variables.datasource   = arguments.datasource;
+    public navigation function init(required validator formValidator, required string tablePrefix, required string datasource) {
+        variables.formValidator = arguments.formValidator;
+        variables.tablePrefix   = arguments.tablePrefix;
+        variables.datasource    = arguments.datasource;
         
         return this;
     }
@@ -65,24 +66,181 @@
         }
     }
     
-    public boolean function addNavigation(required singleUser user, required struct navigationData, numeric navigationId=0) {
+    /**
+     * Navigation header
+     **/
+    public boolean function addNavigation(required struct navigationData) {
         return true;
     }
 
-    public boolean function editNavigation(required singleUser user, required numeric navigationId, required struct navigationData) {
+    public boolean function editNavigation(required numeric navigationId, required numeric version, required struct navigationData) {
         return true;
     }
     
-    public boolean function deleteNavigation(required singleUser user, required numeric navigationId) {
+    public boolean function deleteNavigation(required numeric navigationId) {
         return true;
     }
     
-    public boolean function releaseNavigation(required singleUser user, required numeric navigationId, required numeric version) {
+    public boolean function releaseNavigation(required numeric navigationId, required numeric version) {
         return true;
     }
     
-    public boolean function revokeNavigation(required singleUser user, required numeric navigationId, required numeric version) {
+    public boolean function revokeNavigation(required numeric navigationId, required numeric version) {
         return true;
+    }
+    
+    /**
+     *  Content Version
+     **/
+    public struct function addContentVersion(required numeric navigationId, required numeric userId, required struct versionData) {
+    	var formValidation         = {};
+        formValidation.navigationId         = isDefined("arguments.versionData.navigationId")         ? variables.formValidator.validate(content=arguments.versionData.navigationId,         ruleName='Id')      : false;
+        formValidation.version              = isDefined("arguments.versionData.version")              ? variables.formValidator.validate(content=arguments.versionData.version,              ruleName='Version') : false;
+        formValidation.status               = isDefined("arguments.versionData.contentStatusId")      ? variables.formValidator.validate(content=arguments.versionData.contentStatusId,      ruleName='Id')      : false; 
+        formValidation.content              = isDefined("arguments.versionData.content")              ? variables.formValidator.validate(content=arguments.versionData.content,              ruleName='String')  : false;  
+        formValidation.linkName             = isDefined("arguments.versionData.linkName")             ? variables.formValidator.validate(content=arguments.versionData.linkName,             ruleName='String')  : false; 
+        formValidation.sesLink              = isDefined("arguments.versionData.sesLink")              ? variables.formValidator.validate(content=arguments.versionData.sesLink,              ruleName='SesLink') : false; 
+        formValidation.showContentForEntity = isDefined("arguments.versionData.showContentForEntity") ? variables.formValidator.validate(content=arguments.versionData.showContentForEntity, ruleName='Boolean') : false; 
+        formValidation.moduleId             = isDefined("arguments.versionData.moduleId")             ? variables.formValidator.validate(content=arguments.versionData.moduleId,             ruleName='Id',            mandatory=false) : false; 
+        formValidation.moduleAttributes     = isDefined("arguments.versionData.moduleAttributes")     ? variables.formValidator.validate(content=arguments.versionData.moduleAttributes,     ruleName='SimpleJson',    mandatory=false) : false;
+        formValidation.entityRegExp         = isDefined("arguments.versionData.entityRegExp")         ? variables.formValidator.validate(content=arguments.versionData.entityRegExp,         ruleName='RegExpression', mandatory=false) : false; 
+        formValidation.title                = isDefined("arguments.versionData.title")                ? variables.formValidator.validate(content=arguments.versionData.title,                ruleName='String',        mandatory=false) : false; 
+        formValidation.description          = isDefined("arguments.versionData.description")          ? variables.formValidator.validate(content=arguments.versionData.description,          ruleName='String',        mandatory=false) : false; 
+        formValidation.keywords             = isDefined("arguments.versionData.keywords")             ? variables.formValidator.validate(content=arguments.versionData.keywords,             ruleName='String',        mandatory=false) : false; 
+        formValidation.canonical            = isDefined("arguments.versionData.canonical")            ? variables.formValidator.validate(content=arguments.versionData.canonical,            ruleName='String',        mandatory=false) : false; 
+        
+        formValidation.status       = this.statusExists(contentStatusId = arguments.versioNData.contentStatusId);
+        formValidation.navigationId = this.navigationIdExists(navigationId   = arguments.navigationId);
+        formValidation.version      = this.versionAlreadyInUse(navigationId  = arguments.navigationId, version  = arguments.versionData.version);
+        formValidation.linkName     = this.linkNameAlreadyInUse(navigationId = arguments.navigationId, linkName = arguments.versionData.linkName);
+        formValidation.sesLink      = this.sesLinkAlreadyInUse(navigationId  = arguments.navigationId, sesLink  = arguments.versionData.sesLink); 
+        
+    	if(this.allSuccessfull(formValidation)) {
+            new Query().setDatasource(variables.datasource)
+                       .setSQL("INSERT INTO #variables.tablePrefix#_contentVersion "
+                              &"            ( "
+                              &"              navigationId, "
+                              &"              version, "
+                              &"              contentStatusId, "
+                              &"              content, "
+                              &"              moduleId, "
+                              &"              moduleAttributes, "
+                              &"              linkName, "
+                              &"              sesLink, "
+                              &"              entityRegExp, "
+                              &"              title, "
+                              &"              description, "
+                              &"              keywords, "
+                              &"              canonical, "
+                              &"              userId, "
+                              &"              showContentForEntity "
+                              &"            ) "
+                              &"     VALUES ( "
+                              &"              :navigationId, "
+                              &"              :version, "
+                              &"              :contentStatusId, "
+                              &"              :content, "
+                              &"              :moduleId, "
+                              &"              :moduleAttributes, "
+                              &"              :linkName, "
+                              &"              :sesLink, "
+                              &"              :entityRegExp, "
+                              &"              :title, "
+                              &"              :description, "
+                              &"              :keywords, "
+                              &"              :canonical, "
+                              &"              :userId, "
+                              &"              :showContentForEntity "
+                              &"            ) ")
+                       .addParam(name="navigationId",         value=arguments.navigationId,                     cfsqltype="cf_sql_numeric")
+                       .addParam(name="version",              value=arguments.versionData.version,              cfsqltype="cf_sql_float",   scale="2")
+                       .addParam(name="contentStatusId",      value=arguments.versionData.statusId,             cfsqltype="cf_sql_numeric")
+                       .addParam(name="content",              value=arguments.versionData.content,              cfsqltype="cf_sql_varchar", null="#arguments.versionData.content              EQ '' ? true : false#")
+                       .addParam(name="moduleId",             value=arguments.versionData.moduleId,             cfsqltype="cf_sql_numeric", null="#arguments.versionData.moduleId             EQ '' ? true : false#")
+                       .addParam(name="moduleAttributes",     value=arguments.versionData.moduleAttributes,     cfsqltype="cf_sql_varchar", null="#arguments.versionData.moduleAttributes     EQ '' ? true : false#")
+                       .addParam(name="linkName",             value=arguments.versionData.linkName,             cfsqltype="cf_sql_varchar")
+                       .addParam(name="sesLink",              value=arguments.versionData.sesLink,              cfsqltype="cf_sql_varchar")
+                       .addParam(name="entityRegExp",         value=arguments.versionData.entityRegExp,         cfsqltype="cf_sql_varchar", null="#arguments.versionData.entityRegExp         EQ '' ? true : false#")
+                       .addParam(name="title",                value=arguments.versionData.title,                cfsqltype="cf_sql_varchar", null="#arguments.versionData.title                EQ '' ? true : false#")
+                       .addParam(name="description",          value=arguments.versionData.description,          cfsqltype="cf_sql_varchar", null="#arguments.versionData.description          EQ '' ? true : false#")
+                       .addParam(name="keywords",             value=arguments.versionData.keywords,             cfsqltype="cf_sql_varchar", null="#arguments.versionData.keywords             EQ '' ? true : false#")
+                       .addParam(name="canonical",            value=arguments.versionData.canonical,            cfsqltype="cf_sql_varchar", null="#arguments.versionData.canonical            EQ '' ? true : false#")
+                       .addParam(name="userId",               value=arguments.userId,                           cfsqltype="cf_sql_numeric")
+                       .addParam(name="showContentForEntity", value=arguments.versionData.showContentForEntity, cfsqltype="cf_sql_bit")
+                       .execute();
+    	}
+        
+        return formValidation;
+    }
+    
+    /**
+     * HELPER FUNCTIONS
+     **/ 
+    public boolean function navigationIdExists(required numeric navigationId) {
+        return new Query().setDatasource(variables.datasource)
+                          .setSQL("SELECT navigationId "
+                                 &"  FROM #variables.tablePrefix#_navigation "
+                                 &" WHERE navigationId = :navigationId ")
+                          .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                          .execute()
+                          .getResult()
+                          .getRecordCount() == 1;
+    }
+    
+    public boolean function statusExists(required numeric contentStatusId) {
+    	return new Query().setDatasource(variables.datasource)
+                          .setSQL("SELECT contentStatusId "
+                                 &"  FROM #variables.tablePrefix#_contentStatus "
+                                 &" WHERE contentStatusId = :contentStatusId")
+                          .addParam(name="contentStatusId", value=arguments.contentStatusId, cfsqltype="cf_sql_numeric")
+                          .execute()
+                          .getResult()
+                          .getRecordCount() == 1;
+    }
+    
+    public boolean function versionAlreadyInUse(required numeric navigationId, required float version) {
+    	return new Query().setDatasource(variables.datasource)
+                          .setSQL("SELECT contentVersionId "
+                                 &"  FROM #variables.tablePrefix#_contentVersion "
+                                 &" WHERE navigationId = :navigationId "
+                                 &"   AND version      = :version ")
+                          .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                          .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_float", scale="2")
+                          .execute()
+                          .getResult()
+                          .getRecordCount() == 0;
+    }
+    
+    public boolean function linkNameAlreadyInUse(required numeric navigationId, required string linkName) {
+    	return new Query().setDatasource(variables.datasource)
+                          .setSQL("     SELECT contentVersionId "
+                                 &"       FROM #variables.tablePrefix#_contentVersion cv "
+                                 &" INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                                 &"      WHERE navigationId <> :navigationId "
+                                 &"        AND linkName     =  :linkName "
+                                 &"        AND cs.online    =  :online ")
+                          .addParam(name="navigationId", value=arguments.navigationId,         cfsqltype="cf_sql_numeric")
+                          .addParam(name="linkName",     value=arguments.versionData.linkName, cfsqltype="cf_sql_varchar")
+                          .addParam(name="online",       value=true,                           cfsqltype="cf_sql_bit")
+                          .execute()
+                          .getResult()
+                          .getRecordCount() == 0;
+    }
+    
+    public boolean function sesLinkAlreadyInUse(required numeric navigationId, requird string sesLink) {
+    	return new Query().setDatasource(variables.datasource)
+                          .setSQL("     SELECT contentVersionId "
+                                 &"       FROM #variables.tablePrefix#_contentVersion cv "
+                                 &" INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                                 &"      WHERE navigationId <> :navigationId "
+                                 &"        AND linkName     =  :linkName "
+                                 &"        AND cs.online    =  :online ")
+                          .addParam(name="navigationId", value=arguments.navigationId,        cfsqltype="cf_sql_numeric")
+                          .addParam(name="sesLink",      value=arguments.versionData.sesLink, cfsqltype="cf_sql_varchar")
+                          .addParam(name="online",       value=true,                          cfsqltype="cf_sql_bit")
+                          .execute()
+                          .getResult()
+                          .getRecordCount() == 0;
     }
     
     public array function getHierarchy(required string position, required string language, required numeric parentNavigationId) cachedWithin="#createTimespan(0,0,1,0)#" {
@@ -121,12 +279,15 @@
         return hierarchy;
     }
     
-    public string function getUserLink(required numeric userId) {
-          if(arguments.userId != 0) {
-              return '/User/'&arguments.userId; // replace by userName
-          }
-          else {
-              return '';
+    /**
+     * PRIVATE FUNCTIONS
+     */
+    private boolean function allSuccessfull(required struct structureToBeChecked) {
+        for(var element in arguments.structureToBeChecked) {
+            if(arguments.structureToBeChecked[element] == false) {
+                return false;
+            }
         }
+        return true;
     }
 }
