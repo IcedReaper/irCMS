@@ -55,8 +55,6 @@
         		           .execute();
         	}
         	
-        	// TODO: add unzip mechanism
-        	
         	new Query().setDatasource(variables.datasource)
                        .setSQL("INSERT INTO #variables.tablePrefix#_theme "
                               &"            ( "
@@ -85,6 +83,8 @@
         	           .setSQL("UPDATE #variables.tablePrefix#_theme SET active=:active")
         	           .addParam(name="active", value=true, cfsqltype="cf_sql_bit")
         	           .execute();
+        	
+        	return true;
         }
         else {
             throw(type="notFound", message="Theme not found", detail=arguments.themeName);
@@ -97,6 +97,8 @@
                        .setSQL("UPDATE #variables.tablePrefix#_theme SET active=:inactive")
                        .addParam(name="inactive", value=false, cfsqltype="cf_sql_bit")
                        .execute();
+            
+            return true;
         }
         else {
             throw(type="notFound", message="Theme not found", detail=arguments.themeName);
