@@ -1,5 +1,5 @@
 ﻿<cfparam name="attributes.position" default="header">
-<cfset headerNavigation = application.cms.navigation.getHierarchy(position=attributes.position, language=request.language, parentNavigationId=0)>
+<cfset headerNavigation = application.cms.navigationCRUD.getHierarchy(position=attributes.position, language=request.language, parentNavigationId=0)>
 <cfoutput>
     <header>
         <nav class="navbar navbar-inverse navbar-static-top">

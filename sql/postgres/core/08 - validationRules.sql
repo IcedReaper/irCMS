@@ -8,7 +8,7 @@ CREATE TABLE irCMS_validationRule (
     description      text,
     
     CONSTRAINT "PK_irCMS_validationRule_validationRuleId"        PRIMARY KEY (validationRuleId),
-    CONSTRAINT "UK_irCMS_validationRule_ruleNameCountryLanguage" UNIQUE      (ruleName, country, language),
+    CONSTRAINT "UK_irCMS_validationRule_ruleNameCountryLanguage" UNIQUE      (ruleName, country, language)
 );
 CREATE INDEX "IDX_irCMS_validationRule_ruleName"  ON irCMS_validationRule USING btree (ruleName, country, language);
 

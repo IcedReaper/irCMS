@@ -93,7 +93,7 @@
      *  Content Version
      **/
     public struct function addContentVersion(required numeric navigationId, required numeric userId, required struct versionData) {
-    	var formValidation         = {};
+        var formValidation         = {};
         formValidation.navigationId         = isDefined("arguments.versionData.navigationId")         ? variables.formValidator.validate(content=arguments.versionData.navigationId,         ruleName='Id')      : false;
         formValidation.version              = isDefined("arguments.versionData.version")              ? variables.formValidator.validate(content=arguments.versionData.version,              ruleName='Version') : false;
         formValidation.status               = isDefined("arguments.versionData.contentStatusId")      ? variables.formValidator.validate(content=arguments.versionData.contentStatusId,      ruleName='Id')      : false; 
@@ -115,7 +115,7 @@
         formValidation.linkName     = this.linkNameAlreadyInUse(navigationId = arguments.navigationId, linkName = arguments.versionData.linkName);
         formValidation.sesLink      = this.sesLinkAlreadyInUse(navigationId  = arguments.navigationId, sesLink  = arguments.versionData.sesLink); 
         
-    	if(this.allSuccessfull(formValidation)) {
+        if(this.allSuccessfull(formValidation)) {
             new Query().setDatasource(variables.datasource)
                        .setSQL("INSERT INTO #variables.tablePrefix#_contentVersion "
                               &"            ( "
@@ -168,7 +168,7 @@
                        .addParam(name="userId",               value=arguments.userId,                           cfsqltype="cf_sql_numeric")
                        .addParam(name="showContentForEntity", value=arguments.versionData.showContentForEntity, cfsqltype="cf_sql_bit")
                        .execute();
-    	}
+        }
         
         return formValidation;
     }
@@ -188,7 +188,7 @@
     }
     
     public boolean function statusExists(required numeric contentStatusId) {
-    	return new Query().setDatasource(variables.datasource)
+        return new Query().setDatasource(variables.datasource)
                           .setSQL("SELECT contentStatusId "
                                  &"  FROM #variables.tablePrefix#_contentStatus "
                                  &" WHERE contentStatusId = :contentStatusId")
@@ -199,7 +199,7 @@
     }
     
     public boolean function versionAlreadyInUse(required numeric navigationId, required float version) {
-    	return new Query().setDatasource(variables.datasource)
+        return new Query().setDatasource(variables.datasource)
                           .setSQL("SELECT contentVersionId "
                                  &"  FROM #variables.tablePrefix#_contentVersion "
                                  &" WHERE navigationId = :navigationId "
@@ -212,7 +212,7 @@
     }
     
     public boolean function linkNameAlreadyInUse(required numeric navigationId, required string linkName) {
-    	return new Query().setDatasource(variables.datasource)
+        return new Query().setDatasource(variables.datasource)
                           .setSQL("     SELECT contentVersionId "
                                  &"       FROM #variables.tablePrefix#_contentVersion cv "
                                  &" INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
@@ -228,7 +228,7 @@
     }
     
     public boolean function sesLinkAlreadyInUse(required numeric navigationId, requird string sesLink) {
-    	return new Query().setDatasource(variables.datasource)
+        return new Query().setDatasource(variables.datasource)
                           .setSQL("     SELECT contentVersionId "
                                  &"       FROM #variables.tablePrefix#_contentVersion cv "
                                  &" INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "

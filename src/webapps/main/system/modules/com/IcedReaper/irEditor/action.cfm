@@ -5,8 +5,8 @@
 
         switch(attributes.entities[3]) {
             case 'Freigeben': {
-                if(! applicaton.cms.navigation.isNavigationInUse(navigationId=attributes.navigationId, version=attributes.version)) {
-                    applicaton.cms.navigation.releaseNavigation(navigationId=attributes.navigationId, version=attributes.version);
+                if(! applicaton.cms.navigationCRUD.isNavigationInUse(navigationId=attributes.navigationId, version=attributes.version)) {
+                    applicaton.cms.navigationCRUD.releaseNavigation(navigationId=attributes.navigationId, version=attributes.version);
                 }
                 else {
                     module template="/themes/#request.themeName#/core/message.cfm" headline="Fehler!" text="Die Seite ist bereits in Benutzung und kann nicht weiter freigegeben werden.";
@@ -14,8 +14,8 @@
                 break;
             }
             case 'Löschen': {
-                if(! applicaton.cms.navigation.isNavigationInUse(navigationId=attributes.navigationId, version=attributes.version)) {
-                    applicaton.cms.navigation.deleteNavigation(navigationId=attributes.navigationId, version=attributes.version);
+                if(! applicaton.cms.navigationCRUD.isNavigationInUse(navigationId=attributes.navigationId, version=attributes.version)) {
+                    applicaton.cms.navigationCRUD.deleteNavigation(navigationId=attributes.navigationId, version=attributes.version);
                 }
                 else {
                     module template="/themes/#request.themeName#/core/message.cfm" headline="Fehler!" text="Die Seite ist bereits in Benutzung und kann nicht gelöscht werden.";

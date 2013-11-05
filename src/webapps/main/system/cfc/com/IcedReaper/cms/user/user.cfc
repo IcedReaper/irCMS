@@ -24,7 +24,7 @@ component implements="system.interfaces.com.irCMS.user.user" {
     }
     
     public string function getAvatar() {
-        return '/static/modules/irUser/'&variables.userData.avatar[1];
+        return variables.userData.avatar[1] != '' ? '/static/modules/irUser/'&variables.userData.avatar[1] : '';
     }
     
     public string function getTitle() {

@@ -34,11 +34,11 @@
     }
     
     private boolean function initValidation() {
-        application.validation.validator = createObject("component", "system.cfc.com.IcedReaper.cms.tools.validator").init(tablePrefix = application.tablePrefix
-                                                                                                                          ,datasource  = application.datasource.user);
+        application.validation.validator = createObject("component", "system.cfc.com.IcedReaper.cms.validation.validator").init(tablePrefix = application.tablePrefix
+                                                                                                                               ,datasource  = application.datasource.user);
                                                                                                                          
-        application.validation.validatorCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.tools.validatorCRUD").init(tablePrefix = application.tablePrefix
-                                                                                                                                  ,datasource  = application.datasource.user);
+        application.validation.validatorCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.validation.validatorCRUD").init(tablePrefix = application.tablePrefix
+                                                                                                                                       ,datasource  = application.datasource.user);
         
         return true;
     }
@@ -223,9 +223,9 @@
     }
 
     private boolean function handleSes() {
-        var navigationInformation = application.cms.navigation.getNavigationInformation(sesLink=request.sesLink, language=request.language);
+        var navigationInformation = application.cms.navigationCRUD.getNavigationInformation(sesLink=request.sesLink, language=request.language);
 
-        request.actualMenu = application.cms.navigation.getActualNavigation(navigationInformation);
+        request.actualMenu = application.cms.navigationCRUD.getActualNavigation(navigationInformation);
         
         if(request.actualMenu.loadNavigation()) {
             return true;

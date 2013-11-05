@@ -29,7 +29,7 @@
                     case 'Neue Majorversion': {
                         // e.g. */navigationId+/Neue Majorversion
                         // create new version of the page
-                        attributes.validation = attributes.navigationCRUD.createNewMajorVersion(coreNavigation = application.cms.navigation, userId = 1, navigationId = attributes.entities[1]);
+                        attributes.validation = attributes.navigationCRUD.createNewMajorVersion(coreNavigation = application.cms.navigationCRUD, userId = 1, navigationId = attributes.entities[1]);
                         
                         if(attributes.validation.success) {
                             location(url="/Admin/Pages/#attributes.entities[1]#/#attributes.validation.majorVersion#.0", addToken=false);
