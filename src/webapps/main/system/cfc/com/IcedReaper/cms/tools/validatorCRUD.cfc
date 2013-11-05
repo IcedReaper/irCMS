@@ -1,5 +1,5 @@
-﻿component  implements="system.interfaces.com.irCMS.tools.validatorController" {
-    public validator function init(required string tablePrefix, required string datasource) {
+﻿component  implements="system.interfaces.com.irCMS.tools.validatorCRUD" {
+    public validatorCRUD function init(required string tablePrefix, required string datasource) {
         variables.datasource  = arguments.datasource;
         variables.tablePrefix = arguments.tablePrefix;
         

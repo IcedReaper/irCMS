@@ -5,7 +5,7 @@
     application.themes[request.themeName].cfstatic.include('/css/modules/com/Icedreaper/irEditor/main.less');
 
 
-    attributes.navigationController = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationController").init(tablePrefix = application.tablePrefix
+    attributes.navigationCRUD = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationCRUD").init(tablePrefix = application.tablePrefix
                                                                                                                                        ,datasource  = application.datasource.admin);
 
     if(application.security.permission.hasPermission(userName=request.userName, groupName='irEditor', roleName='Reader')) {
@@ -29,7 +29,7 @@
                     case 'Neue Majorversion': {
                         // e.g. */navigationId+/Neue Majorversion
                         // create new version of the page
-                        attributes.validation = attributes.navigationController.createNewMajorVersion(coreNavigation = application.cms.navigation, userId = 1, navigationId = attributes.entities[1]);
+                        attributes.validation = attributes.navigationCRUD.createNewMajorVersion(coreNavigation = application.cms.navigation, userId = 1, navigationId = attributes.entities[1]);
                         
                         if(attributes.validation.success) {
                             location(url="/Admin/Pages/#attributes.entities[1]#/#attributes.validation.majorVersion#.0", addToken=false);

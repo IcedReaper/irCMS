@@ -1,5 +1,5 @@
 ﻿interface {
-    public themeController function init(required string tablePrefix, required string datasource);
+    public themeCRUD function init(required string tablePrefix, required string datasource);
 
     public array function search(required string themeName);
     

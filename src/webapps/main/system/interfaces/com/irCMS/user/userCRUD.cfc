@@ -1,5 +1,5 @@
 ﻿interface {
-    public userController function init(required cryption cryptionApi, required validator formValidator, required string tablePrefix, required string datasource);
+    public userCRUD function init(required cryption cryptionApi, required validator formValidator, required string tablePrefix, required string datasource);
     
     public boolean function activateUser(required string userName);
     public boolean function deactivateUser(required string userName);

@@ -1,5 +1,5 @@
 component {
-    public moduleController function init(required string tablePrefix, required string datasource) {
+    public moduleCRUD function init(required string tablePrefix, required string datasource) {
         variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
         

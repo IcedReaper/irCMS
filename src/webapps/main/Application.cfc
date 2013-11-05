@@ -32,8 +32,8 @@
         application.tools.formValidator = createObject("component", "system.cfc.com.IcedReaper.cms.tools.validator").init(tablePrefix = application.tablePrefix
                                                                                                                          ,datasource  = application.datasource.user);
                                                                                                                          
-        application.tools.validatorController = createObject("component", "system.cfc.com.IcedReaper.cms.tools.validatorController").init(tablePrefix = application.tablePrefix
-                                                                                                                                         ,datasource  = application.datasource.user);
+        application.tools.validatorCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.tools.validatorCRUD").init(tablePrefix = application.tablePrefix
+                                                                                                                             ,datasource  = application.datasource.user);
         return true;
     }
 
@@ -49,19 +49,19 @@
                                                                                                                    ,tablePrefix   = application.tablePrefix
                                                                                                                    ,datasource    = application.datasource.user);
         
-        application.cms.themeController = createObject("component", "system.cfc.com.IcedReaper.cms.cms.themeController").init(tablePrefix  = application.tablePrefix
-                                                                                                                             ,datasource   = application.datasource.user);
+        application.cms.themeCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.cms.themeCRUD").init(tablePrefix  = application.tablePrefix
+                                                                                                                 ,datasource   = application.datasource.user);
         
-        application.cms.moduleController = createObject("component", "system.cfc.com.IcedReaper.cms.cms.moduleController").init(tablePrefix  = application.tablePrefix
-                                                                                                                               ,datasource   = application.datasource.user);
+        application.cms.moduleCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.cms.moduleCRUD").init(tablePrefix  = application.tablePrefix
+                                                                                                                   ,datasource   = application.datasource.user);
         return true;
     }
 
     private boolean function initCoreUser() {
-        application.user.controller = createObject("component", "system.cfc.com.IcedReaper.cms.user.userController").init(cryptionApi   = application.tools.cryption
-                                                                                                                         ,formValidator = application.tools.formValidator
-                                                                                                                         ,tablePrefix   = application.tablePrefix
-                                                                                                                         ,datasource    = application.datasource.admin);
+        application.user.userCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.user.userCRUD").init(cryptionApi   = application.tools.cryption
+                                                                                                                 ,formValidator = application.tools.formValidator
+                                                                                                                 ,tablePrefix   = application.tablePrefix
+                                                                                                                 ,datasource    = application.datasource.admin);
 
         application.user.search = createObject("component", "system.cfc.com.IcedReaper.cms.user.userSearch").init(cryptionApi  = application.tools.cryption
                                                                                                                  ,tablePrefix  = application.tablePrefix
@@ -178,7 +178,7 @@
 
     private boolean function handleLoginOut() {
         if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
-            if(application.user.controller.login(username = form.username, password = form.password)) {
+            if(application.user.userCRUD.login(username = form.username, password = form.password)) {
                 session.userName = form.username;
                 location(url=request.sesLink, addToken=false);
             }
@@ -188,7 +188,7 @@
             }
         }
         if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userName')) {
-            if(application.user.controller.login(username=form.username, password=form.password)) {
+            if(application.user.userCRUD.login(username=form.username, password=form.password)) {
                 session.userName = "Guest";
                 structClear(session);
             }

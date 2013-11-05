@@ -1,5 +1,5 @@
 component {
-    public navigationController function init(required string tablePrefix, required string datasource) {
+    public navigationCRUD function init(required string tablePrefix, required string datasource) {
         variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
         

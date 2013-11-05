@@ -84,7 +84,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <cfset installedModules = application.cms.moduleController.getActive()>
+                                    <cfset installedModules = application.cms.moduleCRUD.getActive()>
                                     <cfloop from="1" to="#installedModules.len()#" index="moduleIndex">
                                         <div class="row">
                                             <div class="col-md-12">

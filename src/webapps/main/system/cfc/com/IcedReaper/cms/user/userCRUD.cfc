@@ -1,5 +1,5 @@
-﻿component implements="system.interfaces.com.irCMS.user.userController" {
-    public userController function init(required cryption cryptionApi, required validator formValidator, required string tablePrefix, required string datasource) {
+﻿component implements="system.interfaces.com.irCMS.user.userCRUD" {
+    public userCRUD function init(required cryption cryptionApi, required validator formValidator, required string tablePrefix, required string datasource) {
         variables.cryptionApi   = arguments.cryptionApi;
         variables.formValidator = arguments.formValidator;
         variables.tablePrefix   = arguments.tablePrefix;

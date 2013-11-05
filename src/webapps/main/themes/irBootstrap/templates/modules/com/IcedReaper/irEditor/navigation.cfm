@@ -17,7 +17,7 @@
                             Versionen <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <cfset versions = attributes.navigationController.getVersions(navigationId=attributes.navigationId)>
+                            <cfset versions = attributes.navigationCRUD.getVersions(navigationId=attributes.navigationId)>
                             <cfset lastVersion = 0>
                             <cfloop from="1" to="#versions.len()#" index="versionIndex">
                                 <cfif lastVersion NEQ 0 AND lastVersion NEQ versions[versionIndex].major>

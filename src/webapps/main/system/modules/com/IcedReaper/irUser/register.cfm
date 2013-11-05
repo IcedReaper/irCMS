@@ -1,7 +1,7 @@
 <cfscript>
     if(! request.isLoggedIn) {
         if(isDefined("form") && ! form.isEmpty()) {
-            attributes.userCreation = application.user.controller.createUser(userData=form);
+            attributes.userCreation = application.user.userCRUD.createUser(userData=form);
 
             if(attributes.userCreation.success) {
                 session.userName = form.username;

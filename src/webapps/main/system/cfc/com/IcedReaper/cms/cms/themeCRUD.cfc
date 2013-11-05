@@ -1,5 +1,5 @@
-﻿component implements="system.interfaces.com.irCMS.cms.themeController" {
-    public themeController function init(required string tablePrefix, required string datasource) {
+﻿component implements="system.interfaces.com.irCMS.cms.themeCRUD" {
+    public themeCRUD function init(required string tablePrefix, required string datasource) {
     	variables.tablePrefix  = arguments.tablePrefix;
     	variables.datasource   = arguments.datasource;
     	
