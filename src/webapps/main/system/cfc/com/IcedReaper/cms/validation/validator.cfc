@@ -67,6 +67,6 @@
     }
     
     private boolean function doValidation(required any data, required string rule) {
-        return (javaCast('string', arguments.data).replaceAll(arguments.rule, "") == "");
+        return (javaCast('string', arguments.data).replaceAll(arguments.rule, "").trim() == "");
     }
 }
