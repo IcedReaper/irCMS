@@ -26,10 +26,14 @@
     }
 
     private boolean function initCoreTools() {
-        application.tools.tools         = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
-        application.tools.cryption      = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(structSeparator=';');
+        application.tools.tools = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
+        application.tools.cryption = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(structSeparator=';');
+        
         application.tools.formValidator = createObject("component", "system.cfc.com.IcedReaper.cms.tools.validator").init(tablePrefix = application.tablePrefix
                                                                                                                          ,datasource  = application.datasource.user);
+                                                                                                                         
+        application.tools.validatorController = createObject("component", "system.cfc.com.IcedReaper.cms.tools.validatorController").init(tablePrefix = application.tablePrefix
+                                                                                                                                         ,datasource  = application.datasource.user);
         return true;
     }
 
