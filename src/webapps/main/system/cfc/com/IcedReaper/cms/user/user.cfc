@@ -19,6 +19,10 @@ component implements="system.interfaces.com.irCMS.user.user" {
         return variables.userData.getRecordCount() == 1;
     }
     
+    public numeric function getUserId() {
+        return variables.userData.userId[1];
+    }
+    
     public string function getUsername() {
         return variables.userData.userName[1];
     }

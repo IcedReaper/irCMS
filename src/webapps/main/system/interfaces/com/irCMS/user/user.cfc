@@ -3,6 +3,7 @@
     
     public boolean function load();
     
+    public numeric function getUserId();
     public string  function getUsername();
     public string  function getAvatar();
     public string  function getTitle();
