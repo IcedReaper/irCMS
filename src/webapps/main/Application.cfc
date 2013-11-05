@@ -87,13 +87,15 @@
         application.themes = {};
 
         for(var i = 1; i <= qThemes.getRecordCount(); i++) {
-            application.themes[ qThemes.themeName[i] ] = {};
-            application.themes[ qThemes.themeName[i] ].cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/#qThemes.themeName[i]#')
-                                                                                                                         ,staticUrl           = "/themes/#qThemes.themeName[i]#/"
-                                                                                                                         ,includeAllByDefault = false
-                                                                                                                         ,forceCompilation    = true
-                                                                                                                         ,checkForUpdates     = true
-                                                                                                                         ,excludePattern      = '.*/inc_.*');
+        	if(qThemes.useCfStatic[i]) {
+                application.themes[ qThemes.themeName[i] ] = {};
+                application.themes[ qThemes.themeName[i] ].cfstatic = createObject("component", "org.cfstatic.cfstatic").init(staticDirectory     = ExpandPath('./themes/#qThemes.themeName[i]#')
+                                                                                                                             ,staticUrl           = "/themes/#qThemes.themeName[i]#/"
+                                                                                                                             ,includeAllByDefault = false
+                                                                                                                             ,forceCompilation    = true
+                                                                                                                             ,checkForUpdates     = true
+                                                                                                                             ,excludePattern      = '.*/inc_.*');
+            }
         }
         return true;
     }

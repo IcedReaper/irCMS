@@ -12,7 +12,7 @@
 
     public query function getThemes() {
         return new Query().setDatasource(variables.datasource)
-                          .setSQL("SELECT themeId, themeName "
+                          .setSQL("SELECT themeId, themeName, useCfStatic "
                                  &"  FROM #variables.tablePrefix#_theme "
                                  &" WHERE active = :active ")
                           .addParam(name="active", value=true, cfsqltype="cf_sql_bit")

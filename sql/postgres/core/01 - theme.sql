@@ -3,6 +3,7 @@
     themename    text    NOT NULL,
     active       boolean          DEFAULT true,
     defaulttheme boolean          DEFAULT false,
+    useCfStatic  boolean NOT NULL DEFAULT true,
   
     CONSTRAINT "PK_irCMS_theme_themeId" PRIMARY KEY (themeid),
     CONSTRAINT "UK_irCMS_theme_name"    UNIQUE      (themename)
