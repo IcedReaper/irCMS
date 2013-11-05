@@ -6,4 +6,6 @@
     public string function getModulePath(required string moduleName);
     public query  function getThemes();
     public string function getDefaultThemeName();
+    
+    public string function getUserLink(required numeric userId);
 }

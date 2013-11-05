@@ -51,4 +51,13 @@
             throw(type="notFound", message="Path of Module not found", detail=arguments.moduleName);
         }
     }
+    
+    public string function getUserLink(required numeric userId) {
+          if(arguments.userId != 0) {
+              return '/User/'&arguments.userId; // replace by userName
+          }
+          else {
+              return '';
+        }
+    }
 }
