@@ -53,7 +53,6 @@ component {
                                      .contentStatusId[1];
         
         var contentVersionData = {
-            arguments.versionData.version:              majorVersion,
             arguments.versionData.contentStatusId:      draftStatus,
             arguments.versionData.content:              qryGetLastVersion.content[1],
             arguments.versionData.moduleId:             qryGetLastVersion.moduleId[1],
@@ -68,7 +67,7 @@ component {
             arguments.versionData.showContentForEntity: qryGetLastVersion.showContentForEntity[1]
         };
         
-        var validation = arguments.coreNavigation.addContentVersion(navigationId, userId, versionData);
+        var validation = arguments.coreNavigation.addContentVersion(navigationId=arguments.navigationId, userId=arguments.userId, userId, version=majorVersion, versionData=contentVersionData);
         
         if(validation.success) {
             validation.majorVersion = majorversion;

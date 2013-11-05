@@ -1,5 +1,10 @@
+<cfscript>
+    request.pageTitle = "Bearbeiten der Seite #attributes.pageToShow.getSesLink()#";
+    application.themes.irBootstrap.cfstatic.include('/js/modules/irEditor/');
+</cfscript>
 <cfoutput>
-    <form action="" method="post" class="form-horizontal" role="form">
+    <form action="#request.sesLink#" method="post" class="form-horizontal" role="form" id="irEditor">
+        <input type="hidden" name="content">
         <div class="row">
             <div class="col-md-12">
                 <cfinclude template="navigation.cfm">
@@ -15,10 +20,31 @@
 
         <div class="row">
             <div class="col-md-12">
-                <aside class="widget">
+                <section class="widget">
+                    <cfif isDefined('attributes.contentUpdate')>
+                        <cfif attributes.contentUpdate.success>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-success">
+                                        Die Seite wurde erfolgreich gespeichert
+                                    </div>
+                                </div>
+                            </div>
+                        <cfelse>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger">
+                                        Während des Speicherns konnte ein oder mehrere Felder nicht korrekt validiert werden.<br>
+                                        Bitte gucken Sie sich unten die rot markierten Felder an und korrigieren Sie diese.
+                                        <cfdump var="#attributes.contentUpdate#">
+                                    </div>
+                                </div>
+                            </div>
+                        </cfif>
+                    </cfif>
                     <fieldset>
-                        <legend>Optionen</legend>
-                        <div class="form-group">
+                        <legend>Pflichtangaben</legend>
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.linkName>has-error</cfif>">
                             <label class="col-lg-3 control-label">Linkname</label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
@@ -29,7 +55,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.sesLink>has-error</cfif>">
                             <label class="col-lg-3 control-label">SES Link</label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
@@ -40,37 +66,21 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Entities</label>
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.title>has-error</cfif>">
+                            <label class="col-lg-3 control-label">Titel</label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="gender" value="(.*)" <cfif attributes.pageToShow.getRegExp() != ''>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Ja">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="gender" value="" <cfif attributes.pageToShow.getRegExp() == ''>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Nein">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <input type="text" maxLength="150" class="form-control" name="Title" value="#attributes.pageToShow.getTitle()#">
                                 <cfelse>
-                                    <p class="form-control-static"><cfif attributes.pageToShow.getRegExp() != ''>Ja<cfelse>Nein</cfif></p>
+                                    <p class="form-control-static">#attributes.pageToShow.getTitle()#</p>
                                 </cfif>
                             </div>
                         </div>
+                    </fieldset>
 
-                        <div class="form-group">
+                    <fieldset>
+                        <legend>Moduleinstellungen</legend>
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.moduleId>has-error</cfif>">
                             <label class="col-lg-3 control-label">Modul</label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
@@ -103,29 +113,77 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.entityRegExp>has-error</cfif>">
+                            <label class="col-lg-3 control-label">Entities</label>
+                            <div class="col-lg-9">
+                                <cfif attributes.pageToShow.isEditable()>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="entityRegExp" value="(.*)" <cfif attributes.pageToShow.getRegExp() != ''>checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="Ja">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="entityRegExp" value="" <cfif attributes.pageToShow.getRegExp() == ''>checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="Nein">
+                                            </div>
+                                        </div>
+                                    </div>
+                                <cfelse>
+                                    <p class="form-control-static"><cfif attributes.pageToShow.getRegExp() != ''>Ja<cfelse>Nein</cfif></p>
+                                </cfif>
+                            </div>
+                        </div>
+
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.moduleAttributes>has-error</cfif>">
                             <label class="col-lg-3 control-label">Moduloptionen</label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
-                                    <input type="text" maxLength="150" class="form-control" name="Title" value="#attributes.pageToShow.getModuleAttributes()#">
+                                    <input type="text" maxLength="150" class="form-control" name="moduleAttributes" value="#attributes.pageToShow.getModuleAttributes()#">
                                 <cfelse>
                                     <p class="form-control-static">#attributes.pageToShow.getModuleAttributes()#</p>
                                 </cfif>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Titel</label>
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.showContentForEntity>has-error</cfif>">
+                            <label class="col-lg-3 control-label">Zeige bei einem Entity den Content?</label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
-                                    <input type="text" maxLength="150" class="form-control" name="Title" value="#attributes.pageToShow.getTitle()#">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="showContentForEntity" value="true" <cfif attributes.pageToShow.showContentForEntity()>checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="Ja">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="showContentForEntity" value="false" <cfif NOT attributes.pageToShow.showContentForEntity()>checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="Nein">
+                                            </div>
+                                        </div>
+                                    </div>
                                 <cfelse>
-                                    <p class="form-control-static">#attributes.pageToShow.getTitle()#</p>
+                                    <p class="form-control-static"><cfif attributes.pageToShow.showContentForEntity()>Ja<cfelse>Nein</cfif></p>
                                 </cfif>
                             </div>
                         </div>
+                    </fieldset>
 
-                        <div class="form-group">
+                    <fieldset>
+                        <legend>Optionen</legend>
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.description>has-error</cfif>">
                             <label class="col-lg-3 control-label">Beschreibung</label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
@@ -136,7 +194,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.keywords>has-error</cfif>">
                             <label class="col-lg-3 control-label">Schlüsselwörter</label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
@@ -153,12 +211,31 @@
                                 <cfif attributes.pageToShow.isEditable()>
                                     <input type="text" maxLength="150" class="form-control" name="versionComment" value="#attributes.pageToShow.getVersionComment()#">
                                 <cfelse>
-                                    <p class="form-control-static">#attributes.pageToShow.getKeywords()#</p>
+                                    <p class="form-control-static">#attributes.pageToShow.getVersionComment()#</p>
                                 </cfif>
                             </div>
                         </div>
                     </fieldset>
-                </aside>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <cfif attributes.pageToShow.isEditable()>
+                                <button class="btn btn-primary" type="submit" name="action" value="save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern</button>
+                                <button class="btn btn-success" type="submit" name="action" value="release" title="An die nächste Instanz zur weiteren Freigabe weitergeben/online nehmen"><span class="glyphicon glyphicon-ok"></span> Freigeben</button>
+                                <button class="btn btn-danger" type="submit" name="action" value="delete" title="Version löschen"><span class="glyphicon glyphicon-trash"></span> Löschen</button>
+                            </cfif>
+                            <cfif attributes.pageToShow.isOnline()>
+                                <button class="btn btn-warn" type="submit" name="action" value="revoke" title="Version offline nehmen"><span class="glyphicon glyphicon-off"></span> Offline nehmen</button>
+                            </cfif>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
 
