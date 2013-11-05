@@ -47,7 +47,6 @@ CREATE TABLE irCMS_contentVersion (
 	title                text,
 	description          text,
 	keywords             text,
-	canonical            text,
 	userId               integer       NOT NULL,
 	versionComment       text,
 	showContentForEntity boolean       NOT NULL DEFAULT false,
