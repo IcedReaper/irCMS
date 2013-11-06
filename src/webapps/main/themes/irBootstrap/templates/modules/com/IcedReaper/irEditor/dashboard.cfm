@@ -15,77 +15,36 @@
             </header>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <section class="widget">
-                <fieldset>
-                    <legend>Veröffentlichte Versionen</legend>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <th>Seitenname</th>
-                                <th>SES Verlinkung</th>
-                                <th>Status</th>
-                                <th>Version</th>
-                                <th>Letzte Änderung</th>
-                                <th>&nbsp;</th>
-                            </thead>
-                            <tbody>
-                                <cfmodule template="pageEntry.cfm" navigationId="1" pageName="Willkommen" sesLink="/" status="Online" version="1.0" lastChangeAt="#createDateTime(2013, 10, 30, 18, 32, 24)#" lastChangeBy="IcedReaper">
-                            </tbody>
-                        </table>
-                    </div>
-                </fieldset>
-            </section>
+    <cfloop from="1" to="#attributes.dashboardData.len()#" index="statusIndex">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="widget">
+                    <fieldset>
+                        <legend>Seiten im Status: #attributes.dashboardData[statusIndex].statusName#</legend>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>Seitenname</th>
+                                    <th>SES Verlinkung</th>
+                                    <th>Version</th>
+                                    <th>Letzte Änderung</th>
+                                    <th>&nbsp;</th>
+                                </thead>
+                                <tbody>
+                                    <cfloop from="1" to="#attributes.dashboardData[statusIndex].pages.len()#" index="pageIndex">
+                                        <cfmodule template="pageEntry.cfm" navigationId = "#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#"
+												                           pageName     = "#attributes.dashboardData[statusIndex].pages[pageIndex].pageName#"
+                                                                           sesLink      = "#attributes.dashboardData[statusIndex].pages[pageIndex].sesLink#"
+                                                                           version      = "#attributes.dashboardData[statusIndex].pages[pageIndex].version#"
+                                                                           lastChangeAt = "#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeAt#"
+                                                                           lastChangeBy = "#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#">
+                                    </cfloop>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </section>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <section class="widget">
-                <fieldset>
-                    <legend>Versionen im Entwurfsstatus</legend>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <th>Seitenname</th>
-                                <th>SES Verlinkung</th>
-                                <th>Status</th>
-                                <th>Version</th>
-                                <th>Letzte Änderung</th>
-                                <th>&nbsp;</th>
-                            </thead>
-                            <tbody>
-                                <cfmodule template="pageEntry.cfm" navigationId="1" pageName="Willkommen" sesLink="/" status="Rework" version="1.4" lastChangeAt="#createDateTime(2013, 10, 30, 20, 41, 24)#" lastChangeBy="IcedReaper">
-                                <cfmodule template="pageEntry.cfm" navigationId="1" pageName="Willkommen" sesLink="/" status="Draft" version="1.3" lastChangeAt="#createDateTime(2013, 10, 30, 19, 22, 24)#" lastChangeBy="IcedReaper">
-                            </tbody>
-                        </table>
-                    </div>
-                </fieldset>
-            </section>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <section class="widget">
-                <fieldset>
-                    <legend>Versionen im Genehmigungsstatus</legend>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <th>Seitenname</th>
-                                <th>SES Verlinkung</th>
-                                <th>Status</th>
-                                <th>Version</th>
-                                <th>Letzte Änderung</th>
-                                <th>&nbsp;</th>
-                            </thead>
-                            <tbody>
-                                <cfmodule template="pageEntry.cfm" navigationId="1" pageName="Willkommen" sesLink="/" status="Release Candidate" version="1.2" lastChangeAt="#createDateTime(2013, 10, 30, 18, 58, 24)#" lastChangeBy="IcedReaper">
-                            </tbody>
-                        </table>
-                    </div>
-                </fieldset>
-            </section>
-        </div>
-    </div>
+	</cfloop>
 </cfoutput>

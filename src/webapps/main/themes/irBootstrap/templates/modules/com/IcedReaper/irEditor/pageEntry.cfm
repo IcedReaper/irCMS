@@ -2,7 +2,6 @@
     <tr>
         <td><a href="/Admin/Pages/#attributes.navigationId#/#attributes.version#">#attributes.pageName#</a></td>
         <td><a href="#attributes.sesLink#" target="_blank">#attributes.sesLink#</a></td>
-        <td>#attributes.status#</td>
         <td>#attributes.version#</td>
         <td>
             #dateFormat(dateConvert('utc2local', attributes.lastChangeAt), "DD. MMM YYYY")#
