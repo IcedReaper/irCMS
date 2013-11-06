@@ -59,10 +59,10 @@
                               &"                :gender, "
                               &"                :email"
                               &"            ) ")
-                       .addParam(name="username", value=arguments.userData.username, cfsqltype="cf_sql_varchar")
-                       .addParam(name="password", value=arguments.userData.password, cfsqltype="cf_sql_varchar")
-                       .addParam(name="gender",   value=arguments.userData.gender,   cfsqltype="cf_sql_varchar")
-                       .addParam(name="email",    value=arguments.userData.email,    cfsqltype="cf_sql_varchar")
+                       .addParam(name="username", value=arguments.userData.username,                                                 cfsqltype="cf_sql_varchar")
+                       .addParam(name="password", value=variables.cryptionApi.encryptPassword(password=arguments.userData.password), cfsqltype="cf_sql_varchar")
+                       .addParam(name="gender",   value=arguments.userData.gender,                                                   cfsqltype="cf_sql_varchar")
+                       .addParam(name="email",    value=arguments.userData.email,                                                    cfsqltype="cf_sql_varchar")
                        .execute();
         }
 
@@ -148,19 +148,18 @@
     }
     
     public boolean function login(required string username, required string password) {
-    	var qGetLogin = new Query().setDatasource(variables.datasource)
-                                   .setSQL("SELECT userName, active "
-    	                                  &"  FROM #variables.tablePrefix#_user "
-                                        &" WHERE username = :username "
-                                        &"   AND password = :password"
-                                          &"   AND active   = :active")
-                                   .addParam(name="username", value=arguments.username,                                        cfsqltype="cf_sql_varchar")
-                                   .addParam(name="password", value=variables.cryptionApi.encrypt(rawData=arguments.password), cfsqltype="cf_sql_varchar")
-                                   .addParam(name="active",   value=true,                                                      cfsqltype="cf_sql_bit")
-                                   .execute()
-                                   .getResult();
-         
-         return qGetLogin.recordCount == 1;
+    	return new Query().setDatasource(variables.datasource)
+                          .setSQL("SELECT userName, active "
+                                 &"  FROM #variables.tablePrefix#_user "
+                                 &" WHERE username = :username "
+                                 &"   AND password = :password"
+                                 &"   AND active   = :active")
+                          .addParam(name="username", value=arguments.username, cfsqltype="cf_sql_varchar")
+                          .addParam(name="password", value=arguments.password, cfsqltype="cf_sql_varchar")
+                          .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
+                          .execute()
+                          .getResult()
+                          .getRecordCount() == 1;
     }
     
     public boolean function logout() {
@@ -207,8 +206,8 @@
                             &"              :roleId "
                             &"            ) ")
                      .addParam(name="userId",  value=userId,  cfsqltype="cf_sql_numeric")
-                       .addParam(name="groupId", value=groupId, cfsqltype="cf_sql_numeric")
-                       .addParam(name="roleId",  value=roleId,  cfsqltype="cf_sql_numeric")
+                     .addParam(name="groupId", value=groupId, cfsqltype="cf_sql_numeric")
+                     .addParam(name="roleId",  value=roleId,  cfsqltype="cf_sql_numeric")
                      .execute();
             return true;
         }

@@ -13,7 +13,7 @@
     }
     
     private boolean function applicationRestart() {
-        include "system/appSetup/databaseSettings.cfm";
+        include "system/appSetup/applicationSettings.cfm";
 
         this.initCoreTools();
         this.initValidation();
@@ -28,7 +28,9 @@
 
     private boolean function initCoreTools() {
         application.tools.tools = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
-        application.tools.cryption = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(structSeparator=';');
+        application.tools.cryption = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(encryptionKey   = application.encryption.key
+                                                                                                                   ,algorithm       = application.encryption.method
+                                                                                                                   ,structSeparator = ';');
         
         return true;
     }
@@ -163,7 +165,7 @@
     private boolean function handleDefaultVariables() {
         request.language = 'de';
         
-        if(isDefined("session") && structKeyExists(session, 'userName')) {
+        if(isDefined("session") && structKeyExists(session, 'userName') && session.userName != 'Guest') {
             request.userName   = session.userName;
             request.isLoggedIn = true;
         }
@@ -181,19 +183,22 @@
 
         request.moduleClass = '';
         request.pageTitle   = '';
+        request.content     = '';
 
         return true;
     }
 
     private boolean function handleLoginOut() {
         if(isDefined("url.login") && ! structIsEmpty(form) && form.username != "") {
-            if(application.user.userCRUD.login(username = form.username, password = form.password)) {
+            if(application.user.userCRUD.login(username = form.username, password = application.tools.cryption.encryptPassword(password=form.password))) {
                 session.userName = form.username;
                 location(url=request.sesLink, addToken=false);
             }
             else {
                 session.userName = "Guest";
-                include template="/themes/#application.cms.core.getDefaultThemeName()#/templates/core/wrongLogin.cfm";
+                saveContent variable="request.content" {
+                    include template="/themes/#application.cms.core.getDefaultThemeName()#/templates/core/wrongLogin.cfm";
+                }
             }
         }
         if(isDefined("url.logout") && isDefined("session") && structKeyExists(session, 'userName')) {
@@ -237,6 +242,11 @@
 
     private boolean function renderContent() {
         saveContent variable="request.content" {
+            // e.g. Failed login
+            if(request.content != '') {
+                writeOutput(request.content);
+            }
+            
             if(request.actualMenu.checkShowContent()) {
                 writeOutput(request.actualMenu.getContent(cleanArticle=false));
             }
