@@ -1,4 +1,3 @@
-
 <cfparam name="url.print_js_resources" type="boolean" default="true" />
 <cfparam name="url.toggledebug" type="boolean" default="true" />
 
@@ -7,20 +6,16 @@
 	<h2>Welcome, ColdFusion User!</h2>
 
 	<div  style="font-size:1.25em;color:#01010;text-decoration:italic">
-		Hier entsteht die Testsuite für die Portale, Hompage etc.
+		irCMS Testsuite
 	</div>
 
 	<p><hr color="#eaeaea" noshade="true" size="1" /></p>
 
 	<cfscript>
-		//initialize the server and application scope variables of the portal web application
-        include "/WWW/ext/init/setDefaultQueryCacheTime.cfm";
-        include "/WWW/ext/init/setGlobalVars.cfm";
-		
 		//loop recursively through test directory
 		results = createObject("component", "mxunit.runner.DirectoryTestSuite").run(expandPath("/TEST"), "TEST");
 	</cfscript>
-	
+    
 	<div>
 		<cfoutput>
 			#results.getResultsOutput('rawhtml')#
