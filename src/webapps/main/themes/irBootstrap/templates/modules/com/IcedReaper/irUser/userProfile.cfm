@@ -60,35 +60,16 @@
                             <label class="col-lg-3 control-label">Geschlecht</label>
                             <div class="col-lg-9">
                                 <cfif attributes.isMyUser>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="gender" value="None" <cfif attributes.userData.getGender() EQ 'None'>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Keine Angabe">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="gender" value="Male" <cfif attributes.userData.getGender() EQ 'Male'>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Männlich">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="gender" value="Female" <cfif attributes.userData.getGender() EQ 'Female'>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Weiblich">
-                                            </div>
-                                        </div>
+								    <div class="btn-group" data-toggle="buttons" id="genderSelection">
+                                        <label class="btn btn-default <cfif attributes.userData.getGender() EQ 'Male'>active</cfif>">
+                                            <input type="radio" name="gender" id="Male" value="Male" <cfif attributes.userData.getGender() EQ 'Male'>checked="checked"</cfif>> Männlich
+                                        </label>
+                                        <label class="btn btn-default <cfif attributes.userData.getGender() EQ 'Female'>active</cfif>">
+                                            <input type="radio" name="gender" id="Female" value="Female" <cfif attributes.userData.getGender() EQ 'Female'>checked="checked"</cfif>> Weiblich
+                                        </label>
+                                        <label class="btn btn-default <cfif attributes.userData.getGender() EQ 'None'>active</cfif>">
+                                            <input type="radio" name="gender" id="None" value="None" <cfif attributes.userData.getGender() EQ 'None'>checked="checked"</cfif>> Keine Angabe
+                                        </label>
                                     </div>
                                 <cfelse>
                                     <p class="form-control-static">#attributes.userData.getGender()#</p>
@@ -179,27 +160,15 @@
                         <fieldset>
                             <legend>Profileinstellungen</legend>
                             <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.emailPublic>has-error</cfif>">
-                                <label class="col-lg-3 control-label">Email veröffentlichen?</label>
+                                <label class="col-lg-3 control-label">Email anzeigen?</label>
                                 <div class="col-lg-9">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="emailPublic" value="false" <cfif attributes.userData.isEmailPublic() EQ false>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Nein">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="emailPublic" value="true" <cfif attributes.userData.isEmailPublic() EQ true>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Ja">
-                                            </div>
-                                        </div>
+                                    <div class="btn-group" data-toggle="buttons" id="genderSelection">
+                                        <label class="btn btn-default <cfif NOT attributes.userData.isEmailPublic()>active</cfif>">
+                                            <input type="radio" name="emailPublic" id="False" value="false" <cfif NOT attributes.userData.isEmailPublic()>checked="checked"</cfif>> Nein
+                                        </label>
+                                        <label class="btn btn-default <cfif attributes.userData.isEmailPublic()>active</cfif>">
+                                            <input type="radio" name="emailPublic" id="True" value="True" <cfif attributes.userData.isEmailPublic()>checked="checked"</cfif>> Ja
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -228,27 +197,15 @@
                                 </div>
                             </div>
                             <div class="form-group <cfif isDefined('attributes.userUpdate') AND NOT attributes.userUpdate.showBuddies>has-error</cfif>">
-                                <label class="col-lg-3 control-label">Buddies veröffentlichen?</label>
+                                <label class="col-lg-3 control-label">Buddies anzeigen?</label>
                                 <div class="col-lg-9">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="showBuddies" value="false" <cfif attributes.userData.showBuddies() EQ false>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Nein">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="radio" name="showBuddies" value="true" <cfif attributes.userData.showBuddies() EQ true>checked="checked"</cfif>>
-                                                </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="Ja">
-                                            </div>
-                                        </div>
+                                    <div class="btn-group" data-toggle="buttons" id="genderSelection">
+                                        <label class="btn btn-default <cfif NOT attributes.userData.showBuddies()>active</cfif>">
+                                            <input type="radio" name="showBuddies" id="False" value="false" <cfif NOT attributes.userData.showBuddies()>checked="checked"</cfif>> Nein
+                                        </label>
+                                        <label class="btn btn-default <cfif attributes.userData.showBuddies()>active</cfif>">
+                                            <input type="radio" name="showBuddies" id="True" value="True" <cfif attributes.userData.showBuddies()>checked="checked"</cfif>> Ja
+                                        </label>
                                     </div>
                                 </div>
                             </div>
