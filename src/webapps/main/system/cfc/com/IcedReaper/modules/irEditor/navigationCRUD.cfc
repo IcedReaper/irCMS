@@ -68,6 +68,7 @@ component {
         };
         
         var validation = arguments.coreNavigation.addContentVersion(navigationId=arguments.navigationId, userId=arguments.userId, userId, version=majorVersion, versionData=contentVersionData);
+        var validation = arguments.coreNavigation.addContentVersion(navigationId=arguments.navigationId, userId=arguments.userId, version=majorVersion, versionData=contentVersionData);
         
         if(validation.success) {
             validation.majorVersion = majorversion;
