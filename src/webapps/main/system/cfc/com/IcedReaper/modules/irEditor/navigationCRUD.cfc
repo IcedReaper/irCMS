@@ -31,6 +31,7 @@ component {
     }
 
     public struct function createNewMajorVersion(required navigation coreNavigation, required numeric userId, required numeric navigationId) {
+    public struct function createNewMajorVersion(required navigationCRUD coreNavigation, required numeric userId, required numeric navigationId) {
         var qryGetLastVersion = new Query().setDatasource(variables.datasource)
                                            .setSQL("  SELECT * "
                                                   &"    FROM #variables.tablePrefix#_contentVersion "
