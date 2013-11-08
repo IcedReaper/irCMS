@@ -64,7 +64,7 @@ component {
             description:          qryGetLastVersion.description[1],
             keywords:             qryGetLastVersion.keywords[1],
             canonical:            qryGetLastVersion.canonical[1],
-            showContentForEntity: qryGetLastVersion.showContentForEntity[1]
+            showContentForEntity: qryGetLastVersion.showContentForEntity[1] == 1
         };
         
         var validation = arguments.coreNavigation.addContentVersion(navigationId=arguments.navigationId, userId=arguments.userId, version=majorVersion, versionData=contentVersionData);
