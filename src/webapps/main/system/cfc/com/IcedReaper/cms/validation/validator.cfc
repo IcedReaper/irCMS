@@ -46,9 +46,12 @@
     	return true;
     }
     
-    public boolean function validate(required string content, required string ruleName, required boolean mandatory = true, string country, string language) {
-        if(arguments.mandatory && arguments.content != '') {
+    public boolean function validate(any content, required string ruleName, required boolean mandatory = true, string country, string language) {
+        if(arguments.mandatory && (arguments.content == '' || isNull(arguments.content))) {
         	return false;
+        }
+        if(! arguments.mandatory && (arguments.content == '' || isNull(arguments.content))) {
+            return true;
         }
         
         if(! variables.validationRules.keyExists(arguments.ruleName)) {
