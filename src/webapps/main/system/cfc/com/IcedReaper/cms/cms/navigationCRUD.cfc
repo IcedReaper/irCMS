@@ -124,12 +124,12 @@
         var formValidation = this.validateVersionData(arguments.versionData);
         
         formValidation.navigationId = isDefined("arguments.navigationId")                ? variables.formValidator.validate(content=arguments.navigationId,                ruleName='Id')      : false;
-        formValidation.version      = isDefined("arguments.version")                     ? variables.formValidator.validate(content=arguments.versionData.version,         ruleName='Version') : false;
+        formValidation.version      = isDefined("arguments.version")                     ? variables.formValidator.validate(content=arguments.version,                     ruleName='Version') : false;
         formValidation.status       = isDefined("arguments.versionData.contentStatusId") ? variables.formValidator.validate(content=arguments.versionData.contentStatusId, ruleName='Id')      : false; 
         
         formValidation.status       = this.statusExists(contentStatusId    = arguments.versionData.contentStatusId);
         formValidation.navigationId = this.navigationIdExists(navigationId = arguments.navigationId);
-        formValidation.version      = this.versionAvailable(navigationId   = arguments.navigationId, version  = arguments.versionData.version);
+        formValidation.version      = this.versionAvailable(navigationId   = arguments.navigationId, version  = arguments.version);
         formValidation.linkName     = this.linkNameAvailable(navigationId  = arguments.navigationId, linkName = arguments.versionData.linkName);
         formValidation.sesLink      = this.sesLinkAvailable(navigationId   = arguments.navigationId, sesLink  = arguments.versionData.sesLink); 
         
