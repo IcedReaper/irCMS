@@ -30,7 +30,6 @@ component {
         return versions;
     }
 
-    public struct function createNewMajorVersion(required navigation coreNavigation, required numeric userId, required numeric navigationId) {
     public struct function createNewMajorVersion(required navigationCRUD coreNavigation, required numeric userId, required numeric navigationId) {
         var qryGetLastVersion = new Query().setDatasource(variables.datasource)
                                            .setSQL("  SELECT * "
@@ -54,21 +53,20 @@ component {
                                      .contentStatusId[1];
         
         var contentVersionData = {
-            arguments.versionData.contentStatusId:      draftStatus,
-            arguments.versionData.content:              qryGetLastVersion.content[1],
-            arguments.versionData.moduleId:             qryGetLastVersion.moduleId[1],
-            arguments.versionData.moduleAttributes:     qryGetLastVersion.moduleAttributes[1],
-            arguments.versionData.linkName:             qryGetLastVersion.linkName[1],
-            arguments.versionData.sesLink:              qryGetLastVersion.sesLink[1],
-            arguments.versionData.entityRegExp:         qryGetLastVersion.entityRegExp[1],
-            arguments.versionData.title:                qryGetLastVersion.title[1],
-            arguments.versionData.description:          qryGetLastVersion.description[1],
-            arguments.versionData.keywords:             qryGetLastVersion.keywords[1],
-            arguments.versionData.canonical:            qryGetLastVersion.canonical[1],
-            arguments.versionData.showContentForEntity: qryGetLastVersion.showContentForEntity[1]
+            contentStatusId:      draftStatus,
+            content:              qryGetLastVersion.content[1],
+            moduleId:             qryGetLastVersion.moduleId[1],
+            moduleAttributes:     qryGetLastVersion.moduleAttributes[1],
+            linkName:             qryGetLastVersion.linkName[1],
+            sesLink:              qryGetLastVersion.sesLink[1],
+            entityRegExp:         qryGetLastVersion.entityRegExp[1],
+            title:                qryGetLastVersion.title[1],
+            description:          qryGetLastVersion.description[1],
+            keywords:             qryGetLastVersion.keywords[1],
+            canonical:            qryGetLastVersion.canonical[1],
+            showContentForEntity: qryGetLastVersion.showContentForEntity[1]
         };
         
-        var validation = arguments.coreNavigation.addContentVersion(navigationId=arguments.navigationId, userId=arguments.userId, userId, version=majorVersion, versionData=contentVersionData);
         var validation = arguments.coreNavigation.addContentVersion(navigationId=arguments.navigationId, userId=arguments.userId, version=majorVersion, versionData=contentVersionData);
         
         if(validation.success) {
