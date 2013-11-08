@@ -47,7 +47,7 @@
     }
     
     public boolean function validate(required string content, required string ruleName, required boolean mandatory = true, string country, string language) {
-        if(arguments.mandatory && arguments.content.length() == 0) {
+        if(arguments.mandatory && arguments.content != '') {
         	return false;
         }
         
