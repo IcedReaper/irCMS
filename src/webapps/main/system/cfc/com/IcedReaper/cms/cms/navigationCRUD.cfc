@@ -172,7 +172,7 @@
                               &"            ) ")
                        .addParam(name="navigationId",         value=arguments.navigationId,                     cfsqltype="cf_sql_numeric")
                        .addParam(name="version",              value=arguments.version,                          cfsqltype="cf_sql_float",   scale="2")
-                       .addParam(name="contentStatusId",      value=arguments.versionData.statusId,             cfsqltype="cf_sql_numeric")
+                       .addParam(name="contentStatusId",      value=arguments.versionData.contentstatusId,      cfsqltype="cf_sql_numeric")
                        .addParam(name="content",              value=arguments.versionData.content,              cfsqltype="cf_sql_varchar", null="#arguments.versionData.content              == '' ? true : false#")
                        .addParam(name="moduleId",             value=arguments.versionData.moduleId,             cfsqltype="cf_sql_numeric", null="#arguments.versionData.moduleId             == '' ? true : false#")
                        .addParam(name="moduleAttributes",     value=arguments.versionData.moduleAttributes,     cfsqltype="cf_sql_varchar", null="#arguments.versionData.moduleAttributes     == '' ? true : false#")
