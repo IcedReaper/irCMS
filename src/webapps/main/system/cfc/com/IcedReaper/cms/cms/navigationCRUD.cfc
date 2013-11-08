@@ -347,7 +347,7 @@
                           .getRecordCount() == 1;
     }
     
-    public boolean function versionAvailable(required numeric navigationId, required float version) {
+    public boolean function versionAvailable(required numeric navigationId, required numeric version) {
         return new Query().setDatasource(variables.datasource)
                           .setSQL("SELECT contentVersionId "
                                  &"  FROM #variables.tablePrefix#_contentVersion "

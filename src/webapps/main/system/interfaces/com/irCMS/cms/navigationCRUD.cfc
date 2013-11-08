@@ -25,7 +25,7 @@
      **/
     public boolean function navigationIdExists(required numeric navigationId);
     public boolean function statusExists(required numeric contentStatusId);
-    public boolean function versionAvailable(required numeric navigationId, required float version);
+    public boolean function versionAvailable(required numeric navigationId, required numeric version);
     public boolean function linkNameAvailable(required numeric navigationId, required string linkName);
     public boolean function sesLinkAvailable(required numeric navigationId, required string sesLink);
     
