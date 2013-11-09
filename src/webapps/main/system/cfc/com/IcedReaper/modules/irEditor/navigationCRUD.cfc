@@ -81,4 +81,47 @@ component {
     public numeric function createNewMinorVersion(required numeric navigationId, required numeric version) {
         
     }
+
+    public array function getDashboardData() {
+        var dashboardData = [];
+
+        var qGetStatus = new Query().setDatasource(variables.datasource)
+                                    .setSQL("  SELECT contentStatusId, statusName, readyToRelease, online, editable "
+                                           &"    FROM #variables.tablePrefix#_contentStatus "
+                                           &"ORDER BY sortOrder ASC")
+                                    .execute()
+                                    .getResult();
+
+        for(var i = 1; i <= qGetStatus.getRecordCount(); i++) {
+            dashboardData[i] = {};
+            dashboardData[i].statusName     = qGetStatus.statusName[i];
+            dashboardData[i].id             = qGetStatus.contentStatusId[i];
+            dashboardData[i].readyToRelease = qGetStatus.readyToRelease[i];
+            dashboardData[i].online         = qGetStatus.online[i];
+            dashboardData[i].editable       = qGetStatus.editable[i];
+
+            var qGetPages = new Query().setDatasource(variables.datasource)
+                                       .setSQL("    SELECT cv.navigationId, cv.linkName, cv.sesLink, cv.version, cv.creationDate, u.userName "
+                                              &"      FROM #variables.tablePrefix#_contentVersion cv "
+                                              &"INNER JOIN #variables.tablePrefix#_user           u  ON cv.userId = u.UserId"
+                                              &"     WHERE cv.contentStatusId = :statusId "
+                                              &"  ORDER BY cv.sesLink ASC, Version DESC")
+                                       .addParam(name="statusId", value=qGetStatus.contentStatusId[i], cfsqltype="cf_sql_numeric")
+                                       .execute()
+                                       .getResult();
+
+            dashboardData[i].pages = [];
+            for(var j = 1; j <= qGetPages.getRecordCount(); j++) {
+                dashboardData[i].pages[j] = {};
+                dashboardData[i].pages[j].navigationId = qGetPages.navigationId[j];
+                dashboardData[i].pages[j].pageName     = qGetPages.linkName[j];
+                dashboardData[i].pages[j].sesLink      = qGetPages.sesLink[j];
+                dashboardData[i].pages[j].version      = qGetPages.version[j];
+                dashboardData[i].pages[j].lastChangeAt = dateConvert('utc2Local', qGetPages.creationDate[j]);
+                dashboardData[i].pages[j].lastChangeBy = qGetPages.userName[j];
+            }
+        }
+        
+        return dashboardData;
+    }
 }
