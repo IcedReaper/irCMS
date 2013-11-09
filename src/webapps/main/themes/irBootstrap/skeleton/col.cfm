@@ -1,5 +1,5 @@
 <cfoutput>
     <section class="#attributes.classes#">
-        #attributes.modules#
+        #attributes.content#
     </section>
 </cfoutput>

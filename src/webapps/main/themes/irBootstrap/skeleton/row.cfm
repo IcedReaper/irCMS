@@ -1,5 +1,5 @@
 <cfoutput>
     <section class="row">
-        #attributes.cols#
+        #attributes.content#
     </section>
 </cfoutput>
