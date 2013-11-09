@@ -1,5 +1,5 @@
 ﻿<cfscript>
-    application.themes.irBootstrap.cfstatic.include('/js/core/')
+    application.themes.irBootstrap.cfstatic.include('/js/core/main.js')
                                            .include('/css/bootstrap/bootstrap.less')
                                            .include('/css/core/main.less');
 </cfscript>
