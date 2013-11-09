@@ -20,29 +20,30 @@ HTML Code:
 DB-Skeleton Model for the upper HTML Code:
 ==========================================
 {
-"rows": [
-    "cols": [
-        {
-            "classes": "col-md-12",
-            "modules": [
-                {
-                    "name": "textBlock",
-                    "elements": {
-                        "h1": "Willkommen auf der irCMS Seite",
-                        "h4": "Ein CF Content Management System von IcedReaper"
-                        "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
+    "rows": [
+        "cols": [
+            {
+                "classes": "col-md-12",
+                "modules": [
+                    {
+                        "name": "textBlock",
+                        "elements": {
+                            "h1": "Willkommen auf der irCMS Seite",
+                            "h4": "Ein CF Content Management System von IcedReaper"
+                            "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
+                        }
+                    },
+                    {
+                        "name": "heroImage",
+                        "elements": {
+                            "background-image": "/static/content/welcome_heroImage1_02.jpg"
+                        }
                     }
-                },
-                {
-                    "name": "heroImage",
-                    "elements": {
-                        "background-image": "/static/content/welcome_heroImage1_02.jpg"
-                    }
-                }
-            ]
-        }
+                ]
+            }
+        ]
     ]
-]};
+}
 
 Folder Structure:
 =================
