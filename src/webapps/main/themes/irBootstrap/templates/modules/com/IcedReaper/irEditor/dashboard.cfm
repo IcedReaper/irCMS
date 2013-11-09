@@ -32,12 +32,37 @@
                                 </thead>
                                 <tbody>
                                     <cfloop from="1" to="#attributes.dashboardData[statusIndex].pages.len()#" index="pageIndex">
-                                        <cfmodule template="pageEntry.cfm" navigationId = "#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#"
-												                           pageName     = "#attributes.dashboardData[statusIndex].pages[pageIndex].pageName#"
-                                                                           sesLink      = "#attributes.dashboardData[statusIndex].pages[pageIndex].sesLink#"
-                                                                           version      = "#attributes.dashboardData[statusIndex].pages[pageIndex].version#"
-                                                                           lastChangeAt = "#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeAt#"
-                                                                           lastChangeBy = "#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#">
+                                        <tr>
+                                            <td><a href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#">#attributes.dashboardData[statusIndex].pages[pageIndex].pageName#</a></td>
+                                            <td><a href="#attributes.dashboardData[statusIndex].pages[pageIndex].sesLink#" target="_blank">#attributes.dashboardData[statusIndex].pages[pageIndex].sesLink#</a></td>
+                                            <td>#attributes.dashboardData[statusIndex].pages[pageIndex].version#</td>
+                                            <td>
+                                                #dateFormat(attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeAt, "DD. MMM YYYY")#
+                                                #timeFormat(attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeAt, "HH:MM:SS")#
+                                                von <a href="/User/#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#" target="_blank" title="Profilseite von #attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#">#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#</a>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <cfif attributes.dashboardData[statusIndex].editable>
+                                                        <a class="btn btn-default" title="Diese Version des Artikels bearbeiten" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Bearbeiten"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                    </cfif>
+                                                    <cfif attributes.dashboardData[statusIndex].readyToRelease>
+                                                        <a class="btn btn-success" title="Diese Version Online nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Release"><span class="glyphicon glyphicon-ok"></span></a>
+                                                    <cfelse>
+                                                        <a class="btn btn-success" title="Diese Version freigeben" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Freigeben"><span class="glyphicon glyphicon-ok"></span></a>
+                                                    </cfif>
+                                                    <cfif attributes.dashboardData[statusIndex].online>
+                                                        <a class="btn btn-warning" title="Die Version offline nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Offline nehmen"><span class="glyphicon glyphicon-off"></span></a>
+                                                    <cfelse>
+                                                        <cfif attributes.dashboardData[statusIndex].editable>
+                                                            <a class="btn btn-danger" title="Diese Version löschen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Löschen"><span class="glyphicon glyphicon-remove"></span></a>
+                                                        <cfelseif false <!--- does the user have the permission to decline this version?--->>
+                                                            <a class="btn btn-danger" title="Diese Version löschen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Löschen"><span class="glyphicon glyphicon-remove"></span></a>
+                                                        </cfif>
+                                                    </cfif>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </cfloop>
                                 </tbody>
                             </table>
