@@ -250,7 +250,7 @@
             }
             
             if(request.actualMenu.checkShowContent()) {
-                writeOutput(request.actualMenu.getContent(cleanArticle=false));
+                writeOutput(request.actualMenu.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true));
             }
             if(request.actualMenu.checkShowModule()) {
                 writeOutput(request.actualMenu.getModuleContent());

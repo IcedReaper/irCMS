@@ -135,74 +135,44 @@
         return (variables.actualMenu.moduleId != '');
     }
     
-    public string function getContent(required boolean cleanArticle) {
+    public string function getContent(required string themeName, required boolean cleanArticle) {
         var content = variables.actualMenu.content[1];
 
         if(arguments.cleanArticle) {
-            // evaluate cf vars
-            content = evaluate(DE(content));
-            // replace all irCF Tags
-            content = replaceModules(content);
+            content = buildSkeleton(themeName=arguments.themeName, skeleton=content);
         }
         return content;
     }
-    
-    private string function replaceModules(required string content) {
-        var articleContent           = "";
-        var subStringStart           = 1;
-        var subStringEnd             = len(arguments.content);
-        var templateName             = "";
-        var templateStart            = 0;
-        var templateEnd              = 0;
-        var attributeCollection      = "";
-        var tmpAttributeCollection   = {};
-        var attributeCollectionStart = 0;
-        var attributeCollectionEnd   = 0;
-        var closingTag               = 0;
-        
-        saveContent variable="articleContent" {
-            while(true) {
-                templateStart = find('[module template="', arguments.content, subStringStart);
-                if(templateStart == 0) {
-                    writeOutput(mid(arguments.content, subStringStart, subStringEnd-(subStringStart-1)));
-                    break;
-                }
-                writeOutput(mid(arguments.content, subStringStart, (templateStart-subStringStart)));
-                
-                templateStart += 18;
-                templateEnd  = find('"', arguments.content, templateStart);
-                templateName = '/system/modules/'&mid(arguments.content, templateStart, templateEnd-templateStart)&'/index.cfm';
-                
-                attributeCollectionStart = find('attributeCollection="', arguments.content, templateEnd);
-                closingTag = find(']', arguments.content, templateEnd);
-                if(attributeCollectionStart != 0 && attributeCollectionStart < closingTag) { // check if this attributeCollection is from this cfModule
-                    attributeCollectionEnd = find('"', arguments.content, attributeCollectionStart+21);
-                    if(attributeCollectionEnd != 0 && attributeCollectionEnd < closingTag) {
-                        attributeCollection = mid(arguments.content, attributeCollectionStart+21, attributeCollectionEnd-(attributeCollectionStart+21));
-                        
-                        attributeCollection = listToArray(attributeCollection, ';');
-                        tmpAttributeCollection = {};
-                        for(var i = 1; i <= arrayLen(attributeCollection); i++) {
-                            var varName = listGetAt(attributeCollection[i], 1, '=');
-                            var value   = listGetAt(attributeCollection[i], 2, '=');
-                            value = mid(value, 1, len(value));
-                            if(left(value, 1) == '##' && right(value, 1) == '##') {
-                                value = evaluate(DE(value));
-                            }
-                            tmpAttributeCollection[varName] = value;
-                        }
+
+    private string function buildSkeleton(required string themeName, required string skeleton) {
+        if(isJson(arguments.skeleton)) {
+            var jsonSkeleton = deserializeJSON(arguments.skeleton);
+            return this.buildSubSkeleton(themeName=arguments.themeName, modules=jsonSkeleton)
+        }
+        else {
+            return arguments.skeleton;
+        }
+    }
+
+    private string function buildSubSkeleton(required string themeName, required array modules) {
+        var content = "";
+        saveContent variable="content" {
+            for(var element = 1; element <= arguments.modules.len(); element++) {
+                var moduleData = {};
+                for(var moduleAttribute IN arguments.modules[element]) {
+                    if(moduleAttribute != 'modules' && moduleAttribute != 'name') {
+                        moduleData[moduleAttribute] = arguments.modules[element][moduleAttribute];
                     }
                 }
-                saveContent variable="module" {
-                    module template=templateName tmpAttributeCollection=tmpAttributeCollection;
+
+                if(arguments.modules[element].keyExists("modules") && arguments.modules[element].modules.len() > 0) {
+                    moduleData.content = this.buildSubSkeleton(themeName=arguments.themeName, modules=arguments.modules[element].modules);
                 }
-                writeOutput(trim(module));
                 
-                subStringStart = ++closingTag;
+                module template="/themes/#arguments.themeName#/skeleton/#arguments.modules[element].name#.cfm" attributeCollection=moduleData;
             }
         }
-        
-        return articleContent;
+        return content;
     }
 
     public string function getTopNavigationName() {
