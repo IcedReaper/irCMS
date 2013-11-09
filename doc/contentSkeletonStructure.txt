@@ -22,30 +22,241 @@ DB-Skeleton Model for the upper HTML Code:
 [
     {
         "name": "row",
-        "cols": [
+        "modules": [
             {
                 "name": "col",
                 "classes": "col-md-12",
                 "modules": [
                     {
                         "name": "textBlock",
-                        "elements": {
-                            "h1": "Willkommen auf der irCMS Seite",
-                            "h4": "Ein CF Content Management System von IcedReaper",
-                            "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
-                        }
+                        "h1": "Willkommen auf der irCMS Seite",
+                        "h4": "Ein CF Content Management System von IcedReaper",
+                        "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
                     },
                     {
                         "name": "heroImage",
-                        "elements": {
-                            "background-image": "/static/content/welcome_heroImage1_02.jpg"
-                        }
+                        "background-image": "/static/content/welcome_heroImage1_02.jpg"
                     }
                 ]
             }
         ]
     }
 ]
+
+More complex HTML Code:
+==========
+<section class="row">
+    <section class="col-md-12">
+        <article class="textBlock widget">
+            <h1>Willkommen auf der irCMS Seite</h1>
+            <h4 class="subline">Ein CF Content Management System von IcedReaper</h4>
+            <div class="text">
+                <span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span>
+                <span>
+                    Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>
+                    Alle einzelheiten findet Ihr auf unseren Seiten.
+                </span>
+            </div>
+        </article>
+        <article style="background-image:url('/static/content/welcome_heroImage1_02.jpg');" class="heroImage"></article>
+    </section>
+</section>
+<section class="row">
+    <section class="col-md-6 col-sm-12">
+        <article class="textBlock widget">
+            <h1>Willkommen auf der irCMS Seite</h1>
+            <h4 class="subline">Ein CF Content Management System von IcedReaper</h4>
+            <div class="text">
+                <span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span>
+                <span>
+                    Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>
+                    Alle einzelheiten findet Ihr auf unseren Seiten.
+                </span>
+            </div>
+        </article>
+    </section>
+    <section class="col-md-6 col-sm-12">
+        <article style="background-image:url('/static/content/welcome_heroImage1_02.jpg');" class="heroImage"></article>
+    </section>
+</section>
+
+DB-Skeleton Model for the upper HTML Code:
+==========================================
+[
+    {
+        "name": "row",
+        "modules": [
+            {
+                "name": "col",
+                "classes": "col-md-12",
+                "modules": [
+                    {
+                        "name": "textBlock",
+                        "type": "content",
+                        "h1": "Willkommen auf der irCMS Seite",
+                        "h4": "Ein CF Content Management System von IcedReaper",
+                        "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
+                    },
+                    {
+                        "name": "heroImage",
+                        "type": "content",
+                        "background-image": "/static/content/welcome_heroImage1_02.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "row",
+        "modules": [
+            {
+                "name": "col",
+                "classes": "col-md-6 col-sm-12",
+                "modules": [
+                    {
+                        "name": "textBlock",
+                        "h1": "Willkommen auf der irCMS Seite",
+                        "h4": "Ein CF Content Management System von IcedReaper",
+                        "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
+                    }
+                ]
+            },
+            {
+                "name": "col",
+                "classes": "col-md-6 col-sm-12",
+                "modules": [
+                    {
+                        "name": "heroImage",
+                        "background-image": "/static/content/welcome_heroImage1_02.jpg"
+                    }
+                ]
+            }
+        ]
+    }
+]
+
+Even More complex HTML Code:
+==========
+<section class="row">
+    <section class="col-md-12">
+        <article class="textBlock widget">
+            <h1>Willkommen auf der irCMS Seite</h1>
+            <h4 class="subline">Ein CF Content Management System von IcedReaper</h4>
+            <div class="text">
+                <span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span>
+                <span>
+                    Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>
+                    Alle einzelheiten findet Ihr auf unseren Seiten.
+                </span>
+            </div>
+        </article>
+        <article style="background-image:url('/static/content/welcome_heroImage1_02.jpg');" class="heroImage"></article>
+    </section>
+</section>
+<section class="row">
+    <section class="col-md-6 col-sm-12">
+        <section class="row">
+            <section class="col-md-3 col-sm-12">
+                <article style="background-image:url('/static/content/welcome_heroImage1_02.jpg');" class="heroImage"></article>
+            </section>
+            <section class="col-md-9 col-sm-12">
+                <article class="textBlock widget">
+                    <h1>Willkommen auf der irCMS Seite</h1>
+                    <h4 class="subline">Ein CF Content Management System von IcedReaper</h4>
+                    <div class="text">
+                        <span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span>
+                        <span>
+                            Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>
+                            Alle einzelheiten findet Ihr auf unseren Seiten.
+                        </span>
+                    </div>
+                </article>
+            </section>
+        </section>
+    </section>
+    <section class="col-md-6 col-sm-12">
+        <article style="background-image:url('/static/content/welcome_heroImage1_02.jpg');" class="heroImage"></article>
+    </section>
+</section>
+
+DB-Skeleton Model for the upper HTML Code:
+==========================================
+[
+    {
+        "name": "row",
+        "modules": [
+            {
+                "name": "col",
+                "classes": "col-md-12",
+                "modules": [
+                    {
+                        "name": "textBlock",
+                        "type": "content",
+                        "h1": "Willkommen auf der irCMS Seite",
+                        "h4": "Ein CF Content Management System von IcedReaper",
+                        "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
+                    },
+                    {
+                        "name": "heroImage",
+                        "type": "content",
+                        "background-image": "/static/content/welcome_heroImage1_02.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "row",
+        "modules": [
+            {
+                "name": "col",
+                "classes": "col-md-6 col-sm-12",
+                "modules": [
+                    {
+                        "name": "row",
+                        "modules": [
+                            {
+                                "name": "col",
+                                "classes": "col-md-3 col-sm-12",
+                                "modules": [
+                                    {
+                                        "name": "heroImage",
+                                            "background-image": "/static/content/welcome_heroImage1_02.jpg"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "col",
+                                "classes": "col-md-9 col-sm-12",
+                                "modules": [
+                                    {
+                                        "name": "textBlock",
+                                        "h1": "Willkommen auf der irCMS Seite",
+                                        "h4": "Ein CF Content Management System von IcedReaper",
+                                        "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "col",
+                "classes": "col-md-6 col-sm-12",
+                "modules": [
+                    {
+                        "name": "heroImage",
+                        "background-image": "/static/content/welcome_heroImage1_02.jpg"
+                    }
+                ]
+            }
+        ]
+    }
+]
+
+First Skeleton Depth is always an array of rows.
+Second is always an array of cols
 
 Folder Structure:
 =================
