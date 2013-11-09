@@ -1,0 +1,80 @@
+HTML Code:
+==========
+<section class="row">
+    <section class="col-md-12">
+        <article class="textBlock widget">
+            <h1>Willkommen auf der irCMS Seite</h1>
+            <h4 class="subline">Ein CF Content Management System von IcedReaper</h4>
+            <div class="text">
+                <span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span>
+                <span>
+                    Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>
+                    Alle einzelheiten findet Ihr auf unseren Seiten.
+                </span>
+            </div>
+        </article>
+        <article style="background-image:url('/static/content/welcome_heroImage1_02.jpg');" class="heroImage"></article>
+    </section>
+</section>
+
+DB-Skeleton Model for the upper HTML Code:
+==========================================
+{
+"rows": [
+    "cols": [
+        {
+            "classes": "col-md-12",
+            "modules": [
+                {
+                    "name": "textBlock",
+                    "elements": {
+                        "h1": "Willkommen auf der irCMS Seite",
+                        "h4": "Ein CF Content Management System von IcedReaper"
+                        "text": "<span>Das irCMS ist ein modulares CMS System, welches beliebig erweitert oder ersetzt werden kann.</span><span>Jeder kann sich an der Entwicklung von neuen Modulen oder auch Themes beteiligen.<br>Alle einzelheiten findet Ihr auf unseren Seiten.</span>"
+                    }
+                },
+                {
+                    "name": "heroImage",
+                    "elements": {
+                        "background-image": "/static/content/welcome_heroImage1_02.jpg"
+                    }
+                }
+            ]
+        }
+    ]
+]};
+
+Folder Structure:
+=================
+- Skeletons
+    - row
+    - col
+
+    - textBlock
+    - heroImage
+
+Example of Skeletons:
+=====================
+row:
+---------
+<section class="row">
+    {children}
+</section>
+
+col
+--------
+<section class="{classes}">
+    {children}
+</section>
+
+textBlock
+-----------------
+<article class="textBlock widget">
+    if(h1 is defined)   <h1>{h1text}</h1>
+    if(h4 is defined)   <h4 class="subline">{h4text]</h4>
+    if(text is defined) <div class="text">{text}</div>
+</article>
+
+heroImage
+-----------------
+<article style="background-image:{background-image}" class="heroImage"></article>
