@@ -98,7 +98,8 @@
                                                                                                                              ,includeAllByDefault = false
                                                                                                                              ,forceCompilation    = true
                                                                                                                              ,checkForUpdates     = true
-                                                                                                                             ,excludePattern      = '.*/inc_.*');
+                                                                                                                             ,excludePattern      = '.*/inc_.*'
+                                                                                                                             ,jsDependencyFile    = ExpandPath( './themes/#qThemes.themeName[i]#/js/dependencies' ));
             }
         }
         return true;

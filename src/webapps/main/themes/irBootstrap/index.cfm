@@ -1,5 +1,7 @@
 ﻿<cfscript>
-    application.themes.irBootstrap.cfstatic.include('/js/core/main.js')
+    application.themes.irBootstrap.cfstatic.include('/js/vendor/bootstrap/bootstrap.js')
+                                           .include('/js/vendor/jquery/jquery-2.0.3.min.js')
+                                           .include('/js/core/main.js')
                                            .include('/css/bootstrap/bootstrap.less')
                                            .include('/css/core/main.less');
 </cfscript>
@@ -18,7 +20,7 @@
         <meta name="viewport" content="width=device-width">
 
         #application.themes.irBootstrap.cfstatic.renderIncludes('css')#
-        <script src="/system/js/modernizr/modernizr-2.6.2-respond-1.1.0.min.js" charset="utf-8"></script>
+        <script src="/themes/irBootstrap/js/vendor/modernizr/modernizr-2.6.2-respond-1.1.0.min.js" charset="utf-8"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -32,8 +34,8 @@
 
         <cfinclude template="templates/core/footer.cfm">
 
-        <script src="/system/js/jquery/jquery-2.0.3.min.js" charset="utf-8"></script>
-        <script src="/system/js/bootstrap/bootstrap.min.js" charset="utf-8"></script>
+        <!---<script src="/system/js/jquery/jquery-2.0.3.min.js" charset="utf-8"></script>
+        <script src="/system/js/bootstrap/bootstrap.min.js" charset="utf-8"></script>--->
         #application.themes.irBootstrap.cfstatic.renderIncludes('js')#
 
         <!---<script>
