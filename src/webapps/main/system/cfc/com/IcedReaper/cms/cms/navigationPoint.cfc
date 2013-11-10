@@ -134,7 +134,7 @@
     public string function getContent(required string themeName, required boolean cleanArticle) {
         var content = variables.actualMenu.content[1];
 
-        if(arguments.cleanArticle) {
+        if(arguments.cleanArticle && content != '') {
             content = buildSkeleton(themeName=arguments.themeName, skeleton=content);
         }
         return content;
