@@ -13,7 +13,7 @@
 	    variables.actualMenu = new Query().setDatasource(variables.datasource)
                                           .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
                                                  &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
-                                                 &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity, n.nameOfNavigationToShow "
+                                                 &"                cv.title, cv.description, cv.keywords, cv.showContentForEntity, n.nameOfNavigationToShow "
                                                  &"           FROM #variables.tablePrefix#_navigation     n "
                                                  &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
                                                  &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
@@ -37,10 +37,6 @@
     
     public string function getDescription() {
         return variables.actualMenu.description[1];
-    }
-    
-    public string function getCanonical() {
-        return variables.actualMenu.canonical[1];
     }
     
     public string function getKeywords() {
@@ -147,7 +143,7 @@
     private string function buildSkeleton(required string themeName, required string skeleton) {
         if(isJson(arguments.skeleton)) {
             var jsonSkeleton = deserializeJSON(arguments.skeleton);
-            return this.buildSubSkeleton(themeName=arguments.themeName, modules=jsonSkeleton)
+            return this.buildSubSkeleton(themeName=arguments.themeName, modules=jsonSkeleton);
         }
         else {
             return arguments.skeleton;
