@@ -1,6 +1,6 @@
 <cfoutput>
     <cfset application.themes.irBootstrap.cfstatic.include('/js/skeleton/slider.js')>
-    <article id="carousel-#attributes.id#" class="carousel slide" data-ride="carousel" <cfif attributes.keyExists('interval')>data-interval="#attributes.interval#"</cfif> <cfif attributes.keyExists('pause')>data-pause="#attributes.pause#"</cfif> <cfif attributes.keyExists('wrap')>data-wrap="#attributes.wrap#"</cfif>>
+    <article id="carousel-#attributes.id#" class="module carousel slide" data-ride="carousel" <cfif attributes.keyExists('interval')>data-interval="#attributes.interval#"</cfif> <cfif attributes.keyExists('pause')>data-pause="#attributes.pause#"</cfif> <cfif attributes.keyExists('wrap')>data-wrap="#attributes.wrap#"</cfif>>
         <ol class="carousel-indicators">
             <cfloop from="1" to="#attributes.images.len()#" index="position">
                 <li data-target="##carousel-#attributes.id#" data-slide-to="#position#" <cfif position EQ 1>class="active"</cfif>></li>
