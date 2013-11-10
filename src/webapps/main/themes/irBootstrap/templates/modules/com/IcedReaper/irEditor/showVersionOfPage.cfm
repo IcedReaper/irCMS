@@ -1,6 +1,7 @@
 <cfscript>
     request.pageTitle = "Bearbeiten der Seite #attributes.pageToShow.getSesLink()#";
-    application.themes.irBootstrap.cfstatic.include('/js/modules/irEditor/');
+    application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/');
+    application.themes.irBootstrap.cfstatic.include('/css/modules/com/IcedReaper/irEditor/');
 </cfscript>
 <cfoutput>
     <form action="#request.sesLink#" method="post" class="form-horizontal" role="form" id="irEditor">
@@ -245,20 +246,16 @@
                     <aside class="widget">
                         <fieldset>
                             <legend>Editor optionen</legend>
-                            <div class="btn-group">
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-align-left"></span></button>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-align-center"></span></button>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-align-right"></span></button>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-align-justify"></span></button>
-                            </div>
                         </fieldset>
                     </aside>
                 </div>
             </div>
         </cfif>
 
+        <textarea></textarea>
+
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
-            #attributes.pageToShow.getContent()#
+            #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
         </div>
     </form>
 </cfoutput>

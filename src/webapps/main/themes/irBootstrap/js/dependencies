@@ -1,5 +1,6 @@
 /vendor/jquery/jquery-2.0.3.min.js
     /vendor/bootstrap/bootstrap.js
+    /vendor/tinyMce/*.js
     /core/*.js
     /skeleton/*.js
     /modules/*.js

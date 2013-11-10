@@ -99,7 +99,7 @@
                                                                                                                              ,forceCompilation    = true
                                                                                                                              ,checkForUpdates     = true
                                                                                                                              ,excludePattern      = '.*/inc_.*'
-                                                                                                                             ,jsDependencyFile    = ExpandPath( './themes/#qThemes.themeName[i]#/js/dependencies' ));
+                                                                                                                             ,jsDependencyFile    = ExpandPath('./themes/#qThemes.themeName[i]#/js/dependencies'));
             }
         }
         return true;
