@@ -1,4 +1,4 @@
-component {
+component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
     public navigationVersion function init(required string tablePrefix, required string datasource, required numeric navigationId, required numeric version) {
         variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
@@ -12,7 +12,7 @@ component {
         variables.actualMenu = new Query().setDatasource(variables.datasource)
                                           .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
                                                  &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
-                                                 &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity, n.nameOfNavigationToShow, "
+                                                 &"                cv.title, cv.description, cv.keywords, cv.showContentForEntity, n.nameOfNavigationToShow, "
                                                  &"                cs.online, n.active, cv.versionComment, cs.editable "
                                                  &"           FROM #variables.tablePrefix#_navigation     n "
                                                  &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
@@ -53,26 +53,6 @@ component {
         return variables.actualMenu.linkname[1];
     }
     
-    public string function getTitle() {
-        return variables.actualMenu.title[1];
-    }
-    
-    public string function getDescription() {
-        return variables.actualMenu.description[1];
-    }
-    
-    public string function getCanonical() {
-        return variables.actualMenu.canonical[1];
-    }
-    
-    public string function getKeywords() {
-        return variables.actualMenu.keywords[1];
-    }
-    
-    public string function getContent() {
-        return variables.actualMenu.content[1];
-    }
-
     public string function getTopNavigationName() {
         return variables.actualMenu.nameOfNavigationToShow[1];
     }
@@ -95,5 +75,14 @@ component {
 
     public boolean function showContentForEntity() {
         return variables.actualMenu.showContentForEntity[1];
+    }
+    
+    public string function getContent() {
+        var content = variables.actualMenu.content[1];
+
+        if(arguments.cleanArticle && content != '') {
+            content = buildSkeleton(themeName=arguments.themeName, skeleton=content);
+        }
+        return content;
     }
 }
