@@ -44,7 +44,7 @@
                                             <td>
                                                 <div class="btn-group">
                                                     <cfif attributes.dashboardData[statusIndex].editable>
-                                                        <a class="btn btn-default" title="Diese Version des Artikels bearbeiten" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Bearbeiten"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                        <a class="btn btn-default" title="Diese Version des Artikels bearbeiten" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#"><span class="glyphicon glyphicon-pencil"></span></a>
                                                     </cfif>
                                                     <cfif attributes.dashboardData[statusIndex].readyToRelease>
                                                         <a class="btn btn-success" title="Diese Version Online nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Release"><span class="glyphicon glyphicon-ok"></span></a>
