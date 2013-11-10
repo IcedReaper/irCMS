@@ -169,7 +169,7 @@
                     moduleData.content = this.buildSubSkeleton(themeName=arguments.themeName, modules=arguments.modules[element].modules);
                 }
                 
-                module template="/themes/#arguments.themeName#/skeleton/#arguments.modules[element].name#.cfm" attributeCollection=moduleData;
+                module template="/themes/#arguments.themeName#/templates/skeleton/#arguments.modules[element].name#.cfm" attributeCollection=moduleData;
             }
         }
         return content;
