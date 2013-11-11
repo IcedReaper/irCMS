@@ -92,7 +92,7 @@
                                         <div class="col-md-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="moduleId" value="" <cfif attributes.pageToShow.getModuleId() == ''>checked="checked"</cfif>>
+                                                    <input type="radio" name="moduleId" value="" <cfif attributes.pageToShow.getModuleId() EQ ''>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Kein Modul">
                                             </div>
@@ -104,7 +104,7 @@
                                             <div class="col-md-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <input type="radio" name="moduleId" value="#installedModules[moduleIndex].id#" <cfif attributes.pageToShow.getModuleId() == installedModules[moduleIndex].id>checked="checked"</cfif>>
+                                                        <input type="radio" name="moduleId" value="#installedModules[moduleIndex].id#" <cfif attributes.pageToShow.getModuleId() EQ installedModules[moduleIndex].id>checked="checked"</cfif>>
                                                     </span>
                                                     <input type="text" class="form-control" disabled="disabled" value="#installedModules[moduleIndex].name#">
                                                 </div>
@@ -125,7 +125,7 @@
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="entityRegExp" value="(.*)" <cfif attributes.pageToShow.getRegExp() != ''>checked="checked"</cfif>>
+                                                    <input type="radio" name="entityRegExp" value="(.*)" <cfif attributes.pageToShow.getRegExp() NEQ ''>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Ja">
                                             </div>
@@ -133,14 +133,14 @@
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="entityRegExp" value="" <cfif attributes.pageToShow.getRegExp() == ''>checked="checked"</cfif>>
+                                                    <input type="radio" name="entityRegExp" value="" <cfif attributes.pageToShow.getRegExp() EQ ''>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Nein">
                                             </div>
                                         </div>
                                     </div>
                                 <cfelse>
-                                    <p class="form-control-static"><cfif attributes.pageToShow.getRegExp() != ''>Ja<cfelse>Nein</cfif></p>
+                                    <p class="form-control-static"><cfif attributes.pageToShow.getRegExp()NEQ ''>Ja<cfelse>Nein</cfif></p>
                                 </cfif>
                             </div>
                         </div>
@@ -254,8 +254,6 @@
                 </div>
             </div>
         </cfif>
-
-        <textarea></textarea>
 
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
             #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
