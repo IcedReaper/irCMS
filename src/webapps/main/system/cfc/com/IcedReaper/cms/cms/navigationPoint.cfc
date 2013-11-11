@@ -19,7 +19,7 @@
                                                  &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
                                                  &"LEFT OUTER JOIN #variables.tablePrefix#_module         m  ON cv.moduleId        = m.moduleId "
                                                  &"          WHERE cs.online      = :online "
-                                                 &"            AND n.active       = :active "
+                                                 &"            AND n.activ       = :active "
                                                  &"            AND n.navigationId = :navigationId "
                                                  &"       ORDER BY n.sortOrder ASC")
                                           .addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric")

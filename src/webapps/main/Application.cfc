@@ -18,6 +18,7 @@
         include "system/appSetup/applicationSettings.cfm";
 
         this.initCoreTools();
+        this.initErrorHandler();
         this.initValidation();
         this.initCoreCMS();
         this.initCoreUser();
@@ -38,6 +39,13 @@
         return true;
     }
     
+    private boolean function initErrorHandler() {
+        application.error.errorHandler = createObject("component", "system.cfc.com.IcedReaper.cms.error.errorHandler").init(tablePrefix = application.tablePrefix
+                                                                                                                           ,datasource  = application.datasource.admin
+                                                                                                                           ,tools       = application.tools.tools);
+        return true;
+    }
+    
     private boolean function initValidation() {
         application.validation.validator = createObject("component", "system.cfc.com.IcedReaper.cms.validation.validator").init(tablePrefix = application.tablePrefix
                                                                                                                                ,datasource  = application.datasource.user);
@@ -49,10 +57,6 @@
     }
 
     private boolean function initCoreCMS() {
-        application.cms.errorHandler = createObject("component", "system.cfc.com.IcedReaper.cms.cms.errorHandler").init(tablePrefix = application.tablePrefix
-                                                                                                                       ,datasource  = application.datasource.admin
-                                                                                                                       ,tools       = application.tools.tools);
-
         application.cms.core = createObject("component", "system.cfc.com.IcedReaper.cms.cms.cmsCore").init(tablePrefix = application.tablePrefix
                                                                                                           ,datasource  = application.datasource.user);
         
@@ -130,11 +134,13 @@
             }
         }
         catch('notFound' var notFound) {
-            application.cms.errorHandler.processNotFound(themeName=application.cms.core.getDefaultThemeName(), message=notFound.message, detail=notFound.detail);
+            application.error.errorHandler.processNotFound(themeName=application.cms.core.getDefaultThemeName(), errorStruct=notFound);
             return false;
         }
         catch(any var error) {
-            application.cms.errorHandler.processError(themeName=application.cms.core.getDefaultThemeName(), message=error.message, detail=error.detail);
+        writeDump(error);
+        abort;
+            application.error.errorHandler.processError(themeName=application.cms.core.getDefaultThemeName(), errorStruct=error);
             return false;
         }
     }
