@@ -1,6 +1,10 @@
 <cfscript>
     request.pageTitle = "Bearbeiten der Seite #attributes.pageToShow.getSesLink()#";
-    application.themes.irBootstrap.cfstatic.include('/js/modules/irEditor/');
+    application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/')
+                                           .include('/css/modules/com/IcedReaper/irEditor/');
+    
+    application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/jquery.tinymce.min.js" charset="utf-8"></script>');
+    application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/tinymce.min.js" charset="utf-8"></script>');
 </cfscript>
 <cfoutput>
     <form action="#request.sesLink#" method="post" class="form-horizontal" role="form" id="irEditor">
@@ -88,7 +92,7 @@
                                         <div class="col-md-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="moduleId" value="" <cfif attributes.pageToShow.getModuleId() == ''>checked="checked"</cfif>>
+                                                    <input type="radio" name="moduleId" value="" <cfif attributes.pageToShow.getModuleId() EQ ''>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Kein Modul">
                                             </div>
@@ -100,7 +104,7 @@
                                             <div class="col-md-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <input type="radio" name="moduleId" value="#installedModules[moduleIndex].id#" <cfif attributes.pageToShow.getModuleId() == installedModules[moduleIndex].id>checked="checked"</cfif>>
+                                                        <input type="radio" name="moduleId" value="#installedModules[moduleIndex].id#" <cfif attributes.pageToShow.getModuleId() EQ installedModules[moduleIndex].id>checked="checked"</cfif>>
                                                     </span>
                                                     <input type="text" class="form-control" disabled="disabled" value="#installedModules[moduleIndex].name#">
                                                 </div>
@@ -121,7 +125,7 @@
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="entityRegExp" value="(.*)" <cfif attributes.pageToShow.getRegExp() != ''>checked="checked"</cfif>>
+                                                    <input type="radio" name="entityRegExp" value="(.*)" <cfif attributes.pageToShow.getRegExp() NEQ ''>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Ja">
                                             </div>
@@ -129,14 +133,14 @@
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    <input type="radio" name="entityRegExp" value="" <cfif attributes.pageToShow.getRegExp() == ''>checked="checked"</cfif>>
+                                                    <input type="radio" name="entityRegExp" value="" <cfif attributes.pageToShow.getRegExp() EQ ''>checked="checked"</cfif>>
                                                 </span>
                                                 <input type="text" class="form-control" disabled="disabled" value="Nein">
                                             </div>
                                         </div>
                                     </div>
                                 <cfelse>
-                                    <p class="form-control-static"><cfif attributes.pageToShow.getRegExp() != ''>Ja<cfelse>Nein</cfif></p>
+                                    <p class="form-control-static"><cfif attributes.pageToShow.getRegExp()NEQ ''>Ja<cfelse>Nein</cfif></p>
                                 </cfif>
                             </div>
                         </div>
@@ -245,12 +249,6 @@
                     <aside class="widget">
                         <fieldset>
                             <legend>Editor optionen</legend>
-                            <div class="btn-group">
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-align-left"></span></button>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-align-center"></span></button>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-align-right"></span></button>
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-align-justify"></span></button>
-                            </div>
                         </fieldset>
                     </aside>
                 </div>
@@ -258,7 +256,7 @@
         </cfif>
 
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
-            #attributes.pageToShow.getContent()#
+            #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
         </div>
     </form>
 </cfoutput>
