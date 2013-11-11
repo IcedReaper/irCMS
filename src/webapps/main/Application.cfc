@@ -29,7 +29,8 @@
     }
 
     private boolean function initCoreTools() {
-        application.tools.tools = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
+        application.tools.wrapper  = createObject("component", "system.cfc.com.IcedReaper.cms.tools.wrapper");
+        application.tools.tools    = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
         application.tools.cryption = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(encryptionKey   = application.encryption.key
                                                                                                                    ,algorithm       = application.encryption.method
                                                                                                                    ,structSeparator = ';');
@@ -73,15 +74,15 @@
                                                                                                                  ,tablePrefix   = application.tablePrefix
                                                                                                                  ,datasource    = application.datasource.admin);
 
-        application.user.search = createObject("component", "system.cfc.com.IcedReaper.cms.user.userSearch").init(cryptionApi  = application.tools.cryption
-                                                                                                                 ,tablePrefix  = application.tablePrefix
-                                                                                                                 ,datasource   = application.datasource.user);
+        application.user.search = createObject("component", "system.cfc.com.IcedReaper.cms.user.userSearch").init(cryptionApi = application.tools.cryption
+                                                                                                                 ,tablePrefix = application.tablePrefix
+                                                                                                                 ,datasource  = application.datasource.user);
         return true;
     }
 
     private boolean function initCoreSecurity() {
-        application.security.permission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(tablePrefix  = application.tablePrefix
-                                                                                                                             ,datasource   = application.datasource.user);
+        application.security.permission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(tablePrefix = application.tablePrefix
+                                                                                                                             ,datasource  = application.datasource.user);
         return true;
     }
 
@@ -98,8 +99,7 @@
                                                                                                                              ,includeAllByDefault = false
                                                                                                                              ,forceCompilation    = true
                                                                                                                              ,checkForUpdates     = true
-                                                                                                                             ,excludePattern      = '.*/inc_.*'
-                                                                                                                             ,jsDependencyFile    = ExpandPath('./themes/#qThemes.themeName[i]#/js/dependencies'));
+                                                                                                                             ,excludePattern      = '.*/inc_.*');
             }
         }
         return true;
