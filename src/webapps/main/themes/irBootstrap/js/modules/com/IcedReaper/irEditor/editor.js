@@ -1,85 +1,132 @@
 /**
  * this JavaScript files provites all logic for the page editor
  *
- * @depends /vendor/jquery/jquery-2.0.3.min.js
- * @depends /vendor/bootstrap/bootstrap.js
- * @depends /vendor/tinyMce/jquery.tinymce.min.js
- * @depends /vendor/tinyMce/tinymce.min.js
- * @author Icedreaper <Kevin.Lang@gmx.de>
+ * @author IcedReaper <Kevin.Lang@gmx.de>
  */
 $(function() {
-    $('form#irEditor').on('submit', function() {
-        return false;
-    });
-
     if($('.content.editable').length === 1) {
         var editor = new irEditor($('.content.editable'));
     }
-
-    tinymce.init({
-        selector: "textarea"
-    });
-
 });
 
 var irEditor = function($editor) {
-    this.initTextBlock = function() {
-        $('.textBlock', $editor).on('click', function(e) {
-            e.preventDefault();
+    $('form#irEditor').on('submit', function() {
+        try {
+            // clean
+            removeEditHandler();
+            removeTinyMce();
+            
+            // build
+            $('input[name="content"]').val(buildSkeleton());
+            
+            // restore
+            addEditHandler();
+            initTextBlock();
+        
+            return true;
+        } 
+        catch (error) {
+            console.log(error);
+        
+            return false;
+        }
+    });
 
-
+    var addEditHandler = function() {
+        $('.module', $editor).each(function() {
+            $(this).css('position', 'relative');
+            
+            var delButton = $('<div/>').addClass('btn btn-danger')
+                                       .append($('<span/>').addClass('glyphicon glyphicon-trash'))
+                                       .on('click', function() {
+                                           $(this).closest('.irEditor-wrapper').remove();
+                                       });
+            var editContainer = $('<aside/>').addClass('editButton')
+                                            .append(delButton);
+    
+            $(this).wrap('<div/>')
+                   .closest('div')
+                   .addClass('irEditor-wrapper')
+                   .css({'position': 'relative'})
+                   .append(editContainer);
+        });
+    };
+    var removeEditHandler = function() {
+        $('.module', $editor).each(function() {
+            $('> aside', $(this).closest('.irEditor-wrapper')).remove();
+            $(this).unwrap();
+        });
+    };
+    
+    var initTextBlock = function() {
+        $('.module.textBlock').each(function() {
+            $(this).tinymce({
+                theme: "modern",
+                plugins: [
+                    ["autolink link image lists preview hr anchor"],    //advlist pagebreak charmap
+                    ["searchreplace insertdatetime media nonbreaking"], // wordcount visualblocks visualchars fullscreen code
+                    ["table contextmenu directionality template paste"] // emoticons
+                ],
+                menu: { 
+                    edit:   {title: 'Edit',   items: 'undo redo | cut copy paste | selectall'}, 
+                    view:   {title: 'View',   items: 'visualaid'}, 
+                    format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'}, 
+                    table:  {title: 'Table',  items: 'inserttable tableprops deletetable cell row column'}, 
+                },
+                add_unload_trigger: false,
+                schema: "html5",
+                inline: true,
+                toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                statusbar: false
+            });
+        });
+    };
+    var removeTinyMce = function() {
+        $('.module[id^="mce_"]').each(function() {
+            $(this).tinymce().remove();
         });
     }
-
-    $('.module', $editor).each(function() {
-        $(this).css('position', 'relative');
-
-        var container = $('<aside/>').addClass('editButton');
-        var editButton   = $('<div/>').addClass('btn btn-default').append($('<span/>').addClass('glyphicon glyphicon-pencil')).on('click', function() {
-            if($(this).closest('.module').hasClass('textBlock')) {
-                var $module = $(this).closest('.module');
+    
+    var buildSkeleton = function() {
+        var buildSubSkeleton = function($selector) {
+            var skeletonNode = [];
+            
+            $selector.each(function(index) {
+                skeletonNode[index] = {};
+                var lastElement = false;
                 
-                $('div.text', $module).tinymce({
-                    theme: "modern",
-                    plugins: [
-                        ["advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker"],
-                        ["searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking"],
-                        ["save table contextmenu directionality emoticons template paste"]
-                    ],
-                    add_unload_trigger: false,
-                    schema: "html5",
-                    inline: true,
-                    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image     | print preview media",
-                    statusbar: false
-                });
-
-                /*$('h1', $module).tinymce({
-                    selector: "h1.edit",
-                    theme: "modern",
-                    add_unload_trigger: false,
-                    schema: "html5",
-                    inline: true,
-                    toolbar: "undo redo",
-                    statusbar: false
-                });
-
-                $('h4', $module).tinymce({
-                    selector: "h1.edit",
-                    theme: "modern",
-                    add_unload_trigger: false,
-                    schema: "html5",
-                    inline: true,
-                    toolbar: "undo redo",
-                    statusbar: false
-                });*/
-            }
-        });
-        var deleteButton = $('<div/>').addClass('btn btn-danger').append($('<span/>').addClass('glyphicon glyphicon-trash').on('click', function() {
-            $(this).offset('.module').remove();
-        }));
-
-        container.append(editButton).append(deleteButton);
-
-        $(this).append(container);
-    });
+                if($(this).hasClass('row')) {
+                    skeletonNode[index].name = 'row';
+                }
+                if($(this).attr('class').substring(0, 3) === 'col') {
+                    skeletonNode[index].name = 'col';
+                    skeletonNode[index].classes = $(this).attr('class');
+                }
+                if($(this).hasClass('textBlock')) {
+                    skeletonNode[index].name = 'textBlock';
+                    skeletonNode[index].text = $(this).html();
+                    
+                    lastElement = true;
+                }
+                if($(this).hasClass('heroImage')) {
+                    skeletonNode[index].name = 'heroImage';
+                    skeletonNode[index].backgroundImage = $(this).css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, '');
+                    
+                    lastElement = true;
+                }
+                
+                if($(this).children().length > 0 && ! lastElement) {
+                    skeletonNode[index].modules = buildSubSkeleton($(this).children());
+                }
+            });
+            
+            return skeletonNode;
+        }
+        
+        var skeleton = buildSubSkeleton($('.content.editable'));
+        return JSON.stringify(skeleton[0].modules).replace(/\\n/gi, '');
+    };
+    
+    addEditHandler();
+    initTextBlock();
 };
