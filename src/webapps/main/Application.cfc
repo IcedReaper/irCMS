@@ -138,8 +138,6 @@
             return false;
         }
         catch(any var error) {
-        writeDump(error);
-        abort;
             application.error.errorHandler.processError(themeName=application.cms.core.getDefaultThemeName(), errorStruct=error);
             return false;
         }
