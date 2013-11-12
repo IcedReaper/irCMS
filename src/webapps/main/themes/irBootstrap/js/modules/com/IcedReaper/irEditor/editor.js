@@ -114,6 +114,31 @@ var irEditor = function($editor) {
                     
                     lastElement = true;
                 }
+                if($(this).hasClass('carousel')) {
+                    skeletonNode[index].name   = 'slider';
+                    skeletonNode[index].id     = $(this).attr('id');
+
+                    if(typeof $(this).attr('interval') !== 'undefined') { skeletonNode[index].interval = $(this).attr('interval'); }
+                    if(typeof $(this).attr('pause')    !== 'undefined') { skeletonNode[index].pause    = $(this).attr('pause'); }
+                    if(typeof $(this).attr('wrap')     !== 'undefined') { skeletonNode[index].wrap     = $(this).attr('wrap'); }
+                    
+                    skeletonNode[index].images = [];
+                    $('.carousel-inner > .item', $(this)).each(function(imageIndex) {
+                        skeletonNode[index].images[imageIndex] = {};
+                        skeletonNode[index].images[imageIndex].source = $('img', $(this)).attr('src');
+
+                        if(typeof $(this).attr('alt') !== 'undefined') { skeletonNode[index].images[imageIndex].alt = $(this).attr('alt'); }
+
+                        if($('.carousel-caption > h3', $(this)).length === 1) {
+                            skeletonNode[index].images[imageIndex].headline = $('.carousel-caption > h3', $(this)).text();
+                        }
+
+                        if($('.carousel-caption > span', $(this)).length === 1) {
+                            skeletonNode[index].images[imageIndex].description = $('.carousel-caption > span', $(this)).text();
+                        }
+                    });
+                    lastElement = true;
+                }
                 
                 if($(this).children().length > 0 && ! lastElement) {
                     skeletonNode[index].modules = buildSubSkeleton($(this).children());
