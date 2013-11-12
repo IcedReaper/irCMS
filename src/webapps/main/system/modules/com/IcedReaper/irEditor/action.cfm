@@ -17,10 +17,11 @@
                 break;
             }
             case 'delete': {
+                application.cms.navigationCRUD.deleteContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
             case 'revoke': {
-                application.cms.navigationCRUD.revokeContentVersion(navigationId = attributes.navigationId);
+                application.cms.navigationCRUD.revokeContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
             default: {
