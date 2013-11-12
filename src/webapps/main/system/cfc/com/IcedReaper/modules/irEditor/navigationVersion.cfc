@@ -11,9 +11,11 @@ component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
     public boolean function load() {
         variables.actualMenu = new Query().setDatasource(variables.datasource)
                                           .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
-                                                 &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
-                                                 &"                cv.title, cv.description, cv.keywords, cv.showContentForEntity, n.nameOfNavigationToShow, "
-                                                 &"                cs.online, n.active, cv.versionComment, cs.editable "
+                                                 &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, "
+                                                 &"                cv.linkname, cv.sesLink, cv.entityRegExp, "
+                                                 &"                cv.title, cv.description, cv.keywords, cv.showContentForEntity, "
+                                                 &"                n.nameOfNavigationToShow, cs.online, n.active, cv.versionComment, "
+                                                 &"                cs.editable, cs.readyToRelease, cs.contentStatusId, cs.statusName "
                                                  &"           FROM #variables.tablePrefix#_navigation     n "
                                                  &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
                                                  &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
@@ -84,5 +86,44 @@ component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
             content = buildSkeleton(themeName=arguments.themeName, skeleton=content);
         }
         return content;
+    }
+    
+    public boolean function isOffline() {
+    	return new Query().setDatasource(variables.datasource)
+    	                  .setSQL("SELECT contentStatusId " 
+    	                         &"  FROM #variables.tablePrefix#_contentStatus "
+    	                         &" WHERE contentStatusId = :contentStatusId "
+    	                         &"   AND sortOrder       > (SELECT sortOrder "
+    	                         &"                            FROM #variables.tablePrefix#_contentStatus "
+    	                         &"                           WHERE online = :online) "
+    	                         &"ORDER BY sortOrder ASC ")
+    	                  .addParam(name="contentStatusId", value=variables.actualMenu.contentStatusId[1], cfsqltype="cf_sql_numeric")
+                          .addParam(name="online",          value=true,                                    cfsqltype="cf_sql_bit")
+    	                  .execute()
+    	                  .getResult()
+    	                  .getRecordCount() == 1;
+    }
+    
+    public boolean function isReadyToRelease() {
+    	return variables.actualMenu.readyToRelease[1];
+    }
+    
+    public string function getStatusName() {
+        return variables.actualMenu.statusName[1];
+    }
+    
+    public string function getNextStatusName() {
+        return new Query().setDatasource(variables.datasource)
+                          .setSQL("  SELECT statusName "
+                                 &"    FROM #variables.tablePrefix#_contentStatus "
+                                 &"   WHERE sortOrder > (SELECT contentStatusId "
+                                 &"                        FROM #variables.tablePrefix#_contentVersion "
+                                 &"                       WHERE contentVersionId = :contentVersionId) "
+                                 &"ORDER BY sortOrder ASC "
+                                 &"   LIMIT 1 ")
+                          .addParam(name="contentVersionId", value=variables.actualMenu.contentVersionId[1], cfsqltype="cf_sql_numeric")
+                          .execute()
+                          .getResult()
+                          .statusName[1];
     }
 }
