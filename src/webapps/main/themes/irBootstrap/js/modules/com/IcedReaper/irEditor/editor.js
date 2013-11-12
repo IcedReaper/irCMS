@@ -148,7 +148,7 @@ var irEditor = function($editor) {
         });
     };
     var cleanupTextBlock = function() {
-        $('.module[id^="mce_"]').each(function() {
+        $('.module.textBlock[id^="mce_"]').each(function() {
             $(this).tinymce().remove();
         });
     };
