@@ -10,3 +10,25 @@ div.irEditor-wrapper {
         display: block;
     }
 }
+
+.carousel {
+    .item {
+        position: relative;
+        
+        .editControls {
+            display:  none;
+            left:     25%;
+            width:    50%;
+            top:      50px;
+            position: absolute;
+        }
+
+        &.active {
+            &:hover {
+                .editControls {
+                    display: block;
+                }
+            }
+        }
+    }
+}
