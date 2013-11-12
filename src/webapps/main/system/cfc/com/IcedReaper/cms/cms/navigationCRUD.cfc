@@ -253,8 +253,8 @@
     }
     
     public boolean function releaseContentVersion(required numeric navigationId, required numeric version) {
-        var onlineStatusId = this.getOfflineStatusId();
-        var offineStatusId = this.getOnlineStatusId();
+        var onlineStatusId  = this.getOnlineStatusId();
+        var offlineStatusId = this.getOfflineStatusId();
 
         new Query().setDatasource(variables.datasource)
                    .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
@@ -296,7 +296,7 @@
         return true;
     }
 
-    private numeric function getOfflineStatusId() {
+    private numeric function getOnlineStatusId() {
         return new Query().setDatasource(variables.datasource)
                           .setSQL("SELECT contentStatusId "
                                  &"  FROM #variables.tablePrefix#_contentStatus "
@@ -308,7 +308,7 @@
                           .contentStatusId[1];
     }
 
-    private numeric function getOnlineStatusId() {
+    private numeric function getOfflineStatusId() {
         return new Query().setDatasource(variables.datasource)
                           .setSQL("SELECT contentStatusId "
                                  &"  FROM #variables.tablePrefix#_contentStatus "
