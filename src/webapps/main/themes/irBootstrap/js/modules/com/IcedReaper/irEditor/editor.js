@@ -156,7 +156,7 @@ var irEditor = function($editor) {
     };
     
     var initCarousel = function() {
-        $('.carousel .item').each(function() {
+        $('.module.carousel .item').each(function() {
             var $item = $(this);
 
             var createControls = function(label, id) {
@@ -215,7 +215,9 @@ var irEditor = function($editor) {
                                                                                       break;
                                                                                   }
                                                                               }
-                                                                          })));
+                                                                          })
+                                                            )
+                                         );
             };
 
             var $container = $('<aside/>').addClass('editControls widget')
@@ -227,7 +229,7 @@ var irEditor = function($editor) {
 
             $(this).append($container);
         });
-    }
+    };
     var cleanupCarousel = function() {
         $('.carousel .item').each(function() {
             $item = $(this);
