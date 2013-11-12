@@ -92,7 +92,9 @@ component {
         var qGetStatus = new Query().setDatasource(variables.datasource)
                                     .setSQL("  SELECT contentStatusId, statusName, readyToRelease, online, editable "
                                            &"    FROM #variables.tablePrefix#_contentStatus "
+                                           &"   WHERE showInDashboard = :showInDashboard " 
                                            &"ORDER BY sortOrder ASC, rework ASC")
+                                    .addParam(name="showInDashboard", value=true, cfsqltype="cf_sql_bit")
                                     .execute()
                                     .getResult();
 
