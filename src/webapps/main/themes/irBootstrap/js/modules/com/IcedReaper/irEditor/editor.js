@@ -17,6 +17,7 @@ var irEditor = function($editor) {
 
             cleanupTextBlock();
             cleanupCarousel();
+            cleanupHeroImage();
             
             // build
             $('input[name="content"]').val(buildSkeleton());
@@ -25,6 +26,7 @@ var irEditor = function($editor) {
             addEditHandler();
             initTextBlock();
             initCarousel();
+            initHeroImage();
         
             return true;
         } 
@@ -233,9 +235,38 @@ var irEditor = function($editor) {
             $item = $(this);
             $('aside.editControls', $item).remove();
         });
-    }
+    };
+
+    var initHeroImage = function() {
+        $('.module.heroImage').each(function() {
+            var $heroImage = $(this);
+            
+            var $container = $('<aside/>').addClass('editControls widget')
+                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
+                                                                  .append($('<div/>').addClass('form-group')
+                                                                                     .append($('<div/>').addClass('col-md-3 control-label')
+                                                                                                        .text('Bildpfad'))
+                                                                                     .append($('<div/>').addClass('col-md-9')
+                                                                                                        .append($('<input/>').addClass('form-control')
+                                                                                                                             .val($heroImage.css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, ''))
+                                                                                                                             .on('input', function() {
+                                                                                                                                 console.log($(this).val());
+                                                                                                                                 $heroImage.css('background-image', "url("+$(this).val()+")")
+                                                                                                                             })
+                                                                                                               )
+                                                                                            )
+                                                                         )
+                                                 );
+
+            $heroImage.append($container);
+        });
+    };
+    var cleanupHeroImage = function() {
+        $('.module.heroImage > aside.editControls').remove();
+    };
     
     addEditHandler();
     initTextBlock();
     initCarousel();
+    initHeroImage();
 };
