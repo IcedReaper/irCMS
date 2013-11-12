@@ -220,10 +220,10 @@ var irEditor = function($editor) {
 
             var $container = $('<aside/>').addClass('editControls widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                  .append(createControls('Bildpfad',    'src'))
-                                                                  .append(createControls('Titel',       'alt'))
-                                                                  .append(createControls('headline',    'headline'))
-                                                                  .append(createControls('description', 'description')));
+                                                                  .append(createControls('Bildpfad',     'src'))
+                                                                  .append(createControls('Titel',        'alt'))
+                                                                  .append(createControls('Überschrift',  'headline'))
+                                                                  .append(createControls('Beschreibung', 'description')));
 
             $(this).append($container);
         });
