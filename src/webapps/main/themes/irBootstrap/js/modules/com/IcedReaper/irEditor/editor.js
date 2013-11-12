@@ -16,6 +16,7 @@ var irEditor = function($editor) {
             removeEditHandler();
 
             cleanupTextBlock();
+            cleanupCarousel();
             
             // build
             $('input[name="content"]').val(buildSkeleton());
@@ -23,6 +24,7 @@ var irEditor = function($editor) {
             // restore
             addEditHandler();
             initTextBlock();
+            initCarousel();
         
             return true;
         } 
@@ -153,6 +155,61 @@ var irEditor = function($editor) {
         });
     };
     
+    var initCarousel = function() {
+        $('.carousel').carousel('pause');
+        
+        $('.carousel .item').each(function() {
+            $item = $(this);
+
+            var createControls = function(label, id, itemSelector, type) {
+                var value = "";
+
+                switch(type) {
+                    case 'text': {
+                        value = $(itemSelector, $item).text();
+                        break;
+                    }
+                    default: {
+                        value = $(itemSelector, $item).attr(type);
+                        break;
+                    }
+                }
+
+                return $('<div/>').addClass('form-group')
+                                  .append($('<div/>').addClass('col-md-3 control-label')
+                                                     .text(label))
+                                  .append($('<div/>').addClass('col-md-9')
+                                                     .append($('<input/>').addClass('form-control')
+                                                                          .attr('id', id)
+                                                                          .val(value)
+                                                                          .on('blur', function() {
+                                                                              switch(type) {
+                                                                                  case 'text': {
+                                                                                      $(itemSelector, $item).text($(this).val());
+                                                                                      break;
+                                                                                  }
+                                                                                  default: {
+                                                                                      $(itemSelector, $item).attr(type, $(this).val());
+                                                                                      break;
+                                                                                  }
+                                                                              }
+                                                                          })));
+            }
+            var $container = $('<aside/>').addClass('editControls widget')
+                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
+                                                                  .append(createControls('Bildpfad',    'src',         $('img', $item), 'src'))
+                                                                  .append(createControls('Titel',       'alt',         $('img', $item), 'alt'))
+                                                                  .append(createControls('headline',    'headline',    $('.carousel-caption > h3',   $item), 'text'))
+                                                                  .append(createControls('description', 'description', $('.carousel-caption > span', $item), 'text')));
+
+            $(this).append($container);
+        });
+    }
+    var cleanupCarousel = function() {
+
+    }
+    
     addEditHandler();
     initTextBlock();
+    initCarousel();
 };
