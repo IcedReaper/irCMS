@@ -32,7 +32,7 @@
             };
         }
         else {
-            throw(type="notFound", message="Navigation was found", detail=arguments.sesLink);
+            throw(type="notFound", message="Navigation was not found", detail=arguments.sesLink);
         }
     }
 
@@ -252,9 +252,63 @@
         return formValidation;
     }
     
+    public boolean function approveContentVersion(required numeric navigationId, required numeric version) {
+        var nextStatusId = new Query().setDatasource(variables.datasource)
+                                      .setSQL("  SELECT contentStatusId "
+                                             &"    FROM #variables.tablePrefix#_contentStatus "
+                                             &"   WHERE sortOrder > (SELECT contentStatusId "
+                                             &"                        FROM #variables.tablePrefix#_contentVersion "
+                                             &"                       WHERE navigationId = :navigationId "
+                                             &"                         AND version      = :version) "
+                                             &"ORDER BY sortOrder ASC "
+                                             &"   LIMIT 1 ")
+                                      .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_numeric")
+                                      .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                                      .execute()
+                                      .getResult()
+                                      .contentStatusId[1];
+        
+        new Query().setDatasource(variables.datasource)
+                   .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
+                          &"   SET contentStatusId = :online "
+                          &" WHERE navigationId    = :navigationId "
+                          &"   AND version         = :version ")
+                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_numeric")
+                   .addParam(name="online",       value=nextStatusId,           cfsqltype="cf_sql_numeric")
+                   .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                   .execute();
+        
+        return true;
+    }
+    
+    public boolean function rejectContentVersion(required numeric navigationId, required numeric version) {
+        var reworkStatusId = new Query().setDatasource(variables.datasource)
+                                        .setSQL("  SELECT contentStatusId "
+                                               &"    FROM #variables.tablePrefix#_contentStatus "
+                                               &"   WHERE rework = :rework "
+                                               &"ORDER BY sortOrder ASC "
+                                               &"   LIMIT 1 ")
+                                        .addParam(name="rework", value=true, cfsqltype="cf_sql_bit")
+                                        .execute()
+                                        .getResult()
+                                        .contentStatusId[1];
+        
+        new Query().setDatasource(variables.datasource)
+                   .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
+                          &"   SET contentStatusId = :online "
+                          &" WHERE navigationId    = :navigationId "
+                          &"   AND version         = :version ")
+                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_numeric")
+                   .addParam(name="online",       value=reworkStatusId,         cfsqltype="cf_sql_numeric")
+                   .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                   .execute();
+        
+        return true;
+    }
+    
     public boolean function releaseContentVersion(required numeric navigationId, required numeric version) {
-        var onlineStatusId = this.getOfflineStatusId();
-        var offineStatusId = this.getOnlineStatusId();
+        var onlineStatusId  = this.getOnlineStatusId();
+        var offlineStatusId = this.getOfflineStatusId();
 
         new Query().setDatasource(variables.datasource)
                    .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
@@ -296,7 +350,7 @@
         return true;
     }
 
-    private numeric function getOfflineStatusId() {
+    private numeric function getOnlineStatusId() {
         return new Query().setDatasource(variables.datasource)
                           .setSQL("SELECT contentStatusId "
                                  &"  FROM #variables.tablePrefix#_contentStatus "
@@ -308,7 +362,7 @@
                           .contentStatusId[1];
     }
 
-    private numeric function getOnlineStatusId() {
+    private numeric function getOfflineStatusId() {
         return new Query().setDatasource(variables.datasource)
                           .setSQL("SELECT contentStatusId "
                                  &"  FROM #variables.tablePrefix#_contentStatus "

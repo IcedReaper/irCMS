@@ -15,6 +15,14 @@
                 application.cms.navigationCRUD.releaseContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
+            case 'approve': {
+                application.cms.navigationCRUD.approveContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                break;
+            }
+            case 'reject': {
+                application.cms.navigationCRUD.rejectContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                break;
+            }
             case 'delete': {
                 break;
             }

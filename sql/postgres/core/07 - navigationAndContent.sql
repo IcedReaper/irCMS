@@ -20,18 +20,24 @@ CREATE TABLE irCMS_contentStatus (
     readyToRelease  boolean          DEFAULT false,
     online          boolean NOT NULL DEFAULT false,
     editable        boolean NOT NULL DEFAULT false,
+    rework          BOOLEAN NOT NULL default false,
 
     CONSTRAINT "PK_irCMS_contentStatus_contentStatusId" PRIMARY KEY (contentStatusId),
     CONSTRAINT "UK_irCMS_contentStatus_statusName"      UNIQUE      (statusName),
-    CONSTRAINT "UK_irCMS_contentStatus_sortOrder"       UNIQUE      (sortOrder)
+    CONSTRAINT "UK_irCMS_contentStatus_sortOrder"       UNIQUE      (sortOrder, rework)
 );
-INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Draft',              1, false, false);
-INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Rework',             2, false, false);
-INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Review',             3, false, false);
-INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Release Candidate',  4, false, false);
-INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Ready to release',   5, true,  false);
-INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Released',           6, true,  true);
-INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Offline',            7, false, false);
+CREATE INDEX "IDX_irCMS_contentStatus_readyToRelease" ON irCMS_contentStatus USING btree (readyToRelease);
+CREATE INDEX "IDX_irCMS_contentStatus_sortOrder"      ON irCMS_contentStatus USING btree (sortOrder);
+CREATE INDEX "IDX_irCMS_contentStatus_online"         ON irCMS_contentStatus USING btree (online);
+CREATE INDEX "IDX_irCMS_contentStatus_editable"       ON irCMS_contentStatus USING btree (editable);
+CREATE INDEX "IDX_irCMS_contentStatus_rework"         ON irCMS_contentStatus USING btree (rework);
+
+INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online, editable, rework) VALUES ('Draft',              1, false, false, true,  false);
+INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online, editable, rework) VALUES ('Rework',             1, false, false, true,  true);
+INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online, editable, rework) VALUES ('Review',             3, false, false, false, false);
+INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online, editable, rework) VALUES ('Release Candidate',  4, true,  false, false, false);
+INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online, editable, rework) VALUES ('Released',           6, true,  true,  false, false);
+INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online, editable, rework) VALUES ('Offline',            7, false, false, false, false);
 
 CREATE TABLE irCMS_contentVersion (
     contentVersionId     serial,
