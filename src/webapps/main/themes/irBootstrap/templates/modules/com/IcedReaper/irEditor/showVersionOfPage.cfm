@@ -236,24 +236,33 @@
 
                     <div class="form-group">
                         <div class="col-md-12">
-                            <cfif NOT attributes.pageToShow.isOffline()>
-                                <cfif attributes.pageToShow.isEditable()>
-                                    <button class="btn btn-primary" type="submit" name="action" value="save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern</button>
-                                    <div class="pull-right"><button class="btn btn-danger" type="submit" name="action" value="delete" title="Diese Version löschen"><span class="glyphicon glyphicon-trash"></span> Löschen</button></div>
-                                </cfif>
-                                <cfif NOT attributes.pageToShow.isOnline()>
-                                    <cfif NOT attributes.pageToShow.isReadyToRelease()>
-                                        <button class="btn btn-success" type="submit" name="action" value="approve" title="In den Freigabeprozess übergeben - Nächster Status: #attributes.pageToShow.getNextStatusName()#"><span class="glyphicon glyphicon-ok"></span> Freigeben</button>
-                                        <cfif NOT attributes.pageToShow.isEditable()>
-                                            <button class="btn btn-warning" type="submit" name="action" value="reject"  title="Version ablehnen - zurück zum Ersteller"><span class="glyphicon glyphicon-eye-close"></span> Ablehnen</button>
-                                        </cfif>
-    							    <cfelse>
-                                        <button class="btn btn-success" type="submit" name="action" value="release" title="online nehmen"><span class="glyphicon glyphicon-globe"></span> Online schalten</button>
-    								</cfif>
-                                <cfelse>
-                                    <button class="btn btn-warning" type="submit" name="action" value="revoke" title="Version offline nehmen"><span class="glyphicon glyphicon-off"></span> Offline nehmen</button>
-                                </cfif>
-							</cfif>
+                            <div class="pull-left">
+                                <cfif NOT attributes.pageToShow.isOffline()>
+                                    <cfif attributes.pageToShow.isEditable()>
+                                        <button class="btn btn-sm btn-danger" type="submit" name="action" value="delete" title="Diese Version löschen"><span class="glyphicon glyphicon-trash"></span> Löschen</button>
+                                    </cfif>
+                                    <cfif attributes.pageToShow.isOnline()>
+                                        <button class="btn btn-sm btn-warning" type="submit" name="action" value="revoke" title="Version offline nehmen"><span class="glyphicon glyphicon-off"></span> Offline nehmen</button>
+								    </cfif>
+								</cfif>
+                            </div>
+                            <div class="pull-right">
+                                <cfif NOT attributes.pageToShow.isOffline()>
+                                    <cfif attributes.pageToShow.isEditable()>
+                                        <button class="btn btn-primary" type="submit" name="action" value="save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern</button>
+                                    </cfif>
+                                    <cfif NOT attributes.pageToShow.isOnline()>
+                                        <cfif NOT attributes.pageToShow.isReadyToRelease()>
+                                            <button class="btn btn-success" type="submit" name="action" value="approve" title="In den Freigabeprozess übergeben - Nächster Status: #attributes.pageToShow.getNextStatusName()#"><span class="glyphicon glyphicon-ok"></span> Freigeben</button>
+                                            <cfif NOT attributes.pageToShow.isEditable()>
+                                                <button class="btn btn-sm btn-warning" type="submit" name="action" value="reject"  title="Version ablehnen - zurück zum Ersteller"><span class="glyphicon glyphicon-eye-close"></span> Ablehnen</button>
+                                            </cfif>
+        							    <cfelse>
+                                            <button class="btn btn-success" type="submit" name="action" value="release" title="online nehmen"><span class="glyphicon glyphicon-globe"></span> Online schalten</button>
+        								</cfif>
+                                    </cfif>
+    							</cfif>
+							</div>
                         </div>
                     </div>
                 </section>
