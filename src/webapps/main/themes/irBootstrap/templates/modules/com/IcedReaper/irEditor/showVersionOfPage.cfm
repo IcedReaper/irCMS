@@ -48,6 +48,13 @@
                     </cfif>
                     <fieldset>
                         <legend>Pflichtangaben</legend>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Aktueller Status</label>
+                            <div class="col-lg-9">
+                                <p class="form-control-static">#attributes.pageToShow.getStatusName()#</p>
+                            </div>
+                        </div>
+                        
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.linkName>has-error</cfif>">
                             <label class="col-lg-3 control-label">Linkname</label>
                             <div class="col-lg-9">
