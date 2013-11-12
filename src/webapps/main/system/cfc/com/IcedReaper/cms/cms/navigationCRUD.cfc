@@ -349,6 +349,22 @@
 
         return true;
     }
+    
+    public boolean function deleteContentVersion(required numeric navigationId, required numeric version) {
+        var deletedStatusId = this.getDeletedStatusId();
+
+        new Query().setDatasource(variables.datasource)
+                   .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
+                          &"   SET contentStatusId = :deleted "
+                          &" WHERE navigationId    = :navigationId "
+                          &"   AND version         = :version ")
+                   .addParam(name="deleted",      value=deletedStatusId,        cfsqltype="cf_sql_numeric")
+                   .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_float", scale="2")
+                   .execute();
+
+        return true;
+    }
 
     private numeric function getOnlineStatusId() {
         return new Query().setDatasource(variables.datasource)
@@ -371,6 +387,18 @@
                                  &"                     WHERE online = :online )"
                                  &" LIMIT 1")
                           .addParam(name="online", value=true, cfsqltype="cf_sql_bit")
+                          .execute()
+                          .getResult()
+                          .contentStatusId[1];
+    }
+
+    private numeric function getDeletedStatusId() {
+        return new Query().setDatasource(variables.datasource)
+                          .setSQL("SELECT contentStatusId "
+                                 &"  FROM #variables.tablePrefix#_contentStatus "
+                                 &" WHERE sortOrder = :deleted "
+                                 &" LIMIT 1")
+                          .addParam(name="deleted", value=0, cfsqltype="cf_sql_numeric")
                           .execute()
                           .getResult()
                           .contentStatusId[1];

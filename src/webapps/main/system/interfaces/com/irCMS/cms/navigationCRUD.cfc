@@ -23,6 +23,7 @@
     public boolean function releaseContentVersion(required numeric navigationId, required numeric version);
     public boolean function revokeContentVersion(required numeric navigationId, required numeric version);
     
+    public boolean function deleteContentVersion(required numeric navigationId, required numeric version);
     /**
      * Helper Functions
      **/
