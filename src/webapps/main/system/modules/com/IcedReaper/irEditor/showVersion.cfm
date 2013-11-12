@@ -2,7 +2,7 @@
     attributes.navigationId = attributes.entities[1];
     attributes.version      = attributes.entities[2];
 
-    if(isDefined("form") && ! form.isEmpty()) {
+    if(isDefined("form") && ! form.isEmpty() && application.security.permission.hasPermission(userName=request.userName, groupName='irEditor', roleName='Editor')) {
         switch(form.action) {
             case 'save': {
                 attributes.contentUpdate = application.cms.navigationCRUD.updateContentVersion(navigationId = attributes.navigationId
