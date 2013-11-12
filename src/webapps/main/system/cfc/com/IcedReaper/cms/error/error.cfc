@@ -64,7 +64,7 @@
     public boolean function saveStacktrace(required numeric position, required string codeHtml, required string templateName, required string type, required numeric line) {
         if(variables.errorSaved) {
             new Query().setDatasource(variables.datasource)
-                       .setSQL("INSERT INTO #variables.tablePrefix#_errorLog_Detail "
+                       .setSQL("INSERT INTO #variables.tablePrefix#_errorLog_stacktrace "
                               &"            ( "
                               &"              errorId, "
                               &"              chainposition, "
