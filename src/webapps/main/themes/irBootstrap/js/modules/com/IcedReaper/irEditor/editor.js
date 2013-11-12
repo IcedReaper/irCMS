@@ -184,7 +184,7 @@ var irEditor = function($editor) {
                                                      .append($('<input/>').addClass('form-control')
                                                                           .attr('id', id)
                                                                           .val(value)
-                                                                          .on('keypress', function() {
+                                                                          .on('input', function() {
                                                                               switch(id) {
                                                                                   case 'src': {
                                                                                       $('img', $item).attr(id, $(this).val());
