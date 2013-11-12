@@ -46,8 +46,12 @@ component {
         var draftStatus = new Query().setDatasource(variables.datasource)
                                      .setSQL("  SELECT contentStatusId "
                                             &"    FROM #variables.tablePrefix#_contentStatus "
+                                            &"   WHERE sortOrder = :sortOrder "
+                                            &"     AND rework    = :rework "
                                             &"ORDER BY sortOrder ASC "
                                             &"   LIMIT 1")
+                                     .addParam(name="sortOrder", value = 1,     cfsqltype="cf_sql_numeric")
+                                     .addParam(name="rework",    value = false, cfsqltype="cf_sql_bit")
                                      .execute()
                                      .getResult()
                                      .contentStatusId[1];
@@ -88,7 +92,7 @@ component {
         var qGetStatus = new Query().setDatasource(variables.datasource)
                                     .setSQL("  SELECT contentStatusId, statusName, readyToRelease, online, editable "
                                            &"    FROM #variables.tablePrefix#_contentStatus "
-                                           &"ORDER BY sortOrder ASC")
+                                           &"ORDER BY sortOrder ASC, rework ASC")
                                     .execute()
                                     .getResult();
 
