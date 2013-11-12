@@ -14,7 +14,10 @@ var irEditor = function($editor) {
         try {
             // clean
             removeEditHandler();
-            removeTinyMce();
+
+            cleanupTextBlock();
+            cleanupCarousel();
+            cleanupHeroImage();
             
             // build
             $('input[name="content"]').val(buildSkeleton());
@@ -22,6 +25,8 @@ var irEditor = function($editor) {
             // restore
             addEditHandler();
             initTextBlock();
+            initCarousel();
+            initHeroImage();
         
             return true;
         } 
@@ -32,10 +37,73 @@ var irEditor = function($editor) {
         }
     });
 
+    var buildSkeleton = function() {
+        var buildSubSkeleton = function($selector) {
+            var skeletonNode = [];
+            
+            $selector.each(function(index) {
+                skeletonNode[index] = {};
+                var lastElement = false;
+                
+                if($(this).hasClass('row')) {
+                    skeletonNode[index].name = 'row';
+                }
+                if($(this).attr('class').substring(0, 3) === 'col') {
+                    skeletonNode[index].name = 'col';
+                    skeletonNode[index].classes = $(this).attr('class');
+                }
+                if($(this).hasClass('textBlock')) {
+                    skeletonNode[index].name = 'textBlock';
+                    skeletonNode[index].text = $(this).html();
+                    
+                    lastElement = true;
+                }
+                if($(this).hasClass('heroImage')) {
+                    skeletonNode[index].name = 'heroImage';
+                    skeletonNode[index].backgroundImage = $(this).css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, '');
+                    
+                    lastElement = true;
+                }
+                if($(this).hasClass('carousel')) {
+                    skeletonNode[index].name   = 'slider';
+                    skeletonNode[index].id     = $(this).attr('id');
+
+                    if(typeof $(this).attr('interval') !== 'undefined') { skeletonNode[index].interval = $(this).attr('interval'); }
+                    if(typeof $(this).attr('pause')    !== 'undefined') { skeletonNode[index].pause    = $(this).attr('pause'); }
+                    if(typeof $(this).attr('wrap')     !== 'undefined') { skeletonNode[index].wrap     = $(this).attr('wrap'); }
+                    
+                    skeletonNode[index].images = [];
+                    $('.carousel-inner > .item', $(this)).each(function(imageIndex) {
+                        skeletonNode[index].images[imageIndex] = {};
+                        skeletonNode[index].images[imageIndex].source = $('img', $(this)).attr('src');
+
+                        if(typeof $(this).attr('alt') !== 'undefined') { skeletonNode[index].images[imageIndex].alt = $(this).attr('alt'); }
+
+                        if($('.carousel-caption > h3', $(this)).length === 1) {
+                            skeletonNode[index].images[imageIndex].headline = $('.carousel-caption > h3', $(this)).text();
+                        }
+
+                        if($('.carousel-caption > span', $(this)).length === 1) {
+                            skeletonNode[index].images[imageIndex].description = $('.carousel-caption > span', $(this)).text();
+                        }
+                    });
+                    lastElement = true;
+                }
+                
+                if($(this).children().length > 0 && ! lastElement) {
+                    skeletonNode[index].modules = buildSubSkeleton($(this).children());
+                }
+            });
+            
+            return skeletonNode;
+        }
+        
+        var skeleton = buildSubSkeleton($('.content.editable'));
+        return JSON.stringify(skeleton[0].modules).replace(/\\n/gi, '');
+    };
+
     var addEditHandler = function() {
         $('.module', $editor).each(function() {
-            $(this).css('position', 'relative');
-            
             var delButton = $('<div/>').addClass('btn btn-danger')
                                        .append($('<span/>').addClass('glyphicon glyphicon-trash'))
                                        .on('click', function() {
@@ -81,52 +149,122 @@ var irEditor = function($editor) {
             });
         });
     };
-    var removeTinyMce = function() {
-        $('.module[id^="mce_"]').each(function() {
+    var cleanupTextBlock = function() {
+        $('.module.textBlock[id^="mce_"]').each(function() {
             $(this).tinymce().remove();
         });
-    }
+    };
     
-    var buildSkeleton = function() {
-        var buildSubSkeleton = function($selector) {
-            var skeletonNode = [];
+    var initCarousel = function() {
+        $('.carousel .item').each(function() {
+            var $item = $(this);
+
+            var createControls = function(label, id) {
+                var value = "";
+
+                switch(id) {
+                    case 'src': {
+                        value = $('img', $item).attr(id) || '';
+                        break;
+                    }
+                    case 'headline': {
+                        value = $('.carousel-caption > h3', $item).text();
+                        break;
+                    }
+                    case 'description': {
+                        value = $('.carousel-caption > span', $item).text();
+                        break;
+                    }
+                }
+
+                return $('<div/>').addClass('form-group')
+                                  .append($('<div/>').addClass('col-md-3 control-label')
+                                                     .text(label))
+                                  .append($('<div/>').addClass('col-md-9')
+                                                     .append($('<input/>').addClass('form-control')
+                                                                          .attr('id', id)
+                                                                          .val(value)
+                                                                          .on('keypress', function() {
+                                                                              switch(id) {
+                                                                                  case 'src': {
+                                                                                      $('img', $item).attr(id, $(this).val());
+                                                                                      break;
+                                                                                  }
+                                                                                  case 'headline': {
+                                                                                      if($(this).val() !== '') {
+                                                                                          if($('.carousel-caption > h3', $item).length === 0) {
+                                                                                              $('.carousel-caption', $item).prepend($('<h3/>'));
+                                                                                          }
+                                                                                          $('.carousel-caption > h3', $item).text($(this).val());
+                                                                                      }
+                                                                                      else {
+                                                                                          $('.carousel-caption > h3', $item).remove();
+                                                                                      }
+                                                                                      break;
+                                                                                  }
+                                                                                  case 'description': {
+                                                                                      if($(this).val() !== '') {
+                                                                                          if($('.carousel-caption > span', $item).length === 0) {
+                                                                                              $('.carousel-caption', $item).append($('<span/>'));
+                                                                                          }
+                                                                                          $('.carousel-caption > span', $item).text($(this).val());
+                                                                                      }
+                                                                                      else {
+                                                                                          $('.carousel-caption > span', $item).remove();
+                                                                                      }
+                                                                                      break;
+                                                                                  }
+                                                                              }
+                                                                          })));
+            };
+
+            var $container = $('<aside/>').addClass('editControls widget')
+                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
+                                                                  .append(createControls('Bildpfad',     'src'))
+                                                                  .append(createControls('Titel',        'alt'))
+                                                                  .append(createControls('Überschrift',  'headline'))
+                                                                  .append(createControls('Beschreibung', 'description')));
+
+            $(this).append($container);
+        });
+    }
+    var cleanupCarousel = function() {
+        $('.carousel .item').each(function() {
+            $item = $(this);
+            $('aside.editControls', $item).remove();
+        });
+    };
+
+    var initHeroImage = function() {
+        $('.module.heroImage').each(function() {
+            var $heroImage = $(this);
             
-            $selector.each(function(index) {
-                skeletonNode[index] = {};
-                var lastElement = false;
-                
-                if($(this).hasClass('row')) {
-                    skeletonNode[index].name = 'row';
-                }
-                if($(this).attr('class').substring(0, 3) === 'col') {
-                    skeletonNode[index].name = 'col';
-                    skeletonNode[index].classes = $(this).attr('class');
-                }
-                if($(this).hasClass('textBlock')) {
-                    skeletonNode[index].name = 'textBlock';
-                    skeletonNode[index].text = $(this).html();
-                    
-                    lastElement = true;
-                }
-                if($(this).hasClass('heroImage')) {
-                    skeletonNode[index].name = 'heroImage';
-                    skeletonNode[index].backgroundImage = $(this).css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, '');
-                    
-                    lastElement = true;
-                }
-                
-                if($(this).children().length > 0 && ! lastElement) {
-                    skeletonNode[index].modules = buildSubSkeleton($(this).children());
-                }
-            });
-            
-            return skeletonNode;
-        }
-        
-        var skeleton = buildSubSkeleton($('.content.editable'));
-        return JSON.stringify(skeleton[0].modules).replace(/\\n/gi, '');
+            var $container = $('<aside/>').addClass('editControls widget')
+                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
+                                                                  .append($('<div/>').addClass('form-group')
+                                                                                     .append($('<div/>').addClass('col-md-3 control-label')
+                                                                                                        .text('Bildpfad'))
+                                                                                     .append($('<div/>').addClass('col-md-9')
+                                                                                                        .append($('<input/>').addClass('form-control')
+                                                                                                                             .val($heroImage.css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, ''))
+                                                                                                                             .on('input', function() {
+                                                                                                                                 console.log($(this).val());
+                                                                                                                                 $heroImage.css('background-image', "url("+$(this).val()+")")
+                                                                                                                             })
+                                                                                                               )
+                                                                                            )
+                                                                         )
+                                                 );
+
+            $heroImage.append($container);
+        });
+    };
+    var cleanupHeroImage = function() {
+        $('.module.heroImage > aside.editControls').remove();
     };
     
     addEditHandler();
     initTextBlock();
+    initCarousel();
+    initHeroImage();
 };

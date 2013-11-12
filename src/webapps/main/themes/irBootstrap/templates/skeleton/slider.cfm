@@ -17,7 +17,7 @@
                                 <h3>#attributes.images[image].caption.headline#</h3>
                             </cfif>
                             <cfif attributes.images[image].caption.keyExists('description')>
-                                <h3>#attributes.images[image].caption.description#</h3>
+                                <span>#attributes.images[image].caption.description#</span>
                             </cfif>
                         </cfif>
                     </div>
