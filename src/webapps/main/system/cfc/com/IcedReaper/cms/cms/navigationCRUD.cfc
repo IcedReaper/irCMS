@@ -32,7 +32,7 @@
             };
         }
         else {
-            throw(type="notFound", message="Navigation was found", detail=arguments.sesLink);
+            throw(type="notFound", message="Navigation was not found", detail=arguments.sesLink);
         }
     }
 
