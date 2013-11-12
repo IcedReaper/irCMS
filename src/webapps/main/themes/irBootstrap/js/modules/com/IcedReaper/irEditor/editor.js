@@ -14,7 +14,8 @@ var irEditor = function($editor) {
         try {
             // clean
             removeEditHandler();
-            removeTinyMce();
+
+            cleanupTextBlock();
             
             // build
             $('input[name="content"]').val(buildSkeleton());
@@ -32,61 +33,6 @@ var irEditor = function($editor) {
         }
     });
 
-    var addEditHandler = function() {
-        $('.module', $editor).each(function() {
-            $(this).css('position', 'relative');
-            
-            var delButton = $('<div/>').addClass('btn btn-danger')
-                                       .append($('<span/>').addClass('glyphicon glyphicon-trash'))
-                                       .on('click', function() {
-                                           $(this).closest('.irEditor-wrapper').remove();
-                                       });
-            var editContainer = $('<aside/>').addClass('editButton')
-                                            .append(delButton);
-    
-            $(this).wrap('<div/>')
-                   .closest('div')
-                   .addClass('irEditor-wrapper')
-                   .css({'position': 'relative'})
-                   .append(editContainer);
-        });
-    };
-    var removeEditHandler = function() {
-        $('.module', $editor).each(function() {
-            $('> aside', $(this).closest('.irEditor-wrapper')).remove();
-            $(this).unwrap();
-        });
-    };
-    
-    var initTextBlock = function() {
-        $('.module.textBlock').each(function() {
-            $(this).tinymce({
-                theme: "modern",
-                plugins: [
-                    ["autolink link image lists preview hr anchor"],    //advlist pagebreak charmap
-                    ["searchreplace insertdatetime media nonbreaking"], // wordcount visualblocks visualchars fullscreen code
-                    ["table contextmenu directionality template paste"] // emoticons
-                ],
-                menu: { 
-                    edit:   {title: 'Edit',   items: 'undo redo | cut copy paste | selectall'}, 
-                    view:   {title: 'View',   items: 'visualaid'}, 
-                    format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'}, 
-                    table:  {title: 'Table',  items: 'inserttable tableprops deletetable cell row column'}, 
-                },
-                add_unload_trigger: false,
-                schema: "html5",
-                inline: true,
-                toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-                statusbar: false
-            });
-        });
-    };
-    var removeTinyMce = function() {
-        $('.module[id^="mce_"]').each(function() {
-            $(this).tinymce().remove();
-        });
-    }
-    
     var buildSkeleton = function() {
         var buildSubSkeleton = function($selector) {
             var skeletonNode = [];
@@ -150,6 +96,61 @@ var irEditor = function($editor) {
         
         var skeleton = buildSubSkeleton($('.content.editable'));
         return JSON.stringify(skeleton[0].modules).replace(/\\n/gi, '');
+    };
+
+    var addEditHandler = function() {
+        $('.module', $editor).each(function() {
+            $(this).css('position', 'relative');
+            
+            var delButton = $('<div/>').addClass('btn btn-danger')
+                                       .append($('<span/>').addClass('glyphicon glyphicon-trash'))
+                                       .on('click', function() {
+                                           $(this).closest('.irEditor-wrapper').remove();
+                                       });
+            var editContainer = $('<aside/>').addClass('editButton')
+                                            .append(delButton);
+    
+            $(this).wrap('<div/>')
+                   .closest('div')
+                   .addClass('irEditor-wrapper')
+                   .css({'position': 'relative'})
+                   .append(editContainer);
+        });
+    };
+    var removeEditHandler = function() {
+        $('.module', $editor).each(function() {
+            $('> aside', $(this).closest('.irEditor-wrapper')).remove();
+            $(this).unwrap();
+        });
+    };
+    
+    var initTextBlock = function() {
+        $('.module.textBlock').each(function() {
+            $(this).tinymce({
+                theme: "modern",
+                plugins: [
+                    ["autolink link image lists preview hr anchor"],    //advlist pagebreak charmap
+                    ["searchreplace insertdatetime media nonbreaking"], // wordcount visualblocks visualchars fullscreen code
+                    ["table contextmenu directionality template paste"] // emoticons
+                ],
+                menu: { 
+                    edit:   {title: 'Edit',   items: 'undo redo | cut copy paste | selectall'}, 
+                    view:   {title: 'View',   items: 'visualaid'}, 
+                    format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'}, 
+                    table:  {title: 'Table',  items: 'inserttable tableprops deletetable cell row column'}, 
+                },
+                add_unload_trigger: false,
+                schema: "html5",
+                inline: true,
+                toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                statusbar: false
+            });
+        });
+    };
+    var cleanupTextBlock = function() {
+        $('.module[id^="mce_"]').each(function() {
+            $(this).tinymce().remove();
+        });
     };
     
     addEditHandler();
