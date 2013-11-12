@@ -22,8 +22,6 @@
     
     public void function processNotFound(required string themeName, required struct errorStruct) {
         if(this.clearBuffer()) {
-            writeDump(arguments);
-            
             var error = new Error(tablePrefix=variables.tablePrefix, datasource=variables.datasource);
             error.saveError('Not Found');
             error.saveDetail(key='Message', value=arguments.errorStruct.message);
@@ -47,15 +45,12 @@
     
     public void function processError(required string themeName, required struct errorStruct) {
         if(this.clearBuffer()) {
-            this.logError(message=arguments.message, detail=arguments.detail);
-            writeDump(arguments);
-            
             var error = new Error(tablePrefix=variables.tablePrefix, datasource=variables.datasource);
             error.saveError('Error');
-            if(arguments.errorStruct.keyExists('detail'))     { error.saveDetail(key='detail',     value=arguments.errorStruct.detail);     }
-            if(arguments.errorStruct.keyExists('datasource')) { error.saveDetail(key='datasource', value=arguments.errorStruct.datasource); }
-            if(arguments.errorStruct.keyExists('sql'))        { error.saveDetail(key='sql',        value=arguments.errorStruct.sql);        }
-            if(arguments.errorStruct.keyExists('type'))       { error.saveDetail(key='type',       value=arguments.errorStruct.type);       }
+            if(isDefined("arguments.errorStruct.detail"))     { error.saveDetail(key='detail',     value=arguments.errorStruct.detail);     }
+            if(isDefined("arguments.errorStruct.datasource")) { error.saveDetail(key='datasource', value=arguments.errorStruct.datasource); }
+            if(isDefined("arguments.errorStruct.sql"))        { error.saveDetail(key='sql',        value=arguments.errorStruct.sql);        }
+            if(isDefined("arguments.errorStruct.type"))       { error.saveDetail(key='type',       value=arguments.errorStruct.type);       }
             
             for(var i = 1; i <= arguments.errorStruct.tagContext.len(); i++) {
                 if(left(arguments.errorStruct.tagContext[i].raw_trace, 9) != 'org.railo') {
