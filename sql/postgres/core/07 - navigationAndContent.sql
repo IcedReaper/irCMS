@@ -20,11 +20,18 @@ CREATE TABLE irCMS_contentStatus (
     readyToRelease  boolean          DEFAULT false,
     online          boolean NOT NULL DEFAULT false,
     editable        boolean NOT NULL DEFAULT false,
+    rework          BOOLEAN NOT NULL default false,
 
     CONSTRAINT "PK_irCMS_contentStatus_contentStatusId" PRIMARY KEY (contentStatusId),
     CONSTRAINT "UK_irCMS_contentStatus_statusName"      UNIQUE      (statusName),
-    CONSTRAINT "UK_irCMS_contentStatus_sortOrder"       UNIQUE      (sortOrder)
+    CONSTRAINT "UK_irCMS_contentStatus_sortOrder"       UNIQUE      (sortOrder, rework)
 );
+CREATE INDEX "IDX_irCMS_contentStatus_readyToRelease" ON irCMS_contentStatus USING btree (readyToRelease);
+CREATE INDEX "IDX_irCMS_contentStatus_sortOrder"      ON irCMS_contentStatus USING btree (sortOrder);
+CREATE INDEX "IDX_irCMS_contentStatus_online"         ON irCMS_contentStatus USING btree (online);
+CREATE INDEX "IDX_irCMS_contentStatus_editable"       ON irCMS_contentStatus USING btree (editable);
+CREATE INDEX "IDX_irCMS_contentStatus_rework"         ON irCMS_contentStatus USING btree (rework);
+
 INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Draft',              1, false, false);
 INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Rework',             2, false, false);
 INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online) VALUES ('Review',             3, false, false);
