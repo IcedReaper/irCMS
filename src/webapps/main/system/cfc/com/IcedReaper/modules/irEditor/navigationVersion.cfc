@@ -10,12 +10,12 @@ component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
     
     public boolean function load() {
         variables.actualMenu = new Query().setDatasource(variables.datasource)
-                                          .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
-                                                 &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, "
-                                                 &"                cv.linkname, cv.sesLink, cv.entityRegExp, "
-                                                 &"                cv.title, cv.description, cv.keywords, cv.showContentForEntity, "
-                                                 &"                n.nameOfNavigationToShow, cs.online, n.active, cv.versionComment, "
-                                                 &"                cs.editable, cs.readyToRelease, cs.contentStatusId, cs.statusName "
+                                          .setSQL("         SELECT n.nameOfNavigationToShow, n.active, "
+                                                 &"                cv.navigationId, cv.contentVersionId, cv.moduleId, cv.version, cv.content, "
+                                                 &"                cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, cv.title, "
+                                                 &"                cv.description, cv.keywords, cv.showContentForEntity, cv.versionComment, "
+                                                 &"                cs.online, cs.editable, cs.readyToRelease, cs.contentStatusId, cs.statusName, "
+                                                 &"                m.path, m.moduleName "
                                                  &"           FROM #variables.tablePrefix#_navigation     n "
                                                  &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
                                                  &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
