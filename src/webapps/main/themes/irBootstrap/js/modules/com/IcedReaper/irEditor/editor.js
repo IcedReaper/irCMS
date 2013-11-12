@@ -156,21 +156,23 @@ var irEditor = function($editor) {
     };
     
     var initCarousel = function() {
-        $('.carousel').carousel('pause');
-        
         $('.carousel .item').each(function() {
-            $item = $(this);
+            var $item = $(this);
 
-            var createControls = function(label, id, itemSelector, type) {
+            var createControls = function(label, id) {
                 var value = "";
 
-                switch(type) {
-                    case 'text': {
-                        value = $(itemSelector, $item).text();
+                switch(id) {
+                    case 'src': {
+                        value = $('img', $item).attr(id) || '';
                         break;
                     }
-                    default: {
-                        value = $(itemSelector, $item).attr(type);
+                    case 'headline': {
+                        value = $('.carousel-caption > h3', $item).text();
+                        break;
+                    }
+                    case 'description': {
+                        value = $('.carousel-caption > span', $item).text();
                         break;
                     }
                 }
@@ -182,31 +184,55 @@ var irEditor = function($editor) {
                                                      .append($('<input/>').addClass('form-control')
                                                                           .attr('id', id)
                                                                           .val(value)
-                                                                          .on('blur', function() {
-                                                                              switch(type) {
-                                                                                  case 'text': {
-                                                                                      $(itemSelector, $item).text($(this).val());
+                                                                          .on('keypress', function() {
+                                                                              switch(id) {
+                                                                                  case 'src': {
+                                                                                      $('img', $item).attr(id, $(this).val());
                                                                                       break;
                                                                                   }
-                                                                                  default: {
-                                                                                      $(itemSelector, $item).attr(type, $(this).val());
+                                                                                  case 'headline': {
+                                                                                      if($(this).val() !== '') {
+                                                                                          if($('.carousel-caption > h3', $item).length === 0) {
+                                                                                              $('.carousel-caption', $item).prepend($('<h3/>'));
+                                                                                          }
+                                                                                          $('.carousel-caption > h3', $item).text($(this).val());
+                                                                                      }
+                                                                                      else {
+                                                                                          $('.carousel-caption > h3', $item).remove();
+                                                                                      }
+                                                                                      break;
+                                                                                  }
+                                                                                  case 'description': {
+                                                                                      if($(this).val() !== '') {
+                                                                                          if($('.carousel-caption > span', $item).length === 0) {
+                                                                                              $('.carousel-caption', $item).append($('<span/>'));
+                                                                                          }
+                                                                                          $('.carousel-caption > span', $item).text($(this).val());
+                                                                                      }
+                                                                                      else {
+                                                                                          $('.carousel-caption > span', $item).remove();
+                                                                                      }
                                                                                       break;
                                                                                   }
                                                                               }
                                                                           })));
-            }
+            };
+
             var $container = $('<aside/>').addClass('editControls widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                  .append(createControls('Bildpfad',    'src',         $('img', $item), 'src'))
-                                                                  .append(createControls('Titel',       'alt',         $('img', $item), 'alt'))
-                                                                  .append(createControls('headline',    'headline',    $('.carousel-caption > h3',   $item), 'text'))
-                                                                  .append(createControls('description', 'description', $('.carousel-caption > span', $item), 'text')));
+                                                                  .append(createControls('Bildpfad',    'src'))
+                                                                  .append(createControls('Titel',       'alt'))
+                                                                  .append(createControls('headline',    'headline'))
+                                                                  .append(createControls('description', 'description')));
 
             $(this).append($container);
         });
     }
     var cleanupCarousel = function() {
-
+        $('.carousel .item').each(function() {
+            $item = $(this);
+            $('aside.editControls', $item).remove();
+        });
     }
     
     addEditHandler();
