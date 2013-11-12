@@ -174,13 +174,13 @@ var irEditor = function($editor) {
                                          );
             }
 
-            var $optionContainer = $('<aside/>').addClass('slider-options widget')
-                                                .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                        .append(createOptionControl('Interval', 'data-interval', ''))
-                                                                        .append(createOptionControl('Pause',    'data-pause', 'hover'))
-                                                                        .append(createOptionControl('Wrap',     'data-wrap', 'true'))
-                                                       );
-            $carousel.prepend($optionContainer);
+            $carousel.prepend($('<aside/>').addClass('slider-options widget')
+                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
+                                                                   .append(createOptionControl('Interval', 'data-interval', ''))
+                                                                   .append(createOptionControl('Pause',    'data-pause', 'hover'))
+                                                                   .append(createOptionControl('Wrap',     'data-wrap', 'true'))
+                                                  )
+                             );
 
             $('.item', $carousel).each(function() {
                 var $item = $(this);
@@ -245,14 +245,14 @@ var irEditor = function($editor) {
                                              );
                 };
 
-                var $container = $('<aside/>').addClass('editControls widget')
-                                              .append($('<fieldset/>').append($('<legend/>').text('Optionen des aktuellen Slide'))
-                                                                      .append(createControl('Bildpfad',     'src'))
-                                                                      .append(createControl('Titel',        'alt'))
-                                                                      .append(createControl('Überschrift',  'headline'))
-                                                                      .append(createControl('Beschreibung', 'description')));
-
-                $item.append($container);
+                $item.append($('<aside/>').addClass('editControls widget')
+                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen des aktuellen Slide'))
+                                                                  .append(createControl('Bildpfad',     'src'))
+                                                                  .append(createControl('Titel',        'alt'))
+                                                                  .append(createControl('Überschrift',  'headline'))
+                                                                  .append(createControl('Beschreibung', 'description'))
+                                                 )
+                            );
             });
         });
     };
