@@ -14,6 +14,9 @@
     /**
      * Content Version
      **/
+    public boolean function approveContentVersion(required numeric navigationId, required numeric version);
+    public boolean function rejectContentVersion(required numeric navigationId, required numeric version);
+    
     public struct function addContentVersion(required numeric navigationId, required numeric userId, required numeric version, required struct versionData);
     public struct function updateContentVersion(required numeric navigationId, required numeric userId, required numeric version, required struct versionData);
     
