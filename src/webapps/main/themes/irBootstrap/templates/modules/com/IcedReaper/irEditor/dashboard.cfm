@@ -1,4 +1,4 @@
-<cfset request.pageTitle   = "irEditor Dashboard">
+<cfset request.pageTitle = "irEditor Dashboard">
 <cfoutput>
     <div class="row">
         <div class="col-md-12">
@@ -42,13 +42,13 @@
                                                 von <a href="/User/#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#" target="_blank" title="Profilseite von #attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#">#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#</a>
                                             </td>
                                             <td>
-                                                <div class="btn-group">
+                                                <div class="btn-group pull-right">
                                                     <cfif attributes.dashboardData[statusIndex].editable>
                                                         <a class="btn btn-default" title="Diese Version des Artikels bearbeiten" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#"><span class="glyphicon glyphicon-pencil"></span></a>
                                                     </cfif>
                                                     <cfif attributes.dashboardData[statusIndex].readyToRelease>
                                                         <a class="btn btn-success" title="Diese Version Online nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Release"><span class="glyphicon glyphicon-ok"></span></a>
-                                                    <cfelse>
+                                                    <cfelseif NOT attributes.dashboardData[statusIndex].online AND statusIndex NEQ attributes.dashboardData.len()>
                                                         <a class="btn btn-success" title="Diese Version freigeben" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Freigeben"><span class="glyphicon glyphicon-ok"></span></a>
                                                     </cfif>
                                                     <cfif attributes.dashboardData[statusIndex].online>
