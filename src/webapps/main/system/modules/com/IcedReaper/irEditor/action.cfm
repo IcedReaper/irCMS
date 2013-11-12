@@ -4,29 +4,31 @@
         attributes.version      = attributes.entities[2];
 
         switch(attributes.entities[3]) {
-            case 'Freigeben': {
-                if(! applicaton.cms.navigationCRUD.isNavigationInUse(navigationId=attributes.navigationId, version=attributes.version)) {
-                    applicaton.cms.navigationCRUD.releaseNavigation(navigationId=attributes.navigationId, version=attributes.version);
-                }
-                else {
-                    module template="/themes/#request.themeName#/core/message.cfm" headline="Fehler!" text="Die Seite ist bereits in Benutzung und kann nicht weiter freigegeben werden.";
-                }
+            case 'release': {
+                application.cms.navigationCRUD.releaseContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case 'Löschen': {
-                if(! applicaton.cms.navigationCRUD.isNavigationInUse(navigationId=attributes.navigationId, version=attributes.version)) {
-                    applicaton.cms.navigationCRUD.deleteNavigation(navigationId=attributes.navigationId, version=attributes.version);
-                }
-                else {
-                    module template="/themes/#request.themeName#/core/message.cfm" headline="Fehler!" text="Die Seite ist bereits in Benutzung und kann nicht gelöscht werden.";
-                }
+            case 'approve': {
+                application.cms.navigationCRUD.approveContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                break;
+            }
+            case 'reject': {
+                application.cms.navigationCRUD.rejectContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                break;
+            }
+            case 'delete': {
+                break;
+            }
+            case 'revoke': {
+                application.cms.navigationCRUD.revokeContentVersion(navigationId = attributes.navigationId);
                 break;
             }
             default: {
-                module template="/themes/#request.themeName#/core/message.cfm" headline="Fehler!" text="Die Angegebene Aktion konnte nicht gefunden werden.";
                 break;
             }
         }
+        
+        location(url="/Admin/Pages", addToken=false);
     }
     else {
         include template="/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
