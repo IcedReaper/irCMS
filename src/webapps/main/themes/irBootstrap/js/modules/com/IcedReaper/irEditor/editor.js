@@ -104,8 +104,6 @@ var irEditor = function($editor) {
 
     var addEditHandler = function() {
         $('.module', $editor).each(function() {
-            $(this).css('position', 'relative');
-            
             var delButton = $('<div/>').addClass('btn btn-danger')
                                        .append($('<span/>').addClass('glyphicon glyphicon-trash'))
                                        .on('click', function() {
