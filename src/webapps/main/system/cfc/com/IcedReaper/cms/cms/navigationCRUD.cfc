@@ -18,7 +18,7 @@
                                                           &"        AND n.active   = :active "
                                                           &"        AND n.language = :language ")
                                                    .addParam(name="sesLink",  value=arguments.sesLink,  cfsqltype="cf_sql_varchar")
-                                                   .addParam(name="language", value='en', cfsqltype="cf_sql_varchar")
+                                                   .addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar")
                                                    .addParam(name="online",   value=true,               cfsqltype="cf_sql_bit")
                                                    .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
                                                    .execute()
