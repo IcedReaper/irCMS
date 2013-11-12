@@ -49,15 +49,18 @@
                                                     <cfif attributes.dashboardData[statusIndex].readyToRelease>
                                                         <a class="btn btn-success" title="Diese Version Online nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Release"><span class="glyphicon glyphicon-ok"></span></a>
                                                     <cfelseif NOT attributes.dashboardData[statusIndex].online AND statusIndex NEQ attributes.dashboardData.len()>
-                                                        <a class="btn btn-success" title="Diese Version freigeben" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Freigeben"><span class="glyphicon glyphicon-ok"></span></a>
+                                                        <a class="btn btn-success" title="Diese Version freigeben" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Approve"><span class="glyphicon glyphicon-ok"></span></a>
+                                                        <cfif NOT attributes.dashboardData[statusIndex].editable>
+                                                            <a class="btn btn-warning" title="Diese Version ablehnen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Reject"><span class="glyphicon glyphicon-eye-close"></span></a>
+														</cfif>
                                                     </cfif>
                                                     <cfif attributes.dashboardData[statusIndex].online>
-                                                        <a class="btn btn-warning" title="Die Version offline nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Offline nehmen"><span class="glyphicon glyphicon-off"></span></a>
+                                                        <a class="btn btn-warning" title="Die Version offline nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Revoke"><span class="glyphicon glyphicon-off"></span></a>
                                                     <cfelse>
                                                         <cfif attributes.dashboardData[statusIndex].editable>
-                                                            <a class="btn btn-danger" title="Diese Version löschen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Löschen"><span class="glyphicon glyphicon-remove"></span></a>
+                                                            <a class="btn btn-danger" title="Diese Version löschen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Delete"><span class="glyphicon glyphicon-remove"></span></a>
                                                         <cfelseif false <!--- does the user have the permission to decline this version?--->>
-                                                            <a class="btn btn-danger" title="Diese Version löschen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Löschen"><span class="glyphicon glyphicon-remove"></span></a>
+                                                            <a class="btn btn-danger" title="Diese Version löschen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Delete"><span class="glyphicon glyphicon-remove"></span></a>
                                                         </cfif>
                                                     </cfif>
                                                 </div>
