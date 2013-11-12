@@ -256,10 +256,11 @@
         var nextStatusId = new Query().setDatasource(variables.datasource)
                                       .setSQL("  SELECT contentStatusId "
                                              &"    FROM #variables.tablePrefix#_contentStatus "
-                                             &"   WHERE sortOrder > (SELECT contentStatusId "
-                                             &"                        FROM #variables.tablePrefix#_contentVersion "
-                                             &"                       WHERE navigationId = :navigationId "
-                                             &"                         AND version      = :version) "
+                                             &"   WHERE sortOrder > (    SELECT cs.sortOrder "
+                                             &"                            FROM #variables.tablePrefix#_contentVersion cv "
+                                             &"                      INNER JOIN #variables.tablePrefix#_contentStatus cs ON cv.contentStatusId = cs.contentStatusId "
+                                             &"                           WHERE navigationId = :navigationId "
+                                             &"                             AND version      = :version) "
                                              &"ORDER BY sortOrder ASC "
                                              &"   LIMIT 1 ")
                                       .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_numeric")
