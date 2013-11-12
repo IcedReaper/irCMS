@@ -1,4 +1,6 @@
 div.irEditor-wrapper {
+    position: relative;
+
     aside.editButton {
         position: absolute;
         right:    5px;
@@ -9,26 +11,18 @@ div.irEditor-wrapper {
     &:hover aside.editButton {
         display: block;
     }
-}
 
-.carousel {
-    .item {
-        position: relative;
-        
-        .editControls {
-            display:  none;
-            left:     25%;
-            width:    50%;
-            top:      50px;
-            position: absolute;
-        }
+    aside.editControls {
+        display:  none;
+        left:     25%;
+        width:    50%;
+        top:      50px;
+        position: absolute;
+    }
 
-        &.active {
-            &:hover {
-                .editControls {
-                    display: block;
-                }
-            }
+    &:hover {
+        aside.editControls {
+            display: block;
         }
     }
 }
