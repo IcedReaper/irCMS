@@ -21,7 +21,7 @@
     public struct function updateContentVersion(required numeric navigationId, required numeric userId, required numeric version, required struct versionData);
     
     public boolean function releaseContentVersion(required numeric navigationId, required numeric version);
-    public boolean function revokeContentVersion(required numeric navigationId);
+    public boolean function revokeContentVersion(required numeric navigationId, required numeric version);
     
     /**
      * Helper Functions

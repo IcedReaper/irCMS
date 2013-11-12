@@ -334,18 +334,17 @@
         return true;
     }
     
-    public boolean function revokeContentVersion(required numeric navigationId) {
-        var onlineStatusId = this.getOfflineStatusId();
+    public boolean function revokeContentVersion(required numeric navigationId, required numeric version) {
         var offineStatusId = this.getOnlineStatusId();
 
         new Query().setDatasource(variables.datasource)
                    .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
                           &"   SET contentStatusId = :offline "
                           &" WHERE navigationId    = :navigationId "
-                          &"   AND contentStatusId = :online")
+                          &"   AND version         = :version ")
                    .addParam(name="offline",      value=offlineStatusId,        cfsqltype="cf_sql_numeric")
-                   .addParam(name="online",       value=onlineStatusId,         cfsqltype="cf_sql_numeric")
                    .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_float", scale="2")
                    .execute();
 
         return true;
