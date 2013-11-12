@@ -227,7 +227,7 @@ var irEditor = function($editor) {
                                                                   .append(createControls('Überschrift',  'headline'))
                                                                   .append(createControls('Beschreibung', 'description')));
 
-            $(this).append($container);
+            $item.append($container);
         });
     };
     var cleanupCarousel = function() {
