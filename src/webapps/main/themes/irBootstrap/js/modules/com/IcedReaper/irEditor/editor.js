@@ -14,8 +14,8 @@ var irEditor = function($editor) {
         try {
             // clean
             removeEditHandler();
-
             cleanupTextBlock();
+            $('.content.editable aside.editControls').remove();
             cleanupCarousel();
             cleanupHeroImage();
             
