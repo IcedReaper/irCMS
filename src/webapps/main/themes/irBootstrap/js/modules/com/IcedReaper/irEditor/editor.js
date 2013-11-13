@@ -120,10 +120,8 @@ var irEditor = function($editor) {
         });
     };
     var removeEditHandler = function() {
-        $('.module', $editor).each(function() {
-            $('> aside', $(this).closest('.irEditor-wrapper')).remove();
-            $(this).unwrap();
-        });
+        $('.content.editable aside.editButton').remove();
+        $('.module', $editor).unwrap();
     };
     
     var initTextBlock = function() {
@@ -257,10 +255,7 @@ var irEditor = function($editor) {
         });
     };
     var cleanupCarousel = function() {
-        $('.carousel .item').each(function() {
-            $item = $(this);
-            $('aside.editControls', $item).remove();
-        });
+        $('.content.editable aside.slider-options').remove();
     };
 
     var initHeroImage = function() {
