@@ -261,21 +261,59 @@ var irEditor = function($editor) {
         $('.module.heroImage').each(function() {
             var $heroImage = $(this);
             
+            var createOption = function(label, val, on, updateFunction) {
+                return $('<div/>').addClass('form-group')
+                                  .append($('<div/>').addClass('col-md-3 control-label')
+                                                     .text(label))
+                                  .append($('<div/>').addClass('col-md-9')
+                                                     .append($('<input/>').addClass('form-control')
+                                                                          .val(val)
+                                                                          .on(on, updateFunction)
+                                                            )
+                                         );
+            };
+            
+            var backgroundImage = createOption('Bildpfad', 
+                                               $heroImage.css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, ''),
+                                               'input',
+                                               function() {
+                                                   $heroImage.css('background-image', "url("+$(this).val()+")")
+                                               });
+            
+            var content = createOption('Beschreibung', 
+                                       $('> div', $heroImage).html(),
+                                       'change',
+                                       null);
+            
+            $('input', content).tinymce({
+                theme: "modern",
+                plugins: [
+                    ["autolink link image lists preview hr anchor"],    // advlist pagebreak charmap
+                    ["searchreplace insertdatetime media nonbreaking"], // wordcount visualblocks visualchars fullscreen code
+                    ["table contextmenu directionality template paste"] // emoticons
+                ],
+                menu: { 
+                    edit:   {title: 'Edit',   items: 'undo redo | cut copy paste | selectall'}, 
+                    format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'}, 
+                },
+                add_unload_trigger: false,
+                schema: "html5",
+                toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link ",
+                statusbar: false,
+                setup: function(ed) {
+                    ed.on("change", function(event) {
+                        if($('> div', $heroImage).length === 0) {
+                            $heroImage.prepend($('<div/>'));
+                        }
+                        $('> div', $heroImage).html(ed.getContent());
+                    });
+                }
+            });
+            
             var $container = $('<aside/>').addClass('editControls widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                  .append($('<div/>').addClass('form-group')
-                                                                                     .append($('<div/>').addClass('col-md-3 control-label')
-                                                                                                        .text('Bildpfad'))
-                                                                                     .append($('<div/>').addClass('col-md-9')
-                                                                                                        .append($('<input/>').addClass('form-control')
-                                                                                                                             .val($heroImage.css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, ''))
-                                                                                                                             .on('input', function() {
-                                                                                                                                 console.log($(this).val());
-                                                                                                                                 $heroImage.css('background-image', "url("+$(this).val()+")")
-                                                                                                                             })
-                                                                                                               )
-                                                                                            )
-                                                                         )
+                                                                  .append(backgroundImage)
+                                                                  .append(content)
                                                  );
 
             $heroImage.append($container);
