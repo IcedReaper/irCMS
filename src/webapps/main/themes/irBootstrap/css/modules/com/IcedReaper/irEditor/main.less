@@ -12,17 +12,21 @@ div.irEditor-wrapper {
         display: block;
     }
 
-    aside.editControls {
-        display:  none;
-        left:     25%;
-        width:    50%;
-        top:      50px;
-        position: absolute;
-    }
-
-    &:hover {
+    .module.carousel {
         aside.editControls {
-            display: block;
+            margin-top: -355px;
+            left:       25%;
+            width:      50%;
+            top:        50px;
+            position:   absolute;
+            transition: margin-top 1s;
+        }
+    
+        &:hover {
+            aside.editControls {
+                margin-top: 0px;
+                transition: margin-top 1s;
+            }
         }
     }
 
