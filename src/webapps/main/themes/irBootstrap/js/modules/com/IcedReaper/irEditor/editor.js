@@ -321,7 +321,6 @@ var irEditor = function($editor) {
     };
     
     var cleanupHeroImage = function() {
-        $('.module.heroImage > aside.editControls').remove();
     };
     
     addEditHandler();
