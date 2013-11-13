@@ -110,7 +110,7 @@ var irEditor = function($editor) {
                                            $(this).closest('.irEditor-wrapper').remove();
                                        });
             var editContainer = $('<aside/>').addClass('editButton')
-                                            .append(delButton);
+                                             .append(delButton);
     
             $(this).wrap('<div/>')
                    .closest('div')
@@ -282,6 +282,7 @@ var irEditor = function($editor) {
             $heroImage.append($container);
         });
     };
+    
     var cleanupHeroImage = function() {
         $('.module.heroImage > aside.editControls').remove();
     };
