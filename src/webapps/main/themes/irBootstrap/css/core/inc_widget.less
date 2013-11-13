@@ -1,8 +1,18 @@
 article {
-    &.heroImage,
-    &.carousel,
-    &.textBlock {
+    &.module {
         margin-bottom: 30px;
+        &.heroImage {
+            position: relative;
+            
+            > div {
+                color: #EEEEEE;
+                max-width: 30%;
+                position: absolute;
+                right: 5%;
+                text-align: right;
+                top: 10%;
+            }
+        }
     }
 }
 
