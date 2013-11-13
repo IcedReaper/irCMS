@@ -11,18 +11,27 @@ div.irEditor-wrapper {
     &:hover aside.editButton {
         display: block;
     }
-
-    aside.editControls {
-        display:  none;
-        left:     25%;
-        width:    50%;
-        top:      50px;
-        position: absolute;
-    }
-
-    &:hover {
-        aside.editControls {
-            display: block;
+    
+    .module {
+        overflow: hidden;
+        
+        &.carousel,
+        &.heroImage {
+            aside.editControls {
+                margin-top: -355px;
+                left:       25%;
+                width:      50%;
+                top:        50px;
+                position:   absolute;
+                transition: margin-top 1s;
+            }
+        
+            &:hover {
+                aside.editControls {
+                    margin-top: 0px;
+                    transition: margin-top 1s;
+                }
+            }
         }
     }
 

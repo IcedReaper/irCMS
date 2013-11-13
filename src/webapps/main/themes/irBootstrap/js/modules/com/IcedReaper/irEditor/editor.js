@@ -174,13 +174,13 @@ var irEditor = function($editor) {
                                          );
             }
 
-            $carousel.prepend($('<aside/>').addClass('slider-options widget')
-                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                   .append(createOptionControl('Interval', 'data-interval', ''))
-                                                                   .append(createOptionControl('Pause',    'data-pause', 'hover'))
-                                                                   .append(createOptionControl('Wrap',     'data-wrap', 'true'))
-                                                  )
-                             );
+            $carousel.before($('<aside/>').addClass('slider-options widget')
+                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
+                                                                  .append(createOptionControl('Interval', 'data-interval', ''))
+                                                                  .append(createOptionControl('Pause',    'data-pause', 'hover'))
+                                                                  .append(createOptionControl('Wrap',     'data-wrap', 'true'))
+                                                 )
+                            );
 
             $('.item', $carousel).each(function() {
                 var $item = $(this);
