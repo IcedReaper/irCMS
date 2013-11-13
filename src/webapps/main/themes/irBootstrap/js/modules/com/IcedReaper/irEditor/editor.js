@@ -49,7 +49,7 @@ var irEditor = function($editor) {
                     skeletonNode[index].name = 'row';
                 }
                 if($(this).attr('class').substring(0, 3) === 'col') {
-                    skeletonNode[index].name = 'col';
+                    skeletonNode[index].name    = 'col';
                     skeletonNode[index].classes = $(this).attr('class');
                 }
                 if($(this).hasClass('textBlock')) {
@@ -59,14 +59,14 @@ var irEditor = function($editor) {
                     lastElement = true;
                 }
                 if($(this).hasClass('heroImage')) {
-                    skeletonNode[index].name = 'heroImage';
+                    skeletonNode[index].name            = 'heroImage';
                     skeletonNode[index].backgroundImage = $(this).css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, '');
                     
                     lastElement = true;
                 }
                 if($(this).hasClass('carousel')) {
-                    skeletonNode[index].name   = 'slider';
-                    skeletonNode[index].id     = $(this).attr('id');
+                    skeletonNode[index].name = 'slider';
+                    skeletonNode[index].id   = $(this).attr('id');
 
                     if(typeof $(this).attr('interval') !== 'undefined') { skeletonNode[index].interval = $(this).attr('interval'); }
                     if(typeof $(this).attr('pause')    !== 'undefined') { skeletonNode[index].pause    = $(this).attr('pause'); }
