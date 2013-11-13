@@ -61,6 +61,9 @@ var irEditor = function($editor) {
                 if($(this).hasClass('heroImage')) {
                     skeletonNode[index].name            = 'heroImage';
                     skeletonNode[index].backgroundImage = $(this).css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, '');
+                    if($('div', $(this)).length === 1) {
+                        skeletonNode[index].content = $('div', $(this)).html();
+                    }
                     
                     lastElement = true;
                 }
