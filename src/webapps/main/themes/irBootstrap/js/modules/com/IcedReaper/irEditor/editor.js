@@ -115,7 +115,6 @@ var irEditor = function($editor) {
             $(this).wrap('<div/>')
                    .closest('div')
                    .addClass('irEditor-wrapper')
-                   .css({'position': 'relative'})
                    .append(editContainer);
         });
     };
