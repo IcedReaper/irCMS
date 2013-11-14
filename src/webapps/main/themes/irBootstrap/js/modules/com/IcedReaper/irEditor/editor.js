@@ -314,14 +314,37 @@ var irEditor = function($editor) {
     var cleanupHeroImage = function() {
     };
     
+    var initAddHandler = function() {
+        $('.irEditor-wrapper', $('.content.editable')).after($('#moduleAddHandler').html());
+        $('.row', $('.content.editable')).after($('#rowAddHandler').html());
+        
+        $('.addHandler[data-type]').each(function() {
+            $addHandler = $(this);
+            $('a[data-module]', $addHandler).on('click', function(e) {
+                var $anchor = $(this);
+                var type    = $anchor.closest('.addHandler').attr('data-type');
+                var module  = $anchor.attr('data-module');
+                
+                e.preventDefault();
+                
+                $addHandler.before($('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html());
+            });
+        });
+    }
+    var cleanupAddHandler = function() {
+        
+    }
+    
     var setup = function() {
         addEditHandler();
+        initAddHandler();
         initTextBlock();
         initCarousel();
         initHeroImage();
     }
     var cleanup = function() {
         removeEditHandler();
+        cleanupAddHandler();
         cleanupTextBlock();
         $('.content.editable aside.editControls').remove();
         cleanupCarousel();
