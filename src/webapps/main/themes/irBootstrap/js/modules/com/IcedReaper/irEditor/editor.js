@@ -351,7 +351,10 @@ var irEditor = function($editor) {
                 
                 e.preventDefault();
                 
-                $addHandler.before($('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html());
+                var newModule = $('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html();
+                initItem[module](newModule);
+                
+                $addHandler.before(newModule);
             });
         });
     }
