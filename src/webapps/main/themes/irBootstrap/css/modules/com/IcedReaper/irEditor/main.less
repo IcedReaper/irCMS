@@ -6,6 +6,7 @@ div.irEditor-wrapper {
         right:    5px;
         top:      5px;
         display:  none;
+        z-index:  16;
     }
     
     &:hover aside.editButton {
@@ -18,18 +19,18 @@ div.irEditor-wrapper {
         &.carousel,
         &.heroImage {
             aside.editControls {
-                margin-top: -355px;
-                left:       25%;
-                width:      50%;
-                top:        50px;
+                height:     100%;
                 position:   absolute;
-                transition: margin-top 1s;
+                top:        -100%;
+                transition: top 1s ease 0s;
+                width:      100%;
+                z-index:    15;
             }
         
             &:hover {
                 aside.editControls {
-                    margin-top: 0px;
-                    transition: margin-top 1s;
+                    top:        0;
+                    transition: top 1s ease 0s;
                 }
             }
         }

@@ -269,18 +269,6 @@
             </div>
         </div>
 
-        <cfif attributes.pageToShow.isEditable()>
-            <div class="row">
-                <div class="col-md-12">
-                    <aside class="widget">
-                        <fieldset>
-                            <legend>Editor optionen</legend>
-                        </fieldset>
-                    </aside>
-                </div>
-            </div>
-        </cfif>
-
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
             #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
         </div>
