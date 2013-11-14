@@ -268,6 +268,8 @@
                 </section>
             </div>
         </div>
+        
+        <cfinclude template="templates.cfm">
 
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
             #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
