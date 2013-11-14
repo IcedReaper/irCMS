@@ -10,6 +10,10 @@ $(function() {
 });
 
 var irEditor = function($editor) {
+    var isNumeric = function (n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    };
+    
     $('form#irEditor').on('submit', function() {
         try {
             cleanup();
@@ -115,9 +119,11 @@ var irEditor = function($editor) {
         $('.module', $editor).unwrap();
     };
     
-    var initTextBlock = function() {
-        $('.module.textBlock').each(function() {
-            $(this).tinymce({
+    var initItem = {
+        'textBlock': function($textBlock) {
+            var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
+            
+            $textBlock.tinymce({
                 theme: "modern",
                 plugins: [
                     ["autolink link image lists preview hr anchor"],    //advlist pagebreak charmap
@@ -136,18 +142,10 @@ var irEditor = function($editor) {
                 toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
                 statusbar: false
             });
-        });
-    };
-    var cleanupTextBlock = function() {
-        $('.module.textBlock[id^="mce_"]').each(function() {
-            $(this).tinymce().remove();
-        });
-    };
-    
-    var initCarousel = function() {
-        $('.module.carousel').each(function() {
-            var $carousel = $(this);
-
+        },
+        'carousel':  function($carousel) {
+            var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
+            
             var createOptionControl = function(label, attrName, defaultValue) {
                 return $('<div/>').addClass('form-group')
                                   .append($('<div/>').addClass('col-md-3 control-label')
@@ -243,15 +241,9 @@ var irEditor = function($editor) {
                                                  )
                             );
             });
-        });
-    };
-    var cleanupCarousel = function() {
-        $('.content.editable aside.slider-options').remove();
-    };
-    
-    var initHeroImage = function() {
-        $('.module.heroImage').each(function() {
-            var $heroImage = $(this);
+        },
+        'heroImage': function($heroImage) {
+            var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
             
             var createOption = function(label, val, on, updateFunction) {
                 return $('<div/>').addClass('form-group')
@@ -309,9 +301,41 @@ var irEditor = function($editor) {
                                                  );
 
             $heroImage.append($container);
-        });
+        }
+    };
+    
+    var cleanupItem = {
+        'textBlock': function($textBlock) {
+            var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
+            
+            $textBlock.tinymce().remove();
+        },
+        'carousel':  function($carousel) {
+            var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
+            
+            $('.content.editable aside.slider-options').remove();
+        },
+        'heroImage': function($heroImage) {
+            var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
+            
+        }
+    };
+    
+    var initTextBlock    = function() { $('.module.textBlock').each(initItem.textBlock); };
+    var cleanupTextBlock = function() { $('.module.textBlock[id^="mce_"]').each(cleanupItem.textBlock); };
+    
+    var initCarousel = function() {
+        $('.module.carousel').each(initItem.carousel);
+    };
+    var cleanupCarousel = function() {
+        $('.module.carousel').each(cleanupItem.carousel);
+    };
+    
+    var initHeroImage = function() {
+        $('.module.heroImage').each(initItem.heroImage);
     };
     var cleanupHeroImage = function() {
+        $('.module.heroImage').each(cleanupItem.heroImage);
     };
     
     var initAddHandler = function() {
