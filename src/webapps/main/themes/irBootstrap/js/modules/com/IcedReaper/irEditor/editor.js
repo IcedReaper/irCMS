@@ -12,21 +12,10 @@ $(function() {
 var irEditor = function($editor) {
     $('form#irEditor').on('submit', function() {
         try {
-            // clean
-            removeEditHandler();
-            cleanupTextBlock();
-            $('.content.editable aside.editControls').remove();
-            cleanupCarousel();
-            cleanupHeroImage();
-            
-            // build
+            cleanup();
             $('input[name="content"]').val(buildSkeleton());
             
-            // restore
-            addEditHandler();
-            initTextBlock();
-            initCarousel();
-            initHeroImage();
+            setup();
         
             return true;
         } 
@@ -259,7 +248,7 @@ var irEditor = function($editor) {
     var cleanupCarousel = function() {
         $('.content.editable aside.slider-options').remove();
     };
-
+    
     var initHeroImage = function() {
         $('.module.heroImage').each(function() {
             var $heroImage = $(this);
@@ -322,12 +311,22 @@ var irEditor = function($editor) {
             $heroImage.append($container);
         });
     };
-    
     var cleanupHeroImage = function() {
     };
     
-    addEditHandler();
-    initTextBlock();
-    initCarousel();
-    initHeroImage();
+    var setup = function() {
+        addEditHandler();
+        initTextBlock();
+        initCarousel();
+        initHeroImage();
+    }
+    var cleanup = function() {
+        removeEditHandler();
+        cleanupTextBlock();
+        $('.content.editable aside.editControls').remove();
+        cleanupCarousel();
+        cleanupHeroImage();
+    }
+    
+    setup();
 };
