@@ -317,13 +317,6 @@ var irEditor = function($editor) {
         }
     };
     
-    var initTextBlock    = function() { $('.module.textBlock').each(initItem.textBlock); };
-    var initCarousel = function() {
-        $('.module.carousel').each(initItem.carousel);
-    };
-    var initHeroImage = function() {
-        $('.module.heroImage').each(initItem.heroImage);
-    };
     var initAddHandler = function() {
         $('.irEditor-wrapper', $('.content.editable')).after($('#moduleAddHandler').html());
         $('.row', $('.content.editable')).after($('#rowAddHandler').html());
@@ -352,10 +345,12 @@ var irEditor = function($editor) {
         $('.module', $editor).each(initItem.deleteHandler);
         
         initAddHandler();
-        initTextBlock();
-        initCarousel();
-        initHeroImage();
-    }
+        
+        // modules
+        $('.module.textBlock').each(initItem.textBlock);
+        $('.module.carousel').each(initItem.carousel);
+        $('.module.heroImage').each(initItem.heroImage);
+    };
     var cleanup = function() {
         $('.content.editable aside.editButton').remove();
         $('.module', $editor).unwrap();
