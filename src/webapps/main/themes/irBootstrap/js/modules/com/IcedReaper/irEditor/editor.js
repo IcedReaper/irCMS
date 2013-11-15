@@ -114,11 +114,6 @@ var irEditor = function($editor) {
                    .append(editContainer);
         });
     };
-    var removeEditHandler = function() {
-        $('.content.editable aside.editButton').remove();
-        $('.module', $editor).unwrap();
-    };
-    
     var initItem = {
         'textBlock': function($textBlock) {
             var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
@@ -322,22 +317,12 @@ var irEditor = function($editor) {
     };
     
     var initTextBlock    = function() { $('.module.textBlock').each(initItem.textBlock); };
-    var cleanupTextBlock = function() { $('.module.textBlock[id^="mce_"]').each(cleanupItem.textBlock); };
-    
     var initCarousel = function() {
         $('.module.carousel').each(initItem.carousel);
     };
-    var cleanupCarousel = function() {
-        $('.module.carousel').each(cleanupItem.carousel);
-    };
-    
     var initHeroImage = function() {
         $('.module.heroImage').each(initItem.heroImage);
     };
-    var cleanupHeroImage = function() {
-        $('.module.heroImage').each(cleanupItem.heroImage);
-    };
-    
     var initAddHandler = function() {
         $('.irEditor-wrapper', $('.content.editable')).after($('#moduleAddHandler').html());
         $('.row', $('.content.editable')).after($('#rowAddHandler').html());
@@ -370,13 +355,17 @@ var irEditor = function($editor) {
         initHeroImage();
     }
     var cleanup = function() {
-        removeEditHandler();
+        $('.content.editable aside.editButton').remove();
+        $('.module', $editor).unwrap();
+        
         cleanupAddHandler();
-        cleanupTextBlock();
+        
+        // modules
+        $('.module.textBlock[id^="mce_"]').each(cleanupItem.textBlock);
         $('.content.editable aside.editControls').remove();
-        cleanupCarousel();
-        cleanupHeroImage();
-    }
+        $('.module.carousel').each(cleanupItem.carousel);
+        $('.module.heroImage').each(cleanupItem.heroImage);
+    };
     
     setup();
 };
