@@ -324,27 +324,31 @@ var irEditor = function($editor) {
     
     var initAddHandler = function() {
         $('.irEditor-wrapper', $('.content.editable')).after($('#moduleAddHandler').html());
-        $('.row', $('.content.editable')).after($('#rowAddHandler').html());
         
         $('.addHandler[data-type]').each(function() {
-            $addHandler = $(this);
+            var $addHandler = $(this);
             $('a[data-module]', $addHandler).on('click', function(e) {
+                e.preventDefault();
+                
                 var $anchor = $(this);
                 var type    = $anchor.closest('.addHandler').attr('data-type');
                 var module  = $anchor.attr('data-module');
                 
-                e.preventDefault();
-                
-                var newModule = $('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html();
-                initItem[module](newModule);
+                var newModule = $($('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html());
+                var classes = newModule.attr('class');
+                newModule = initItem.deleteHandler(newModule);
                 
                 $addHandler.before(newModule);
+                
+                var $module = $('.'+classes.replace(/ /gi, '.'), newModule);
+                initItem[module]($module);
             });
         });
-    }
+        $('.row', $('.content.editable')).after($('#rowAddHandler').html());
+    };
     var cleanupAddHandler = function() {
-        
-    }
+        $('.addHandler').remove();
+    };
     
     var setup = function() {
         $('.module', $editor).each(initItem.deleteHandler);
