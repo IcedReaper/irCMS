@@ -28,7 +28,7 @@ var irEditor = function($editor) {
             return false;
         }
     });
-
+    
     var buildSkeleton = function() {
         var buildSubSkeleton = function($selector) {
             var skeletonNode = [];
@@ -96,7 +96,7 @@ var irEditor = function($editor) {
         var skeleton = buildSubSkeleton($('.content.editable'));
         return JSON.stringify(skeleton[0].modules).replace(/\\n/gi, '');
     };
-
+    
     var initItem = {
         'deleteHandler': function($module) {
             var $module = ! isNumeric($module) ? $module : $(this);
@@ -157,7 +157,7 @@ var irEditor = function($editor) {
                                                             )
                                          );
             }
-
+            
             $carousel.before($('<aside/>').addClass('slider-options widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
                                                                   .append(createOptionControl('Interval', 'data-interval', ''))
@@ -165,7 +165,7 @@ var irEditor = function($editor) {
                                                                   .append(createOptionControl('Wrap',     'data-wrap', 'true'))
                                                  )
                             );
-
+            
             $('.item', $carousel).each(function() {
                 var $item = $(this);
 
@@ -216,12 +216,21 @@ var irEditor = function($editor) {
                                                                                                                      }
                                                                                                                  }
                                                    );
+                
+                var deleteBtn = $('<div/>').addClass('btn btn-danger')
+                                           .append($('<i/>').addClass('glyphicon glyphicon-trash'))
+                                           .append($('<span/>').text('Slide löschen'))
+                                           .on('click', function() {
+                                               console.log('remove slider image');
+                                           });
+                
                 $item.append($('<aside/>').addClass('editControls widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen des aktuellen Slide'))
                                                                   .append(pathEdit)
                                                                   .append(titleEdit)
                                                                   .append(headlineEdit)
                                                                   .append(DescriptionEdit)
+                                                                  .append(deleteBtn)
                                                  )
                             );
             });
