@@ -166,7 +166,7 @@ var irEditor = function($editor) {
                                                  )
                             );
             
-            $('.item', $carousel).each(function() {
+            $('.item', $carousel).each(function(itemIndex) {
                 var $item = $(this);
 
                 var createControl = function(label, value, inputFunction) {
@@ -221,7 +221,21 @@ var irEditor = function($editor) {
                                            .append($('<i/>').addClass('glyphicon glyphicon-trash'))
                                            .append($('<span/>').text('Slide löschen'))
                                            .on('click', function() {
-                                               console.log('remove slider image');
+                                               // circle to the next
+                                               $carousel.carousel('cycle');
+                                               
+                                               // remove marker
+                                               $('li[data-slide-to]', $carousel).each(function(actIndex) {
+                                                   if(actIndex === itemIndex) {
+                                                       $(this).remove();
+                                                   }
+                                                   if(actIndex > itemIndex) {
+                                                       $(this).attr('data-slide-to', $(this).attr('data-slide-to')-1);
+                                                   }
+                                               });
+                                               
+                                               // remove item
+                                               $item.remove();
                                            });
                 
                 $item.append($('<aside/>').addClass('editControls widget')
