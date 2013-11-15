@@ -98,8 +98,10 @@ var irEditor = function($editor) {
         return JSON.stringify(skeleton[0].modules).replace(/\\n/gi, '');
     };
 
-    var addEditHandler = function() {
-        $('.module', $editor).each(function() {
+    var initItem = {
+        'deleteHandler': function($module) {
+            var $module = ! isNumeric($module) ? $module : $(this);
+            
             var delButton = $('<div/>').addClass('btn btn-danger')
                                        .append($('<span/>').addClass('glyphicon glyphicon-trash'))
                                        .on('click', function() {
@@ -107,15 +109,14 @@ var irEditor = function($editor) {
                                        });
             var editContainer = $('<aside/>').addClass('editButton')
                                              .append(delButton);
-    
-            $(this).wrap('<div/>')
+            
+            $module.wrap('<div/>')
                    .closest('div')
                    .addClass('irEditor-wrapper')
                    .append(editContainer);
-        });
-    };
-    var initItem = {
-        'textBlock': function($textBlock) {
+            return $module.closest('.irEditor-wrapper');
+        },
+        'textBlock':     function($textBlock) {
             var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
             
             $textBlock.tinymce({
@@ -348,7 +349,8 @@ var irEditor = function($editor) {
     }
     
     var setup = function() {
-        addEditHandler();
+        $('.module', $editor).each(initItem.deleteHandler);
+        
         initAddHandler();
         initTextBlock();
         initCarousel();
