@@ -169,72 +169,59 @@ var irEditor = function($editor) {
             $('.item', $carousel).each(function() {
                 var $item = $(this);
 
-                var createControl = function(label, id) {
-                    var value = "";
-
-                    switch(id) {
-                        case 'src': {
-                            value = $('img', $item).attr(id) || '';
-                            break;
-                        }
-                        case 'headline': {
-                            value = $('.carousel-caption > h3', $item).text();
-                            break;
-                        }
-                        case 'description': {
-                            value = $('.carousel-caption > span', $item).text();
-                            break;
-                        }
-                    }
-
+                var createControl = function(label, value, inputFunction) {
                     return $('<div/>').addClass('form-group')
                                       .append($('<div/>').addClass('col-md-3 control-label')
                                                          .text(label))
                                       .append($('<div/>').addClass('col-md-9')
                                                          .append($('<input/>').addClass('form-control')
                                                                               .val(value)
-                                                                              .on('input', function() {
-                                                                                  switch(id) {
-                                                                                      case 'src': {
-                                                                                          $('img', $item).attr(id, $(this).val());
-                                                                                          break;
-                                                                                      }
-                                                                                      case 'headline': {
-                                                                                          if($(this).val() !== '') {
-                                                                                              if($('.carousel-caption > h3', $item).length === 0) {
-                                                                                                  $('.carousel-caption', $item).prepend($('<h3/>'));
-                                                                                              }
-                                                                                              $('.carousel-caption > h3', $item).text($(this).val());
-                                                                                          }
-                                                                                          else {
-                                                                                              $('.carousel-caption > h3', $item).remove();
-                                                                                          }
-                                                                                          break;
-                                                                                      }
-                                                                                      case 'description': {
-                                                                                          if($(this).val() !== '') {
-                                                                                              if($('.carousel-caption > span', $item).length === 0) {
-                                                                                                  $('.carousel-caption', $item).append($('<span/>'));
-                                                                                              }
-                                                                                              $('.carousel-caption > span', $item).text($(this).val());
-                                                                                          }
-                                                                                          else {
-                                                                                              $('.carousel-caption > span', $item).remove();
-                                                                                          }
-                                                                                          break;
-                                                                                      }
-                                                                                  }
-                                                                              })
+                                                                              .on('input', inputFunction)
                                                                 )
                                              );
                 };
-
+                
+                var pathEdit = createControl('Bildpfad', $('img', $item).attr('src') || '', function() { 
+                                                                                                $('img', $item).attr('src', $(this).val()); 
+                                                                                            }
+                                            );
+                
+                var titleEdit = createControl('Titel', $('img', $item).attr('alt') || '', function() { 
+                                                                                              $('img', $item).attr('alt', $(this).val()); 
+                                                                                          }
+                                             );
+                
+                var headlineEdit = createControl('Überschrift', $('.carousel-caption > h3', $item).text(), function() {
+                                                                                                               if($(this).val() !== '') {
+                                                                                                                   if($('.carousel-caption > h3', $item).length === 0) {
+                                                                                                                       $('.carousel-caption', $item).prepend($('<h3/>'));
+                                                                                                                   }
+                                                                                                                   $('.carousel-caption > h3', $item).text($(this).val());
+                                                                                                               }
+                                                                                                               else {
+                                                                                                                   $('.carousel-caption > h3', $item).remove();
+                                                                                                               }
+                                                                                                           }
+                                                   );
+                
+                var DescriptionEdit = createControl('Beschreibung', $('.carousel-caption > span', $item).text(), function() {
+                                                                                                                     if($(this).val() !== '') {
+                                                                                                                         if($('.carousel-caption > span', $item).length === 0) {
+                                                                                                                             $('.carousel-caption', $item).append($('<span/>'));
+                                                                                                                         }
+                                                                                                                        $('.carousel-caption > span', $item).text($(this).val());
+                                                                                                                     }
+                                                                                                                     else {
+                                                                                                                         $('.carousel-caption > span', $item).remove();
+                                                                                                                     }
+                                                                                                                 }
+                                                   );
                 $item.append($('<aside/>').addClass('editControls widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen des aktuellen Slide'))
-                                                                  .append(createControl('Bildpfad',     'src'))
-                                                                  .append(createControl('Titel',        'alt'))
-                                                                  .append(createControl('Überschrift',  'headline'))
-                                                                  .append(createControl('Beschreibung', 'description'))
+                                                                  .append(pathEdit)
+                                                                  .append(titleEdit)
+                                                                  .append(headlineEdit)
+                                                                  .append(DescriptionEdit)
                                                  )
                             );
             });
