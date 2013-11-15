@@ -268,6 +268,14 @@ var irEditor = function($editor) {
                                        'change',
                                        null);
             
+            var $container = $('<aside/>').addClass('editControls widget')
+                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
+                                                                  .append(backgroundImage)
+                                                                  .append(content)
+                                                 );
+
+            $heroImage.append($container);
+            
             $('input', content).tinymce({
                 theme: "modern",
                 plugins: [
@@ -292,14 +300,6 @@ var irEditor = function($editor) {
                     });
                 }
             });
-            
-            var $container = $('<aside/>').addClass('editControls widget')
-                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                  .append(backgroundImage)
-                                                                  .append(content)
-                                                 );
-
-            $heroImage.append($container);
             
             return $heroImage;
         }
