@@ -18,14 +18,13 @@ var irEditor = function($editor) {
         try {
             cleanup();
             $('input[name="content"]').val(buildSkeleton());
-            
             setup();
-        
+            
             return true;
         } 
         catch (error) {
             console.log(error);
-        
+            
             return false;
         }
     });
@@ -139,7 +138,7 @@ var irEditor = function($editor) {
                 statusbar: false
             });
         },
-        'carousel':  function($carousel) {
+        'carousel':      function($carousel) {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
             
             var createOptionControl = function(label, attrName, defaultValue) {
@@ -238,7 +237,7 @@ var irEditor = function($editor) {
                             );
             });
         },
-        'heroImage': function($heroImage) {
+        'heroImage':     function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
             
             var createOption = function(label, val, on, updateFunction) {
