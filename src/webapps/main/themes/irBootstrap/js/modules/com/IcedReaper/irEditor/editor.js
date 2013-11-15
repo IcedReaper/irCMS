@@ -137,6 +137,8 @@ var irEditor = function($editor) {
                 toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
                 statusbar: false
             });
+            
+            return $textBlock;
         },
         'carousel':      function($carousel) {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
@@ -236,6 +238,8 @@ var irEditor = function($editor) {
                                                  )
                             );
             });
+            
+            return $carousel;
         },
         'heroImage':     function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
@@ -296,6 +300,8 @@ var irEditor = function($editor) {
                                                  );
 
             $heroImage.append($container);
+            
+            return $heroImage;
         }
     };
     
