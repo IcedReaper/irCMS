@@ -17,7 +17,7 @@
 </script>
 
 <script type="html/text" class="contentTemplate" data-type="module" data-module="textBlock">
-    <cfmodule template="/themes/irBootstrap/templates/skeleton/textBlock.cfm">
+    <cfmodule template="/themes/irBootstrap/templates/skeleton/textBlock.cfm" text="<h2>Beispielüberschrift</h2><p>Beispieltext</p>">
 </script>
 
 <script type="html/text" class="contentTemplate" data-type="module" data-module="carousel">
