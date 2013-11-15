@@ -226,6 +226,13 @@ var irEditor = function($editor) {
                             );
             });
             
+            $('aside.editButton', $carousel.closest('.irEditor-wrapper')).prepend($('<div/>').addClass('btn btn-success')
+                                                                                             .append($('<span/>').addClass('glyphicon glyphicon-plus'))
+                                                                                             .on('click', function() {
+                                                                                                 console.log('add slider image');
+                                                                                             })
+                                                                                             .after('&nbsp;'));
+            
             return $carousel;
         },
         'heroImage':     function($heroImage) {
