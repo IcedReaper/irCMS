@@ -167,7 +167,7 @@ var irEditor = function($editor) {
                             );
             
             var item_addEditHandler = function($item) {
-            var $item = ! isNumeric($item) ? $item : $(this);
+                var $item = ! isNumeric($item) ? $item : $(this);
 
                 var createControl = function(label, value, inputFunction) {
                     return $('<div/>').addClass('form-group')
@@ -181,30 +181,30 @@ var irEditor = function($editor) {
                                              );
                 };
                 
-                var pathEdit = createControl('Bildpfad', $('img', $item).attr('src') || '', function() { 
-                                                                                                $('img', $item).attr('src', $(this).val()); 
-                                                                                            }
-                                            );
-                
-                var titleEdit = createControl('Titel', $('img', $item).attr('alt') || '', function() { 
-                                                                                              $('img', $item).attr('alt', $(this).val()); 
-                                                                                          }
+                var $pathEdit = createControl('Bildpfad', $('img', $item).attr('src') || '', function() { 
+                                                                                                 $('img', $item).attr('src', $(this).val()); 
+                                                                                             }
                                              );
                 
-                var headlineEdit = createControl('Überschrift', $('.carousel-caption > h3', $item).text(), function() {
-                                                                                                               if($(this).val() !== '') {
-                                                                                                                   if($('.carousel-caption > h3', $item).length === 0) {
-                                                                                                                       $('.carousel-caption', $item).prepend($('<h3/>'));
-                                                                                                                   }
-                                                                                                                   $('.carousel-caption > h3', $item).text($(this).val());
-                                                                                                               }
-                                                                                                               else {
-                                                                                                                   $('.carousel-caption > h3', $item).remove();
-                                                                                                               }
-                                                                                                           }
-                                                   );
+                var $titleEdit = createControl('Titel', $('img', $item).attr('alt') || '', function() { 
+                                                                                               $('img', $item).attr('alt', $(this).val()); 
+                                                                                           }
+                                              );
                 
-                var DescriptionEdit = createControl('Beschreibung', $('.carousel-caption > span', $item).text(), function() {
+                var $headlineEdit = createControl('Überschrift', $('.carousel-caption > h3', $item).text(), function() {
+                                                                                                                if($(this).val() !== '') {
+                                                                                                                    if($('.carousel-caption > h3', $item).length === 0) {
+                                                                                                                        $('.carousel-caption', $item).prepend($('<h3/>'));
+                                                                                                                    }
+                                                                                                                    $('.carousel-caption > h3', $item).text($(this).val());
+                                                                                                                }
+                                                                                                                else {
+                                                                                                                    $('.carousel-caption > h3', $item).remove();
+                                                                                                                }
+                                                                                                            }
+                                                 );
+                
+                var $descriptionEdit = createControl('Beschreibung', $('.carousel-caption > span', $item).text(), function() {
                                                                                                                      if($(this).val() !== '') {
                                                                                                                          if($('.carousel-caption > span', $item).length === 0) {
                                                                                                                              $('.carousel-caption', $item).append($('<span/>'));
@@ -216,54 +216,96 @@ var irEditor = function($editor) {
                                                                                                                      }
                                                                                                                  }
                                                    );
+                var $buttonContainer = $('<div/>')
+                var $deleteBtn = $('<button/>').addClass('btn btn-danger')
+                                               .append($('<i/>').addClass('glyphicon glyphicon-trash'))
+                                               .append('&nbsp;')
+                                               .append($('<span/>').text('Slide löschen'))
+                                               .on('click', function(e) {
+                                                   // get the actual index
+                                                   var itemIndex = function() {
+                                                       var itemIndex = 0;
+                                                       $('.item', $carousel).each(function(index) {
+                                                           if($(this).hasClass('active')) {
+                                                               itemIndex = index;
+                                                           }
+                                                       });
+
+                                                       return itemIndex;
+                                                   }();
+
+                                                   // remove the indicator and activate the correct slide and indicator
+                                                   if($('li[data-slide-to]:last', $carousel).attr('data-slide-to') != itemIndex) {
+                                                       $('li[data-slide-to]:last', $carousel).remove();
+
+                                                       $item.removeClass('active').next('.item').addClass('active');
+                                                   }
+                                                   else {
+                                                       $('li[data-slide-to]:last', $carousel).remove();
+                                                       $('li[data-slide-to]:first', $carousel).addClass('active');
+
+                                                       $('.item', $carousel).removeClass('active').first().addClass('active');
+                                                   }
+                                                   
+                                                   // remove item
+                                                   $item.remove();
+                                               });
                 
-                var deleteBtn = $('<div/>').addClass('btn btn-danger')
-                                           .append($('<i/>').addClass('glyphicon glyphicon-trash'))
-                                           .append($('<span/>').text('Slide löschen'))
-                                           .on('click', function() {
-                                               // get the actual index
-                                               var itemIndex = function() {
-                                                   var itemIndex = 0;
-                                                   $('.item', $carousel).each(function(index) {
-                                                       if($(this).hasClass('active')) {
-                                                           itemIndex = index;
-                                                       }
-                                                   });
+                var $moveContainer = $('<div/>').addClass('pull-right')
+                                                .append($('<button/>').addClass('btn btn-primary')
+                                                                      .append($('<i/>').addClass('glyphicon glyphicon-chevron-left'))
+                                                                      .append('&nbsp;')
+                                                                      .append($('<span/>').text('Eine Position nach vorne'))
+                                                                      .on('click', function(e) {
+                                                                          e.preventDefault();
 
-                                                   return itemIndex;
-                                               }();
-
-                                               // remove the indicator and activate the correct slide and indicator
-                                               if($('li[data-slide-to]:last', $carousel).attr('data-slide-to') != itemIndex) {
-                                                   $('li[data-slide-to]:last', $carousel).remove();
-
-                                                   $item.removeClass('active').next('.item').addClass('active');
-                                               }
-                                               else {
-                                                   $('li[data-slide-to]:last', $carousel).remove();
-                                                   $('li[data-slide-to]:first', $carousel).addClass('active');
-
-                                                   $('.item', $carousel).removeClass('active').first().addClass('active');
-                                               }
-                                               
-                                               // remove item
-                                               $item.remove();
-                                           });
+                                                                          if($item.prev('.item').length >= 1) {
+                                                                              // move slide
+                                                                              $item.insertBefore($item.prev('.item'));
+                                                                              // mark correct indicator
+                                                                              var indicator = $('.carousel-indicators li.active', $carousel).prev();
+                                                                              $('.carousel-indicators li.active', $carousel).removeClass('active');
+                                                                              indicator.addClass('active');
+                                                                          }
+                                                                      })
+                                                       )
+                                                .append('&nbsp;')
+                                                .append($('<button/>').addClass('btn btn-primary')
+                                                                      .append($('<span/>').text('Eine Position nach hinten'))
+                                                                      .append('&nbsp;')
+                                                                      .append($('<i/>').addClass('glyphicon glyphicon-chevron-right'))
+                                                                      .on('click', function(e) {
+                                                                          e.preventDefault();
+                                                                          
+                                                                          if($item.next('.item').length >= 1) {
+                                                                              // move slide
+                                                                              $item.insertAfter($item.next('.item'));
+                                                                              // mark correct indicator
+                                                                              var indicator = $('.carousel-indicators li.active', $carousel).next();
+                                                                              $('.carousel-indicators li.active', $carousel).removeClass('active');
+                                                                              indicator.addClass('active');
+                                                                          }
+                                                                      })
+                                                       );
                 
+                $buttonContainer.append($deleteBtn)
+                                .append($moveContainer);
+
                 $item.append($('<aside/>').addClass('editControls widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen des aktuellen Slide'))
-                                                                  .append(pathEdit)
-                                                                  .append(titleEdit)
-                                                                  .append(headlineEdit)
-                                                                  .append(DescriptionEdit)
-                                                                  .append(deleteBtn)
+                                                                  .append($pathEdit)
+                                                                  .append($titleEdit)
+                                                                  .append($headlineEdit)
+                                                                  .append($descriptionEdit)
+                                                                  .append($buttonContainer)
                                                  )
                             );
             };
 
             $('.item', $carousel).each(item_addEditHandler);
             
-            $('aside.editButton', $carousel.closest('.irEditor-wrapper')).prepend($('<div/>').addClass('btn btn-success')
+            $('aside.editButton', $carousel.closest('.irEditor-wrapper')).prepend('&nbsp;')
+                                                                         .prepend($('<div/>').addClass('btn btn-success')
                                                                                              .append($('<span/>').addClass('glyphicon glyphicon-plus'))
                                                                                              .on('click', function() {
                                                                                                  var newIndex = $('.item', $carousel).length;
@@ -282,8 +324,7 @@ var irEditor = function($editor) {
                                                                                                  $('.carousel-indicators', $carousel).append($newIndicator);
                                                                                                  $('.carousel-inner',      $carousel).append($newSlide);
                                                                                              })
-                                                                                             .after('&nbsp;')
-                                                                                  );
+                                                                                 );
             
             return $carousel;
         },
