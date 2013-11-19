@@ -221,18 +221,30 @@ var irEditor = function($editor) {
                                            .append($('<i/>').addClass('glyphicon glyphicon-trash'))
                                            .append($('<span/>').text('Slide löschen'))
                                            .on('click', function() {
-                                               // circle to the next
-                                               $carousel.carousel('cycle');
-                                               
-                                               // remove marker
-                                               $('li[data-slide-to]', $carousel).each(function(actIndex) {
-                                                   if(actIndex === itemIndex) {
-                                                       $(this).remove();
-                                                   }
-                                                   if(actIndex > itemIndex) {
-                                                       $(this).attr('data-slide-to', $(this).attr('data-slide-to')-1);
-                                                   }
-                                               });
+                                               // get the actual index
+                                               var itemIndex = function() {
+                                                   var itemIndex = 0;
+                                                   $('.item', $carousel).each(function(index) {
+                                                       if($(this).hasClass('active')) {
+                                                           itemIndex = index;
+                                                       }
+                                                   });
+
+                                                   return itemIndex;
+                                               }();
+
+                                               // remove the indicator and activate the correct slide and indicator
+                                               if($('li[data-slide-to]:last', $carousel).attr('data-slide-to') != itemIndex) {
+                                                   $('li[data-slide-to]:last', $carousel).remove();
+
+                                                   $item.removeClass('active').next('.item').addClass('active');
+                                               }
+                                               else {
+                                                   $('li[data-slide-to]:last', $carousel).remove();
+                                                   $('li[data-slide-to]:first', $carousel).addClass('active');
+
+                                                   $('.item', $carousel).removeClass('active').first().addClass('active');
+                                               }
                                                
                                                // remove item
                                                $item.remove();
@@ -335,7 +347,6 @@ var irEditor = function($editor) {
         },
         'heroImage': function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
-            
         }
     };
     
