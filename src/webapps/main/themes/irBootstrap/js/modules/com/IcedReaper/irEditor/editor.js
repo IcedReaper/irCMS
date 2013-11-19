@@ -266,9 +266,24 @@ var irEditor = function($editor) {
             $('aside.editButton', $carousel.closest('.irEditor-wrapper')).prepend($('<div/>').addClass('btn btn-success')
                                                                                              .append($('<span/>').addClass('glyphicon glyphicon-plus'))
                                                                                              .on('click', function() {
-                                                                                                 console.log('add slider image');
+                                                                                                 var newIndex = $('.item', $carousel).length;
+
+                                                                                                 var $newSlide = $('<div/>').addClass('item active')
+                                                                                                                            .append($('<img/>').attr('src', '/themes/irBootstrap/img/modules/com/IcedReaper/irEditor/slider-dummy.jpg'))
+                                                                                                                            .append($('<div/>').addClass('carousel-caption'));
+                                                                                                 
+                                                                                                 var $newIndicator = $('<li/>').addClass('active')
+                                                                                                                               .attr('data-slide-to', newIndex)
+                                                                                                                               .attr('data-target', '#'+$carousel.attr('id'));
+
+                                                                                                 item_addEditHandler($newSlide);
+
+                                                                                                 $('.active', $carousel).removeClass('active');
+                                                                                                 $('.carousel-indicators', $carousel).append($newIndicator);
+                                                                                                 $('.carousel-inner',      $carousel).append($newSlide);
                                                                                              })
-                                                                                             .after('&nbsp;'));
+                                                                                             .after('&nbsp;')
+                                                                                  );
             
             return $carousel;
         },
