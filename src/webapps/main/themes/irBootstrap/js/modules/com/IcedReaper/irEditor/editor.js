@@ -166,8 +166,8 @@ var irEditor = function($editor) {
                                                  )
                             );
             
-            $('.item', $carousel).each(function(itemIndex) {
-                var $item = $(this);
+            var item_addEditHandler = function($item) {
+            var $item = ! isNumeric($item) ? $item : $(this);
 
                 var createControl = function(label, value, inputFunction) {
                     return $('<div/>').addClass('form-group')
@@ -259,7 +259,9 @@ var irEditor = function($editor) {
                                                                   .append(deleteBtn)
                                                  )
                             );
-            });
+            };
+
+            $('.item', $carousel).each(item_addEditHandler);
             
             $('aside.editButton', $carousel.closest('.irEditor-wrapper')).prepend($('<div/>').addClass('btn btn-success')
                                                                                              .append($('<span/>').addClass('glyphicon glyphicon-plus'))
