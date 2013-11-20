@@ -1,6 +1,6 @@
 ﻿<!--- Add new modules to the document --->
 <script type="html/text" id="moduleAddHandler">
-    <div data-type="module" class="addHandler">
+    <div data-type="module" class="addHandler" id="module">
         <a href="#" class="glyphicon glyphicon-picture" title="Titelbild einfügen" data-module="heroImage"><span class="glyphicon glyphicon-plus"></span></a>
         <a href="#" class="glyphicon glyphicon-align-left" title="Textblock einfügen" data-module="textBlock"><span class="glyphicon glyphicon-plus"></span></a>
         <a href="#" class="glyphicon glyphicon-picture" title="Carousel / Slider einfügen" data-module="carousel"><span class="glyphicon glyphicon-plus"></span></a>
@@ -8,9 +8,51 @@
 </script>
 
 <script type="html/text" id="rowAddHandler">
-    <!---<div data-type="row" class="addHandler">
-        <a title="Spaltenaufteilung von 12 einzelnen Einheiten einfügen" data-module="12" class="glyphicon glyphicon-plus" href="#"></a>
-    </div>--->
+    <div data-type="row" class="addHandler" id="row">
+        <div href="#">
+            <section class="row">
+                <section class="col-md-12">100%</section>
+            </section>
+        </div>
+        <div href="#">
+            <section class="row">
+                <section class="col-md-6">50%</section>
+                <section class="col-md-6">50%</section>
+            </section>
+        </div>
+        <div href="#">
+            <section class="row">
+                <section class="col-md-3">25%</section>
+                <section class="col-md-9">75%</section>
+            </section>
+        </div>
+        <div href="#">
+            <section class="row">
+                <section class="col-md-3">25%</section>
+                <section class="col-md-6">50%</section>
+                <section class="col-md-3">25%</section>
+            </section>
+        </div>
+        <div href="#">
+            <section class="row">
+                <section class="col-md-6">50%</section>
+                <section class="col-md-3">25%</section>
+                <section class="col-md-3">25%</section>
+            </section>
+        </div>
+        <div href="#">
+            <section class="row">
+                <section class="col-md-4">33%</section>
+                <section class="col-md-8">66%</section>
+            </section>
+        </div>
+        <div href="#">
+            <section class="row">
+                <section class="col-md-8">66%</section>
+                <section class="col-md-4">33%</section>
+            </section>
+        </div>
+    </div>
 </script>
 
 <!--- Module prototypes which will be added to the document --->
