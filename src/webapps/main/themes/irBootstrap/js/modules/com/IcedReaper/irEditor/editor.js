@@ -98,7 +98,7 @@ var irEditor = function($editor) {
     };
     
     var initItem = {
-        'deleteHandler': function($module) {
+        'deleteHandler': function($module)    {
             var $module = ! isNumeric($module) ? $module : $(this);
             
             var $editContainer = $($('#deleteHandler').html());
@@ -138,7 +138,7 @@ var irEditor = function($editor) {
             
             return $textBlock;
         },
-        'carousel':      function($carousel) {
+        'carousel':      function($carousel)  {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
             
             var createOption = function(label, value, inputFunction) {
@@ -347,7 +347,7 @@ var irEditor = function($editor) {
             
             $textBlock.tinymce().remove();
         },
-        'carousel':  function($carousel) {
+        'carousel':  function($carousel)  {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
             
             $('.content.editable aside.slider-options').remove();
