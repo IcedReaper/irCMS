@@ -14,6 +14,9 @@ var irEditor = function($editor) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     };
     
+    var $previewBtn = $('#preview');
+    var $editBtn    = $('#edit');
+    
     $('form#irEditor').on('submit', function() {
         try {
             cleanup();
@@ -411,6 +414,17 @@ var irEditor = function($editor) {
         $('.addHandler').remove();
     };
     
+    $previewBtn.on('click', function(e) {
+        e.preventDefault();
+        
+        cleanup();
+    });
+    $editBtn.on('click', function(e) {
+        e.preventDefault();
+        
+        setup();
+    });
+    
     var setup = function() {
         $('.module', $editor).each(initItem.deleteHandler);
         
@@ -420,6 +434,9 @@ var irEditor = function($editor) {
         $('.module.textBlock').each(initItem.textBlock);
         $('.module.carousel').each(initItem.carousel);
         $('.module.heroImage').each(initItem.heroImage);
+        
+        $previewBtn.show();
+        $editBtn.hide();
     };
     var cleanup = function() {
         $('.content.editable aside.editButton').remove();
@@ -432,6 +449,9 @@ var irEditor = function($editor) {
         $('.content.editable aside.editControls').remove();
         $('.module.carousel').each(cleanupItem.carousel);
         $('.module.heroImage').each(cleanupItem.heroImage);
+        
+        $previewBtn.hide();
+        $editBtn.show();
     };
     
     setup();
