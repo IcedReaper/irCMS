@@ -365,9 +365,10 @@ var irEditor = function($editor) {
                        .on('click', function(e) {
                            e.preventDefault();
                            
-                           var $anchor = $(this);
-                           var type    = $anchor.closest('.addHandler').attr('data-type');
-                           var module  = $anchor.attr('data-module');
+                           var $anchor     = $(this);
+                           var $addHandler = $anchor.closest('.addHandler');
+                           var type        = $addHandler.attr('data-type');
+                           var module      = $anchor.attr('data-module');
                            
                            var newModule = $($('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html());
                            var classes = newModule.attr('class');
