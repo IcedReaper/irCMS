@@ -15,7 +15,7 @@
 
 <!--- Module prototypes which will be added to the document --->
 <script type="html/text" class="contentTemplate" data-type="module" data-module="heroImage">
-    <cfmodule template="/themes/irBootstrap/templates/skeleton/heroImage.cfm" backgroundImage="" content="">
+    <cfmodule template="/themes/irBootstrap/templates/skeleton/heroImage.cfm" backgroundImage="/themes/irBootstrap/img/modules/com/IcedReaper/irEditor/slider-dummy.jpg" content="">
 </script>
 
 <script type="html/text" class="contentTemplate" data-type="module" data-module="textBlock">
