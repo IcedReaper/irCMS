@@ -141,85 +141,57 @@ var irEditor = function($editor) {
         'carousel':      function($carousel) {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
             
-            var createOptionControl = function(label, attrName, defaultValue) {
-                return $('<div/>').addClass('form-group')
-                                  .append($('<div/>').addClass('col-md-3 control-label')
-                                                     .append($('<label/>').text(label))
-                                         )
-                                  .append($('<div/>').addClass('col-md-9')
-                                                     .append($('<input/>').addClass('form-control')
-                                                                          .val($carousel.attr(attrName) || defaultValue)
-                                                                          .on('input', function() {
-                                                                              $carousel.attr(attrName, $(this).val());
-                                                                          })
-                                                            )
-                                         );
+            var createOption = function(label, value, inputFunction) {
+                var $option = $($('#carousel_option').html()
+                                                     .replace(/\$\{label\}/gi, label)
+                                                     .replace(/\$\{value\}/gi, value));
+                $option.find('input')
+                       .on('input', inputFunction);
+                
+                return $option;
             }
             
-            $carousel.before($('<aside/>').addClass('slider-options widget')
-                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                  .append(createOptionControl('Interval', 'data-interval', ''))
-                                                                  .append(createOptionControl('Pause',    'data-pause', 'hover'))
-                                                                  .append(createOptionControl('Wrap',     'data-wrap', 'true'))
-                                                 )
-                            );
+            var $settings = $($('#carousel_setting').html());
+            $settings.find('fieldset')
+                     .append(createOption('Interval', $carousel.attr('data-interal') || '',      function() { $carousel.attr('data-interval', $(this).val()); }))
+                     .append(createOption('Pause',    $carousel.attr('data-pause')   || 'hover', function() { $carousel.attr('data-pause',    $(this).val()); }))
+                     .append(createOption('Wrap',     $carousel.attr('data-wrap')    || 'true',  function() { $carousel.attr('data-wrap',     $(this).val()); }));
+            $carousel.before($settings);
             
             var item_addEditHandler = function($item) {
                 var $item = ! isNumeric($item) ? $item : $(this);
 
-                var createControl = function(label, value, inputFunction) {
-                    return $('<div/>').addClass('form-group')
-                                      .append($('<div/>').addClass('col-md-3 control-label')
-                                                         .text(label))
-                                      .append($('<div/>').addClass('col-md-9')
-                                                         .append($('<input/>').addClass('form-control')
-                                                                              .val(value)
-                                                                              .on('input', inputFunction)
-                                                                )
-                                             );
-                };
+                var $pathEdit        = createOption('Bildpfad',     $('img', $item).attr('src') || '',                 function() {
+                                                                                                                           $('img', $item).attr('src', $(this).val()); 
+                                                                                                                       });
+                var $titleEdit       = createOption('Titel',        $('img', $item).attr('alt') || '',                 function() {
+                                                                                                                           $('img', $item).attr('alt', $(this).val()); 
+                                                                                                                       });
+                var $headlineEdit    = createOption('Überschrift',  $('.carousel-caption > h3', $item).text() || '',   function() {
+                                                                                                                           if($(this).val() !== '') {
+                                                                                                                               if($('.carousel-caption > h3', $item).length === 0) {
+                                                                                                                                   $('.carousel-caption', $item).prepend($('<h3/>'));
+                                                                                                                               }
+                                                                                                                               $('.carousel-caption > h3', $item).text($(this).val());
+                                                                                                                           }
+                                                                                                                           else {
+                                                                                                                               $('.carousel-caption > h3', $item).remove();
+                                                                                                                           }
+                                                                                                                       });
+                var $descriptionEdit = createOption('Beschreibung', $('.carousel-caption > span', $item).text() || '', function() {
+                                                                                                                           if($(this).val() !== '') {
+                                                                                                                               if($('.carousel-caption > span', $item).length === 0) {
+                                                                                                                                   $('.carousel-caption', $item).append($('<span/>'));
+                                                                                                                               }
+                                                                                                                              $('.carousel-caption > span', $item).text($(this).val());
+                                                                                                                           }
+                                                                                                                           else {
+                                                                                                                               $('.carousel-caption > span', $item).remove();
+                                                                                                                           }
+                                                                                                                       });
                 
-                var $pathEdit = createControl('Bildpfad', $('img', $item).attr('src') || '', function() { 
-                                                                                                 $('img', $item).attr('src', $(this).val()); 
-                                                                                             }
-                                             );
-                
-                var $titleEdit = createControl('Titel', $('img', $item).attr('alt') || '', function() { 
-                                                                                               $('img', $item).attr('alt', $(this).val()); 
-                                                                                           }
-                                              );
-                
-                var $headlineEdit = createControl('Überschrift', $('.carousel-caption > h3', $item).text(), function() {
-                                                                                                                if($(this).val() !== '') {
-                                                                                                                    if($('.carousel-caption > h3', $item).length === 0) {
-                                                                                                                        $('.carousel-caption', $item).prepend($('<h3/>'));
-                                                                                                                    }
-                                                                                                                    $('.carousel-caption > h3', $item).text($(this).val());
-                                                                                                                }
-                                                                                                                else {
-                                                                                                                    $('.carousel-caption > h3', $item).remove();
-                                                                                                                }
-                                                                                                            }
-                                                 );
-                
-                var $descriptionEdit = createControl('Beschreibung', $('.carousel-caption > span', $item).text(), function() {
-                                                                                                                     if($(this).val() !== '') {
-                                                                                                                         if($('.carousel-caption > span', $item).length === 0) {
-                                                                                                                             $('.carousel-caption', $item).append($('<span/>'));
-                                                                                                                         }
-                                                                                                                        $('.carousel-caption > span', $item).text($(this).val());
-                                                                                                                     }
-                                                                                                                     else {
-                                                                                                                         $('.carousel-caption > span', $item).remove();
-                                                                                                                     }
-                                                                                                                 }
-                                                   );
-                var $buttonContainer = $('<div/>')
-                var $deleteBtn = $('<button/>').addClass('btn btn-danger')
-                                               .append($('<i/>').addClass('glyphicon glyphicon-trash'))
-                                               .append('&nbsp;')
-                                               .append($('<span/>').text('Slide löschen'))
-                                               .on('click', function(e) {
+                var $slideOptions = $($('#carousel_slide_options').html());
+                $slideOptions.find('#deleteBtn').on('click', function(e) {
                                                    // get the actual index
                                                    var itemIndex = function() {
                                                        var itemIndex = 0;
@@ -248,81 +220,62 @@ var irEditor = function($editor) {
                                                    // remove item
                                                    $item.remove();
                                                });
-                
-                var $moveContainer = $('<div/>').addClass('pull-right')
-                                                .append($('<button/>').addClass('btn btn-primary')
-                                                                      .append($('<i/>').addClass('glyphicon glyphicon-chevron-left'))
-                                                                      .append('&nbsp;')
-                                                                      .append($('<span/>').text('Eine Position nach vorne'))
-                                                                      .on('click', function(e) {
-                                                                          e.preventDefault();
+                $slideOptions.find('#movePrev').on('click', function(e) {
+                                                      e.preventDefault();
 
-                                                                          if($item.prev('.item').length >= 1) {
-                                                                              // move slide
-                                                                              $item.insertBefore($item.prev('.item'));
-                                                                              // mark correct indicator
-                                                                              var indicator = $('.carousel-indicators li.active', $carousel).prev();
-                                                                              $('.carousel-indicators li.active', $carousel).removeClass('active');
-                                                                              indicator.addClass('active');
-                                                                          }
-                                                                      })
-                                                       )
-                                                .append('&nbsp;')
-                                                .append($('<button/>').addClass('btn btn-primary')
-                                                                      .append($('<span/>').text('Eine Position nach hinten'))
-                                                                      .append('&nbsp;')
-                                                                      .append($('<i/>').addClass('glyphicon glyphicon-chevron-right'))
-                                                                      .on('click', function(e) {
-                                                                          e.preventDefault();
-                                                                          
-                                                                          if($item.next('.item').length >= 1) {
-                                                                              // move slide
-                                                                              $item.insertAfter($item.next('.item'));
-                                                                              // mark correct indicator
-                                                                              var indicator = $('.carousel-indicators li.active', $carousel).next();
-                                                                              $('.carousel-indicators li.active', $carousel).removeClass('active');
-                                                                              indicator.addClass('active');
-                                                                          }
-                                                                      })
-                                                       );
+                                                      if($item.prev('.item').length >= 1) {
+                                                          // move slide
+                                                          $item.insertBefore($item.prev('.item'));
+                                                          // mark correct indicator
+                                                          var indicator = $('.carousel-indicators li.active', $carousel).prev();
+                                                          $('.carousel-indicators li.active', $carousel).removeClass('active');
+                                                          indicator.addClass('active');
+                                                      }
+                                                  });
+                $slideOptions.find('#moveNext').on('click', function(e) {
+                                                          e.preventDefault();
+                                                          
+                                                          if($item.next('.item').length >= 1) {
+                                                              // move slide
+                                                              $item.insertAfter($item.next('.item'));
+                                                              // mark correct indicator
+                                                              var indicator = $('.carousel-indicators li.active', $carousel).next();
+                                                              $('.carousel-indicators li.active', $carousel).removeClass('active');
+                                                              indicator.addClass('active');
+                                                          }
+                                                      });
                 
-                $buttonContainer.append($deleteBtn)
-                                .append($moveContainer);
-
-                $item.append($('<aside/>').addClass('editControls widget')
-                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen des aktuellen Slide'))
-                                                                  .append($pathEdit)
-                                                                  .append($titleEdit)
-                                                                  .append($headlineEdit)
-                                                                  .append($descriptionEdit)
-                                                                  .append($buttonContainer)
-                                                 )
-                            );
+                $slideOptions.find('fieldset')
+                             .prepend($descriptionEdit)
+                             .prepend($headlineEdit)
+                             .prepend($titleEdit)
+                             .prepend($pathEdit);
+                
+                $item.append($slideOptions);
             };
 
             $('.item', $carousel).each(item_addEditHandler);
             
+            var $addSlideBtn = $($('#carousel_add_slideBtn').html()).on('click', function(e) {
+                                                                           e.preventDefault();
+                                                                           
+                                                                           var newIndex = $('.item', $carousel).length;
+                                                                           
+                                                                           var $newSlide = $($('#carousel_new_slide').html());
+                                                                           
+                                                                           var $newIndicator = $($('#carousel_new_indicator').html()
+                                                                                                                             .replace(/\$\{newIndex\}/gi, newIndex)
+                                                                                                                             .replace(/\$\{id\}/gi, $carousel.attr('id')));
+                                                                           
+                                                                           item_addEditHandler($newSlide);
+                                                                           
+                                                                           $('.active', $carousel).removeClass('active');
+                                                                           $('.carousel-indicators', $carousel).append($newIndicator);
+                                                                           $('.carousel-inner',      $carousel).append($newSlide);
+                                                                       });
+            
             $('aside.editButton', $carousel.closest('.irEditor-wrapper')).prepend('&nbsp;')
-                                                                         .prepend($('<div/>').addClass('btn btn-success')
-                                                                                             .append($('<span/>').addClass('glyphicon glyphicon-plus'))
-                                                                                             .on('click', function() {
-                                                                                                 var newIndex = $('.item', $carousel).length;
-
-                                                                                                 var $newSlide = $('<div/>').addClass('item active')
-                                                                                                                            .append($('<img/>').attr('src', '/themes/irBootstrap/img/modules/com/IcedReaper/irEditor/slider-dummy.jpg'))
-                                                                                                                            .append($('<div/>').addClass('carousel-caption'));
-                                                                                                 
-                                                                                                 var $newIndicator = $('<li/>').addClass('active')
-                                                                                                                               .attr('data-slide-to', newIndex)
-                                                                                                                               .attr('data-target', '#'+$carousel.attr('id'));
-
-                                                                                                 item_addEditHandler($newSlide);
-
-                                                                                                 $('.active', $carousel).removeClass('active');
-                                                                                                 $('.carousel-indicators', $carousel).append($newIndicator);
-                                                                                                 $('.carousel-inner',      $carousel).append($newSlide);
-                                                                                             })
-                                                                                 );
+                                                                         .prepend($addSlideBtn);
             
             return $carousel;
         },
