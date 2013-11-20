@@ -10,33 +10,25 @@ $(function() {
 });
 
 var irEditor = function($editor) {
+    var isNumeric = function (n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    };
+    
     $('form#irEditor').on('submit', function() {
         try {
-            // clean
-            removeEditHandler();
-            cleanupTextBlock();
-            $('.content.editable aside.editControls').remove();
-            cleanupCarousel();
-            cleanupHeroImage();
-            
-            // build
+            cleanup();
             $('input[name="content"]').val(buildSkeleton());
+            setup();
             
-            // restore
-            addEditHandler();
-            initTextBlock();
-            initCarousel();
-            initHeroImage();
-        
             return true;
         } 
         catch (error) {
             console.log(error);
-        
+            
             return false;
         }
     });
-
+    
     var buildSkeleton = function() {
         var buildSubSkeleton = function($selector) {
             var skeletonNode = [];
@@ -104,9 +96,11 @@ var irEditor = function($editor) {
         var skeleton = buildSubSkeleton($('.content.editable'));
         return JSON.stringify(skeleton[0].modules).replace(/\\n/gi, '');
     };
-
-    var addEditHandler = function() {
-        $('.module', $editor).each(function() {
+    
+    var initItem = {
+        'deleteHandler': function($module) {
+            var $module = ! isNumeric($module) ? $module : $(this);
+            
             var delButton = $('<div/>').addClass('btn btn-danger')
                                        .append($('<span/>').addClass('glyphicon glyphicon-trash'))
                                        .on('click', function() {
@@ -114,21 +108,17 @@ var irEditor = function($editor) {
                                        });
             var editContainer = $('<aside/>').addClass('editButton')
                                              .append(delButton);
-    
-            $(this).wrap('<div/>')
+            
+            $module.wrap('<div/>')
                    .closest('div')
                    .addClass('irEditor-wrapper')
                    .append(editContainer);
-        });
-    };
-    var removeEditHandler = function() {
-        $('.content.editable aside.editButton').remove();
-        $('.module', $editor).unwrap();
-    };
-    
-    var initTextBlock = function() {
-        $('.module.textBlock').each(function() {
-            $(this).tinymce({
+            return $module.closest('.irEditor-wrapper');
+        },
+        'textBlock':     function($textBlock) {
+            var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
+            
+            $textBlock.tinymce({
                 theme: "modern",
                 plugins: [
                     ["autolink link image lists preview hr anchor"],    //advlist pagebreak charmap
@@ -147,18 +137,12 @@ var irEditor = function($editor) {
                 toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
                 statusbar: false
             });
-        });
-    };
-    var cleanupTextBlock = function() {
-        $('.module.textBlock[id^="mce_"]').each(function() {
-            $(this).tinymce().remove();
-        });
-    };
-    
-    var initCarousel = function() {
-        $('.module.carousel').each(function() {
-            var $carousel = $(this);
-
+            
+            return $textBlock;
+        },
+        'carousel':      function($carousel) {
+            var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
+            
             var createOptionControl = function(label, attrName, defaultValue) {
                 return $('<div/>').addClass('form-group')
                                   .append($('<div/>').addClass('col-md-3 control-label')
@@ -173,7 +157,7 @@ var irEditor = function($editor) {
                                                             )
                                          );
             }
-
+            
             $carousel.before($('<aside/>').addClass('slider-options widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
                                                                   .append(createOptionControl('Interval', 'data-interval', ''))
@@ -181,88 +165,171 @@ var irEditor = function($editor) {
                                                                   .append(createOptionControl('Wrap',     'data-wrap', 'true'))
                                                  )
                             );
+            
+            var item_addEditHandler = function($item) {
+                var $item = ! isNumeric($item) ? $item : $(this);
 
-            $('.item', $carousel).each(function() {
-                var $item = $(this);
-
-                var createControl = function(label, id) {
-                    var value = "";
-
-                    switch(id) {
-                        case 'src': {
-                            value = $('img', $item).attr(id) || '';
-                            break;
-                        }
-                        case 'headline': {
-                            value = $('.carousel-caption > h3', $item).text();
-                            break;
-                        }
-                        case 'description': {
-                            value = $('.carousel-caption > span', $item).text();
-                            break;
-                        }
-                    }
-
+                var createControl = function(label, value, inputFunction) {
                     return $('<div/>').addClass('form-group')
                                       .append($('<div/>').addClass('col-md-3 control-label')
                                                          .text(label))
                                       .append($('<div/>').addClass('col-md-9')
                                                          .append($('<input/>').addClass('form-control')
                                                                               .val(value)
-                                                                              .on('input', function() {
-                                                                                  switch(id) {
-                                                                                      case 'src': {
-                                                                                          $('img', $item).attr(id, $(this).val());
-                                                                                          break;
-                                                                                      }
-                                                                                      case 'headline': {
-                                                                                          if($(this).val() !== '') {
-                                                                                              if($('.carousel-caption > h3', $item).length === 0) {
-                                                                                                  $('.carousel-caption', $item).prepend($('<h3/>'));
-                                                                                              }
-                                                                                              $('.carousel-caption > h3', $item).text($(this).val());
-                                                                                          }
-                                                                                          else {
-                                                                                              $('.carousel-caption > h3', $item).remove();
-                                                                                          }
-                                                                                          break;
-                                                                                      }
-                                                                                      case 'description': {
-                                                                                          if($(this).val() !== '') {
-                                                                                              if($('.carousel-caption > span', $item).length === 0) {
-                                                                                                  $('.carousel-caption', $item).append($('<span/>'));
-                                                                                              }
-                                                                                              $('.carousel-caption > span', $item).text($(this).val());
-                                                                                          }
-                                                                                          else {
-                                                                                              $('.carousel-caption > span', $item).remove();
-                                                                                          }
-                                                                                          break;
-                                                                                      }
-                                                                                  }
-                                                                              })
+                                                                              .on('input', inputFunction)
                                                                 )
                                              );
                 };
+                
+                var $pathEdit = createControl('Bildpfad', $('img', $item).attr('src') || '', function() { 
+                                                                                                 $('img', $item).attr('src', $(this).val()); 
+                                                                                             }
+                                             );
+                
+                var $titleEdit = createControl('Titel', $('img', $item).attr('alt') || '', function() { 
+                                                                                               $('img', $item).attr('alt', $(this).val()); 
+                                                                                           }
+                                              );
+                
+                var $headlineEdit = createControl('Überschrift', $('.carousel-caption > h3', $item).text(), function() {
+                                                                                                                if($(this).val() !== '') {
+                                                                                                                    if($('.carousel-caption > h3', $item).length === 0) {
+                                                                                                                        $('.carousel-caption', $item).prepend($('<h3/>'));
+                                                                                                                    }
+                                                                                                                    $('.carousel-caption > h3', $item).text($(this).val());
+                                                                                                                }
+                                                                                                                else {
+                                                                                                                    $('.carousel-caption > h3', $item).remove();
+                                                                                                                }
+                                                                                                            }
+                                                 );
+                
+                var $descriptionEdit = createControl('Beschreibung', $('.carousel-caption > span', $item).text(), function() {
+                                                                                                                     if($(this).val() !== '') {
+                                                                                                                         if($('.carousel-caption > span', $item).length === 0) {
+                                                                                                                             $('.carousel-caption', $item).append($('<span/>'));
+                                                                                                                         }
+                                                                                                                        $('.carousel-caption > span', $item).text($(this).val());
+                                                                                                                     }
+                                                                                                                     else {
+                                                                                                                         $('.carousel-caption > span', $item).remove();
+                                                                                                                     }
+                                                                                                                 }
+                                                   );
+                var $buttonContainer = $('<div/>')
+                var $deleteBtn = $('<button/>').addClass('btn btn-danger')
+                                               .append($('<i/>').addClass('glyphicon glyphicon-trash'))
+                                               .append('&nbsp;')
+                                               .append($('<span/>').text('Slide löschen'))
+                                               .on('click', function(e) {
+                                                   // get the actual index
+                                                   var itemIndex = function() {
+                                                       var itemIndex = 0;
+                                                       $('.item', $carousel).each(function(index) {
+                                                           if($(this).hasClass('active')) {
+                                                               itemIndex = index;
+                                                           }
+                                                       });
+
+                                                       return itemIndex;
+                                                   }();
+
+                                                   // remove the indicator and activate the correct slide and indicator
+                                                   if($('li[data-slide-to]:last', $carousel).attr('data-slide-to') != itemIndex) {
+                                                       $('li[data-slide-to]:last', $carousel).remove();
+
+                                                       $item.removeClass('active').next('.item').addClass('active');
+                                                   }
+                                                   else {
+                                                       $('li[data-slide-to]:last', $carousel).remove();
+                                                       $('li[data-slide-to]:first', $carousel).addClass('active');
+
+                                                       $('.item', $carousel).removeClass('active').first().addClass('active');
+                                                   }
+                                                   
+                                                   // remove item
+                                                   $item.remove();
+                                               });
+                
+                var $moveContainer = $('<div/>').addClass('pull-right')
+                                                .append($('<button/>').addClass('btn btn-primary')
+                                                                      .append($('<i/>').addClass('glyphicon glyphicon-chevron-left'))
+                                                                      .append('&nbsp;')
+                                                                      .append($('<span/>').text('Eine Position nach vorne'))
+                                                                      .on('click', function(e) {
+                                                                          e.preventDefault();
+
+                                                                          if($item.prev('.item').length >= 1) {
+                                                                              // move slide
+                                                                              $item.insertBefore($item.prev('.item'));
+                                                                              // mark correct indicator
+                                                                              var indicator = $('.carousel-indicators li.active', $carousel).prev();
+                                                                              $('.carousel-indicators li.active', $carousel).removeClass('active');
+                                                                              indicator.addClass('active');
+                                                                          }
+                                                                      })
+                                                       )
+                                                .append('&nbsp;')
+                                                .append($('<button/>').addClass('btn btn-primary')
+                                                                      .append($('<span/>').text('Eine Position nach hinten'))
+                                                                      .append('&nbsp;')
+                                                                      .append($('<i/>').addClass('glyphicon glyphicon-chevron-right'))
+                                                                      .on('click', function(e) {
+                                                                          e.preventDefault();
+                                                                          
+                                                                          if($item.next('.item').length >= 1) {
+                                                                              // move slide
+                                                                              $item.insertAfter($item.next('.item'));
+                                                                              // mark correct indicator
+                                                                              var indicator = $('.carousel-indicators li.active', $carousel).next();
+                                                                              $('.carousel-indicators li.active', $carousel).removeClass('active');
+                                                                              indicator.addClass('active');
+                                                                          }
+                                                                      })
+                                                       );
+                
+                $buttonContainer.append($deleteBtn)
+                                .append($moveContainer);
 
                 $item.append($('<aside/>').addClass('editControls widget')
                                           .append($('<fieldset/>').append($('<legend/>').text('Optionen des aktuellen Slide'))
-                                                                  .append(createControl('Bildpfad',     'src'))
-                                                                  .append(createControl('Titel',        'alt'))
-                                                                  .append(createControl('Überschrift',  'headline'))
-                                                                  .append(createControl('Beschreibung', 'description'))
+                                                                  .append($pathEdit)
+                                                                  .append($titleEdit)
+                                                                  .append($headlineEdit)
+                                                                  .append($descriptionEdit)
+                                                                  .append($buttonContainer)
                                                  )
                             );
-            });
-        });
-    };
-    var cleanupCarousel = function() {
-        $('.content.editable aside.slider-options').remove();
-    };
+            };
 
-    var initHeroImage = function() {
-        $('.module.heroImage').each(function() {
-            var $heroImage = $(this);
+            $('.item', $carousel).each(item_addEditHandler);
+            
+            $('aside.editButton', $carousel.closest('.irEditor-wrapper')).prepend('&nbsp;')
+                                                                         .prepend($('<div/>').addClass('btn btn-success')
+                                                                                             .append($('<span/>').addClass('glyphicon glyphicon-plus'))
+                                                                                             .on('click', function() {
+                                                                                                 var newIndex = $('.item', $carousel).length;
+
+                                                                                                 var $newSlide = $('<div/>').addClass('item active')
+                                                                                                                            .append($('<img/>').attr('src', '/themes/irBootstrap/img/modules/com/IcedReaper/irEditor/slider-dummy.jpg'))
+                                                                                                                            .append($('<div/>').addClass('carousel-caption'));
+                                                                                                 
+                                                                                                 var $newIndicator = $('<li/>').addClass('active')
+                                                                                                                               .attr('data-slide-to', newIndex)
+                                                                                                                               .attr('data-target', '#'+$carousel.attr('id'));
+
+                                                                                                 item_addEditHandler($newSlide);
+
+                                                                                                 $('.active', $carousel).removeClass('active');
+                                                                                                 $('.carousel-indicators', $carousel).append($newIndicator);
+                                                                                                 $('.carousel-inner',      $carousel).append($newSlide);
+                                                                                             })
+                                                                                 );
+            
+            return $carousel;
+        },
+        'heroImage':     function($heroImage) {
+            var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
             
             var createOption = function(label, val, on, updateFunction) {
                 return $('<div/>').addClass('form-group')
@@ -287,6 +354,14 @@ var irEditor = function($editor) {
                                        $('> div', $heroImage).html(),
                                        'change',
                                        null);
+            
+            var $container = $('<aside/>').addClass('editControls widget')
+                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
+                                                                  .append(backgroundImage)
+                                                                  .append(content)
+                                                 );
+
+            $heroImage.append($container);
             
             $('input', content).tinymce({
                 theme: "modern",
@@ -313,21 +388,76 @@ var irEditor = function($editor) {
                 }
             });
             
-            var $container = $('<aside/>').addClass('editControls widget')
-                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                  .append(backgroundImage)
-                                                                  .append(content)
-                                                 );
-
-            $heroImage.append($container);
+            return $heroImage;
+        }
+    };
+    
+    var cleanupItem = {
+        'textBlock': function($textBlock) {
+            var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
+            
+            $textBlock.tinymce().remove();
+        },
+        'carousel':  function($carousel) {
+            var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
+            
+            $('.content.editable aside.slider-options').remove();
+        },
+        'heroImage': function($heroImage) {
+            var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
+        }
+    };
+    
+    var initAddHandler = function() {
+        $('.irEditor-wrapper', $('.content.editable')).after($('#moduleAddHandler').html());
+        
+        $('.addHandler[data-type]').each(function() {
+            var $addHandler = $(this);
+            $('a[data-module]', $addHandler).on('click', function(e) {
+                e.preventDefault();
+                
+                var $anchor = $(this);
+                var type    = $anchor.closest('.addHandler').attr('data-type');
+                var module  = $anchor.attr('data-module');
+                
+                var newModule = $($('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html());
+                var classes = newModule.attr('class');
+                newModule = initItem.deleteHandler(newModule);
+                
+                $addHandler.before(newModule);
+                
+                var $module = $('.'+classes.replace(/ /gi, '.'), newModule);
+                initItem[module]($module);
+            });
         });
+        $('.row', $('.content.editable')).after($('#rowAddHandler').html());
+    };
+    var cleanupAddHandler = function() {
+        $('.addHandler').remove();
     };
     
-    var cleanupHeroImage = function() {
+    var setup = function() {
+        $('.module', $editor).each(initItem.deleteHandler);
+        
+        initAddHandler();
+        
+        // modules
+        $('.module.textBlock').each(initItem.textBlock);
+        $('.module.carousel').each(initItem.carousel);
+        $('.module.heroImage').each(initItem.heroImage);
+    };
+    var cleanup = function() {
+        $('.content.editable aside.editButton').remove();
+        $('.module', $editor).unwrap();
+        
+        cleanupAddHandler();
+        
+        // modules
+        $('.module.textBlock[id^="mce_"]').each(cleanupItem.textBlock);
+        $('.content.editable aside.editControls').remove();
+        $('.module.carousel').each(cleanupItem.carousel);
+        $('.module.heroImage').each(cleanupItem.heroImage);
     };
     
-    addEditHandler();
-    initTextBlock();
-    initCarousel();
-    initHeroImage();
+    setup();
 };
