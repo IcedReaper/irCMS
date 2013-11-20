@@ -374,7 +374,8 @@ var irEditor = function($editor) {
                            var classes = newModule.attr('class');
                            newModule = initItem.deleteHandler(newModule);
                            
-                           $addHandler.before(newModule);
+                           $addHandler.before(createModuleAddHandler())
+                                      .before(newModule);
                            
                            var $module = $('.'+classes.replace(/ /gi, '.'), newModule);
                            initItem[module]($module);
