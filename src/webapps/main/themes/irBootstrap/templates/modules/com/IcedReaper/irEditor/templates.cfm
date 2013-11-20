@@ -24,14 +24,8 @@
     <cfmodule template="/themes/irBootstrap/templates/skeleton/slider.cfm" id="newSlider" images="#[]#">
 </script>
 
-<!---
-<cfloop from="1" to="12" index="colIndex">
-    <cfoutput>
-        <script type="html/text" data-type="module" data-module="#(12-(colIndex-1))#">
-            <cfsavecontent variable="content">
-				<cfmodule template="/themes/irBootstrap/templates/skeleton/col.cfm" classes="col-md-#(12-(colIndex-1))#" content="">
-			</cfsavecontent>
-            <cfmodule template="/themes/irBootstrap/templates/skeleton/row.cfm" content="#content#">
-        </script>
-    </cfoutput>
-</cfloop>--->
+<script type="html/text" id="deleteHandler">
+    <aside class="editButton">
+        <div class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></div>
+    </aside>
+</script>

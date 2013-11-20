@@ -101,18 +101,16 @@ var irEditor = function($editor) {
         'deleteHandler': function($module) {
             var $module = ! isNumeric($module) ? $module : $(this);
             
-            var delButton = $('<div/>').addClass('btn btn-danger')
-                                       .append($('<span/>').addClass('glyphicon glyphicon-trash'))
-                                       .on('click', function() {
-                                           $(this).closest('.irEditor-wrapper').remove();
-                                       });
-            var editContainer = $('<aside/>').addClass('editButton')
-                                             .append(delButton);
+            var $editContainer = $($('#deleteHandler').html());
+            $editContainer.find('div')
+                          .on('click', function() {
+                              $(this).closest('.irEditor-wrapper').remove();
+                          });
             
             $module.wrap('<div/>')
                    .closest('div')
                    .addClass('irEditor-wrapper')
-                   .append(editContainer);
+                   .append($editContainer);
             return $module.closest('.irEditor-wrapper');
         },
         'textBlock':     function($textBlock) {
