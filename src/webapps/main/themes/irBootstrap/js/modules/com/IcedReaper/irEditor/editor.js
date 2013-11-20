@@ -357,29 +357,53 @@ var irEditor = function($editor) {
         }
     };
     
-    var initAddHandler = function() {
-        $('.irEditor-wrapper', $('.content.editable')).after($('#moduleAddHandler').html());
+    var initAddHandler    = function() {
+        var createModuleAddHandler = function() {
+            var $addHandler = $($('#moduleAddHandler').html());
+
+            $addHandler.find('a[data-module]')
+                       .on('click', function(e) {
+                           e.preventDefault();
+                           
+                           var $anchor = $(this);
+                           var type    = $anchor.closest('.addHandler').attr('data-type');
+                           var module  = $anchor.attr('data-module');
+                           
+                           var newModule = $($('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html());
+                           var classes = newModule.attr('class');
+                           newModule = initItem.deleteHandler(newModule);
+                           
+                           $addHandler.before(newModule);
+                           
+                           var $module = $('.'+classes.replace(/ /gi, '.'), newModule);
+                           initItem[module]($module);
+                       });
+            
+            return $addHandler;
+        };
         
-        $('.addHandler[data-type]').each(function() {
-            var $addHandler = $(this);
-            $('a[data-module]', $addHandler).on('click', function(e) {
-                e.preventDefault();
-                
-                var $anchor = $(this);
-                var type    = $anchor.closest('.addHandler').attr('data-type');
-                var module  = $anchor.attr('data-module');
-                
-                var newModule = $($('.contentTemplate[data-type="'+type+'"][data-module="'+module+'"]').html());
-                var classes = newModule.attr('class');
-                newModule = initItem.deleteHandler(newModule);
-                
-                $addHandler.before(newModule);
-                
-                var $module = $('.'+classes.replace(/ /gi, '.'), newModule);
-                initItem[module]($module);
-            });
-        });
-        $('.row', $('.content.editable')).after($('#rowAddHandler').html());
+        $('.irEditor-wrapper', $('.content.editable')).after(createModuleAddHandler());
+        
+        var createRowAddHandler = function() {
+            var $rowAddHandler = $($('#rowAddHandler').html());
+            
+            $rowAddHandler.find('> div')
+                          .on('click', function() {
+                              var $addHandler = $($(this).html());
+                              $addHandler.find('> section')
+                                         .text('')
+                                         .each(function() {
+                                             $(this).append(createModuleAddHandler());
+                                         });
+                              
+                              $rowAddHandler.before(createRowAddHandler())
+                                            .before($addHandler);
+                          });
+            
+            return $rowAddHandler;
+        }
+        
+        $('.row', $('.content.editable')).after(createRowAddHandler());
     };
     var cleanupAddHandler = function() {
         $('.addHandler').remove();
