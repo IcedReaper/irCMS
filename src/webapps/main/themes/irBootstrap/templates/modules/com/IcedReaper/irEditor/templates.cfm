@@ -82,3 +82,23 @@
 <script type="html/text" id="carousel_new_indicator">
     <li class="active" data-slide-to="${newIndex}" data-target="${id}"></li>
 </script>
+
+<!--- heroImage options --->
+<script type="html/text" id="heroImage_setting">
+    <aside class="editControls widget">
+        <fieldset>
+            <legend>Optionen</legend>
+        </fieldset>
+    </aside>
+</script>
+
+<script type="html/text" id="heroImage_option">
+    <div class="form-group">
+        <div class="col-md-3 control-label">
+            <label>${label}</label>
+        </div>
+        <div class="col-md-9">
+            <input class="form-control" value="${value}">
+        </div>
+    </div>
+</script>

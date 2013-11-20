@@ -282,16 +282,15 @@ var irEditor = function($editor) {
         'heroImage':     function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
             
-            var createOption = function(label, val, on, updateFunction) {
-                return $('<div/>').addClass('form-group')
-                                  .append($('<div/>').addClass('col-md-3 control-label')
-                                                     .text(label))
-                                  .append($('<div/>').addClass('col-md-9')
-                                                     .append($('<input/>').addClass('form-control')
-                                                                          .val(val)
-                                                                          .on(on, updateFunction)
-                                                            )
-                                         );
+            var createOption = function(label, value, on, updateFunction) {
+                var $option = $($('#heroImage_option').html()
+                                                      .replace(/\$\{label\}/gi, label)
+                                                      .replace(/\$\{value\}/gi, value));
+                if(typeof updateFunction === 'function') {
+                    $option.find('input')
+                           .on(on, updateFunction);
+                }
+                return $option;
             };
             
             var backgroundImage = createOption('Bildpfad', 
@@ -306,12 +305,11 @@ var irEditor = function($editor) {
                                        'change',
                                        null);
             
-            var $container = $('<aside/>').addClass('editControls widget')
-                                          .append($('<fieldset/>').append($('<legend/>').text('Optionen'))
-                                                                  .append(backgroundImage)
-                                                                  .append(content)
-                                                 );
-
+            var $container = $($('#heroImage_setting').html());
+            $container.find('fieldset')
+                      .append(backgroundImage)
+                      .append(content);
+            
             $heroImage.append($container);
             
             $('input', content).tinymce({
