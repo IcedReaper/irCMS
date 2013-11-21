@@ -421,8 +421,9 @@ var irEditor = function($editor) {
                            var classes = newModule.attr('class');
                            newModule = initItem.deleteHandler(newModule);
                            
-                           $addHandler.before(createModuleAddHandler())
-                                      .before(newModule);
+                           newModule.append(createModuleAddHandler());
+                           $addHandler.closest('.irEditor-wrapper')
+                                      .after(newModule);
                            
                            var $module = $('.'+classes.replace(/ /gi, '.'), newModule);
                            initItem[module]($module);
@@ -431,7 +432,7 @@ var irEditor = function($editor) {
             return $addHandler;
         };
         
-        $('.irEditor-wrapper', $('.content.editable')).after(createModuleAddHandler());
+        $('.irEditor-wrapper', $('.content.editable')).append(createModuleAddHandler());
         
         var createRowAddHandler = function() {
             var $rowAddHandler = $($('#rowAddHandler').html());
@@ -439,6 +440,7 @@ var irEditor = function($editor) {
             $rowAddHandler.find('> div')
                           .on('click', function() {
                               var $addHandler = $($(this).html());
+                              
                               $addHandler.find('> section')
                                          .text('')
                                          .each(function() {
