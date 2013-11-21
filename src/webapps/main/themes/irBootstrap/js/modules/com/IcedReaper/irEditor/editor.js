@@ -26,8 +26,6 @@ var irEditor = function($editor) {
             return true;
         } 
         catch (error) {
-            console.log(error);
-            
             return false;
         }
     });
@@ -101,7 +99,7 @@ var irEditor = function($editor) {
     };
     
     var initItem = {
-        'deleteHandler': function($module)    {
+        'deleteHandler':     function($module)    {
             var $module = ! isNumeric($module) ? $module : $(this);
             
             var $editContainer = $($('#deleteHandler').html());
@@ -116,7 +114,50 @@ var irEditor = function($editor) {
                    .append($editContainer);
             return $module.closest('.irEditor-wrapper');
         },
-        'textBlock':     function($textBlock) {
+        'responsiveHandler': function($container) {
+            $container = ! isNumeric($container) ? $container : $(this);
+            
+            var $responsiveHandler = $($('#responsiveButton').html());
+            
+            $responsiveHandler.find('button')
+                              .on('click', function(e) {
+                                  e.preventDefault();
+                                  
+                                  $('#responsiveSettingDialog').modal()
+                                                               .off('hide.bs.modal')
+                                                               .on('hide.bs.modal', function() {
+                                                                   var setClass = function(name) {
+                                                                       $('input[name="'+name+'"]').each(function() {
+                                                                           $container.removeClass($(this).val());
+                                                                       });
+                                                                       
+                                                                       $container.addClass($('input[name="'+name+'"]:checked').val());
+                                                                   };
+                                                                   
+                                                                   setClass('extraSmall');
+                                                                   setClass('small');
+                                                                   setClass('large');
+                                                               });
+                                  
+                                  var checkOptions = function(name) {
+                                      $('input[name="'+name+'"][value=""]').prop('checked', true);
+                                      $('input[name="'+name+'"]').each(function() {
+                                          if($container.hasClass($(this).val())) {
+                                              $(this).prop('checked', true);
+                                          }
+                                      });
+                                  };
+                                  
+                                  checkOptions('extraSmall');
+                                  checkOptions('small');
+                                  checkOptions('large');
+                              });
+            
+            $container.prepend($responsiveHandler);
+            
+            return $container;
+        },
+        'textBlock':         function($textBlock) {
             var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
             
             $textBlock.tinymce({
@@ -141,7 +182,7 @@ var irEditor = function($editor) {
             
             return $textBlock;
         },
-        'carousel':      function($carousel)  {
+        'carousel':          function($carousel)  {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
             
             var createOption = function(label, value, inputFunction) {
@@ -282,7 +323,7 @@ var irEditor = function($editor) {
             
             return $carousel;
         },
-        'heroImage':     function($heroImage) {
+        'heroImage':         function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
             
             var createOption = function(label, value, on, updateFunction) {
@@ -345,17 +386,17 @@ var irEditor = function($editor) {
     };
     
     var cleanupItem = {
-        'textBlock': function($textBlock) {
+        'textBlock':         function($textBlock) {
             var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
             
             $textBlock.tinymce().remove();
         },
-        'carousel':  function($carousel)  {
+        'carousel':          function($carousel)  {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
             
             $('.content.editable aside.slider-options').remove();
         },
-        'heroImage': function($heroImage) {
+        'heroImage':         function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
         }
     };
@@ -398,7 +439,8 @@ var irEditor = function($editor) {
                               $addHandler.find('> section')
                                          .text('')
                                          .each(function() {
-                                             $(this).append(createModuleAddHandler());
+                                             $(this).append(createModuleAddHandler())
+                                                    .prepend(initItem.responsiveHandler);
                                          });
                               
                               $rowAddHandler.before(createRowAddHandler())
@@ -419,7 +461,7 @@ var irEditor = function($editor) {
         
         cleanup();
     });
-    $editBtn.on('click', function(e) {
+    $editBtn.on('click',    function(e) {
         e.preventDefault();
         
         setup();
@@ -427,7 +469,7 @@ var irEditor = function($editor) {
     
     var setup = function() {
         $('.module', $editor).each(initItem.deleteHandler);
-        
+        $('.content.editable > section.row').find('> section').each(initItem.responsiveHandler);
         initAddHandler();
         
         // modules
@@ -440,6 +482,7 @@ var irEditor = function($editor) {
     };
     var cleanup = function() {
         $('.content.editable aside.editButton').remove();
+        $('.content.editable aside.responsiveEdit').remove();
         $('.module', $editor).unwrap();
         
         cleanupAddHandler();
