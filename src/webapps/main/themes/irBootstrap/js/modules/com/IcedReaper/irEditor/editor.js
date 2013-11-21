@@ -414,7 +414,8 @@ var irEditor = function($editor) {
                               $addHandler.find('> section')
                                          .text('')
                                          .each(function() {
-                                             $(this).append(createModuleAddHandler());
+                                             $(this).append(createModuleAddHandler())
+                                                    .prepend(initItem.responsiveHandler);
                                          });
                               
                               $rowAddHandler.before(createRowAddHandler())
