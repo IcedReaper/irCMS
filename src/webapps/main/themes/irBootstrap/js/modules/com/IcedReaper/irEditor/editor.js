@@ -22,9 +22,11 @@ var irEditor = function($editor) {
     
     $('form#irEditor').on('submit', function() {
         try {
+            cleanupSortable();
             cleanup();
             $('input[name="content"]').val(buildSkeleton());
             setup();
+            setupSortable();
             
             return true;
         } 
@@ -102,6 +104,12 @@ var irEditor = function($editor) {
     };
     
     var initItem = {
+        'sortable':          function($container) {
+            $container = ! isNumeric($container) ? $container : $(this);
+            
+            console.log($container); 
+            $container.sortable();
+        },
         'deleteHandler':     function($module)    {
             var $module = ! isNumeric($module) ? $module : $(this);
             
@@ -389,6 +397,11 @@ var irEditor = function($editor) {
     };
     
     var cleanupItem = {
+        'sortable':          function($container) {
+            $container = ! isNumeric($container) ? $container : $(this); 
+            
+            $container.sortable('destroy');
+        },
         'textBlock':         function($textBlock) {
             var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
             
@@ -477,12 +490,17 @@ var irEditor = function($editor) {
         
         $fixBtn.hide();
         $sortBtn.show();
+        
+        setup();
+        cleanupSortable();
     });
     $sortBtn.on('click', function(e) {
         e.preventDefault();
         
         $fixBtn.show();
         $sortBtn.hide();
+        cleanup();
+        setupSortable();
     });
     
     var setup = function() {
@@ -521,5 +539,13 @@ var irEditor = function($editor) {
         $sortBtn.hide();
     };
     
+    var setupSortable   = function() {
+        $('.content.editable > section.row').find('> section').each(initItem.sortable);
+    };
+    var cleanupSortable = function() {
+        $('.content.editable > section.row').find('> section').each(cleanupItem.sortable);
+    };
+    
     setup();
+    setupSortable();
 };
