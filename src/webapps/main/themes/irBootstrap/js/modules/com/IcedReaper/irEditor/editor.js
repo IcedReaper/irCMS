@@ -123,7 +123,22 @@ var irEditor = function($editor) {
                               .on('click', function(e) {
                                   e.preventDefault();
                                   
-                                  $('#responsiveSettingDialog').modal();
+                                  $('#responsiveSettingDialog').modal()
+                                                               .off('hide.bs.modal')
+                                                               .on('hide.bs.modal', function() {
+                                                                   var setClass = function(name) {
+                                                                       $('input[name="'+name+'"]').each(function() {
+                                                                           $container.removeClass($(this).val());
+                                                                       });
+                                                                       
+                                                                       $container.addClass($('input[name="'+name+'"]:checked').val());
+                                                                   };
+                                                                   
+                                                                   setClass('extraSmall');
+                                                                   setClass('small');
+                                                                   setClass('large');
+                                                               });
+                                  
                                   var checkOptions = function(name) {
                                       $('input[name="'+name+'"][value=""]').prop('checked', true);
                                       $('input[name="'+name+'"]').each(function() {
