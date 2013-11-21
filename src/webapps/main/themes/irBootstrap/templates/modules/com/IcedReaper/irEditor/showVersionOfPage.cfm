@@ -248,8 +248,12 @@
                             <div class="pull-right">
                                 <cfif NOT attributes.pageToShow.isOffline()>
                                     <cfif attributes.pageToShow.isEditable()>
-										<button class="btn btn-default" id="preview"><span class="glyphicon glyphicon-eye-open"></span> Vorschau</button>
+                                        <button class="btn btn-default" id="sort"><span class="glyphicon glyphicon-sort"></span> Sortieren</button>
+                                        <button class="btn btn-default" id="fix"><span class="glyphicon glyphicon-pushpin"></span> Fixieren</button>
+                                        
+                                        <button class="btn btn-default" id="preview"><span class="glyphicon glyphicon-eye-open"></span> Vorschau</button>
                                         <button class="btn btn-default" id="edit"><span class="glyphicon glyphicon-eye-close"></span> Editieren</button>
+                                        
                                         <button class="btn btn-primary" type="submit" name="action" value="save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern</button>
                                     </cfif>
                                     <cfif NOT attributes.pageToShow.isOnline()>
