@@ -124,6 +124,18 @@ var irEditor = function($editor) {
                                   e.preventDefault();
                                   
                                   $('#responsiveSettingDialog').modal();
+                                  var checkOptions = function(name) {
+                                      $('input[name="'+name+'"][value=""]').prop('checked', true);
+                                      $('input[name="'+name+'"]').each(function() {
+                                          if($container.hasClass($(this).val())) {
+                                              $(this).prop('checked', true);
+                                          }
+                                      });
+                                  };
+                                  
+                                  checkOptions('extraSmall');
+                                  checkOptions('small');
+                                  checkOptions('large');
                               });
             
             $container.prepend($responsiveHandler);
