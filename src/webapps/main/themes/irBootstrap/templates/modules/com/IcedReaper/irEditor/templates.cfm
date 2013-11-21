@@ -13,45 +13,45 @@
 	    <div data-type="row" class="addHandler" id="row">
 	        <div href="##">
 	            <section class="row">
-	                <section class="col-md-12">100%</section>
+	                <section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">100%</section>
 	            </section>
 	        </div>
 	        <div href="##">
 	            <section class="row">
-	                <section class="col-md-6">50%</section>
-	                <section class="col-md-6">50%</section>
+	                <section class="col-xs-6 col-sm-6 col-md-6 col-lg-6">50%</section>
+	                <section class="col-xs-6 col-sm-6 col-md-6 col-lg-6">50%</section>
 	            </section>
 	        </div>
 	        <div href="##">
 	            <section class="row">
-	                <section class="col-md-3">25%</section>
-	                <section class="col-md-9">75%</section>
+	                <section class="col-xs-3 col-sm-3 col-md-3 col-lg-3">25%</section>
+	                <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">75%</section>
 	            </section>
 	        </div>
 	        <div href="##">
 	            <section class="row">
-	                <section class="col-md-3">25%</section>
-	                <section class="col-md-6">50%</section>
-	                <section class="col-md-3">25%</section>
+	                <section class="col-xs-3 col-sm-3 col-md-3 col-lg-3">25%</section>
+	                <section class="col-xs-6 col-sm-6 col-md-6 col-lg-6">50%</section>
+	                <section class="col-xs-3 col-sm-3 col-md-3 col-lg-3">25%</section>
 	            </section>
 	        </div>
 	        <div href="##">
 	            <section class="row">
-	                <section class="col-md-6">50%</section>
-	                <section class="col-md-3">25%</section>
-	                <section class="col-md-3">25%</section>
+	                <section class="col-xs-6 col-sm-6 col-md-6 col-lg-6">50%</section>
+	                <section class="col-xs-3 col-sm-3 col-md-3 col-lg-3">25%</section>
+	                <section class="col-xs-3 col-sm-3 col-md-3 col-lg-3">25%</section>
 	            </section>
 	        </div>
 	        <div href="##">
 	            <section class="row">
-	                <section class="col-md-4">33%</section>
-	                <section class="col-md-8">66%</section>
+	                <section class="col-xs-4 col-sm-4 col-md-4 col-lg-4">33%</section>
+	                <section class="col-xs-8 col-sm-8 col-md-8 col-lg-8">66%</section>
 	            </section>
 	        </div>
 	        <div href="##">
 	            <section class="row">
-	                <section class="col-md-8">66%</section>
-	                <section class="col-md-4">33%</section>
+	                <section class="col-xs-8 col-sm-8 col-md-8 col-lg-8">66%</section>
+	                <section class="col-xs-4 col-sm-4 col-md-4 col-lg-4">33%</section>
 	            </section>
 	        </div>
 	    </div>
