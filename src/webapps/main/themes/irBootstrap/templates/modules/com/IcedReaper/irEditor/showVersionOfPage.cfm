@@ -40,7 +40,6 @@
                                     <div class="alert alert-danger">
                                         Während des Speicherns konnte ein oder mehrere Felder nicht korrekt validiert werden.<br>
                                         Bitte gucken Sie sich unten die rot markierten Felder an und korrigieren Sie diese.
-                                        <cfdump var="#attributes.contentUpdate#">
                                     </div>
                                 </div>
                             </div>
