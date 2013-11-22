@@ -378,10 +378,19 @@ var irEditor = function($editor) {
                                           $heroImage.css('height', $(this).val())
                                       });
             
+            var marginTop = createOption('Versatz Oben', 
+                                         'marginTop',
+                                         $('img', $heroImage).css('margin-top') || '',
+                                         'input',
+                                         function() {
+                                             $('img', $heroImage).css('margin-top', $(this).val())
+                                         });
+            
             var $container = $($('#heroImage_setting').html());
             $container.find('fieldset')
                       .append(backgroundImage)
                       .append(height)
+                      .append(marginTop)
                       .append(content);
             
             $heroImage.append($container);
