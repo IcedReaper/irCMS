@@ -14,14 +14,23 @@ var irEditor = function($editor) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     };
     
-    var $previewBtn = $('#preview');
-    var $editBtn    = $('#edit');
+    var bEditable = true;
+    
+    var $previewBtn = $('.btn#preview');
+    var $editBtn    = $('.btn#edit');
+    
+    var $fixBtn  = $('.btn#fix');
+    var $sortBtn = $('.btn#sort');
     
     $('form#irEditor').on('submit', function() {
         try {
-            cleanup();
+            if(bEditable) {
+                cleanupSortable();
+                cleanup();
+            }
             $('input[name="content"]').val(buildSkeleton());
             setup();
+            setupSortable();
             
             return true;
         } 
@@ -99,6 +108,11 @@ var irEditor = function($editor) {
     };
     
     var initItem = {
+        'sortable':          function($container) {
+            $container = ! isNumeric($container) ? $container : $(this);
+            
+            $container.sortable();
+        },
         'deleteHandler':     function($module)    {
             var $module = ! isNumeric($module) ? $module : $(this);
             
@@ -386,17 +400,22 @@ var irEditor = function($editor) {
     };
     
     var cleanupItem = {
-        'textBlock':         function($textBlock) {
+        'sortable':  function($container) {
+            $container = ! isNumeric($container) ? $container : $(this); 
+            
+            $container.sortable('destroy');
+        },
+        'textBlock': function($textBlock) {
             var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
             
             $textBlock.tinymce().remove();
         },
-        'carousel':          function($carousel)  {
+        'carousel':  function($carousel)  {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
             
             $('.content.editable aside.slider-options').remove();
         },
-        'heroImage':         function($heroImage) {
+        'heroImage': function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
         }
     };
@@ -418,8 +437,9 @@ var irEditor = function($editor) {
                            var classes = newModule.attr('class');
                            newModule = initItem.deleteHandler(newModule);
                            
-                           $addHandler.before(createModuleAddHandler())
-                                      .before(newModule);
+                           newModule.append(createModuleAddHandler());
+                           $addHandler.closest('.irEditor-wrapper')
+                                      .after(newModule);
                            
                            var $module = $('.'+classes.replace(/ /gi, '.'), newModule);
                            initItem[module]($module);
@@ -428,29 +448,36 @@ var irEditor = function($editor) {
             return $addHandler;
         };
         
-        $('.irEditor-wrapper', $('.content.editable')).after(createModuleAddHandler());
+        $('.irEditor-wrapper', $('.content.editable')).append(createModuleAddHandler());
+        $('.content.editable .row > section').each(function() {
+            $(this).find('.irEditor-wrapper:first').before(createModuleAddHandler().wrap($('<div/>').addClass('irEditor-wrapper'))
+                                                                                   .closest('.irEditor-wrapper'));
+        });
         
         var createRowAddHandler = function() {
             var $rowAddHandler = $($('#rowAddHandler').html());
             
             $rowAddHandler.find('> div')
                           .on('click', function() {
-                              var $addHandler = $($(this).html());
-                              $addHandler.find('> section')
+                              var $newRow = $($(this).html());
+                              
+                              $newRow.find('> section')
                                          .text('')
                                          .each(function() {
-                                             $(this).append(createModuleAddHandler())
-                                                    .prepend(initItem.responsiveHandler);
+                                             $(this).append(initItem.responsiveHandler($(this)))
+                                                    .append(createModuleAddHandler().wrap($('<div/>').addClass('irEditor-wrapper'))
+                                                                                    .closest('.irEditor-wrapper'));
                                          });
                               
-                              $rowAddHandler.before(createRowAddHandler())
-                                            .before($addHandler);
+                              $rowAddHandler.after(createRowAddHandler())
+                                            .after($newRow);
                           });
             
             return $rowAddHandler;
-        }
+        };
         
-        $('.row', $('.content.editable')).after(createRowAddHandler());
+        $('> .row', $('.content.editable')).after(createRowAddHandler());
+        $('> .row:first-child', $('.content.editable')).before(createRowAddHandler());
     };
     var cleanupAddHandler = function() {
         $('.addHandler').remove();
@@ -459,15 +486,42 @@ var irEditor = function($editor) {
     $previewBtn.on('click', function(e) {
         e.preventDefault();
         
-        cleanup();
+        cleanup(false);
+        bEditable = false;
     });
     $editBtn.on('click',    function(e) {
         e.preventDefault();
         
-        setup();
+        setup(false);
+        bEditable = true;
     });
     
-    var setup = function() {
+    $fixBtn.on('click',  function(e) {
+        e.preventDefault();
+        
+        $fixBtn.hide();
+        $sortBtn.show();
+        
+        if(bEditable) {
+            setup(false);
+        }
+        
+        cleanupSortable();
+    });
+    $sortBtn.on('click', function(e) {
+        e.preventDefault();
+        
+        $fixBtn.show();
+        $sortBtn.hide();
+        
+        if(bEditable) {
+            cleanup(false);
+        }
+        
+        setupSortable();
+    });
+    
+    var setup   = function(changeSortableButton) {
         $('.module', $editor).each(initItem.deleteHandler);
         $('.content.editable > section.row').find('> section').each(initItem.responsiveHandler);
         initAddHandler();
@@ -479,8 +533,13 @@ var irEditor = function($editor) {
         
         $previewBtn.show();
         $editBtn.hide();
+        
+        if(changeSortableButton) {
+            $fixBtn.hide();
+            $sortBtn.show();
+        }
     };
-    var cleanup = function() {
+    var cleanup = function(changeSortableButton) {
         $('.content.editable aside.editButton').remove();
         $('.content.editable aside.responsiveEdit').remove();
         $('.module', $editor).unwrap();
@@ -493,9 +552,24 @@ var irEditor = function($editor) {
         $('.module.carousel').each(cleanupItem.carousel);
         $('.module.heroImage').each(cleanupItem.heroImage);
         
+        $('.irEditor-wrapper:empty').remove();
+        
         $previewBtn.hide();
         $editBtn.show();
+        
+        if(changeSortableButton) {
+            $fixBtn.show();
+            $sortBtn.hide();
+        }
     };
     
-    setup();
+    var setupSortable   = function() {
+        $('.content.editable > section.row').find('> section').each(initItem.sortable);
+    };
+    var cleanupSortable = function() {
+        $('.content.editable > section.row').find('> section').each(cleanupItem.sortable);
+    };
+    
+    setup(true);
+    setupSortable(true);
 };

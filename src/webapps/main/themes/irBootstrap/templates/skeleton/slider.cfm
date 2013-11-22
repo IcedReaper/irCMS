@@ -25,10 +25,10 @@
             </cfloop>
         </div>
 
-        <a class="left carousel-control" href="##carousel-#attributes.id#" data-slide="prev">
+        <a class="left carousel-control" href="###attributes.id#" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left"></span>
         </a>
-        <a class="right carousel-control" href="##carousel-#attributes.id#" data-slide="next">
+        <a class="right carousel-control" href="###attributes.id#" data-slide="next">
             <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
     </article>

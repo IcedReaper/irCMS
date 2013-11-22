@@ -1,7 +1,8 @@
 <cfscript>
     request.pageTitle = "Bearbeiten der Seite #attributes.pageToShow.getSesLink()#";
     application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/')
-                                           .include('/css/modules/com/IcedReaper/irEditor/');
+                                           .include('/css/modules/com/IcedReaper/irEditor/')
+                                           .include('/js/vendor/jquery_plugins/jquery.sortable.js');
     
     application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/jquery.tinymce.min.js" charset="utf-8"></script>');
     application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/tinymce.min.js" charset="utf-8"></script>');
@@ -248,8 +249,12 @@
                             <div class="pull-right">
                                 <cfif NOT attributes.pageToShow.isOffline()>
                                     <cfif attributes.pageToShow.isEditable()>
-										<button class="btn btn-default" id="preview"><span class="glyphicon glyphicon-eye-open"></span> Vorschau</button>
+                                        <button class="btn btn-default" id="sort"><span class="glyphicon glyphicon-sort"></span> Sortieren</button>
+                                        <button class="btn btn-default" id="fix"><span class="glyphicon glyphicon-pushpin"></span> Fixieren</button>
+                                        
+                                        <button class="btn btn-default" id="preview"><span class="glyphicon glyphicon-eye-open"></span> Vorschau</button>
                                         <button class="btn btn-default" id="edit"><span class="glyphicon glyphicon-eye-close"></span> Editieren</button>
+                                        
                                         <button class="btn btn-primary" type="submit" name="action" value="save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> Speichern</button>
                                     </cfif>
                                     <cfif NOT attributes.pageToShow.isOnline()>
