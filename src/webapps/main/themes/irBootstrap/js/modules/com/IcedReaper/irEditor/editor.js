@@ -63,7 +63,14 @@ var irEditor = function($editor) {
                 if($(this).hasClass('heroImage')) {
                     skeletonNode[index].name            = 'heroImage';
                     skeletonNode[index].backgroundImage = $('img', $(this)).attr('src');
-                    skeletonNode[index].height          = $(this).css('height');
+
+                    if($('img', $(this)).css('margin-top') !== '' && $('img', $(this)).css('margin-top') !== '0px' && $('img', $(this)).css('margin-top') !== '0') {
+                        skeletonNode[index].marginTop = $('img', $(this)).css('margin-top');
+                    }
+
+                    if($(this).css('height') !== '' && $(this).css('height') !== '0px' && $(this).css('height') !== '0') {
+                        skeletonNode[index].height = $(this).css('height');
+                    }
                     
                     if($('div', $(this)).length === 1) {
                         skeletonNode[index].content = $('div', $(this)).html();
