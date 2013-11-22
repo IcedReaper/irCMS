@@ -113,7 +113,9 @@ var irEditor = function($editor) {
         'sortable':          function($container) {
             $container = ! isNumeric($container) ? $container : $(this);
             
-            $container.sortable();
+            $container.sortable({
+                items: '.module'
+            });
         },
         'deleteHandler':     function($module)    {
             var $module = ! isNumeric($module) ? $module : $(this);
