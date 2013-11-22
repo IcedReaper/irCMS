@@ -449,8 +449,11 @@ var irEditor = function($editor) {
         };
         
         $('.irEditor-wrapper', $('.content.editable')).append(createModuleAddHandler());
-        $('.irEditor-wrapper:first', $('.content.editable')).before(createModuleAddHandler().wrap($('<div/>').addClass('irEditor-wrapper'))
-                                                                                            .closest('.irEditor-wrapper'));
+        $('.content.editable .row > section').each(function() {
+            $(this).find('.irEditor-wrapper:first').before(createModuleAddHandler().wrap($('<div/>').addClass('irEditor-wrapper'))
+                                                                                   .closest('.irEditor-wrapper'));
+        });
+        
         var createRowAddHandler = function() {
             var $rowAddHandler = $($('#rowAddHandler').html());
             
