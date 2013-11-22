@@ -62,7 +62,16 @@ var irEditor = function($editor) {
                 }
                 if($(this).hasClass('heroImage')) {
                     skeletonNode[index].name            = 'heroImage';
-                    skeletonNode[index].backgroundImage = $(this).css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, '');
+                    skeletonNode[index].backgroundImage = $('img', $(this)).attr('src');
+
+                    if($('img', $(this)).css('margin-top') !== '' && $('img', $(this)).css('margin-top') !== '0px' && $('img', $(this)).css('margin-top') !== '0') {
+                        skeletonNode[index].marginTop = $('img', $(this)).css('margin-top');
+                    }
+
+                    if($(this).css('height') !== '' && $(this).css('height') !== '0px' && $(this).css('height') !== '0') {
+                        skeletonNode[index].height = $(this).css('height');
+                    }
+                    
                     if($('div', $(this)).length === 1) {
                         skeletonNode[index].content = $('div', $(this)).html();
                     }
@@ -111,7 +120,9 @@ var irEditor = function($editor) {
         'sortable':          function($container) {
             $container = ! isNumeric($container) ? $container : $(this);
             
-            $container.sortable();
+            $container.sortable({
+                items: '.module'
+            });
         },
         'deleteHandler':     function($module)    {
             var $module = ! isNumeric($module) ? $module : $(this);
@@ -340,10 +351,11 @@ var irEditor = function($editor) {
         'heroImage':         function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
             
-            var createOption = function(label, value, on, updateFunction) {
+            var createOption = function(label, id, value, on, updateFunction) {
                 var $option = $($('#heroImage_option').html()
                                                       .replace(/\$\{label\}/gi, label)
-                                                      .replace(/\$\{value\}/gi, value));
+                                                      .replace(/\$\{value\}/gi, value)
+                                                      .replace(/\$\{id\}/gi,    id));
                 if(typeof updateFunction === 'function') {
                     $option.find('input')
                            .on(on, updateFunction);
@@ -352,20 +364,40 @@ var irEditor = function($editor) {
             };
             
             var backgroundImage = createOption('Bildpfad', 
-                                               $heroImage.css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, ''),
+                                               'src',
+                                               $('img', $heroImage).attr('src') || '',
                                                'input',
                                                function() {
-                                                   $heroImage.css('background-image', "url("+$(this).val()+")")
+                                                   $('img', $heroImage).attr('src', $(this).val())
                                                });
             
             var content = createOption('Beschreibung', 
-                                       $('> div', $heroImage).html(),
+                                       'description',
+                                       $('> div', $heroImage).html() || '',
                                        'change',
                                        null);
+            
+            var height = createOption('Höhe', 
+                                      'height',
+                                      $heroImage.css('height') || '',
+                                      'change',
+                                      function() {
+                                          $heroImage.css('height', $(this).val())
+                                      });
+            
+            var marginTop = createOption('Versatz Oben', 
+                                         'marginTop',
+                                         $('img', $heroImage).css('margin-top') || '',
+                                         'input',
+                                         function() {
+                                             $('img', $heroImage).css('margin-top', $(this).val())
+                                         });
             
             var $container = $($('#heroImage_setting').html());
             $container.find('fieldset')
                       .append(backgroundImage)
+                      .append(height)
+                      .append(marginTop)
                       .append(content);
             
             $heroImage.append($container);
@@ -571,5 +603,4 @@ var irEditor = function($editor) {
     };
     
     setup(true);
-    setupSortable(true);
 };
