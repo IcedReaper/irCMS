@@ -583,5 +583,4 @@ var irEditor = function($editor) {
     };
     
     setup(true);
-    setupSortable(true);
 };
