@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-md-12">
                 <header class="widget">
-                    <h2>#attributes.pageToShow.getLinkname()#<small>Version: #attributes.version#</small></h2>
+                    <h2>#attributes.pageToShow.getLinkname()#<small>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.version', language=request.language)#: #attributes.version#</small></h2>
                 </header>
             </div>
         </div>
