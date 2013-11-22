@@ -62,7 +62,9 @@ var irEditor = function($editor) {
                 }
                 if($(this).hasClass('heroImage')) {
                     skeletonNode[index].name            = 'heroImage';
-                    skeletonNode[index].backgroundImage = $(this).css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, '');
+                    skeletonNode[index].backgroundImage = $('img', $(this)).attr('src');
+                    skeletonNode[index].height          = $(this).css('height');
+                    
                     if($('div', $(this)).length === 1) {
                         skeletonNode[index].content = $('div', $(this)).html();
                     }
@@ -352,10 +354,10 @@ var irEditor = function($editor) {
             };
             
             var backgroundImage = createOption('Bildpfad', 
-                                               $heroImage.css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, ''),
+                                               $('img', $heroImage).attr('src'),
                                                'input',
                                                function() {
-                                                   $heroImage.css('background-image', "url("+$(this).val()+")")
+                                                   $('img', $heroImage).attr('src', $(this).val())
                                                });
             
             var content = createOption('Beschreibung', 
@@ -363,9 +365,17 @@ var irEditor = function($editor) {
                                        'change',
                                        null);
             
+            var height = createOption('Höhe', 
+                                      $heroImage.css('height'),
+                                      'input',
+                                      function() {
+                                          $heroImage.css('height', $(this).val())
+                                      });
+            
             var $container = $($('#heroImage_setting').html());
             $container.find('fieldset')
                       .append(backgroundImage)
+                      .append(height)
                       .append(content);
             
             $heroImage.append($container);
