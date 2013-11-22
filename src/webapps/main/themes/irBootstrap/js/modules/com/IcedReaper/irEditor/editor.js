@@ -447,29 +447,30 @@ var irEditor = function($editor) {
         $('.irEditor-wrapper', $('.content.editable')).append(createModuleAddHandler());
         $('.irEditor-wrapper:first', $('.content.editable')).before(createModuleAddHandler().wrap($('<div/>').addClass('irEditor-wrapper'))
                                                                                             .closest('.irEditor-wrapper'));
-        
         var createRowAddHandler = function() {
             var $rowAddHandler = $($('#rowAddHandler').html());
             
             $rowAddHandler.find('> div')
                           .on('click', function() {
-                              var $addHandler = $($(this).html());
+                              var $newRow = $($(this).html());
                               
-                              $addHandler.find('> section')
+                              $newRow.find('> section')
                                          .text('')
                                          .each(function() {
-                                             $(this).append(createModuleAddHandler())
-                                                    .prepend(initItem.responsiveHandler);
+                                             $(this).append(initItem.responsiveHandler($(this)))
+                                                    .append(createModuleAddHandler().wrap($('<div/>').addClass('irEditor-wrapper'))
+                                                                                    .closest('.irEditor-wrapper'));
                                          });
                               
-                              $rowAddHandler.before(createRowAddHandler())
-                                            .before($addHandler);
+                              $rowAddHandler.after(createRowAddHandler())
+                                            .after($newRow);
                           });
             
             return $rowAddHandler;
-        }
+        };
         
-        $('.row', $('.content.editable')).after(createRowAddHandler());
+        $('> .row', $('.content.editable')).after(createRowAddHandler());
+        $('> .row:first-child', $('.content.editable')).before(createRowAddHandler());
     };
     var cleanupAddHandler = function() {
         $('.addHandler').remove();
