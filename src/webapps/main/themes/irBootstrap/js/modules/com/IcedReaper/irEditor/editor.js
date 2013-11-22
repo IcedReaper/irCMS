@@ -14,6 +14,8 @@ var irEditor = function($editor) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     };
     
+    var bEditable = true;
+    
     var $previewBtn = $('.btn#preview');
     var $editBtn    = $('.btn#edit');
     
@@ -396,22 +398,22 @@ var irEditor = function($editor) {
     };
     
     var cleanupItem = {
-        'sortable':          function($container) {
+        'sortable':  function($container) {
             $container = ! isNumeric($container) ? $container : $(this); 
             
             $container.sortable('destroy');
         },
-        'textBlock':         function($textBlock) {
+        'textBlock': function($textBlock) {
             var $textBlock = ! isNumeric($textBlock) ? $textBlock : $(this);
             
             $textBlock.tinymce().remove();
         },
-        'carousel':          function($carousel)  {
+        'carousel':  function($carousel)  {
             var $carousel = ! isNumeric($carousel) ? $carousel : $(this);
             
             $('.content.editable aside.slider-options').remove();
         },
-        'heroImage':         function($heroImage) {
+        'heroImage': function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
         }
     };
@@ -479,12 +481,14 @@ var irEditor = function($editor) {
     $previewBtn.on('click', function(e) {
         e.preventDefault();
         
-        cleanup();
+        cleanup(false);
+        bEditable = false;
     });
     $editBtn.on('click',    function(e) {
         e.preventDefault();
         
-        setup();
+        setup(false);
+        bEditable = true;
     });
     
     $fixBtn.on('click',  function(e) {
@@ -493,7 +497,10 @@ var irEditor = function($editor) {
         $fixBtn.hide();
         $sortBtn.show();
         
-        setup();
+        if(bEditable) {
+            setup(false);
+        }
+        
         cleanupSortable();
     });
     $sortBtn.on('click', function(e) {
@@ -501,11 +508,15 @@ var irEditor = function($editor) {
         
         $fixBtn.show();
         $sortBtn.hide();
-        cleanup();
+        
+        if(bEditable) {
+            cleanup(false);
+        }
+        
         setupSortable();
     });
     
-    var setup   = function() {
+    var setup   = function(changeSortableButton) {
         $('.module', $editor).each(initItem.deleteHandler);
         $('.content.editable > section.row').find('> section').each(initItem.responsiveHandler);
         initAddHandler();
@@ -518,10 +529,12 @@ var irEditor = function($editor) {
         $previewBtn.show();
         $editBtn.hide();
         
-        $fixBtn.hide();
-        $sortBtn.show();
+        if(changeSortableButton) {
+            $fixBtn.hide();
+            $sortBtn.show();
+        }
     };
-    var cleanup = function() {
+    var cleanup = function(changeSortableButton) {
         $('.content.editable aside.editButton').remove();
         $('.content.editable aside.responsiveEdit').remove();
         $('.module', $editor).unwrap();
@@ -534,13 +547,15 @@ var irEditor = function($editor) {
         $('.module.carousel').each(cleanupItem.carousel);
         $('.module.heroImage').each(cleanupItem.heroImage);
         
+        $('.irEditor-wrapper:empty').remove();
+        
         $previewBtn.hide();
         $editBtn.show();
         
-        $fixBtn.show();
-        $sortBtn.hide();
-        
-        $('.irEditor-wrapper:empty').remove();
+        if(changeSortableButton) {
+            $fixBtn.show();
+            $sortBtn.hide();
+        }
     };
     
     var setupSortable   = function() {
@@ -550,6 +565,6 @@ var irEditor = function($editor) {
         $('.content.editable > section.row').find('> section').each(cleanupItem.sortable);
     };
     
-    setup();
-    setupSortable();
+    setup(true);
+    setupSortable(true);
 };
