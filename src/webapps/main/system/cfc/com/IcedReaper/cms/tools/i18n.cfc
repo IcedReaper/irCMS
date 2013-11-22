@@ -1,9 +1,9 @@
-﻿﻿component implements="system.interfaces.com.irCMS.tools.i18n" {
+﻿component implements="system.interfaces.com.irCMS.tools.i18n" {
     public i18n function init(required string tablePrefix, required string datasource, required string fallbackLanguage) {
         variables.tablePrefix      = arguments.tablePrefix;
         variables.datasource       = arguments.datasource;
         variables.fallbackLanguage = arguments.fallbackLanguage;
-        variables.translation  = {};
+        variables.translation      = {};
 
         this.reload();
 
@@ -13,7 +13,7 @@
     public boolean function reload() {
         var translationReload = {};
         var qGetKeys = new Query().setDatasource(variables.datasource)
-                                  .setSQL("SELECT * FROM #variables.tablePrefix#_i18nKey WHERE active=:active")
+                                  .setSQL("SELECT * FROM #variables.tablePrefix#_i18nKey WHERE active = :active")
                                   .addParam(name="active", value=true, cfsqltype="cf_sql_bit")
                                   .execute()
                                   .getResult();
@@ -22,7 +22,7 @@
             translationReload[ qGetKeys.i18nName[i] ] = {};
 
             var qGetTranslation = new Query().setDatasource(variables.datasource)
-                                             .setSQL("SELECT * FROM #variables.tablePrefix#_i18nTranslation WHERE i18nKeyId=:i18nKeyId")
+                                             .setSQL("SELECT * FROM #variables.tablePrefix#_i18nTranslation WHERE i18nKeyId = :i18nKeyId")
                                              .addParam(name="i18nKeyId", value=qGetKeys.i18nKeyId[i], cfsqltype="cf_sql_numeric")
                                              .execute()
                                              .getResult();
