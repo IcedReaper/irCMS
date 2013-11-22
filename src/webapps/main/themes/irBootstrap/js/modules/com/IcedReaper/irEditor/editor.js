@@ -487,7 +487,7 @@ var irEditor = function($editor) {
         setup();
     });
     
-    $fixBtn.on('click', function(e) {
+    $fixBtn.on('click',  function(e) {
         e.preventDefault();
         
         $fixBtn.hide();
@@ -505,7 +505,7 @@ var irEditor = function($editor) {
         setupSortable();
     });
     
-    var setup = function() {
+    var setup   = function() {
         $('.module', $editor).each(initItem.deleteHandler);
         $('.content.editable > section.row').find('> section').each(initItem.responsiveHandler);
         initAddHandler();
