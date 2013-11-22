@@ -251,8 +251,8 @@
 	            <div>
 	                <button class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-trash"></span> Slide löschen</button>
 	                <div class="pull-right">
-	                    <button class="btn btn-primary" id="movePrev"><span clas="glyphicon glyphicon-chevron-left"></span> Eine Position nach vorne</button>
-	                    <button class="btn btn-primary" id="moveNext"><span clas="glyphicon glyphicon-chevron-right"></span> Eine Position nach hinten</button>
+	                    <button class="btn btn-primary" id="movePrev"><span class="glyphicon glyphicon-chevron-left"></span> Eine Position nach vorne</button>
+	                    <button class="btn btn-primary" id="moveNext"><span class="glyphicon glyphicon-chevron-right"></span> Eine Position nach hinten</button>
 	                </div>
 	            </div>
 	        </fieldset>
