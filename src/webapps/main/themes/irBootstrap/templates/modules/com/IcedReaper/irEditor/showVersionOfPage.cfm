@@ -1,11 +1,14 @@
 <cfscript>
     request.pageTitle = "Bearbeiten der Seite #attributes.pageToShow.getSesLink()#";
-    application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/')
-                                           .include('/css/modules/com/IcedReaper/irEditor/')
-                                           .include('/js/vendor/jquery_plugins/jquery.sortable.js');
-    
-    application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/jquery.tinymce.min.js" charset="utf-8"></script>');
-    application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/tinymce.min.js" charset="utf-8"></script>');
+    application.themes.irBootstrap.cfstatic.include('/css/modules/com/IcedReaper/irEditor/');
+
+    if(attributes.pageToShow.isEditable()) {
+        application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/')
+                                               .include('/js/vendor/jquery_plugins/jquery.sortable.js');
+        
+        application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/jquery.tinymce.min.js" charset="utf-8"></script>');
+        application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/tinymce.min.js" charset="utf-8"></script>');
+    }
 </cfscript>
 <cfoutput>
     <form action="#request.sesLink#" method="post" class="form-horizontal" role="form" id="irEditor">
