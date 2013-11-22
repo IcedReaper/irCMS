@@ -354,19 +354,19 @@ var irEditor = function($editor) {
             };
             
             var backgroundImage = createOption('Bildpfad', 
-                                               $('img', $heroImage).attr('src'),
+                                               $('img', $heroImage).attr('src') || '',
                                                'input',
                                                function() {
                                                    $('img', $heroImage).attr('src', $(this).val())
                                                });
             
             var content = createOption('Beschreibung', 
-                                       $('> div', $heroImage).html(),
+                                       $('> div', $heroImage).html() || '',
                                        'change',
                                        null);
             
             var height = createOption('Höhe', 
-                                      $heroImage.css('height'),
+                                      $heroImage.css('height') || '',
                                       'input',
                                       function() {
                                           $heroImage.css('height', $(this).val())
