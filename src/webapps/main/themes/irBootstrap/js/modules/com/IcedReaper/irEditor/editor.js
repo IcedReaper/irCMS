@@ -24,8 +24,10 @@ var irEditor = function($editor) {
     
     $('form#irEditor').on('submit', function() {
         try {
-            cleanupSortable();
-            cleanup();
+            if(bEditable) {
+                cleanupSortable();
+                cleanup();
+            }
             $('input[name="content"]').val(buildSkeleton());
             setup();
             setupSortable();
