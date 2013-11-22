@@ -1,0 +1,2 @@
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.version', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (lastval('ircms_i18nkey_i18nkeyid_seq'), 'de', Version);
