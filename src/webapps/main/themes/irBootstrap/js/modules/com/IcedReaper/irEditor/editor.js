@@ -107,7 +107,6 @@ var irEditor = function($editor) {
         'sortable':          function($container) {
             $container = ! isNumeric($container) ? $container : $(this);
             
-            console.log($container); 
             $container.sortable();
         },
         'deleteHandler':     function($module)    {
