@@ -344,10 +344,11 @@ var irEditor = function($editor) {
         'heroImage':         function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
             
-            var createOption = function(label, value, on, updateFunction) {
+            var createOption = function(label, id, value, on, updateFunction) {
                 var $option = $($('#heroImage_option').html()
                                                       .replace(/\$\{label\}/gi, label)
-                                                      .replace(/\$\{value\}/gi, value));
+                                                      .replace(/\$\{value\}/gi, value)
+                                                      .replace(/\$\{id\}/gi,    id));
                 if(typeof updateFunction === 'function') {
                     $option.find('input')
                            .on(on, updateFunction);
@@ -356,6 +357,7 @@ var irEditor = function($editor) {
             };
             
             var backgroundImage = createOption('Bildpfad', 
+                                               'src',
                                                $('img', $heroImage).attr('src') || '',
                                                'input',
                                                function() {
@@ -363,13 +365,15 @@ var irEditor = function($editor) {
                                                });
             
             var content = createOption('Beschreibung', 
+                                       'description',
                                        $('> div', $heroImage).html() || '',
                                        'change',
                                        null);
             
             var height = createOption('Höhe', 
+                                      'height',
                                       $heroImage.css('height') || '',
-                                      'input',
+                                      'change',
                                       function() {
                                           $heroImage.css('height', $(this).val())
                                       });

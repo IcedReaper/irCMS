@@ -289,7 +289,7 @@
 	            <label>${label}</label>
 	        </div>
 	        <div class="col-md-9">
-	            <input class="form-control" value="${value}">
+	            <input class="form-control" value="${value}" id="${id}">
 	        </div>
 	    </div>
 	</script>
