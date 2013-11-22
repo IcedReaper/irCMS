@@ -446,6 +446,8 @@ var irEditor = function($editor) {
         };
         
         $('.irEditor-wrapper', $('.content.editable')).append(createModuleAddHandler());
+        $('.irEditor-wrapper:first', $('.content.editable')).before(createModuleAddHandler().wrap($('<div/>').addClass('irEditor-wrapper'))
+                                                                                            .closest('.irEditor-wrapper'));
         
         var createRowAddHandler = function() {
             var $rowAddHandler = $($('#rowAddHandler').html());
@@ -537,6 +539,8 @@ var irEditor = function($editor) {
         
         $fixBtn.show();
         $sortBtn.hide();
+        
+        $('.irEditor-wrapper:empty').remove();
     };
     
     var setupSortable   = function() {
