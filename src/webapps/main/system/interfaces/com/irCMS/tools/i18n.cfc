@@ -3,8 +3,5 @@
     
     public boolean function reload();
     
-    public numeric function addKey(required string keyName);
-    public boolean function addTranslation(required struct translationData);
-    
-    public string function getTranslation(required string keyName, required string iso639);
+    public string function getTranslation(required string keyName, required string language);
 }
