@@ -5,6 +5,21 @@
     if(attributes.pageToShow.isEditable()) {
         application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/')
                                                .include('/js/vendor/jquery_plugins/jquery.sortable.js');
+
+        var jsTranslation = {};
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval']        = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause']           = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap']            = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path']        = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title']       = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline']    = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.description'] = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.description', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path']           = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description']    = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height']         = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop']      = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop', language=request.language);
+
+        application.themes.irBootstrap.cfstatic.includeData(jsTranslation);
         
         application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/jquery.tinymce.min.js" charset="utf-8"></script>');
         application.tools.wrapper.htmlHead('<script src="/themes/irBootstrap/js/vendor/tinyMce/tinymce.min.js" charset="utf-8"></script>');

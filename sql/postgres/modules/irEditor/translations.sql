@@ -104,6 +104,40 @@ INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedRe
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Nein');
 
 
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Interval');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Pause');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Wrap');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Bildpfad');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Titel');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Überschrift');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.description', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Beschreibung');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Bildpfad');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Beschreibung');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Höhe');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Versatz Oben');
+
+
 
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.pageTitle', true, 1);
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'irEditor Dashboard');
