@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="pageOptions">
             <div class="col-md-12">
                 <section class="widget">
                     <cfif isDefined('attributes.contentUpdate')>
