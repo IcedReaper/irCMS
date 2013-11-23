@@ -102,3 +102,53 @@ INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (curr
 
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.no', true, 1);
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Nein');
+
+
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.pageTitle', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'irEditor Dashboard');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.title', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Dashboard');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.subTitle', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'irEditor');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.pagename', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Seitenname');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.sesLink', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'SES Verlinkung');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.version', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Version');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.lastChange', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Letzte Änderung');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.pagesInStatus', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Seiten im Status:');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.changeBy', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'von');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.changeByTitle', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Profilseite von');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.buttons.title.edit', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Diese Version des Artikels bearbeiten');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.buttons.title.release', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Diese Version Online nehmen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.buttons.title.approve', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Diese Version freigeben');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.buttons.title.decline', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Diese Version ablehnen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.buttons.title.revoke', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Die Version offline nehmen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.buttons.title.delete', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Diese Version löschen');

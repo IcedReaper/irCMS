@@ -1,4 +1,4 @@
-<cfset request.pageTitle = "irEditor Dashboard">
+<cfset request.pageTitle = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.pageTitle', language=request.language)>
 <cfoutput>
     <div class="row">
         <div class="col-md-12">
@@ -9,8 +9,8 @@
         <div class="col-md-12">
             <header class="widget">
                 <h2>
-                    Dashboard
-                    <small>irEditor</small>
+                    #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.title', language=request.language)#
+                    <small>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.title', language=request.language)#</small>
                 </h2>
             </header>
         </div>
@@ -20,14 +20,14 @@
             <div class="col-md-12">
                 <section class="widget">
                     <fieldset>
-                        <legend>Seiten im Status: #attributes.dashboardData[statusIndex].statusName#</legend>
+                        <legend>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.pagesInStatus', language=request.language)# #attributes.dashboardData[statusIndex].statusName#</legend>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
-                                    <th>Seitenname</th>
-                                    <th>SES Verlinkung</th>
-                                    <th>Version</th>
-                                    <th>Letzte Änderung</th>
+                                    <th>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.pagename', language=request.language)#</th>
+                                    <th>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.sesLink', language=request.language)#</th>
+                                    <th>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.version', language=request.language)#</th>
+                                    <th>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.lastChange', language=request.language)#</th>
                                     <th>&nbsp;</th>
                                 </thead>
                                 <tbody>
@@ -39,28 +39,28 @@
                                             <td>
                                                 #dateFormat(attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeAt, "DD. MMM YYYY")#
                                                 #timeFormat(attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeAt, "HH:MM:SS")#
-                                                von <a href="/User/#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#" target="_blank" title="Profilseite von #attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#">#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#</a>
+                                                #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.changeBy', language=request.language)# <a href="/User/#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#" target="_blank" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.changeByTitle', language=request.language)# #attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#">#attributes.dashboardData[statusIndex].pages[pageIndex].lastChangeBy#</a>
                                             </td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <cfif attributes.dashboardData[statusIndex].editable>
-                                                        <a class="btn btn-default" title="Diese Version des Artikels bearbeiten" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                        <a class="btn btn-default" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.buttons.title.edit', language=request.language)#" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#"><span class="glyphicon glyphicon-pencil"></span></a>
                                                     </cfif>
                                                     <cfif attributes.dashboardData[statusIndex].readyToRelease>
-                                                        <a class="btn btn-success" title="Diese Version Online nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Release"><span class="glyphicon glyphicon-ok"></span></a>
+                                                        <a class="btn btn-success" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.buttons.title.release', language=request.language)#" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Release"><span class="glyphicon glyphicon-ok"></span></a>
                                                     <cfelseif NOT attributes.dashboardData[statusIndex].online AND statusIndex NEQ attributes.dashboardData.len()>
-                                                        <a class="btn btn-success" title="Diese Version freigeben" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Approve"><span class="glyphicon glyphicon-ok"></span></a>
+                                                        <a class="btn btn-success" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.buttons.title.approve', language=request.language)#" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Approve"><span class="glyphicon glyphicon-ok"></span></a>
                                                         <cfif NOT attributes.dashboardData[statusIndex].editable>
-                                                            <a class="btn btn-warning" title="Diese Version ablehnen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Reject"><span class="glyphicon glyphicon-eye-close"></span></a>
+                                                            <a class="btn btn-warning" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.buttons.title.decline', language=request.language)#" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Reject"><span class="glyphicon glyphicon-eye-close"></span></a>
 														</cfif>
                                                     </cfif>
                                                     <cfif attributes.dashboardData[statusIndex].online>
-                                                        <a class="btn btn-warning" title="Die Version offline nehmen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Revoke"><span class="glyphicon glyphicon-off"></span></a>
+                                                        <a class="btn btn-warning" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.buttons.title.revoke', language=request.language)#" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Revoke"><span class="glyphicon glyphicon-off"></span></a>
                                                     <cfelse>
                                                         <cfif attributes.dashboardData[statusIndex].editable>
-                                                            <a class="btn btn-danger" title="Diese Version löschen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Delete"><span class="glyphicon glyphicon-remove"></span></a>
+                                                            <a class="btn btn-danger" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.buttons.title.delete', language=request.language)#" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Delete"><span class="glyphicon glyphicon-remove"></span></a>
                                                         <cfelseif false <!--- does the user have the permission to decline this version?--->>
-                                                            <a class="btn btn-danger" title="Diese Version löschen" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Delete"><span class="glyphicon glyphicon-remove"></span></a>
+                                                            <a class="btn btn-danger" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.dashboard.buttons.title.delete', language=request.language)#" href="/Admin/Pages/#attributes.dashboardData[statusIndex].pages[pageIndex].navigationId#/#attributes.dashboardData[statusIndex].pages[pageIndex].version#/Delete"><span class="glyphicon glyphicon-remove"></span></a>
                                                         </cfif>
                                                     </cfif>
                                                 </div>
