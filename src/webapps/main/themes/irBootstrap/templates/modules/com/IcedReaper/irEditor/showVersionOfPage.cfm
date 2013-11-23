@@ -236,7 +236,12 @@
                             <hr>
                         </div>
                     </div>
-
+                </section>
+            </div>
+        </div>
+        <div class="row" id="actionBar">
+            <div class="col-md-12">
+                <section class="widget">
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="pull-left">
@@ -246,8 +251,8 @@
                                     </cfif>
                                     <cfif attributes.pageToShow.isOnline()>
                                         <button class="btn btn-sm btn-warning" type="submit" name="action" value="revoke" title="Version offline nehmen"><span class="glyphicon glyphicon-off"></span> Offline nehmen</button>
-								    </cfif>
-								</cfif>
+                                    </cfif>
+                                </cfif>
                             </div>
                             <div class="pull-right">
                                 <cfif NOT attributes.pageToShow.isOffline()>
@@ -266,18 +271,18 @@
                                             <cfif NOT attributes.pageToShow.isEditable()>
                                                 <button class="btn btn-sm btn-warning" type="submit" name="action" value="reject"  title="Version ablehnen - zurück zum Ersteller"><span class="glyphicon glyphicon-eye-close"></span> Ablehnen</button>
                                             </cfif>
-        							    <cfelse>
+                                        <cfelse>
                                             <button class="btn btn-success" type="submit" name="action" value="release" title="online nehmen"><span class="glyphicon glyphicon-globe"></span> Online schalten</button>
-        								</cfif>
+                                        </cfif>
                                     </cfif>
-    							</cfif>
-							</div>
+                                </cfif>
+                            </div>
                         </div>
                     </div>
                 </section>
             </div>
         </div>
-        
+
         <cfinclude template="templates.cfm">
 
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
