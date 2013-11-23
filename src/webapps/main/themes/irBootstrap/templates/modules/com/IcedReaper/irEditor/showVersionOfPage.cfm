@@ -1,5 +1,5 @@
 <cfscript>
-    request.pageTitle = "Bearbeiten der Seite #attributes.pageToShow.getSesLink()#";
+    request.pageTitle = "#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.pageTitle', language=request.language)# #attributes.pageToShow.getSesLink()#";
     application.themes.irBootstrap.cfstatic.include('/css/modules/com/IcedReaper/irEditor/');
 
     if(attributes.pageToShow.isEditable()) {
