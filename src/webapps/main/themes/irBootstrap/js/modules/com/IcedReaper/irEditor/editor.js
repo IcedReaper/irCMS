@@ -7,6 +7,28 @@ $(function() {
     if($('.content.editable').length === 1) {
         var editor = new irEditor($('.content.editable'));
     }
+
+    $(window).on('scroll', function() {
+        if($(window).scrollTop() <= ($('.row#pageOptions').offset().top + $('.row#pageOptions').height())) {
+            if($('.row#actionBar').parent().hasClass('container')) {
+                $('.row#actionBar').unwrap();
+            }
+        }
+        else {
+            if($(window).scrollTop() >= ($('.row#pageOptions').offset().top + $('.row#pageOptions').height())) {
+                if(! $('.row#actionBar').parent().hasClass('container')) {
+                    $('.row#actionBar').wrap($('<div/>').addClass('container')
+                                                        .css({
+                                                            position:   'fixed',
+                                                            top:        0,
+                                                            padding:    '0 15px',
+                                                            zIndex:     100,
+                                                            marginLeft: '-15px'
+                                                        }));
+                }
+            }
+        } 
+    });
 });
 
 var irEditor = function($editor) {
@@ -450,8 +472,8 @@ var irEditor = function($editor) {
         'heroImage': function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
         }
-    };
     
+    };
     var initAddHandler    = function() {
         var createModuleAddHandler = function() {
             var $addHandler = $($('#moduleAddHandler').html());
