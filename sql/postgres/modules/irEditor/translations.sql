@@ -242,3 +242,20 @@ INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (curr
 
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.carousel.options.headline', true, 1);
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Optionen');
+
+
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.dashboard', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'irEditor Dashboard');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.newPage', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Neue Seite');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.newMajorVersion', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Neue Majorversion');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.newMinorVersion', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Neue Minorversion');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.versions', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Versionen');
