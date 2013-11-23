@@ -2,9 +2,9 @@
 	<!--- Add new modules to the document --->
 	<script type="html/text" id="moduleAddHandler">
 	    <div data-type="module" class="addHandler" id="module">
-	        <a href="##" class="glyphicon glyphicon-picture" title="Titelbild einfügen" data-module="heroImage"><span class="glyphicon glyphicon-plus"></span></a>
-	        <a href="##" class="glyphicon glyphicon-align-left" title="Textblock einfügen" data-module="textBlock"><span class="glyphicon glyphicon-plus"></span></a>
-	        <a href="##" class="glyphicon glyphicon-picture" title="Carousel / Slider einfügen" data-module="carousel"><span class="glyphicon glyphicon-plus"></span></a>
+	        <a href="##" class="glyphicon glyphicon-picture" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.moduleAddHandler.heroImage', language=request.language)#" data-module="heroImage"><span class="glyphicon glyphicon-plus"></span></a>
+	        <a href="##" class="glyphicon glyphicon-align-left" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.moduleAddHandler.textBlock', language=request.language)#" data-module="textBlock"><span class="glyphicon glyphicon-plus"></span></a>
+	        <a href="##" class="glyphicon glyphicon-picture" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.moduleAddHandler.carousel', language=request.language)#" data-module="carousel"><span class="glyphicon glyphicon-plus"></span></a>
 	    </div>
 	</script>
 	
@@ -60,8 +60,8 @@
 	<!--- Responsive handler --->
 	<script type="html/text" id="responsiveButton">
 	    <aside class="responsiveEdit">
-	        <button class="btn btn-default" title="Responsiveeigenschaften des Containers bearbeiten">
-	            <span class="glyphicon glyphicon-edit"></span> Responsiveeigenschaften
+	        <button class="btn btn-default" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.title', language=request.language)#">
+	            <span class="glyphicon glyphicon-edit"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.buttonCaption', language=request.language)#
 	        </button>
 	    </aside>
 	</script>
@@ -72,13 +72,13 @@
 	        <div class="modal-content">
 	        <div class="modal-header">
 	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	            <h4 class="modal-title" id="responsiveSettings">Responsiveeigenschaften des Containers</h4>
+	            <h4 class="modal-title" id="responsiveSettings">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.title', language=request.language)#</h4>
 	        </div>
 	        <div class="modal-body">
 	            <div class="row">
     	            <div class="col-md-6">
         	            <div class="form-group">
-        	                <label class="col-lg-3 control-label">Extra klein</label>
+        	                <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.extraSmall', language=request.language)#</label>
         	                <div class="col-lg-9">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -86,7 +86,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="" name="extraSmall">
                                             </span>
-                                            <input type="text" value="Keine Speziellen Responsiven Eigenschaften" disabled="disabled" class="form-control">
+                                            <input type="text" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.noSetting', language=request.language)#" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
         	                                <span class="input-group-addon">
         	                                    <input type="radio" value="hidden-xs" name="extraSmall">
         	                                </span>
-        	                                <input type="text" value="Ausblenden" disabled="disabled" class="form-control">
+        	                                <input type="text" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.hide', language=request.language)#" disabled="disabled" class="form-control">
         	                            </div>
         	                        </div>
         	                    </div>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Klein</label>
+                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.small', language=request.language)#</label>
                             <div class="col-lg-9">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -125,7 +125,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="" name="small">
                                             </span>
-                                            <input type="text" value="Keine Speziellen Responsiven Eigenschaften" disabled="disabled" class="form-control">
+                                            <input type="text" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.noSetting', language=request.language)#" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="hidden-sm" name="small">
                                             </span>
-                                            <input type="text" value="Ausblenden" disabled="disabled" class="form-control">
+                                            <input type="text" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.hide', language=request.language)#" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Groß</label>
+                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.large', language=request.language)#</label>
                             <div class="col-lg-9">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -166,7 +166,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="" name="large">
                                             </span>
-                                            <input type="text" value="Keine Speziellen Responsiven Eigenschaften" disabled="disabled" class="form-control">
+                                            <input type="text" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.noSetting', language=request.language)#" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +176,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="hidden-lg" name="large">
                                             </span>
-                                            <input type="text" value="Ausblenden" disabled="disabled" class="form-control">
+                                            <input type="text" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.hide', language=request.language)#" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@
                 </div>
 	        </div>
 	        <div class="modal-footer">
-	            <button type="button" class="btn btn-primary" data-dismiss="modal">Übernehmen</button>
+	            <button type="button" class="btn btn-primary" data-dismiss="modal">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.responsive.save', language=request.language)#</button>
 	        </div>
 	        </div>
 	    </div>
@@ -228,7 +228,7 @@
 	<script type="html/text" id="carousel_setting">
 	    <aside class="slider-options widget">
 	        <fieldset>
-	            <legend>Optionen</legend>
+	            <legend>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.carousel.options.headline', language=request.language)#</legend>
 	        </fieldset>
 	    </aside>
 	</script>
@@ -247,12 +247,12 @@
 	<script type="html/text" id="carousel_slide_options">
 	    <aside class="editControls widget">
 	        <fieldset>
-	            <legend>Optionen des aktuellen Slide</legend>
+	            <legend>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.headline', language=request.language)#</legend>
 	            <div>
-	                <button class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-trash"></span> Slide löschen</button>
+	                <button class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-trash"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.delete', language=request.language)#</button>
 	                <div class="pull-right">
-	                    <button class="btn btn-primary" id="movePrev"><span class="glyphicon glyphicon-chevron-left"></span> Eine Position nach vorne</button>
-	                    <button class="btn btn-primary" id="moveNext"><span class="glyphicon glyphicon-chevron-right"></span> Eine Position nach hinten</button>
+	                    <button class="btn btn-primary" id="movePrev"><span class="glyphicon glyphicon-chevron-left"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.movePrev', language=request.language)#</button>
+	                    <button class="btn btn-primary" id="moveNext"><span class="glyphicon glyphicon-chevron-right"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.moveNext', language=request.language)#</button>
 	                </div>
 	            </div>
 	        </fieldset>
@@ -278,7 +278,7 @@
 	<script type="html/text" id="heroImage_setting">
 	    <aside class="editControls widget">
 	        <fieldset>
-	            <legend>Optionen</legend>
+	            <legend>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.templates.heroImage.options.headline', language=request.language)#</legend>
 	        </fieldset>
 	    </aside>
 	</script>

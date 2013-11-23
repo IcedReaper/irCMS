@@ -189,3 +189,56 @@ INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (curr
 
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.dashboard.buttons.title.delete', true, 1);
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Diese Version löschen');
+
+
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.moduleAddHandler.heroImage', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Titelbild einfügen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.moduleAddHandler.textBlock', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Textblock einfügen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.moduleAddHandler.carousel', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Carousel / Slider einfügen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.responsive.title', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Responsiveeigenschaften des Containers bearbeiten');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.responsive.buttonCaption', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Responsiveeigenschaften');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.responsive.extraSmall', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Sehr Klein<br/>(< 768px)');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.responsive.noSetting', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Keine Speziellen Responsiven Eigenschaften');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.responsive.hide', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Ausblenden');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.responsive.small', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Klein<br/>(768px - 992px)');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.responsive.large', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Groß<br/>(>1200px)');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.responsive.save', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Übernehmen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.headline', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Optionen des aktuellen Slide');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.delete', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Slide löschen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.movePrev', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Eine Position nach vorne');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.moveNext', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Eine Position nach hinten');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.heroImage.options.headline', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Optionen');
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.templates.carousel.options.headline', true, 1);
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES (currval('ircms_i18nkey_i18nkeyid_seq'::regclass), 'de', 'Optionen');
