@@ -9,12 +9,12 @@
     switch(attributes.entities.len()) {
     	case 2: {
             switch(attributes.entities[1]) {
-                case 'Page': {
+                case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irErrorlog.links.page', language=request.language): {
                     attributes.page = attributes.entities[2];
                     include template="overview.cfm";
                     break;
                 }
-                case 'Error': {
+                case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irErrorlog.links.error', language=request.language): {
                     include template="entity.cfm";
                     break;
                 }
