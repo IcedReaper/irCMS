@@ -201,10 +201,10 @@
                                 <div class="col-lg-9">
                                     <div class="btn-group" data-toggle="buttons" id="genderSelection">
                                         <label class="btn btn-default <cfif NOT attributes.userData.showBuddies()>active</cfif>">
-                                            <input type="radio" name="showBuddies" id="False" value="false" <cfif NOT attributes.userData.showBuddies()>checked="checked"</cfif>> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.profile.profileSettings', language=request.language)#
+                                            <input type="radio" name="showBuddies" id="False" value="false" <cfif NOT attributes.userData.showBuddies()>checked="checked"</cfif>> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.profile.profileSettings.no', language=request.language)#
                                         </label>
                                         <label class="btn btn-default <cfif attributes.userData.showBuddies()>active</cfif>">
-                                            <input type="radio" name="showBuddies" id="True" value="True" <cfif attributes.userData.showBuddies()>checked="checked"</cfif>> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.profile.profileSettings', language=request.language)#
+                                            <input type="radio" name="showBuddies" id="True" value="True" <cfif attributes.userData.showBuddies()>checked="checked"</cfif>> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.profile.profileSettings.yes', language=request.language)#
                                         </label>
                                     </div>
                                 </div>
