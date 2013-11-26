@@ -1,0 +1,4 @@
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irUserBuddy.showBuddies.headline'), 'de', 'Buddylist');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irUserBuddy.showBuddies.message'), 'de', 'Der User hat keine Buddies.<br>Helf Ihm dagegen anzukommen und stelle einen Buddyrequest!');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irUserBuddy.showBuddies.addBuddy'), 'de', 'Werde mein Buddy!');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irUserBuddy.showBuddies.pleaseLogin'), 'de', 'Bitte loggen Sie sich ein um diesen Bereich zu sehen!');
