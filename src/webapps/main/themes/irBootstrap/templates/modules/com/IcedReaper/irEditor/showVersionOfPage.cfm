@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="pageOptions">
             <div class="col-md-12">
                 <section class="widget">
                     <cfif isDefined('attributes.contentUpdate')>
@@ -250,7 +250,12 @@
                             <hr>
                         </div>
                     </div>
-
+                </section>
+            </div>
+        </div>
+        <div class="row" id="actionBar">
+            <div class="col-md-12">
+                <section class="widget">
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="pull-left">
@@ -284,14 +289,14 @@
                                             <button class="btn btn-success" type="submit" name="action" value="release" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.release', language=request.language)#"><span class="glyphicon glyphicon-globe"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.release', language=request.language)#</button>
         								</cfif>
                                     </cfif>
-    							</cfif>
-							</div>
+                                </cfif>
+                            </div>
                         </div>
                     </div>
                 </section>
             </div>
         </div>
-        
+
         <cfinclude template="templates.cfm">
 
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
