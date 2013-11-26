@@ -1,3 +1,6 @@
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irUser.links.search', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irUser.links.register', true, 1);
+
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irUser.registration.existing.headline', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irUser.registration.existing.message', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irUser.registration.existing.yourProfile', true, 1);

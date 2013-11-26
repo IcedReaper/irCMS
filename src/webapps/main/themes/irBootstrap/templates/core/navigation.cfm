@@ -50,7 +50,7 @@
                                     </form>
                                     <li class="divider"></li>
                                     <li>
-                                        <a type="submit" value="register" class="btn btn-default" href="/User/Registrieren">Registrieren</a>
+                                        <a type="submit" value="register" class="btn btn-default" href="/User/#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.links.register', language=request.language)#">Registrieren</a>
                                     </li>
                                 </ul>
                             </li>
