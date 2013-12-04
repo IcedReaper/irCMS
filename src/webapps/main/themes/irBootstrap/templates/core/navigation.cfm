@@ -10,7 +10,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">irCMS</a>
+                    <a class="navbar-brand" href="/">#application.tools.i18n.getTranslation(keyName='core.navigation.pageName', language=request.language)#</a>
                 </header>
                 <section class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -31,7 +31,7 @@
                     <cfif NOT request.isLoggedIn>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="##" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
+                                <a href="##" class="dropdown-toggle" data-toggle="dropdown">#application.tools.i18n.getTranslation(keyName='core.navigation.login.headline', language=request.language)# <b class="caret"></b></a>
                                 <ul class="dropdown-menu" style="padding:15px;">
                                     <form action="?login" method="post" autocomplete="false">
                                         <li>
@@ -45,12 +45,12 @@
                                             </div>
                                         </li>
                                         <li>
-                                            <button type="submit" value="login" class="btn btn-success">Sign in</button>
+                                            <button type="submit" value="login" class="btn btn-success">#application.tools.i18n.getTranslation(keyName='core.navigation.login.login', language=request.language)#</button>
                                         </li>
                                     </form>
                                     <li class="divider"></li>
                                     <li>
-                                        <a type="submit" value="register" class="btn btn-default" href="/User/#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.links.register', language=request.language)#">Registrieren</a>
+                                        <a type="submit" value="register" class="btn btn-default" href="/User/#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.links.register', language=request.language)#">#application.tools.i18n.getTranslation(keyName='core.navigation.login.register', language=request.language)#</a>
                                     </li>
                                 </ul>
                             </li>
@@ -65,11 +65,11 @@
                                     #session.userName# <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/User/#session.userName#">Userpanel</a></li>
+                                    <li><a href="/User/#session.userName#">#application.tools.i18n.getTranslation(keyName='core.navigation.login.userPanel', language=request.language)#</a></li>
                                     <cfif application.security.permission.hasPermission(userName=session.userName, groupName='CMS', roleName='Reader')>
-                                        <li><a href="/Admin">Zum Adminpanel</a></li>
+                                        <li><a href="/Admin">#application.tools.i18n.getTranslation(keyName='core.navigation.login.toAdminPanel', language=request.language)#</a></li>
                                     </cfif>
-                                    <li><a href="?logout">Ausloggen</a></li>
+                                    <li><a href="?logout">#application.tools.i18n.getTranslation(keyName='core.navigation.login.logout', language=request.language)#</a></li>
                                 </ul>
                             </li>
                         </ul>
