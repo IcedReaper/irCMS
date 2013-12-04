@@ -3,9 +3,9 @@
 	<div class="row">
 	    <div class="col-md-12">
 	        <div class="alert alert-danger">
-	            #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.search.notFound.message', language=request.language)#
-	            <a type="button" class="btn btn-default" href="#attributes.sesLink#">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.search.notFound.buttons.overview.caption', language=request.language)#</a>
-	            <a type="button" class="btn btn-default" href="#attributes.sesLink#/#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.links.search', language=request.language)#">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.search.notFound.buttons.search.caption', language=request.language)#</a>
+	            <cf_translation keyName='modules.com.IcedReaper.irUser.search.notFound.message'>
+	            <a type="button" class="btn btn-default" href="#attributes.sesLink#"><cf_translation keyName='modules.com.IcedReaper.irUser.search.notFound.buttons.overview.caption'></a>
+	            <a type="button" class="btn btn-default" href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irUser.links.search'>"><cf_translation keyName='modules.com.IcedReaper.irUser.search.notFound.buttons.search.caption'></a>
 	        </div>
 	    </div>
 	</div>

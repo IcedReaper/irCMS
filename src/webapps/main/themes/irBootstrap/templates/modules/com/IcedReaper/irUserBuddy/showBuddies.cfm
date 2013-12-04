@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 	<section class="widget" id="buddyList">
 	    <fieldset>
-	        <legend>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUserBuddy.showBuddies.headline', language=request.language)#</legend>
+	        <legend><cf_translation keyName='modules.com.IcedReaper.irUserBuddy.showBuddies.headline'></legend>
 	        <cfif request.isLoggedIn OR attributes.userData.showBuddies()>
 	            <cfset buddyList = attributes.userData.getBuddylist()>
 	            <cfif buddyList.len() GT 0>
@@ -10,14 +10,14 @@
 	                </cfloop>
 	            <cfelse>
 	                <div class="alert alert-info">
-	                    #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUserBuddy.showBuddies.message', language=request.language)#
+	                    <cf_translation keyName='modules.com.IcedReaper.irUserBuddy.showBuddies.message'>
 	                    <cfif request.isLoggedIn AND NOT request.actualUser.isMyBuddy(attributes.userData.getUsername())>
-	                        <a class="btn btn-success" href="#request.sesLink#?addBuddy">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUserBuddy.showBuddies.addBuddy', language=request.language)#</a>
+	                        <a class="btn btn-success" href="#request.sesLink#?addBuddy"><cf_translation keyName='modules.com.IcedReaper.irUserBuddy.showBuddies.addBuddy'></a>
 	                    </cfif>
 	                </div>
 	            </cfif>
 	        <cfelse>
-	            <div class="alert alert-danger">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUserBuddy.showBuddies.pleaseLogin', language=request.language)#</div>
+	            <div class="alert alert-danger"><cf_translation keyName='modules.com.IcedReaper.irUserBuddy.showBuddies.pleaseLogin'></div>
 	        </cfif>
 	    </fieldset>
 	</section>

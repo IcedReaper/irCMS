@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-md-12">
                 <header class="widget">
-                    <h2>#attributes.pageToShow.getLinkname()#<small>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.version', language=request.language)#: #attributes.version#</small></h2>
+                    <h2>#attributes.pageToShow.getLinkname()#<small><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.version'>: #attributes.version#</small></h2>
                 </header>
             </div>
         </div>
@@ -49,7 +49,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="alert alert-success">
-                                        #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.saveSuccessfull', language=request.language)#
+                                        <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.saveSuccessfull'>
                                     </div>
                                 </div>
                             </div>
@@ -57,23 +57,23 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="alert alert-danger">
-                                        #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.saveFailed', language=request.language)#
+                                        <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.saveFailed'>
                                     </div>
                                 </div>
                             </div>
                         </cfif>
                     </cfif>
                     <fieldset>
-                        <legend>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.mandatory', language=request.language)#</legend>
+                        <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.mandatory'></legend>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.actualStatus', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.actualStatus'></label>
                             <div class="col-lg-9">
                                 <p class="form-control-static">#attributes.pageToShow.getStatusName()#</p>
                             </div>
                         </div>
                         
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.linkName>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.linkname', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.linkname'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <input type="text" maxLength="150" class="form-control" name="Linkname" value="#attributes.pageToShow.getLinkname()#">
@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.sesLink>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.sesLink', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.sesLink'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <input type="text" maxLength="150" class="form-control" name="sesLink" value="#attributes.pageToShow.getSesLink()#">
@@ -95,7 +95,7 @@
                         </div>
 
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.title>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.title', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.title'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <input type="text" maxLength="150" class="form-control" name="Title" value="#attributes.pageToShow.getTitle()#">
@@ -107,9 +107,9 @@
                     </fieldset>
 
                     <fieldset>
-                        <legend>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.moduleSettings', language=request.language)#</legend>
+                        <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.moduleSettings'></legend>
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.moduleId>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.module', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.module'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <div class="row">
@@ -118,7 +118,7 @@
                                                 <span class="input-group-addon">
                                                     <input type="radio" name="moduleId" value="" <cfif attributes.pageToShow.getModuleId() EQ ''>checked="checked"</cfif>>
                                                 </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.noModule', language=request.language)#">
+                                                <input type="text" class="form-control" disabled="disabled" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.noModule'>">
                                             </div>
                                         </div>
                                     </div>
@@ -142,7 +142,7 @@
                         </div>
 
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.entityRegExp>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.entities', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.entities'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <div class="row">
@@ -151,7 +151,7 @@
                                                 <span class="input-group-addon">
                                                     <input type="radio" name="entityRegExp" value="(.*)" <cfif attributes.pageToShow.getRegExp() NEQ ''>checked="checked"</cfif>>
                                                 </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.yes', language=request.language)#">
+                                                <input type="text" class="form-control" disabled="disabled" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.yes'>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -159,18 +159,18 @@
                                                 <span class="input-group-addon">
                                                     <input type="radio" name="entityRegExp" value="" <cfif attributes.pageToShow.getRegExp() EQ ''>checked="checked"</cfif>>
                                                 </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.no', language=request.language)#">
+                                                <input type="text" class="form-control" disabled="disabled" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.no'>">
                                             </div>
                                         </div>
                                     </div>
                                 <cfelse>
-                                    <p class="form-control-static"><cfif attributes.pageToShow.getRegExp() NEQ ''>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.yes', language=request.language)#<cfelse>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.no', language=request.language)#</cfif></p>
+                                    <p class="form-control-static"><cfif attributes.pageToShow.getRegExp() NEQ ''><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.yes'><cfelse><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.no'></cfif></p>
                                 </cfif>
                             </div>
                         </div>
 
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.moduleAttributes>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.moduleOptions', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.moduleOptions'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <input type="text" maxLength="150" class="form-control" name="moduleAttributes" value="#attributes.pageToShow.getModuleAttributes()#">
@@ -181,7 +181,7 @@
                         </div>
 
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.showContentForEntity>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.showContentForEntity', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.showContentForEntity'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <div class="row">
@@ -190,7 +190,7 @@
                                                 <span class="input-group-addon">
                                                     <input type="radio" name="showContentForEntity" value="true" <cfif attributes.pageToShow.showContentForEntity()>checked="checked"</cfif>>
                                                 </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.yes', language=request.language)#">
+                                                <input type="text" class="form-control" disabled="disabled" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.yes'>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -198,21 +198,21 @@
                                                 <span class="input-group-addon">
                                                     <input type="radio" name="showContentForEntity" value="false" <cfif NOT attributes.pageToShow.showContentForEntity()>checked="checked"</cfif>>
                                                 </span>
-                                                <input type="text" class="form-control" disabled="disabled" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.no', language=request.language)#">
+                                                <input type="text" class="form-control" disabled="disabled" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.no'>">
                                             </div>
                                         </div>
                                     </div>
                                 <cfelse>
-                                    <p class="form-control-static"><cfif attributes.pageToShow.showContentForEntity()>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.yes', language=request.language)#<cfelse>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.no', language=request.language)#</cfif></p>
+                                    <p class="form-control-static"><cfif attributes.pageToShow.showContentForEntity()><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.yes'><cfelse><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.no'></cfif></p>
                                 </cfif>
                             </div>
                         </div>
                     </fieldset>
 
                     <fieldset>
-                        <legend>#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.options', language=request.language)#</legend>
+                        <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.options'></legend>
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.description>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.description', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.description'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <input type="text" maxLength="150" class="form-control" name="description" value="#attributes.pageToShow.getDescription()#">
@@ -223,7 +223,7 @@
                         </div>
 
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.keywords>has-error</cfif>">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.keywords', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.keywords'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <input type="text" maxLength="150" class="form-control" name="keywords" value="#attributes.pageToShow.getKeywords()#">
@@ -234,7 +234,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.versionComment', language=request.language)#</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.versionComment'></label>
                             <div class="col-lg-9">
                                 <cfif attributes.pageToShow.isEditable()>
                                     <input type="text" maxLength="150" class="form-control" name="versionComment" value="#attributes.pageToShow.getVersionComment()#">
@@ -261,32 +261,32 @@
                             <div class="pull-left">
                                 <cfif NOT attributes.pageToShow.isOffline()>
                                     <cfif attributes.pageToShow.isEditable()>
-                                        <button class="btn btn-sm btn-danger" type="submit" name="action" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.delete', language=request.language)#" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.delete', language=request.language)#"><span class="glyphicon glyphicon-trash"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.delete', language=request.language)#</button>
+                                        <button class="btn btn-sm btn-danger" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.delete'>" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.delete'>"><span class="glyphicon glyphicon-trash"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.delete'></button>
                                     </cfif>
                                     <cfif attributes.pageToShow.isOnline()>
-                                        <button class="btn btn-sm btn-warning" type="submit" name="action" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.revoke', language=request.language)#" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.revoke', language=request.language)#"><span class="glyphicon glyphicon-off"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.revoke', language=request.language)#</button>
+                                        <button class="btn btn-sm btn-warning" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.revoke'>" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.revoke'>"><span class="glyphicon glyphicon-off"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.revoke'></button>
 								    </cfif>
 								</cfif>
                             </div>
                             <div class="pull-right">
                                 <cfif NOT attributes.pageToShow.isOffline()>
                                     <cfif attributes.pageToShow.isEditable()>
-                                        <button class="btn btn-default" id="sort"><span class="glyphicon glyphicon-sort"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.enableSort', language=request.language)#</button>
-                                        <button class="btn btn-default" id="fix"><span class="glyphicon glyphicon-pushpin"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.disableSort', language=request.language)#</button>
+                                        <button class="btn btn-default" id="sort"><span class="glyphicon glyphicon-sort"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.enableSort'></button>
+                                        <button class="btn btn-default" id="fix"><span class="glyphicon glyphicon-pushpin"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.disableSort'></button>
                                         
-                                        <button class="btn btn-default" id="preview"><span class="glyphicon glyphicon-eye-open"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.preview', language=request.language)#</button>
-                                        <button class="btn btn-default" id="edit"><span class="glyphicon glyphicon-eye-close"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.edit', language=request.language)#</button>
+                                        <button class="btn btn-default" id="preview"><span class="glyphicon glyphicon-eye-open"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.preview'></button>
+                                        <button class="btn btn-default" id="edit"><span class="glyphicon glyphicon-eye-close"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.edit'></button>
                                         
-                                        <button class="btn btn-primary" type="submit" name="action" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.save', language=request.language)#save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.save', language=request.language)#Speichern</button>
+                                        <button class="btn btn-primary" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.save'>save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.save'>Speichern</button>
                                     </cfif>
                                     <cfif NOT attributes.pageToShow.isOnline()>
                                         <cfif NOT attributes.pageToShow.isReadyToRelease()>
-                                            <button class="btn btn-success" type="submit" name="action" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.approve', language=request.language)#" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.approve', language=request.language)# #attributes.pageToShow.getNextStatusName()#"><span class="glyphicon glyphicon-ok"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.approve', language=request.language)#</button>
+                                            <button class="btn btn-success" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.approve'>" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.approve'> #attributes.pageToShow.getNextStatusName()#"><span class="glyphicon glyphicon-ok"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.approve'></button>
                                             <cfif NOT attributes.pageToShow.isEditable()>
-                                                <button class="btn btn-sm btn-warning" type="submit" name="action" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.reject', language=request.language)#"  title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.reject', language=request.language)#"><span class="glyphicon glyphicon-eye-close"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.reject', language=request.language)#</button>
+                                                <button class="btn btn-sm btn-warning" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.reject'>"  title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.reject'>"><span class="glyphicon glyphicon-eye-close"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.reject'></button>
                                             </cfif>
         							    <cfelse>
-                                            <button class="btn btn-success" type="submit" name="action" value="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.release', language=request.language)#" title="#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.release', language=request.language)#"><span class="glyphicon glyphicon-globe"></span> #application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.button.release', language=request.language)#</button>
+                                            <button class="btn btn-success" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.release'>" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.release'>"><span class="glyphicon glyphicon-globe"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.release'></button>
         								</cfif>
                                     </cfif>
                                 </cfif>

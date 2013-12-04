@@ -1,10 +1,16 @@
 ﻿component {
     this.sessionmanagement = true;
-    this.sessiontimeout    = createTimespan(1,0,0,0);
+    this.sessiontimeout    = createTimespan(1, 0, 0, 0);
     
-    this.mappings = {'/org':    expandPath("./system/libs/"),
-                     '/system': expandPath("./system/"),
-                     '/themes': expandPath("./themes/")};
+    this.mappings = {
+    	'/org':    expandPath("./system/libs/"),
+        '/system': expandPath("./system/"),
+        '/themes': expandPath("./themes/")
+    };
+    
+    this.customtagpaths = [
+    	expandPath("./system/customTags/com/IcedReaper/i18n/")
+    ];
     
     public boolean function onApplicationStart() {
         application.installSuccessfull = true;

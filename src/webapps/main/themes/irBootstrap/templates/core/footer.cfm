@@ -30,7 +30,7 @@
                             </cfloop>
                         </div>
                         <div class="col-md-4">
-                           <p class="muted pull-right"><a class="navbar-brand" href="#application.tools.i18n.getTranslation(keyName='core.navigation.footer.link.anchor', language=request.language)#">#application.tools.i18n.getTranslation(keyName='core.navigation.footer.link.text', language=request.language)#</a></p>
+                           <p class="muted pull-right"><a class="navbar-brand" href="<cf_translation keyName='core.navigation.footer.link.anchor'>"><cf_translation keyName='core.navigation.footer.link.text'></a></p>
                         </div>
                     </div>
                 </div>
