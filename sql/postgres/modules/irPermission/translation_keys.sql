@@ -1,0 +1,9 @@
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.pageTitle', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.headline', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.subTitle', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.permissionName', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.roleName.guest', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.roleName.reader', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.roleName.editor', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.roleName.admin', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.overview.buttons.edit.title', true, 1);
