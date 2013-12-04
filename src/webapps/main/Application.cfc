@@ -1,10 +1,16 @@
 ﻿component {
     this.sessionmanagement = true;
-    this.sessiontimeout    = createTimespan(1,0,0,0);
+    this.sessiontimeout    = createTimespan(1, 0, 0, 0);
     
-    this.mappings = {'/org':    expandPath("./system/libs/"),
-                     '/system': expandPath("./system/"),
-                     '/themes': expandPath("./themes/")};
+    this.mappings = {
+    	'/org':    expandPath("./system/libs/"),
+        '/system': expandPath("./system/"),
+        '/themes': expandPath("./themes/")
+    };
+    
+    this.customtagpaths = [
+    	expandPath("./system/customTags/com/IcedReaper/i18n/")
+    ];
     
     public boolean function onApplicationStart() {
         application.installSuccessfull = true;
@@ -31,11 +37,19 @@
 
     private boolean function initCoreTools() {
         application.tools.wrapper  = createObject("component", "system.cfc.com.IcedReaper.cms.tools.wrapper");
+        
         application.tools.tools    = createObject("component", "system.cfc.com.IcedReaper.cms.tools.tools").init();
+
         application.tools.cryption = createObject("component", "system.cfc.com.IcedReaper.cms.tools.cryption").init(encryptionKey   = application.encryption.key
                                                                                                                    ,algorithm       = application.encryption.method
                                                                                                                    ,structSeparator = ';');
         
+        application.tools.i18n = createObject("component", "system.cfc.com.IcedReaper.cms.tools.i18n").init(tablePrefix      = application.tablePrefix
+                                                                                                           ,datasource       = application.datasource.user
+                                                                                                           ,fallbackLanguage = 'en');
+
+        application.tools.i18nCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.tools.i18nCRUD").init(tablePrefix = application.tablePrefix
+                                                                                                                   ,datasource  = application.datasource.user);
         return true;
     }
     
@@ -155,11 +169,9 @@
                     case 'cms':              { this.initCoreCMS();        break; }
                     case 'user':             { this.initCoreUser();       break; }
                     case 'security':         { this.initCoreSecurity();   break; }
-                    
-                    case 'clearCache': {
-                        application.tools.tools.clearQueryCache();
-                        break;
-                    }
+
+                    case 'i18n':       { application.tools.i18n.reload();           break; }
+                    case 'clearCache': { application.tools.tools.clearQueryCache(); break; }
                     default: {
                         break;
                     }

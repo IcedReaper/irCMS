@@ -244,21 +244,21 @@ var irEditor = function($editor) {
             
             var $settings = $($('#carousel_setting').html());
             $settings.find('fieldset')
-                     .append(createOption('Interval', $carousel.attr('data-interal') || '',      function() { $carousel.attr('data-interval', $(this).val()); }))
-                     .append(createOption('Pause',    $carousel.attr('data-pause')   || 'hover', function() { $carousel.attr('data-pause',    $(this).val()); }))
-                     .append(createOption('Wrap',     $carousel.attr('data-wrap')    || 'true',  function() { $carousel.attr('data-wrap',     $(this).val()); }));
+                     .append(createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval'], $carousel.attr('data-interal') || '',      function() { $carousel.attr('data-interval', $(this).val()); }))
+                     .append(createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause'],    $carousel.attr('data-pause')   || 'hover', function() { $carousel.attr('data-pause',    $(this).val()); }))
+                     .append(createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap'],     $carousel.attr('data-wrap')    || 'true',  function() { $carousel.attr('data-wrap',     $(this).val()); }));
             $carousel.before($settings);
             
             var item_addEditHandler = function($item) {
                 var $item = ! isNumeric($item) ? $item : $(this);
 
-                var $pathEdit        = createOption('Bildpfad',     $('img', $item).attr('src') || '',                 function() {
+                var $pathEdit        = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path'],     $('img', $item).attr('src') || '',                 function() {
                                                                                                                            $('img', $item).attr('src', $(this).val()); 
                                                                                                                        });
-                var $titleEdit       = createOption('Titel',        $('img', $item).attr('alt') || '',                 function() {
+                var $titleEdit       = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title'],        $('img', $item).attr('alt') || '',                 function() {
                                                                                                                            $('img', $item).attr('alt', $(this).val()); 
                                                                                                                        });
-                var $headlineEdit    = createOption('Überschrift',  $('.carousel-caption > h3', $item).text() || '',   function() {
+                var $headlineEdit    = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline'],  $('.carousel-caption > h3', $item).text() || '',   function() {
                                                                                                                            if($(this).val() !== '') {
                                                                                                                                if($('.carousel-caption > h3', $item).length === 0) {
                                                                                                                                    $('.carousel-caption', $item).prepend($('<h3/>'));
@@ -269,7 +269,7 @@ var irEditor = function($editor) {
                                                                                                                                $('.carousel-caption > h3', $item).remove();
                                                                                                                            }
                                                                                                                        });
-                var $descriptionEdit = createOption('Beschreibung', $('.carousel-caption > span', $item).text() || '', function() {
+                var $descriptionEdit = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.description'], $('.carousel-caption > span', $item).text() || '', function() {
                                                                                                                            if($(this).val() !== '') {
                                                                                                                                if($('.carousel-caption > span', $item).length === 0) {
                                                                                                                                    $('.carousel-caption', $item).append($('<span/>'));
@@ -385,7 +385,7 @@ var irEditor = function($editor) {
                 return $option;
             };
             
-            var backgroundImage = createOption('Bildpfad', 
+            var backgroundImage = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path'], 
                                                'src',
                                                $('img', $heroImage).attr('src') || '',
                                                'input',
@@ -393,13 +393,13 @@ var irEditor = function($editor) {
                                                    $('img', $heroImage).attr('src', $(this).val())
                                                });
             
-            var content = createOption('Beschreibung', 
+            var content = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description'], 
                                        'description',
                                        $('> div', $heroImage).html() || '',
                                        'change',
                                        null);
             
-            var height = createOption('Höhe', 
+            var height = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height'], 
                                       'height',
                                       $heroImage.css('height') || '',
                                       'change',
@@ -407,7 +407,7 @@ var irEditor = function($editor) {
                                           $heroImage.css('height', $(this).val())
                                       });
             
-            var marginTop = createOption('Versatz Oben', 
+            var marginTop = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop'], 
                                          'marginTop',
                                          $('img', $heroImage).css('margin-top') || '',
                                          'input',

@@ -10,7 +10,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">irCMS</a>
+                    <a class="navbar-brand" href="/"><cf_translation keyName='core.navigation.pageName'></a>
                 </header>
                 <section class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -31,7 +31,7 @@
                     <cfif NOT request.isLoggedIn>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="##" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
+                                <a href="##" class="dropdown-toggle" data-toggle="dropdown"><cf_translation keyName='core.navigation.login.headline'> <b class="caret"></b></a>
                                 <ul class="dropdown-menu" style="padding:15px;">
                                     <form action="?login" method="post" autocomplete="false">
                                         <li>
@@ -45,12 +45,12 @@
                                             </div>
                                         </li>
                                         <li>
-                                            <button type="submit" value="login" class="btn btn-success">Sign in</button>
+                                            <button type="submit" value="login" class="btn btn-success"><cf_translation keyName='core.navigation.login.login'></button>
                                         </li>
                                     </form>
                                     <li class="divider"></li>
                                     <li>
-                                        <a type="submit" value="register" class="btn btn-default" href="/User/Registrieren">Registrieren</a>
+                                        <a type="submit" value="register" class="btn btn-default" href="/User/<cf_translation keyName='modules.com.IcedReaper.irUser.links.register'>"><cf_translation keyName='core.navigation.login.register'></a>
                                     </li>
                                 </ul>
                             </li>
@@ -65,11 +65,11 @@
                                     #session.userName# <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/User/#session.userName#">Userpanel</a></li>
+                                    <li><a href="/User/#session.userName#"><cf_translation keyName='core.navigation.login.userPanel'></a></li>
                                     <cfif application.security.permission.hasPermission(userName=session.userName, groupName='CMS', roleName='Reader')>
-                                        <li><a href="/Admin">Zum Adminpanel</a></li>
+                                        <li><a href="/Admin"><cf_translation keyName='core.navigation.login.toAdminPanel'></a></li>
                                     </cfif>
-                                    <li><a href="?logout">Ausloggen</a></li>
+                                    <li><a href="?logout"><cf_translation keyName='core.navigation.login.logout'></a></li>
                                 </ul>
                             </li>
                         </ul>
