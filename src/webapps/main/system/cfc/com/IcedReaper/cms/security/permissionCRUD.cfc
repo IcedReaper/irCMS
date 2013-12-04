@@ -90,4 +90,39 @@
         
         return qryRole.getRecordCount() == 1 ? qryGroup.permissionRoleId[1] : 0;
     }
+    
+    public array function getUserWithPermission(required string groupName, required string roleName) {
+    	var groupId = this.getGroupId(arguments.groupName);
+    	if(groupId == 0) {
+            throw(type="notFound", message="Group was not found", detail=arguments.groupName);
+    	}
+    	
+    	var roleId  = this.getRoleId(arguments.roleName);
+    	if(roleId == 0) {
+            throw(type="notFound", message="Role was not found", detail=arguments.roleName);
+    	}
+    	
+    	var qUserWithPermission = new Query().setDatasource(variables.datasource)
+    	                                     .setSQL("  SELECT userId, userName "
+    	                                            &"    FROM #variables.tablePrefix#_user "
+    	                                            &"   WHERE userId IN (SELECT userId "
+    	                                            &"                      FROM #variables.tablePrefix#_permission "
+                                                    &"                     WHERE permissionRoleId  = :role "
+                                                    &"                       AND permissionGroupId = :group) "
+                                                    &"ORDER BY userName ASC ")
+                                             .addParam(name="role",  value=roleId,   cfsqltype="cf_sql_numeric")
+                                             .addParam(name="group", value=groupId, cfsqltype="cf_sql_numeric")
+                                             .execute()
+                                             .getResult();
+    	
+    	var user = [];
+    	for(var i = 1; i <= qUserWithPermission.getRecordCount(); i++) {
+    		user[i] = {
+    			'userId': qUserWithPermission.userId[i],
+                'userName': qUserWithPermission.userName[i]
+    		};
+    	}
+    	
+    	return user;
+    }
 }
