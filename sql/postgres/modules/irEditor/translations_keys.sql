@@ -87,3 +87,13 @@ INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedRe
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.newMajorVersion', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.newMinorVersion', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.versions', true, 1);
+
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.newPage', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.newMajorVersion', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.newMinorVersion', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.delete', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.revoke', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.save', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.approve', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.reject', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.actionKeys.release', true, 1);
