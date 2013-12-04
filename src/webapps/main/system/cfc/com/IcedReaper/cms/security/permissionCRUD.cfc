@@ -11,10 +11,8 @@
     	                          .setSQL("  SELECT roleName "
     	                                 &"    FROM #variables.tablePrefix#_permissionRole "
     	                                 &"   WHERE active    = :active "
-    	                                 &"     AND sortOrder > :guest "
     	                                 &"ORDER BY sortOrder ASC")
     	                          .addParam(name="active", value=true, cfsqltype="cf_sql_bit")
-    	                          .addParam(name="guest", value=0, cfsqltype="cf_sql_numeric")
     	                          .execute()
     	                          .getResult();
     	
