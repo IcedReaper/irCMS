@@ -66,8 +66,28 @@
         }
         return groups;
     }
-    
-    public void function assignPermission(required string userName, required string roleName, required string groupName) {
-    	
+
+    public numeric function getGroupId(required string groupName) {
+        var qryGroup = new Query().setDatasource(variables.datasource)
+                                  .setSQL("SELECT permissionGroupId "
+                                         &"  FROM #variables.tablePrefix#_permissionGroup "
+                                         &" WHERE groupName = :groupName")
+                                  .addParam(name="groupName", value=arguments.groupName, cfsqltype="cf_sql_varchar")
+                                  .execute()
+                                  .getResult();
+        
+        return qryGroup.getRecordCount() == 1 ? qryGroup.permissionGroupId[1] : 0;
+    }
+
+    public numeric function getRoleId(required string roleName) {
+        var qryRole = new Query().setDatasource(variables.datasource)
+                                 .setSQL("SELECT permissionRoleId "
+                                        &"  FROM #variables.tablePrefix#_permissionRole "
+                                        &" WHERE roleName = :roleName")
+                                 .addParam(name="roleName", value=arguments.roleName, cfsqltype="cf_sql_varchar")
+                                 .execute()
+                                 .getResult();
+        
+        return qryRole.getRecordCount() == 1 ? qryGroup.permissionRoleId[1] : 0;
     }
 }

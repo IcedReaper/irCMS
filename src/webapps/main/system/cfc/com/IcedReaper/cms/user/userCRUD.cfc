@@ -191,12 +191,12 @@
     }
     
     public boolean function grantPermission(required string userName, required string groupName, required string roleName) {
-        var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(datasource   = variables.datasource
-                                                                                                             ,tablePrefix  = variables.tablePrefix);
+        var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permissionCRUD").init(datasource   = variables.datasource
+                                                                                                                 ,tablePrefix  = variables.tablePrefix);
         
     	var userId  = this.getId(userName = arguments.userName);
-    	var groupId = oPermission.groupGetId(groupName = arguments.groupName);
-    	var roleId  = oPermission.roleGetId(roleName = arguments.roleName);
+    	var groupId = oPermission.getGroupId(groupName = arguments.groupName);
+    	var roleId  = oPermission.getRoleId(roleName = arguments.roleName);
     	
     	if(userId != 0 && groupId != 0 && roleId != 0) {
           new Query().setDatasource(variables.datasource)
@@ -223,12 +223,12 @@
     }
     
     public boolean function refusePermission(required string userName, required string groupName, required string roleName) {
-        var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(datasource   = variables.datasource
-                                                                                                             ,tablePrefix  = variables.tablePrefix);
+        var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permissionCRUD").init(datasource   = variables.datasource
+                                                                                                                 ,tablePrefix  = variables.tablePrefix);
         
         var userId  = this.getId(userName = arguments.userName);
-        var groupId = oPermission.groupGetId(groupName = arguments.groupName);
-        var roleId  = oPermission.roleGetId(roleName = arguments.roleName);
+        var groupId = oPermission.getGroupId(groupName = arguments.groupName);
+        var roleId  = oPermission.getRoleId(roleName = arguments.roleName);
         
         if(userId != 0 && groupId != 0 && roleId != 0) {
             new Query().setDatasource(variables.datasource)
