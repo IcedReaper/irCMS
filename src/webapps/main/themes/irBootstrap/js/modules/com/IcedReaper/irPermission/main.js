@@ -29,4 +29,10 @@ $(function() {
                               e.originalEvent.dataTransfer.setData("id", $(this).attr('id'));
                           }
                       }, 'li');
+    
+    $('button#save').on('click', function() {
+        $('ul.list-group').each(function() {
+            
+        });
+    });
 });
