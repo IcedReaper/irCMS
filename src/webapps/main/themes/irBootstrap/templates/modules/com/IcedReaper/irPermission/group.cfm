@@ -34,6 +34,7 @@
             </div>
         </div>
     </cfif>
+    
     <section class="row">
         <section class="col-md-9">
             <section class="row">
@@ -42,9 +43,12 @@
                         <article class="widget">
                             <fieldset>
                                 <legend>#attributes.roleData[roleDataIndex].roleName#</legend>
-                                <ul class="list-group">
+                                <ul class="list-group" data-roleName="#attributes.roleData[roleDataIndex].roleName#">
                                     <cfloop from="1" to="#attributes.roleData[roleDataIndex].user.len()#" index="userIndex">
-                                        <li class="list-group-item" draggable="true" id="user#attributes.roleData[roleDataIndex].user[userIndex].userId#">#attributes.roleData[roleDataIndex].user[userIndex].userName#</li>
+                                        <li class="list-group-item"
+                                            draggable="true"
+                                            id="user#attributes.roleData[roleDataIndex].user[userIndex].userId#"
+                                            data-userId="#attributes.roleData[roleDataIndex].user[userIndex].userId#">#attributes.roleData[roleDataIndex].user[userIndex].userName#</li>
                                     </cfloop>
                                 </ul>
                             </fieldset>
@@ -59,7 +63,10 @@
                     <legend><cf_translation keyName='modules.com.IcedReaper.irPermission.group.userList'></legend>
                     <ul class="list-group" id="userList">
                         <cfloop from="1" to="#attributes.userWithoutPermission.len()#" index="userIndex">
-                            <li class="list-group-item" draggable="true" id="user#attributes.userWithoutPermission[userIndex].userId#">#attributes.userWithoutPermission[userIndex].userName#</li>
+                            <li class="list-group-item" 
+                                draggable="true"
+                                id="user#attributes.userWithoutPermission[userIndex].userId#"
+                                data-userId="#attributes.roleData[roleDataIndex].user[userIndex].userId#">#attributes.userWithoutPermission[userIndex].userName#</li>
                         </cfloop>
                     </ul>
                 </fieldset>
