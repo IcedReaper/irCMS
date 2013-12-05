@@ -2,11 +2,6 @@
 <cfoutput>
     <div class="row">
         <div class="col-md-12">
-            <cfmodule template="navigation.cfm">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <header class="widget">
                 <h2>
                     <cf_translation keyName='modules.com.IcedReaper.irPermission.overview.headline'>
