@@ -88,7 +88,7 @@
                                  .execute()
                                  .getResult();
         
-        return qryRole.getRecordCount() == 1 ? qryGroup.permissionRoleId[1] : 0;
+        return qryRole.getRecordCount() == 1 ? qryRole.permissionRoleId[1] : 0;
     }
     
     public array function getUserWithPermission(required string groupName, required string roleName) {
