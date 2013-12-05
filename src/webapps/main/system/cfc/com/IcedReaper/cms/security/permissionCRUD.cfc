@@ -118,11 +118,41 @@
     	var user = [];
     	for(var i = 1; i <= qUserWithPermission.getRecordCount(); i++) {
     		user[i] = {
-    			'userId': qUserWithPermission.userId[i],
+    			'userId':   qUserWithPermission.userId[i],
                 'userName': qUserWithPermission.userName[i]
     		};
     	}
     	
     	return user;
+    }
+    
+    public array function getUserWithoutPermission(required string groupName) {
+        var groupId = this.getGroupId(arguments.groupName);
+        if(groupId == 0) {
+            throw(type="notFound", message="Group was not found", detail=arguments.groupName);
+        }
+        
+        var qUserWithoutPermission = new Query().setDatasource(variables.datasource)
+                                                .setSQL("  SELECT userId, userName "
+                                                       &"    FROM #variables.tablePrefix#_user "
+                                                       &"   WHERE active = :active "
+                                                       &"     AND userId NOT IN (SELECT userId "
+                                                       &"                          FROM #variables.tablePrefix#_permission "
+                                                       &"                         WHERE permissionGroupId = :group) "
+                                                       &"ORDER BY userName ASC ")
+                                                .addParam(name="active", value=true,    cfsqltype="cf_sql_bit")
+                                                .addParam(name="group",  value=groupId, cfsqltype="cf_sql_numeric")
+                                                .execute()
+                                                .getResult();
+        
+        var user = [];
+        for(var i = 1; i <= qUserWithoutPermission.getRecordCount(); i++) {
+            user[i] = {
+                'userId':   qUserWithoutPermission.userId[i],
+                'userName': qUserWithoutPermission.userName[i]
+            };
+        }
+        
+        return user;
     }
 }
