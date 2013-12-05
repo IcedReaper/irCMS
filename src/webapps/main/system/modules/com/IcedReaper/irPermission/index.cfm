@@ -7,8 +7,8 @@
     if(request.actualUser.hasPermission(groupName='irPermission', roleName='Reader')) {
         switch(attributes.entities.len()) {
         	case 1: {
-                // show users of specific permission
-                include "permission.cfm";
+                // show users of specific group
+                include "group.cfm";
                 break;
         	}
         	case 2: {
