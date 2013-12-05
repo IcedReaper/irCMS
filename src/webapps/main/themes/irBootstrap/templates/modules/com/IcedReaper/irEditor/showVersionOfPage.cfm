@@ -277,7 +277,7 @@
                                         <button class="btn btn-default" id="preview"><span class="glyphicon glyphicon-eye-open"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.preview'></button>
                                         <button class="btn btn-default" id="edit"><span class="glyphicon glyphicon-eye-close"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.edit'></button>
                                         
-                                        <button class="btn btn-primary" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.save'>save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.save'>Speichern</button>
+                                        <button class="btn btn-primary" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.save'>" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.save'></button>
                                     </cfif>
                                     <cfif NOT attributes.pageToShow.isOnline()>
                                         <cfif NOT attributes.pageToShow.isReadyToRelease()>
