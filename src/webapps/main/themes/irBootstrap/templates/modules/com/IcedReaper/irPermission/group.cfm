@@ -2,7 +2,7 @@
     request.pageTitle = "#application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irPermission.group.pageTitle', language=request.language)# #attributes.groupName#";
     
     if(attributes.editable) {
-        application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irPermission/');
+        application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irPermission/group.js');
     }
 </cfscript>
 <cfoutput>
