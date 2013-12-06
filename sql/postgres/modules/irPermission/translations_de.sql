@@ -18,3 +18,7 @@ INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SEL
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irPermission.group.button.save.value'), 'de', 'save');
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irPermission.group.button.save.title'), 'de', 'Bearbeitung der Rechtezugehörigkeiten speichern');
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irPermission.group.button.save.caption'), 'de', 'Speichern');
+
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irPermission.permissionList.headline'), 'de', 'Berechtigungen des Users');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irPermission.permissionList.buttons.edit.title'), 'de', 'Rechte des Users bearbeiten');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irPermission.permissionList.buttons.edit.caption'), 'de', 'Rechte bearbeiten');
