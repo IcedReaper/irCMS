@@ -229,6 +229,9 @@
                     </section>
                 </div>
             </div>
+            <cfif request.actualUser.hasPermission(groupName='irPermission', roleName='Reader')>
+                <cfmodule template="/system/modules/com/IcedReaper/irPermission/userPermissionList.cfm" userName="#attributes.userName#">
+            </cfif>
             <div class="row">
                 <div class="col-md-12">
                     <cfset buddyModule = application.cms.core.getModulePath('Buddies')>
