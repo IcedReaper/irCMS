@@ -9,13 +9,13 @@
     switch(attributes.entities.len()) {
     	case 2: {
             switch(attributes.entities[1]) {
-                case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irErrorlog.links.page', language=request.language): {
+                case 'page': {
                     attributes.page = attributes.entities[2];
-                    include template="overview.cfm";
+                    include "overview.cfm";
                     break;
                 }
-                case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irErrorlog.links.error', language=request.language): {
-                    include template="entity.cfm";
+                case 'error': {
+                    include "entity.cfm";
                     break;
                 }
             }
@@ -23,7 +23,7 @@
         }
     	default: {
             attributes.page = 1;
-    		include template="overview.cfm";
+    		include "overview.cfm";
     		break;
     	}
     }

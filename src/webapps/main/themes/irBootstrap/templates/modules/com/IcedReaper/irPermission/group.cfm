@@ -37,7 +37,7 @@
                                      <a href="#attributes.sesLink#" class="btn btn-sm btn-warning" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.cancel.title'>"><span class="glyphicon glyphicon-off"></span> <cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.cancel.caption'></a>
                                 </div>
                                 <div class="pull-right">
-                                     <button class="btn btn-primary" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.value'>" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.title'>" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.caption'></button>
+                                     <button class="btn btn-primary" type="submit" name="action" value="save" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.title'>" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.caption'></button>
                                 </div>
                             </div>
                         </div>

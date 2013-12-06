@@ -4,5 +4,5 @@
     attributes.errorId   = attributes.entities[2];
     attributes.errorData = attributes.errorLog.getDetails(errorId=attributes.errorId);
     
-    include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irErrorlog/details.cfm";
+    include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irErrorlog/details.cfm";
 </cfscript>

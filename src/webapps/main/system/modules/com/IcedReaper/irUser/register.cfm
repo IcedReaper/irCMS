@@ -8,9 +8,9 @@
             }
         }
 
-        include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/userRegistration.cfm";
+        include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/userRegistration.cfm";
     }
     else {
-        include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/alreadyRegistered.cfm";
+        include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/alreadyRegistered.cfm";
     }
 </cfscript>

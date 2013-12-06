@@ -50,7 +50,7 @@
                                     </form>
                                     <li class="divider"></li>
                                     <li>
-                                        <a type="submit" value="register" class="btn btn-default" href="/User/<cf_translation keyName='modules.com.IcedReaper.irUser.links.register'>"><cf_translation keyName='core.navigation.login.register'></a>
+                                        <a type="submit" value="register" class="btn btn-default" href="/User/register"><cf_translation keyName='core.navigation.login.register'></a>
                                     </li>
                                 </ul>
                             </li>

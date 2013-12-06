@@ -16,11 +16,11 @@
         <div class="col-md-12">
             <nav>
                 <ul class="pagination">
-                    <li <cfif attributes.page EQ 1>class="disabled"</cfif>><a href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irErrorlog.links.page'>/#attributes.page-1#">&laquo;</a></li>
+                    <li <cfif attributes.page EQ 1>class="disabled"</cfif>><a href="#attributes.sesLink#/page/#attributes.page-1#">&laquo;</a></li>
                     <cfloop from="1" to="#attributes.pageCount#" index="errorPage">
-                        <li <cfif errorPage EQ attributes.page>class="active"</cfif>><a href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irErrorlog.links.page'>/#errorPage#">#errorPage#</a></li>
+                        <li <cfif errorPage EQ attributes.page>class="active"</cfif>><a href="#attributes.sesLink#/page/#errorPage#">#errorPage#</a></li>
                     </cfloop>
-                    <li <cfif attributes.page EQ attributes.pageCount>class="disabled"</cfif>><a href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irErrorlog.links.page'>/#attributes.page+1#">&raquo;</a></li>
+                    <li <cfif attributes.page EQ attributes.pageCount>class="disabled"</cfif>><a href="#attributes.sesLink#/page/#attributes.page+1#">&raquo;</a></li>
                 </ul>
             </nav>
         </div>
@@ -42,11 +42,11 @@
                             <tbody>
                                 <cfloop from="1" to="#attributes.overview.len()#" index="errorIndex">
                                     <tr>
-                                        <td><a href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irErrorlog.links.error'>/#attributes.overview[errorIndex].errorId#">#attributes.overview[errorIndex].type#</a></td>
-                                        <td><a href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irErrorlog.links.error'>/#attributes.overview[errorIndex].errorId#">#attributes.overview[errorIndex].errorType#</a></td>
-                                        <td><a href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irErrorlog.links.error'>/#attributes.overview[errorIndex].errorId#">#attributes.overview[errorIndex].templateName#</a></td>
-                                        <td><a href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irErrorlog.links.error'>/#attributes.overview[errorIndex].errorId#">#attributes.overview[errorIndex].line#</a></td>
-                                        <td><a href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irErrorlog.links.error'>/#attributes.overview[errorIndex].errorId#">#dateFormat(attributes.overview[errorIndex].date, 'DD. MMM YYYY')# um #timeFormat(attributes.overview[errorIndex].date, 'HH:MM:SS')#</a></td>
+                                        <td><a href="#attributes.sesLink#/error/#attributes.overview[errorIndex].errorId#">#attributes.overview[errorIndex].type#</a></td>
+                                        <td><a href="#attributes.sesLink#/error/#attributes.overview[errorIndex].errorId#">#attributes.overview[errorIndex].errorType#</a></td>
+                                        <td><a href="#attributes.sesLink#/error/#attributes.overview[errorIndex].errorId#">#attributes.overview[errorIndex].templateName#</a></td>
+                                        <td><a href="#attributes.sesLink#/error/#attributes.overview[errorIndex].errorId#">#attributes.overview[errorIndex].line#</a></td>
+                                        <td><a href="#attributes.sesLink#/error/#attributes.overview[errorIndex].errorId#">#dateFormat(attributes.overview[errorIndex].date, 'DD. MMM YYYY')# um #timeFormat(attributes.overview[errorIndex].date, 'HH:MM:SS')#</a></td>
                                     </tr>
 	                            </cfloop>
                             </tbody>

@@ -6,21 +6,21 @@
 
     switch(attributes.entities.len()) {
         case 0: {
-            include template="overview.cfm";
+            include "overview.cfm";
             break;
         }
         case 1: {
             switch(attributes.entities[1]) {
-                case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.links.search', language=request.language): {
-                    include template="search.cfm";
+                case 'search': {
+                    include "search.cfm";
                     break;
                 }
-                case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.links.register', language=request.language): {
-                    include template="register.cfm";
+                case 'register': {
+                    include "register.cfm";
                     break;
                 }
                 default: {
-                    include template="showUserProfile.cfm";
+                    include "showUserProfile.cfm";
                 }
             }
             break;

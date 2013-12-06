@@ -5,7 +5,7 @@
 	        <div class="alert alert-danger">
 	            <cf_translation keyName='modules.com.IcedReaper.irUser.search.notFound.message'>
 	            <a type="button" class="btn btn-default" href="#attributes.sesLink#"><cf_translation keyName='modules.com.IcedReaper.irUser.search.notFound.buttons.overview.caption'></a>
-	            <a type="button" class="btn btn-default" href="#attributes.sesLink#/<cf_translation keyName='modules.com.IcedReaper.irUser.links.search'>"><cf_translation keyName='modules.com.IcedReaper.irUser.search.notFound.buttons.search.caption'></a>
+	            <a type="button" class="btn btn-default" href="#attributes.sesLink#/search"><cf_translation keyName='modules.com.IcedReaper.irUser.search.notFound.buttons.search.caption'></a>
 	        </div>
 	    </div>
 	</div>

@@ -6,5 +6,5 @@
     
     attributes.pageCount = ceiling(attributes.errorCount/attributes.showPerPage);
     
-    include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irErrorlog/overview.cfm";
+    include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irErrorlog/overview.cfm";
 </cfscript>
