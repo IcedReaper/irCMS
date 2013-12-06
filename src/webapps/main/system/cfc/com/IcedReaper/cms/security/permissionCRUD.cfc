@@ -156,7 +156,7 @@
         return user;
     }
     
-    public void function setUserPermission(required numeric userId, required numeric groupId, required numeric roleId) {
+    public void function setPermission(required numeric userId, required numeric groupId, required numeric roleId) {
         var qPermissionSet = new Query().setDatasource(variables.datasource)
                                         .setSQL("SELECT permissionId "
                                                &"  FROM #variables.tablePrefix#_permission "
@@ -196,7 +196,7 @@
         }
     }
     
-    public void function removeUserPermission(required numeric userId, required numeric groupId) {
+    public void function removePermission(required numeric userId, required numeric groupId) {
         new Query().setDatasource(variables.datasource)
                    .setSQL("DELETE FROM #variables.tablePrefix#_permission "
                           &"      WHERE userId            = :userId "
@@ -206,7 +206,7 @@
                    .execute();
     }
     
-    public void function setPermission(required string groupName, required array roleData) {
+    public void function updatePermission(required string groupName, required array roleData) {
         var groupId = this.getGroupId(groupName=arguments.groupName);
         if(groupId == 0) {
             throw(type="notFound", message="Group was not found", detail=arguments.groupName);
@@ -220,12 +220,12 @@
                 }
                 
                 for(var j = 1; j <= arguments.roleData[i].user.len(); j++) {
-                    this.setUserPermission(userId=arguments.roleData[i].user[j], groupId=groupId, roleId=roleId);
+                    this.setPermission(userId=arguments.roleData[i].user[j], groupId=groupId, roleId=roleId);
                 }
             }
             else {
                 for(var j = 1; j <= arguments.roleData[i].user.len(); j++) {
-                    this.removeUserPermission(userId=arguments.roleData[i].user[j], groupId=groupId);
+                    this.removePermission(userId=arguments.roleData[i].user[j], groupId=groupId);
                 }
             }
         }

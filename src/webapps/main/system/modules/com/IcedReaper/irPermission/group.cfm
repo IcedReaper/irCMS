@@ -6,7 +6,7 @@
         if(attributes.editable) {
         	switch(form.action) {
         	    case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irPermission.group.button.save.value', language=request.language): {
-        	        application.security.permissionCRUD.setPermission(groupName=attributes.groupName, roleData=DeserializeJSON(form.roles));
+        	        application.security.permissionCRUD.updatePermission(groupName=attributes.groupName, roleData=DeserializeJSON(form.roles));
         	        break;
         	    }
         	}
