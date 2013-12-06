@@ -43,7 +43,7 @@
                                                                                                                           ,version      = attributes.version);
     
     if(attributes.pageToShow.load()) {
-        include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irEditor/showVersionOfPage.cfm";
+        include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irEditor/showVersionOfPage.cfm";
     }
     else {
         throw(type="notFound", message="Navigation was found", detail=arguments.sesLink);

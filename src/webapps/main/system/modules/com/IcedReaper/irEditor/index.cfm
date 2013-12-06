@@ -11,14 +11,14 @@
     if(request.actualUser.hasPermission(groupName='irEditor', roleName='Reader')) {
         switch(attributes.entities.len()) {
             case 0: {
-                include template="dashboard.cfm";
+                include "dashboard.cfm";
                 break;
             }
             case 1: {
                 switch(attributes.entities[1]) {
                     case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.newPage', language=request.language): {
                         // create a new page
-                        include template="newPage.cfm";
+                        include "newPage.cfm";
                         break;
                     }
                 }
@@ -46,7 +46,7 @@
                     }
                     default: {
                         // e.g. */navigationId+D/1.0
-                        include template="showVersion.cfm";
+                        include "showVersion.cfm";
                         break;
                     }
                 }
@@ -54,12 +54,12 @@
             }
             case 3: {
                 // e.g. */navigationId+/1.0/Delete
-                include template="action.cfm";
+                include "action.cfm";
                 break;
             }
         }
     }
     else {
-        include template="/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
+        include "/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
     }
 </cfscript>
