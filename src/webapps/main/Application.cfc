@@ -103,7 +103,7 @@
                                                                                                                              ,datasource  = application.datasource.user);
         
         application.security.permissionCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.security.permissionCRUD").init(tablePrefix = application.tablePrefix
-                                                                                                                                     ,datasource  = application.datasource.user);
+                                                                                                                                     ,datasource  = application.datasource.admin);
         
         return true;
     }
