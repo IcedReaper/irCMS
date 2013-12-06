@@ -40,10 +40,19 @@
         for(var i = 1; i <= qGetGroup.getRecordCount(); i++) {
         	groups[i] = {
         		'id':    qGetGroup.permissionGroupId[i],
-        	    'name':  qGetGroup.groupName[i],
-        	    'roles': []
+        	    'name':  qGetGroup.groupName[i]
         	};
-        	var qGetRole = new Query().setDatasource(variables.datasource)
+        }
+        return groups;
+    }
+    
+    public array function getGroupListWithRoleCounter() {
+        var groups = this.getGroupList();
+        
+        for(var i = 1; i <= groups.len(); i++) {
+            groups[i].roles = [];
+            
+            var qGetRole = new Query().setDatasource(variables.datasource)
                                   .setSQL("  SELECT permissionRoleId "
                                          &"    FROM #variables.tablePrefix#_permissionRole "
                                          &"   WHERE active    = :active "
@@ -54,19 +63,20 @@
                                   .execute()
                                   .getResult();
             
-        	for(var j = 1; j <= qGetRole.getRecordCount(); j++) {
-        		groups[i].roles[j] = new Query().setDatasource(variables.datasource)
-        		                                .setSQL("SELECT permissionId "
-    		                                           &"  FROM #variables.tablePrefix#_permission "
-    		                                           &" WHERE permissionRoleId  = :role "
-    		                                           &"   AND permissionGroupId = :group ")
-        		                                .addParam(name="role",  value=qGetRole.permissionRoleId[j],   cfsqltype="cf_sql_numeric")
-                                                .addParam(name="group", value=qGetGroup.permissionGroupId[i], cfsqltype="cf_sql_numeric")
-        		                                .execute()
-        		                                .getResult()
-        		                                .getRecordCount();
-        	}
+            for(var j = 1; j <= qGetRole.getRecordCount(); j++) {
+                groups[i].roles[j] = new Query().setDatasource(variables.datasource)
+                                                .setSQL("SELECT permissionId "
+                                                       &"  FROM #variables.tablePrefix#_permission "
+                                                       &" WHERE permissionRoleId  = :role "
+                                                       &"   AND permissionGroupId = :group ")
+                                                .addParam(name="role",  value=qGetRole.permissionRoleId[j], cfsqltype="cf_sql_numeric")
+                                                .addParam(name="group", value=groups[i].id,                 cfsqltype="cf_sql_numeric")
+                                                .execute()
+                                                .getResult()
+                                                .getRecordCount();
+            }
         }
+        
         return groups;
     }
 
