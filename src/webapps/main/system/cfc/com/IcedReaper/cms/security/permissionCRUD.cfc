@@ -220,54 +220,12 @@
                 }
                 
                 for(var j = 1; j <= arguments.roleData[i].user.len(); j++) {
-                    var qPermissionSet = new Query().setDatasource(variables.datasource)
-                                                    .setSQL("SELECT permissionId "
-                                                           &"  FROM #variables.tablePrefix#_permission "
-                                                           &" WHERE userId            = :userId "
-                                                           &"   AND permissionGroupId = :groupId")
-                                                    .addParam(name="userId",  value=arguments.roleData[i].user[j], cfsqltype="cf_sql_numeric")
-                                                    .addParam(name="groupId", value=groupId,                       cfsqltype="cf_sql_numeric")
-                                                    .execute()
-                                                    .getResult();
-                    
-                    if(qPermissionSet.getRecordCount() == 1) {
-                        new Query().setDatasource(variables.datasource)
-                                   .setSQL("UPDATE #variables.tablePrefix#_permission "
-                                          &"   SET permissionRoleId = :roleId "
-                                          &" WHERE permissionId     = :permissionId")
-                                   .addParam(name="roleId",       value=roleId,                         cfsqltype="cf_sql_numeric")
-                                   .addParam(name="permissionId", value=qPermissionSet.permissionId[1], cfsqltype="cf_sql_numeric")
-                                   .execute();
-                    }
-                    else {
-                        new Query().setDatasource(variables.datasource)
-                                   .setSQL("INSERT INTO #variables.tablePrefix#_permission "
-                                          &"            ( "
-                                          &"                userId, "
-                                          &"                permissionGroupId, "
-                                          &"                permissionRoleId "
-                                          &"            ) "
-                                          &"     VALUES ( "
-                                          &"                :userId, "
-                                          &"                :permissionGroupId, "
-                                          &"                :permissionRoleId "
-                                          &"            ) ")
-                                   .addParam(name="userId",            value=arguments.roleData[i].user[j], cfsqltype="cf_sql_numeric")
-                                   .addParam(name="permissionGroupId", value=groupId,                       cfsqltype="cf_sql_numeric")
-                                   .addParam(name="permissionRoleId",  value=roleId,                        cfsqltype="cf_sql_numeric")
-                                   .execute();
-                    }
+                    this.setUserPermission(userId=arguments.roleData[i].user[j], groupId=groupId, roleId=roleId);
                 }
             }
             else {
                 for(var j = 1; j <= arguments.roleData[i].user.len(); j++) {
-                    new Query().setDatasource(variables.datasource)
-                               .setSQL("DELETE FROM #variables.tablePrefix#_permission "
-                                      &"      WHERE userId            = :userId "
-                                      &"        AND permissionGroupId = :groupId ")
-                               .addParam(name="groupId", value=groupId,                       cfsqltype="cf_sql_numeric")
-                               .addParam(name="userId",  value=arguments.roleData[i].user[j], cfsqltype="cf_sql_numeric")
-                               .execute();
+                    this.removeUserPermission(userId=arguments.roleData[i].user[j], groupId=groupId);
                 }
             }
         }
