@@ -15,7 +15,7 @@
                         </cfloop>
                     </div>
                     <cfif request.actualUser.hasPermission(groupName='irPermission', roleName='Editor')>
-                        <a class="btn btn-primary" href="/Admin/Permissions/User/#attributes.userName#" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.permissionList.buttons.edit.title'>"><span class="glyphicon glyphicon-edit"></span><cf_translation keyName='modules.com.IcedReaper.irPermission.permissionList.buttons.edit.caption'></a>
+                        <a class="btn btn-primary" href="/Admin/Permissions/User/#attributes.userName#" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.permissionList.buttons.edit.title'>"><span class="glyphicon glyphicon-edit"></span> <cf_translation keyName='modules.com.IcedReaper.irPermission.permissionList.buttons.edit.caption'></a>
                     </cfif>
                 </fieldset>
             </section>
