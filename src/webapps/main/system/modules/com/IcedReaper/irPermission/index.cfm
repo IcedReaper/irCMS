@@ -24,6 +24,6 @@
         }
     }
     else {
-        include template="/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
+        include "/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
     }
 </cfscript>
