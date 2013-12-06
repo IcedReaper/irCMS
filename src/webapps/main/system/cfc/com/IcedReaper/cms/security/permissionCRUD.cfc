@@ -265,4 +265,24 @@
         
         return userRoles;
     }
+    
+    public void function updateUserPermission(required numeric userId, required struct userRoles) {
+        var groupList = this.getGroupList();
+        
+        for(var i = 1; i <= groupList.len(); i++) {
+            var groupId = groupList[i].id;
+            
+            if(arguments.userRoles[ groupList[i].name ] != 'guest') {
+                var roleId = arguments.userRoles[ groupList[i].name ];
+                
+                this.setPermission(userId  = arguments.userId,
+                                   groupId = groupId,
+                                   roleId  = roleId);
+            }
+            else {
+                this.removePermission(userId  = arguments.userId,
+                                      groupId = groupId);
+            }
+        }
+    }
 }
