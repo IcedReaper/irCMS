@@ -15,7 +15,6 @@ INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedRe
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.group.headline', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.group.button.cancel.title', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.group.button.cancel.caption', true, 1);
-INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.group.button.save.value', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.group.button.save.title', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.group.button.save.caption', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irPermission.group.update.successfull', true, 1);
