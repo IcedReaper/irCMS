@@ -64,7 +64,7 @@
             <article class="widget">
                 <fieldset>
                     <legend><cf_translation keyName='modules.com.IcedReaper.irPermission.group.userList'></legend>
-                    <ul class="list-group" id="userList">
+                    <ul class="list-group" id="userList" data-roleName="guest">
                         <cfloop from="1" to="#attributes.userWithoutPermission.len()#" index="userIndex">
                             <li class="list-group-item" 
                                 draggable="true"
