@@ -92,12 +92,12 @@
     }
     
     public array function getUserWithPermission(required string groupName, required string roleName) {
-    	var groupId = this.getGroupId(arguments.groupName);
+    	var groupId = this.getGroupId(groupName=arguments.groupName);
     	if(groupId == 0) {
             throw(type="notFound", message="Group was not found", detail=arguments.groupName);
     	}
     	
-    	var roleId  = this.getRoleId(arguments.roleName);
+    	var roleId  = this.getRoleId(roleName=arguments.roleName);
     	if(roleId == 0) {
             throw(type="notFound", message="Role was not found", detail=arguments.roleName);
     	}
@@ -110,7 +110,7 @@
                                                     &"                     WHERE permissionRoleId  = :role "
                                                     &"                       AND permissionGroupId = :group) "
                                                     &"ORDER BY userName ASC ")
-                                             .addParam(name="role",  value=roleId,   cfsqltype="cf_sql_numeric")
+                                             .addParam(name="role",  value=roleId,  cfsqltype="cf_sql_numeric")
                                              .addParam(name="group", value=groupId, cfsqltype="cf_sql_numeric")
                                              .execute()
                                              .getResult();
@@ -127,7 +127,7 @@
     }
     
     public array function getUserWithoutPermission(required string groupName) {
-        var groupId = this.getGroupId(arguments.groupName);
+        var groupId = this.getGroupId(groupName=arguments.groupName);
         if(groupId == 0) {
             throw(type="notFound", message="Group was not found", detail=arguments.groupName);
         }
