@@ -69,7 +69,7 @@
                             <li class="list-group-item" 
                                 draggable="true"
                                 id="user#attributes.userWithoutPermission[userIndex].userId#"
-                                data-userId="#attributes.roleData[roleDataIndex].user[userIndex].userId#">#attributes.userWithoutPermission[userIndex].userName#</li>
+                                data-userId="#attributes.userWithoutPermission[userIndex].userId#">#attributes.userWithoutPermission[userIndex].userName#</li>
                         </cfloop>
                     </ul>
                 </fieldset>
