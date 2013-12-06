@@ -38,9 +38,6 @@
             
             module template="/themes/#arguments.themeName#/templates/core/notFound.cfm";
         }
-        else {
-            // error within an error -> nice :D
-        }
     }
     
     public void function processError(required string themeName, required struct errorStruct) {
@@ -63,9 +60,6 @@
             }
             
             module template="/themes/#arguments.themeName#/templates/core/error.cfm";
-        }
-        else {
-            // error within an error -> nice :D
         }
     }
     

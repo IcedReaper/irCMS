@@ -32,10 +32,6 @@ $(function() {
 });
 
 var irEditor = function($editor) {
-    var isNumeric = function (n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    };
-    
     var bEditable = true;
     
     var $previewBtn = $('.btn#preview');
