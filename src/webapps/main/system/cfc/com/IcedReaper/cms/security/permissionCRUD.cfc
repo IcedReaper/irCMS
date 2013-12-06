@@ -230,4 +230,26 @@
             }
         }
     }
+    
+    public array function getUserPermission(required string userId) {
+        var qGetUserPermissions = new Query().setDatasource(variables.datasource)
+                                             .setSQL("    SELECT g.groupName, r.roleName "
+                                                    &"      FROM #variables.tablePrefix#_permission p "
+                                                    &"INNER JOIN #variables.tablePrefix#_permissionGroup g ON g.permissionGroupId=p.permissionGroupId "
+                                                    &"INNER JOIN #variables.tablePrefix#_permissionRole  r ON r.permissionRoleId=p.permissionRoleId "
+                                                    &"     WHERE p.userId=:userId")
+                                             .addParam(name="userId", value=arguments.userId, cfsqltype="cf_sql_numeric")
+                                             .execute()
+                                             .getResult();
+        
+        var userRoles = [];
+        for(var i = 1; i <= qGetUserPermissions.getRecordCount(); i++) {
+            userRoles[i] = {
+                'groupName': qGetUserPermissions.groupName[i],
+                'roleName':  qGetUserPermissions.roleName[i]
+            };
+        }
+        
+        return userRoles;
+    }
 }
