@@ -11,11 +11,11 @@
         }
         case 1: {
             switch(attributes.entities[1]) {
-                case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.links.search', language=request.language): {
+                case 'search': {
                     include "search.cfm";
                     break;
                 }
-                case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irUser.links.register', language=request.language): {
+                case 'register': {
                     include "register.cfm";
                     break;
                 }
