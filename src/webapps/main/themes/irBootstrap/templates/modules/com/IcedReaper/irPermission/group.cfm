@@ -78,6 +78,6 @@
     </section>
     
     <script type="html/text" id="dummyUser">
-        <li class="list-group-item dummy" draggable="true" id="dummy"><cf_translation keyName='modules.com.IcedReaper.irPermission.group.addAUser'></li>
+        <li class="list-group-item dummy" id="dummy"><cf_translation keyName='modules.com.IcedReaper.irPermission.group.addAUser'></li>
     </script>
 </cfoutput>
