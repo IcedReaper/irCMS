@@ -30,9 +30,21 @@ $(function() {
                           }
                       }, 'li');
     
-    $('button#save').on('click', function() {
-        $('ul.list-group').each(function() {
-            
+    $('button#save').closest('form').on('submit', function() {
+        var ruleData = [];
+        $('ul.list-group').each(function(index) {
+            ruleData[index] = {
+                'roleName': $(this).attr('data-roleName'),
+                'user':     $(this).find('li')
+                                   .map(function() {
+                                       return $(this).attr('data-userId')
+                                   })
+                                   .get()
+            };
         });
+        
+        $('#newRoleStruct').val(JSON.stringify(ruleData).replace(/\\n/gi, ''));
+        
+        return true;
     });
 });
