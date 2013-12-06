@@ -4,23 +4,23 @@
         attributes.version      = attributes.entities[2];
 
         switch(attributes.entities[3]) {
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.release', language=request.language): {
+            case 'release': {
                 application.cms.navigationCRUD.releaseContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.approve', language=request.language): {
+            case 'approve': {
                 application.cms.navigationCRUD.approveContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.reject', language=request.language): {
+            case 'reject': {
                 application.cms.navigationCRUD.rejectContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.delete', language=request.language): {
+            case 'delete': {
                 application.cms.navigationCRUD.deleteContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.revoke', language=request.language): {
+            case 'revoke': {
                 application.cms.navigationCRUD.revokeContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }

@@ -261,10 +261,10 @@
                             <div class="pull-left">
                                 <cfif NOT attributes.pageToShow.isOffline()>
                                     <cfif attributes.pageToShow.isEditable()>
-                                        <button class="btn btn-sm btn-danger" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.delete'>" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.delete'>"><span class="glyphicon glyphicon-trash"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.delete'></button>
+                                        <button class="btn btn-sm btn-danger" type="submit" name="action" value="delete" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.delete'>"><span class="glyphicon glyphicon-trash"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.delete'></button>
                                     </cfif>
                                     <cfif attributes.pageToShow.isOnline()>
-                                        <button class="btn btn-sm btn-warning" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.revoke'>" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.revoke'>"><span class="glyphicon glyphicon-off"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.revoke'></button>
+                                        <button class="btn btn-sm btn-warning" type="submit" name="action" value="revoke" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.revoke'>"><span class="glyphicon glyphicon-off"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.revoke'></button>
 								    </cfif>
 								</cfif>
                             </div>
@@ -277,16 +277,16 @@
                                         <button class="btn btn-default" id="preview"><span class="glyphicon glyphicon-eye-open"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.preview'></button>
                                         <button class="btn btn-default" id="edit"><span class="glyphicon glyphicon-eye-close"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.edit'></button>
                                         
-                                        <button class="btn btn-primary" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.save'>" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.save'></button>
+                                        <button class="btn btn-primary" type="submit" name="action" value="save" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.save'></button>
                                     </cfif>
                                     <cfif NOT attributes.pageToShow.isOnline()>
                                         <cfif NOT attributes.pageToShow.isReadyToRelease()>
-                                            <button class="btn btn-success" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.approve'>" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.approve'> #attributes.pageToShow.getNextStatusName()#"><span class="glyphicon glyphicon-ok"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.approve'></button>
+                                            <button class="btn btn-success" type="submit" name="action" value="approve" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.approve'> #attributes.pageToShow.getNextStatusName()#"><span class="glyphicon glyphicon-ok"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.approve'></button>
                                             <cfif NOT attributes.pageToShow.isEditable()>
-                                                <button class="btn btn-sm btn-warning" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.reject'>"  title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.reject'>"><span class="glyphicon glyphicon-eye-close"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.reject'></button>
+                                                <button class="btn btn-sm btn-warning" type="submit" name="action" value="reject"  title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.reject'>"><span class="glyphicon glyphicon-eye-close"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.reject'></button>
                                             </cfif>
         							    <cfelse>
-                                            <button class="btn btn-success" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.actionKeys.release'>" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.release'>"><span class="glyphicon glyphicon-globe"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.release'></button>
+                                            <button class="btn btn-success" type="submit" name="action" value="release" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.buttonTitle.release'>"><span class="glyphicon glyphicon-globe"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.button.release'></button>
         								</cfif>
                                     </cfif>
                                 </cfif>

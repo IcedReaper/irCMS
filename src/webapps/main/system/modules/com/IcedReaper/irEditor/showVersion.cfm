@@ -4,30 +4,30 @@
 
     if(isDefined("form") && ! form.isEmpty() && application.security.permission.hasPermission(userName=request.userName, groupName='irEditor', roleName='Editor')) {
         switch(form.action) {
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.save', language=request.language): {
+            case 'save': {
                 attributes.contentUpdate = application.cms.navigationCRUD.updateContentVersion(navigationId = attributes.navigationId
                                                                                               ,userId       = request.actualUser.getUserId()
                                                                                               ,version      = attributes.version
                                                                                               ,versionData  = form);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.release', language=request.language): {
+            case 'release': {
                 application.cms.navigationCRUD.releaseContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.approve', language=request.language): {
+            case 'approve': {
                 application.cms.navigationCRUD.approveContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.reject', language=request.language): {
+            case 'reject': {
                 application.cms.navigationCRUD.rejectContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.delete', language=request.language): {
+            case 'delete': {
                 application.cms.navigationCRUD.deleteContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }
-            case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.revoke', language=request.language): {
+            case 'revoke': {
                 application.cms.navigationCRUD.revokeContentVersion(navigationId = attributes.navigationId, version = attributes.version);
                 break;
             }

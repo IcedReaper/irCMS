@@ -16,7 +16,7 @@
             }
             case 1: {
                 switch(attributes.entities[1]) {
-                    case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.newPage', language=request.language): {
+                    case 'newPage': {
                         // create a new page
                         include "newPage.cfm";
                         break;
@@ -26,8 +26,7 @@
             }
             case 2: {
                 switch(attributes.entities[2]) {
-                    case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.newMajorVersion', language=request.language): {
-                        // e.g. */navigationId+/Neue Majorversion
+                    case 'newMajor': {
                         // create new version of the page
                         attributes.validation = attributes.navigationCRUD.createNewMajorVersion(coreNavigation = application.cms.navigationCRUD, userId = 1, navigationId = attributes.entities[1]);
                         
@@ -39,8 +38,7 @@
                         }
                         break;
                     }
-                    case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.actionKeys.newMinorVersion', language=request.language): {
-                        // e.g. */navigationId+/Neue Minorversion
+                    case 'newMinor': {
                         // create new version of the page
                         break;
                     }
