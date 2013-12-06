@@ -16,6 +16,15 @@
             </header>
         </div>
     </div>
+    <cfif isDefined("attributes.saveSuccessfull") AND attributes.saveSuccessfull>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success">
+                    <cf_translation keyName='modules.com.IcedReaper.irPermission.group.update.successfull'>
+                </div>
+            </div>
+        </div>
+    </cfif>
     <cfif attributes.editable>
         <div class="row" id="actionBar">
             <div class="col-md-12">

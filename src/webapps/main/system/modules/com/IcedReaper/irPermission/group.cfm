@@ -7,6 +7,8 @@
         	switch(form.action) {
         	    case application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irPermission.group.button.save.value', language=request.language): {
         	        application.security.permissionCRUD.updatePermission(groupName=attributes.groupName, roleData=DeserializeJSON(form.roles));
+        	        attributes.saveSuccessfull = true;
+        	        
         	        break;
         	    }
         	}
