@@ -20,8 +20,8 @@
     attributes.roleData = [];
     for(i = 1; i <= attributes.roles.len(); i++) {
     	attributes.roleData[i] = {
-    		'roleName': attributes.roles[i],
-    		'user':     application.security.permissionCRUD.getUserWithPermission(groupName = attributes.groupName, roleName = attributes.roles[i])
+    		'roleName': attributes.roles[i].name,
+    		'user':     application.security.permissionCRUD.getUserWithPermission(groupName = attributes.groupName, roleName = attributes.roles[i].name)
     	};
     }
     attributes.userWithoutPermission = application.security.permissionCRUD.getUserWithoutPermission(groupName = attributes.groupName);

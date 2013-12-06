@@ -8,7 +8,7 @@
     
     public array function getRoleList() {
     	var qGetRole = new Query().setDatasource(variables.datasource)
-    	                          .setSQL("  SELECT roleName "
+    	                          .setSQL("  SELECT permissionRoleId, roleName "
     	                                 &"    FROM #variables.tablePrefix#_permissionRole "
     	                                 &"   WHERE active    = :active "
     	                                 &"ORDER BY sortOrder ASC")
@@ -18,7 +18,10 @@
     	
     	var roles = [];
     	for(var i = 1; i <= qGetRole.getRecordCount(); i++) {
-    		roles[i] = qGetRole.roleName[i];
+    		roles[i] = {
+    		    'id':   qGetRole.permissionRoleId[i],
+    		    'name': qGetRole.roleName[i]
+    		};
     	}
     	
     	return roles;

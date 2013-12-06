@@ -17,7 +17,7 @@
                     <thead>
                         <th><cf_translation keyName='modules.com.IcedReaper.irPermission.overview.groupName'></th>
                         <cfloop from="1" to="#attributes.roleList.len()#" index="roleIndex">
-                            <th class="col-md-2"><cf_translation keyName='modules.com.IcedReaper.irPermission.overview.roleName.#attributes.roleList[roleIndex]#'></th>
+                            <th class="col-md-2"><cf_translation keyName='modules.com.IcedReaper.irPermission.overview.roleName.#attributes.roleList[roleIndex].name#'></th>
 						</cfloop>
                         <th class="col-md-1">&nbsp;</th>
                     </thead>
