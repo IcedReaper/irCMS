@@ -20,16 +20,19 @@
         <div class="row" id="actionBar">
             <div class="col-md-12">
                 <section class="widget">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="pull-left">
-                                 <a href="/Admin/Permission" class="btn btn-sm btn-warning" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.cancel.title'>"><span class="glyphicon glyphicon-off"></span> <cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.cancel.caption'></a>
-                            </div>
-                            <div class="pull-right">
-                                 <button class="btn btn-primary" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.value'>" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.title'>" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.caption'></button>
+                    <form action="#attributes.sesLink#/#attributes.groupName#" method="post">
+                        <input name="roles" id="newRoleStruct" type="hidden">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-left">
+                                     <a href="#attributes.sesLink#" class="btn btn-sm btn-warning" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.cancel.title'>"><span class="glyphicon glyphicon-off"></span> <cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.cancel.caption'></a>
+                                </div>
+                                <div class="pull-right">
+                                     <button class="btn btn-primary" type="submit" name="action" value="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.value'>" title="<cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.title'>" id="save"><span class="glyphicon glyphicon-floppy-disk"></span> <cf_translation keyName='modules.com.IcedReaper.irPermission.group.button.save.caption'></button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </section>
             </div>
         </div>
