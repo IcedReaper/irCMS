@@ -178,7 +178,7 @@
                                         &"  FROM #variables.tablePrefix#_user "
                                         &" WHERE userName=:userName "
                                         &"   AND active=:active ")
-                                 .addParam(name="userName", value=arguments.userName, cfsqltype="cf_sql_numeric")
+                                 .addParam(name="userName", value=arguments.userName, cfsqltype="cf_sql_varchar")
                                  .addParam(name="active",   value=true,               cfsqltype="cf_sql_bit")
                                  .execute()
                                  .getResult();
