@@ -2,17 +2,16 @@
     <div class="form-group">
         <div class="col-md-12">
             <header class="widget">
-                <h2>Registrierung</h2>
+                <h2><cf_translation keyName='modules.com.IcedReaper.irUser.registration.existing.headline'></h2>
             </header>
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-12">
-            <div class="alert alert-success">
-                Sie sind bereits eingeloggt.<br>
-                Gehen Sie hier auf Ihr Profil oder auf die Startseite.<br>
-                <a type="button" class="btn btn-default" href="/User/#request.username#">Ihr Profil</a>
-                <a type="button" class="btn btn-default" href="/">Zur Startseite</a>
+            <div class="alert alert-danger">
+                <cf_translation keyName='modules.com.IcedReaper.irUser.registration.existing.message'>
+                <a type="button" class="btn btn-default" href="/User/#request.username#"><cf_translation keyName='modules.com.IcedReaper.irUser.registration.existing.yourProfile'></a>
+                <a type="button" class="btn btn-default" href="/"><cf_translation keyName='modules.com.IcedReaper.irUser.registration.existing.startPage'></a>
             </div>
         </div>
     </div>

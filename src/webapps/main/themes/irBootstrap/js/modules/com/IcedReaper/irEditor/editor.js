@@ -7,13 +7,31 @@ $(function() {
     if($('.content.editable').length === 1) {
         var editor = new irEditor($('.content.editable'));
     }
+
+    $(window).on('scroll', function() {
+        if($(window).scrollTop() <= ($('.row#pageOptions').offset().top + $('.row#pageOptions').height())) {
+            if($('.row#actionBar').parent().hasClass('container')) {
+                $('.row#actionBar').unwrap();
+            }
+        }
+        else {
+            if($(window).scrollTop() >= ($('.row#pageOptions').offset().top + $('.row#pageOptions').height())) {
+                if(! $('.row#actionBar').parent().hasClass('container')) {
+                    $('.row#actionBar').wrap($('<div/>').addClass('container')
+                                                        .css({
+                                                            position:   'fixed',
+                                                            top:        0,
+                                                            padding:    '0 15px',
+                                                            zIndex:     100,
+                                                            marginLeft: '-15px'
+                                                        }));
+                }
+            }
+        } 
+    });
 });
 
 var irEditor = function($editor) {
-    var isNumeric = function (n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    };
-    
     var bEditable = true;
     
     var $previewBtn = $('.btn#preview');
@@ -62,7 +80,16 @@ var irEditor = function($editor) {
                 }
                 if($(this).hasClass('heroImage')) {
                     skeletonNode[index].name            = 'heroImage';
-                    skeletonNode[index].backgroundImage = $(this).css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, '');
+                    skeletonNode[index].backgroundImage = $('img', $(this)).attr('src');
+
+                    if($('img', $(this)).css('margin-top') !== '' && $('img', $(this)).css('margin-top') !== '0px' && $('img', $(this)).css('margin-top') !== '0') {
+                        skeletonNode[index].marginTop = $('img', $(this)).css('margin-top');
+                    }
+
+                    if($(this).css('height') !== '' && $(this).css('height') !== '0px' && $(this).css('height') !== '0') {
+                        skeletonNode[index].height = $(this).css('height');
+                    }
+                    
                     if($('div', $(this)).length === 1) {
                         skeletonNode[index].content = $('div', $(this)).html();
                     }
@@ -213,21 +240,21 @@ var irEditor = function($editor) {
             
             var $settings = $($('#carousel_setting').html());
             $settings.find('fieldset')
-                     .append(createOption('Interval', $carousel.attr('data-interal') || '',      function() { $carousel.attr('data-interval', $(this).val()); }))
-                     .append(createOption('Pause',    $carousel.attr('data-pause')   || 'hover', function() { $carousel.attr('data-pause',    $(this).val()); }))
-                     .append(createOption('Wrap',     $carousel.attr('data-wrap')    || 'true',  function() { $carousel.attr('data-wrap',     $(this).val()); }));
+                     .append(createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval'], $carousel.attr('data-interal') || '',      function() { $carousel.attr('data-interval', $(this).val()); }))
+                     .append(createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause'],    $carousel.attr('data-pause')   || 'hover', function() { $carousel.attr('data-pause',    $(this).val()); }))
+                     .append(createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap'],     $carousel.attr('data-wrap')    || 'true',  function() { $carousel.attr('data-wrap',     $(this).val()); }));
             $carousel.before($settings);
             
             var item_addEditHandler = function($item) {
                 var $item = ! isNumeric($item) ? $item : $(this);
 
-                var $pathEdit        = createOption('Bildpfad',     $('img', $item).attr('src') || '',                 function() {
+                var $pathEdit        = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path'],     $('img', $item).attr('src') || '',                 function() {
                                                                                                                            $('img', $item).attr('src', $(this).val()); 
                                                                                                                        });
-                var $titleEdit       = createOption('Titel',        $('img', $item).attr('alt') || '',                 function() {
+                var $titleEdit       = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title'],        $('img', $item).attr('alt') || '',                 function() {
                                                                                                                            $('img', $item).attr('alt', $(this).val()); 
                                                                                                                        });
-                var $headlineEdit    = createOption('Überschrift',  $('.carousel-caption > h3', $item).text() || '',   function() {
+                var $headlineEdit    = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline'],  $('.carousel-caption > h3', $item).text() || '',   function() {
                                                                                                                            if($(this).val() !== '') {
                                                                                                                                if($('.carousel-caption > h3', $item).length === 0) {
                                                                                                                                    $('.carousel-caption', $item).prepend($('<h3/>'));
@@ -238,7 +265,7 @@ var irEditor = function($editor) {
                                                                                                                                $('.carousel-caption > h3', $item).remove();
                                                                                                                            }
                                                                                                                        });
-                var $descriptionEdit = createOption('Beschreibung', $('.carousel-caption > span', $item).text() || '', function() {
+                var $descriptionEdit = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.description'], $('.carousel-caption > span', $item).text() || '', function() {
                                                                                                                            if($(this).val() !== '') {
                                                                                                                                if($('.carousel-caption > span', $item).length === 0) {
                                                                                                                                    $('.carousel-caption', $item).append($('<span/>'));
@@ -342,10 +369,11 @@ var irEditor = function($editor) {
         'heroImage':         function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
             
-            var createOption = function(label, value, on, updateFunction) {
+            var createOption = function(label, id, value, on, updateFunction) {
                 var $option = $($('#heroImage_option').html()
                                                       .replace(/\$\{label\}/gi, label)
-                                                      .replace(/\$\{value\}/gi, value));
+                                                      .replace(/\$\{value\}/gi, value)
+                                                      .replace(/\$\{id\}/gi,    id));
                 if(typeof updateFunction === 'function') {
                     $option.find('input')
                            .on(on, updateFunction);
@@ -353,21 +381,41 @@ var irEditor = function($editor) {
                 return $option;
             };
             
-            var backgroundImage = createOption('Bildpfad', 
-                                               $heroImage.css('background-image').replace(/(url\("https*:\/\/(\w+\.*)+|"\))/gi, ''),
+            var backgroundImage = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path'], 
+                                               'src',
+                                               $('img', $heroImage).attr('src') || '',
                                                'input',
                                                function() {
-                                                   $heroImage.css('background-image', "url("+$(this).val()+")")
+                                                   $('img', $heroImage).attr('src', $(this).val())
                                                });
             
-            var content = createOption('Beschreibung', 
-                                       $('> div', $heroImage).html(),
+            var content = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description'], 
+                                       'description',
+                                       $('> div', $heroImage).html() || '',
                                        'change',
                                        null);
+            
+            var height = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height'], 
+                                      'height',
+                                      $heroImage.css('height') || '',
+                                      'change',
+                                      function() {
+                                          $heroImage.css('height', $(this).val())
+                                      });
+            
+            var marginTop = createOption(cfrequest['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop'], 
+                                         'marginTop',
+                                         $('img', $heroImage).css('margin-top') || '',
+                                         'input',
+                                         function() {
+                                             $('img', $heroImage).css('margin-top', $(this).val())
+                                         });
             
             var $container = $($('#heroImage_setting').html());
             $container.find('fieldset')
                       .append(backgroundImage)
+                      .append(height)
+                      .append(marginTop)
                       .append(content);
             
             $heroImage.append($container);
@@ -420,8 +468,8 @@ var irEditor = function($editor) {
         'heroImage': function($heroImage) {
             var $heroImage = ! isNumeric($heroImage) ? $heroImage : $(this);
         }
-    };
     
+    };
     var initAddHandler    = function() {
         var createModuleAddHandler = function() {
             var $addHandler = $($('#moduleAddHandler').html());
@@ -573,5 +621,4 @@ var irEditor = function($editor) {
     };
     
     setup(true);
-    setupSortable(true);
 };

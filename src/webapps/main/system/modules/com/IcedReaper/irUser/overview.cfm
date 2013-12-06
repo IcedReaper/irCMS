@@ -1,4 +1,4 @@
 <cfscript>
     attributes.searchResults = application.user.search.forUser(userName='');
-    include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/searchResults.cfm";
+    include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/searchResults.cfm";
 </cfscript>

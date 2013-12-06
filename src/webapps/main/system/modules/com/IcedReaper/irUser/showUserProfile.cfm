@@ -10,9 +10,9 @@
                                                                                                    ,tablePrefix  = application.tablePrefix
                                                                                                    ,userName     = attributes.userName);
     if(attributes.userName != 'Guest' && attributes.userData.load()) {
-        include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/userProfile.cfm";
+        include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/userProfile.cfm";
     }
     else {
-        include template="/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/userNotFound.cfm";
+        include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irUser/userNotFound.cfm";
     }
 </cfscript>

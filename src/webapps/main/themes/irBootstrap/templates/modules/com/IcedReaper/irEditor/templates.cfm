@@ -2,9 +2,9 @@
 	<!--- Add new modules to the document --->
 	<script type="html/text" id="moduleAddHandler">
 	    <div data-type="module" class="addHandler" id="module">
-	        <a href="##" class="glyphicon glyphicon-picture" title="Titelbild einfügen" data-module="heroImage"><span class="glyphicon glyphicon-plus"></span></a>
-	        <a href="##" class="glyphicon glyphicon-align-left" title="Textblock einfügen" data-module="textBlock"><span class="glyphicon glyphicon-plus"></span></a>
-	        <a href="##" class="glyphicon glyphicon-picture" title="Carousel / Slider einfügen" data-module="carousel"><span class="glyphicon glyphicon-plus"></span></a>
+	        <a href="##" class="glyphicon glyphicon-picture" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.moduleAddHandler.heroImage'>" data-module="heroImage"><span class="glyphicon glyphicon-plus"></span></a>
+	        <a href="##" class="glyphicon glyphicon-align-left" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.moduleAddHandler.textBlock'>" data-module="textBlock"><span class="glyphicon glyphicon-plus"></span></a>
+	        <a href="##" class="glyphicon glyphicon-picture" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.moduleAddHandler.carousel'>" data-module="carousel"><span class="glyphicon glyphicon-plus"></span></a>
 	    </div>
 	</script>
 	
@@ -60,8 +60,8 @@
 	<!--- Responsive handler --->
 	<script type="html/text" id="responsiveButton">
 	    <aside class="responsiveEdit">
-	        <button class="btn btn-default" title="Responsiveeigenschaften des Containers bearbeiten">
-	            <span class="glyphicon glyphicon-edit"></span> Responsiveeigenschaften
+	        <button class="btn btn-default" title="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.title'>">
+	            <span class="glyphicon glyphicon-edit"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.buttonCaption'>
 	        </button>
 	    </aside>
 	</script>
@@ -72,13 +72,13 @@
 	        <div class="modal-content">
 	        <div class="modal-header">
 	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	            <h4 class="modal-title" id="responsiveSettings">Responsiveeigenschaften des Containers</h4>
+	            <h4 class="modal-title" id="responsiveSettings"><cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.title'></h4>
 	        </div>
 	        <div class="modal-body">
 	            <div class="row">
     	            <div class="col-md-6">
         	            <div class="form-group">
-        	                <label class="col-lg-3 control-label">Extra klein</label>
+        	                <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.extraSmall'></label>
         	                <div class="col-lg-9">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -86,7 +86,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="" name="extraSmall">
                                             </span>
-                                            <input type="text" value="Keine Speziellen Responsiven Eigenschaften" disabled="disabled" class="form-control">
+                                            <input type="text" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.noSetting'>" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
         	                                <span class="input-group-addon">
         	                                    <input type="radio" value="hidden-xs" name="extraSmall">
         	                                </span>
-        	                                <input type="text" value="Ausblenden" disabled="disabled" class="form-control">
+        	                                <input type="text" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.hide'>" disabled="disabled" class="form-control">
         	                            </div>
         	                        </div>
         	                    </div>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Klein</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.small'></label>
                             <div class="col-lg-9">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -125,7 +125,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="" name="small">
                                             </span>
-                                            <input type="text" value="Keine Speziellen Responsiven Eigenschaften" disabled="disabled" class="form-control">
+                                            <input type="text" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.noSetting'>" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="hidden-sm" name="small">
                                             </span>
-                                            <input type="text" value="Ausblenden" disabled="disabled" class="form-control">
+                                            <input type="text" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.hide'>" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Groß</label>
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.large'></label>
                             <div class="col-lg-9">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -166,7 +166,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="" name="large">
                                             </span>
-                                            <input type="text" value="Keine Speziellen Responsiven Eigenschaften" disabled="disabled" class="form-control">
+                                            <input type="text" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.noSetting'>" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +176,7 @@
                                             <span class="input-group-addon">
                                                 <input type="radio" value="hidden-lg" name="large">
                                             </span>
-                                            <input type="text" value="Ausblenden" disabled="disabled" class="form-control">
+                                            <input type="text" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.hide'>" disabled="disabled" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@
                 </div>
 	        </div>
 	        <div class="modal-footer">
-	            <button type="button" class="btn btn-primary" data-dismiss="modal">Übernehmen</button>
+	            <button type="button" class="btn btn-primary" data-dismiss="modal"><cf_translation keyName='modules.com.IcedReaper.irEditor.templates.responsive.save'></button>
 	        </div>
 	        </div>
 	    </div>
@@ -228,7 +228,7 @@
 	<script type="html/text" id="carousel_setting">
 	    <aside class="slider-options widget">
 	        <fieldset>
-	            <legend>Optionen</legend>
+	            <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.templates.carousel.options.headline'></legend>
 	        </fieldset>
 	    </aside>
 	</script>
@@ -247,12 +247,12 @@
 	<script type="html/text" id="carousel_slide_options">
 	    <aside class="editControls widget">
 	        <fieldset>
-	            <legend>Optionen des aktuellen Slide</legend>
+	            <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.headline'></legend>
 	            <div>
-	                <button class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-trash"></span> Slide löschen</button>
+	                <button class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-trash"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.delete'></button>
 	                <div class="pull-right">
-	                    <button class="btn btn-primary" id="movePrev"><span class="glyphicon glyphicon-chevron-left"></span> Eine Position nach vorne</button>
-	                    <button class="btn btn-primary" id="moveNext"><span class="glyphicon glyphicon-chevron-right"></span> Eine Position nach hinten</button>
+	                    <button class="btn btn-primary" id="movePrev"><span class="glyphicon glyphicon-chevron-left"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.movePrev'></button>
+	                    <button class="btn btn-primary" id="moveNext"><span class="glyphicon glyphicon-chevron-right"></span> <cf_translation keyName='modules.com.IcedReaper.irEditor.templates.carousel.actualSlide.moveNext'></button>
 	                </div>
 	            </div>
 	        </fieldset>
@@ -278,7 +278,7 @@
 	<script type="html/text" id="heroImage_setting">
 	    <aside class="editControls widget">
 	        <fieldset>
-	            <legend>Optionen</legend>
+	            <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.templates.heroImage.options.headline'></legend>
 	        </fieldset>
 	    </aside>
 	</script>
@@ -289,7 +289,7 @@
 	            <label>${label}</label>
 	        </div>
 	        <div class="col-md-9">
-	            <input class="form-control" value="${value}">
+	            <input class="form-control" value="${value}" id="${id}">
 	        </div>
 	    </div>
 	</script>

@@ -146,7 +146,7 @@ component implements="system.interfaces.com.irCMS.user.user" {
         return [];
     }
     
-    public boolean function hasPermission(required string groupName, required string roleName) cachedWithin="#createTimespan(0, 0, 1, 0)#" {
+    public boolean function hasPermission(required string groupName, required string roleName) {
         if(arguments.groupName == '' || arguments.roleName == '') {
             return false;
         }

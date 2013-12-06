@@ -6,21 +6,21 @@
 
     switch(attributes.entities.len()) {
         case 0: {
-            include template="overview.cfm";
+            include "overview.cfm";
             break;
         }
         case 1: {
             switch(attributes.entities[1]) {
-                case 'Suche': {
-                    include template="search.cfm";
+                case 'search': {
+                    include "search.cfm";
                     break;
                 }
-                case 'Registrieren': {
-                    include template="register.cfm";
+                case 'register': {
+                    include "register.cfm";
                     break;
                 }
                 default: {
-                    include template="showUserProfile.cfm";
+                    include "showUserProfile.cfm";
                 }
             }
             break;

@@ -11,14 +11,14 @@
     if(request.actualUser.hasPermission(groupName='irEditor', roleName='Reader')) {
         switch(attributes.entities.len()) {
             case 0: {
-                include template="dashboard.cfm";
+                include "dashboard.cfm";
                 break;
             }
             case 1: {
                 switch(attributes.entities[1]) {
-                    case 'Neu': {
+                    case 'newPage': {
                         // create a new page
-                        include template="newPage.cfm";
+                        include "newPage.cfm";
                         break;
                     }
                 }
@@ -26,8 +26,7 @@
             }
             case 2: {
                 switch(attributes.entities[2]) {
-                    case 'Neue Majorversion': {
-                        // e.g. */navigationId+/Neue Majorversion
+                    case 'newMajor': {
                         // create new version of the page
                         attributes.validation = attributes.navigationCRUD.createNewMajorVersion(coreNavigation = application.cms.navigationCRUD, userId = 1, navigationId = attributes.entities[1]);
                         
@@ -39,14 +38,13 @@
                         }
                         break;
                     }
-                    case 'Neue Minorversion': {
-                        // e.g. */navigationId+/Neue Minorversion
+                    case 'newMinor': {
                         // create new version of the page
                         break;
                     }
                     default: {
-                        // e.g. */navigationId+/1.0
-                        include template="showVersion.cfm";
+                        // e.g. */navigationId+D/1.0
+                        include "showVersion.cfm";
                         break;
                     }
                 }
@@ -54,12 +52,12 @@
             }
             case 3: {
                 // e.g. */navigationId+/1.0/Delete
-                include template="action.cfm";
+                include "action.cfm";
                 break;
             }
         }
     }
     else {
-        include template="/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
+        include "/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
     }
 </cfscript>

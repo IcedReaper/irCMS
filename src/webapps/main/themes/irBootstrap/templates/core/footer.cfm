@@ -30,7 +30,7 @@
                             </cfloop>
                         </div>
                         <div class="col-md-4">
-                           <p class="muted pull-right"><a class="navbar-brand" href="https://github.com/IcedReaper/irCMS">&copy; IcedReaper 2013 All rights reserved</a></p>
+                           <p class="muted pull-right"><a class="navbar-brand" href="<cf_translation keyName='core.navigation.footer.link.anchor'>"><cf_translation keyName='core.navigation.footer.link.text'></a></p>
                         </div>
                     </div>
                 </div>

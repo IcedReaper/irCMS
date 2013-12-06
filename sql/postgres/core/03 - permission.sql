@@ -7,7 +7,6 @@
 	CONSTRAINT "PK_irCMS_permissionRole_permissionRoleId" PRIMARY KEY (permissionRoleId),
 	CONSTRAINT "UK_irCMS_permissionRole_roleName" UNIQUE (roleName)
 );
-INSERT INTO irCMS_permissionRole (roleName, sortOrder) VALUES ('Guest',    0);
 INSERT INTO irCMS_permissionRole (roleName, sortOrder) VALUES ('Reader',  10);
 INSERT INTO irCMS_permissionRole (roleName, sortOrder) VALUES ('Editor',  80);
 INSERT INTO irCMS_permissionRole (roleName, sortOrder) VALUES ('Admin',  100);
