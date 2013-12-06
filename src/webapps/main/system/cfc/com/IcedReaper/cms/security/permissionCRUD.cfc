@@ -156,6 +156,56 @@
         return user;
     }
     
+    public void function setUserPermission(required numeric userId, required numeric groupId, required numeric roleId) {
+        var qPermissionSet = new Query().setDatasource(variables.datasource)
+                                        .setSQL("SELECT permissionId "
+                                               &"  FROM #variables.tablePrefix#_permission "
+                                               &" WHERE userId            = :userId "
+                                               &"   AND permissionGroupId = :groupId")
+                                        .addParam(name="userId",  value=arguments.userId,  cfsqltype="cf_sql_numeric")
+                                        .addParam(name="groupId", value=arguments.groupId, cfsqltype="cf_sql_numeric")
+                                        .execute()
+                                        .getResult();
+        
+        if(qPermissionSet.getRecordCount() == 1) {
+            new Query().setDatasource(variables.datasource)
+                       .setSQL("UPDATE #variables.tablePrefix#_permission "
+                              &"   SET permissionRoleId = :roleId "
+                              &" WHERE permissionId     = :permissionId")
+                       .addParam(name="roleId",       value=arguments.roleId,               cfsqltype="cf_sql_numeric")
+                       .addParam(name="permissionId", value=qPermissionSet.permissionId[1], cfsqltype="cf_sql_numeric")
+                       .execute();
+        }
+        else {
+            new Query().setDatasource(variables.datasource)
+                       .setSQL("INSERT INTO #variables.tablePrefix#_permission "
+                              &"            ( "
+                              &"                userId, "
+                              &"                permissionGroupId, "
+                              &"                permissionRoleId "
+                              &"            ) "
+                              &"     VALUES ( "
+                              &"                :userId, "
+                              &"                :permissionGroupId, "
+                              &"                :permissionRoleId "
+                              &"            ) ")
+                       .addParam(name="userId",            value=arguments.userId,  cfsqltype="cf_sql_numeric")
+                       .addParam(name="permissionGroupId", value=arguments.groupId, cfsqltype="cf_sql_numeric")
+                       .addParam(name="permissionRoleId",  value=arguments.roleId,  cfsqltype="cf_sql_numeric")
+                       .execute();
+        }
+    }
+    
+    public void function removeUserPermission(required numeric userId, required numeric groupId) {
+        new Query().setDatasource(variables.datasource)
+                   .setSQL("DELETE FROM #variables.tablePrefix#_permission "
+                          &"      WHERE userId            = :userId "
+                          &"        AND permissionGroupId = :groupId ")
+                   .addParam(name="groupId", value=arguments.groupId, cfsqltype="cf_sql_numeric")
+                   .addParam(name="userId",  value=arguments.userId,  cfsqltype="cf_sql_numeric")
+                   .execute();
+    }
+    
     public void function setPermission(required string groupName, required array roleData) {
         var groupId = this.getGroupId(groupName=arguments.groupName);
         if(groupId == 0) {
