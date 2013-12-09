@@ -32,6 +32,6 @@
         location(url="/Admin/Pages", addToken=false);
     }
     else {
-        include template="/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
+        throw(type="permissionInsufficient", message="The required permission isn't assigned", detail="irEditor;Editor");
     }
 </cfscript>
