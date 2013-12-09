@@ -185,6 +185,7 @@
                     case 'cms':              { this.initCoreCMS();        break; }
                     case 'user':             { this.initCoreUser();       break; }
                     case 'security':         { this.initCoreSecurity();   break; }
+                    case 'error':            { this.initErrorHandler();   break; }
 
                     case 'i18n':       { application.tools.i18n.reload();           break; }
                     case 'clearCache': { application.tools.tools.clearQueryCache(); break; }
