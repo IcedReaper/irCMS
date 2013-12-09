@@ -20,21 +20,31 @@
                           .getResult();
     }
     
-    public void function processNotFound(required string themeName, required struct errorStruct) {
-        if(this.clearBuffer()) {
-            var error = new Error(tablePrefix=variables.tablePrefix, datasource=variables.datasource);
-            error.saveError('Not Found');
-            error.saveDetail(key='Message', value=arguments.errorStruct.message);
-            
-            for(var i = 1; i <= arguments.errorStruct.tagContext.len(); i++) {
-            	if(left(arguments.errorStruct.tagContext[i].raw_trace, 9) != 'org.railo') {
-                	error.saveStacktrace(position     = i
-                	                    ,codeHtml     = arguments.errorStruct.tagContext[i].codePrintHTML
-                	                    ,templateName = arguments.errorStruct.tagContext[i].template
-                	                    ,type         = arguments.errorStruct.tagContext[i].type
-                	                    ,line         = arguments.errorStruct.tagContext[i].line);
+    public void function logError(required string errorType, required struct errorData) {
+        var error = new Error(tablePrefix=variables.tablePrefix, datasource=variables.datasource);
+        error.saveError(arguments.errorType);
+        
+        for(var element in arguments.errorData) {
+            if(element == 'message' || element == 'detail' || element == 'datasource' || element == 'sql' || element == 'type') {
+                error.saveDetail(key=element, value=arguments.errorData[element]);
+            }
+            else if(element == 'tagContext') {
+                for(var i = 1; i <= arguments.errorData[element].len(); i++) {
+                    if(left(arguments.errorData[element][i].raw_trace, 9) != 'org.railo') {
+                        error.saveStacktrace(position     = i
+                                            ,codeHtml     = arguments.errorData[element][i].codePrintHTML
+                                            ,templateName = arguments.errorData[element][i].template
+                                            ,type         = arguments.errorData[element][i].type
+                                            ,line         = arguments.errorData[element][i].line);
+                    }
                 }
             }
+        }
+    }
+    
+    public void function processNotFound(required string themeName, required struct errorStruct) {
+        if(this.clearBuffer()) {
+            this.logError(errorType='Not Found', errorData=arguments.errorStruct);
             
             module template="/themes/#arguments.themeName#/templates/core/notFound.cfm";
         }
@@ -42,22 +52,7 @@
     
     public void function processError(required string themeName, required struct errorStruct) {
         if(this.clearBuffer()) {
-            var error = new Error(tablePrefix=variables.tablePrefix, datasource=variables.datasource);
-            error.saveError('Error');
-            if(isDefined("arguments.errorStruct.detail"))     { error.saveDetail(key='detail',     value=arguments.errorStruct.detail);     }
-            if(isDefined("arguments.errorStruct.datasource")) { error.saveDetail(key='datasource', value=arguments.errorStruct.datasource); }
-            if(isDefined("arguments.errorStruct.sql"))        { error.saveDetail(key='sql',        value=arguments.errorStruct.sql);        }
-            if(isDefined("arguments.errorStruct.type"))       { error.saveDetail(key='type',       value=arguments.errorStruct.type);       }
-            
-            for(var i = 1; i <= arguments.errorStruct.tagContext.len(); i++) {
-                if(left(arguments.errorStruct.tagContext[i].raw_trace, 9) != 'org.railo') {
-                    error.saveStacktrace(position     = i
-                                        ,codeHtml     = arguments.errorStruct.tagContext[i].codePrintHTML
-                                        ,templateName = arguments.errorStruct.tagContext[i].template
-                                        ,type         = arguments.errorStruct.tagContext[i].type
-                                        ,line         = arguments.errorStruct.tagContext[i].line);
-                }
-            }
+            this.logError(errorType='Error', errorData=arguments.errorStruct);
             
             module template="/themes/#arguments.themeName#/templates/core/error.cfm";
         }
