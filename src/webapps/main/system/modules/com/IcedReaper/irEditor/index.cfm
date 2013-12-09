@@ -58,6 +58,6 @@
         }
     }
     else {
-        include "/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
+        throw(type="permissionInsufficient", message="The required permission isn't assigned", detail="irEditor;Reader");
     }
 </cfscript>

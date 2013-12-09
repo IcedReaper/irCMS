@@ -10,6 +10,6 @@
         include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irPermission/userPermissionList.cfm";
     }
     else {
-        include "/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm";
+        throw(type="permissionInsufficient", message="The required permission isn't assigned", detail="irPermission;Reader");
     }
 </cfscript>

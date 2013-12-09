@@ -155,6 +155,18 @@
             application.error.errorHandler.processNotFound(themeName=application.cms.core.getDefaultThemeName(), errorStruct=notFound);
             return false;
         }
+        catch('permissionInsufficient' var permInsufficient) {
+            application.error.errorHandler.logError(errorType='Permission Insufficient', errorData=permInsufficient);
+            
+            saveContent variable="request.content" {
+                module template  = "/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm"
+                       message   = permInsufficient.message
+                       groupName = listFirst(permInsufficient.detail, ';')
+                       roleName  = listLast(permInsufficient.detail, ';');
+            }
+            
+            return true;
+        }
         catch(any var error) {
             application.error.errorHandler.processError(themeName=application.cms.core.getDefaultThemeName(), errorStruct=error);
             return false;
@@ -173,6 +185,7 @@
                     case 'cms':              { this.initCoreCMS();        break; }
                     case 'user':             { this.initCoreUser();       break; }
                     case 'security':         { this.initCoreSecurity();   break; }
+                    case 'error':            { this.initErrorHandler();   break; }
 
                     case 'i18n':       { application.tools.i18n.reload();           break; }
                     case 'clearCache': { application.tools.tools.clearQueryCache(); break; }
