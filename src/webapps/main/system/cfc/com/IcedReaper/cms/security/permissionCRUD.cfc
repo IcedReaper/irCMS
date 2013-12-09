@@ -92,6 +92,18 @@
         return qryGroup.getRecordCount() == 1 ? qryGroup.permissionGroupId[1] : 0;
     }
 
+    public string function getGroupName(required string groupId) {
+        var qryGroup = new Query().setDatasource(variables.datasource)
+                                  .setSQL("SELECT groupName "
+                                         &"  FROM #variables.tablePrefix#_permissionGroup "
+                                         &" WHERE permissionGroupId = :groupId")
+                                  .addParam(name="groupId", value=arguments.groupId, cfsqltype="cf_sql_numeric")
+                                  .execute()
+                                  .getResult();
+        
+        return qryGroup.getRecordCount() == 1 ? qryGroup.groupName[1] : 0;
+    }
+
     public numeric function getRoleId(required string roleName) {
         var qryRole = new Query().setDatasource(variables.datasource)
                                  .setSQL("SELECT permissionRoleId "
@@ -102,6 +114,18 @@
                                  .getResult();
         
         return qryRole.getRecordCount() == 1 ? qryRole.permissionRoleId[1] : 0;
+    }
+
+    public string function getRoleName(required string roleId) {
+        var qryRole = new Query().setDatasource(variables.datasource)
+                                  .setSQL("SELECT roleName "
+                                         &"  FROM #variables.tablePrefix#_permissionRole "
+                                         &" WHERE permissionRoleId = :roleId")
+                                  .addParam(name="roleId", value=arguments.roleId, cfsqltype="cf_sql_numeric")
+                                  .execute()
+                                  .getResult();
+        
+        return qryRole.getRecordCount() == 1 ? qryRole.roleName[1] : 0;
     }
     
     public array function getUserWithPermission(required string groupName, required string roleName) {
