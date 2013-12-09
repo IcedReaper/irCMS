@@ -26,7 +26,9 @@
         
         for(var element in arguments.errorData) {
             if(element == 'message' || element == 'detail' || element == 'datasource' || element == 'sql' || element == 'type') {
-                error.saveDetail(key=element, value=arguments.errorData[element]);
+                if(arguments.errorData[element] != '') {
+                    error.saveDetail(key=element, value=arguments.errorData[element]);
+                }
             }
             else if(element == 'tagContext') {
                 for(var i = 1; i <= arguments.errorData[element].len(); i++) {
