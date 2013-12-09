@@ -66,23 +66,25 @@
         }
     }
     
-    public array function getHierarchy(required string position, required string language, required numeric parentNavigationId) cachedWithin="#createTimespan(0,0,1,0)#" {
+    public array function getHierarchy(required string position, required string language, required numeric parentNavigationId, required string userName) cachedWithin = "#createTimespan(0, 0, 1, 0)#" {
         var hierarchy = [];
-
+        var oPermissionCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.security.permissionCRUD").init(tablePrefix = variables.tablePrefix,
+                                                                                                                      datasource  = variables.datasource);
+        
         var qGetTopLevel = new Query().setDatasource(variables.datasource)
-                                      .setSQL("         SELECT cv.navigationId, cv.contentVersionId, "
-                                             &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkName, cv.sesLink, cv.entityRegExp, "
-                                             &"                cv.title, cv.description, cv.keywords, cv.canonical, cv.showContentForEntity "
-                                             &"           FROM #variables.tablePrefix#_navigation     n "
-                                             &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
-                                             &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
-                                             &"LEFT OUTER JOIN #variables.tablePrefix#_module         m  ON cv.moduleId        = m.moduleId "
-                                             &"          WHERE cs.online            = :online "
-                                             &"            AND n.position           = :position "
-                                             &"            AND n.language           = :language "
-                                             &"            AND n.active             = :active "
-                                             &"            AND n.parentNavigationId " & (arguments.parentNavigationId == 0 ? " is null " : "= :parentNavigationId ")
-                                             &"       ORDER BY n.position, n.sortOrder ASC")
+                                      .setSQL("    SELECT cv.navigationId, cv.linkName, cv.sesLink, cv.title, cv.permissionGroupId, cv.permissionRoleId, "
+                                             &"           (SELECT COUNT(child.navigationId) children "
+                                             &"              FROM #variables.tablePrefix#_navigation child "
+                                             &"             WHERE child.parentNavigationId = n.navigationId) children "
+                                             &"      FROM #variables.tablePrefix#_navigation     n "
+                                             &"INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
+                                             &"INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
+                                             &"     WHERE cs.online            = :online "
+                                             &"       AND n.position           = :position "
+                                             &"       AND n.language           = :language "
+                                             &"       AND n.active             = :active "
+                                             &"       AND n.parentNavigationId " & (arguments.parentNavigationId == 0 ? " IS NULL " : "= :parentNavigationId ")
+                                             &"  ORDER BY n.position, n.sortOrder ASC")
                                       .addParam(name="online",             value=true,                         cfsqltype="cf_sql_bit")
                                       .addParam(name="active",             value=true,                         cfsqltype="cf_sql_bit")
                                       .addParam(name="language",           value=arguments.language,           cfsqltype="cf_sql_varchar")
@@ -90,13 +92,39 @@
                                       .addParam(name="parentNavigationId", value=arguments.parentNavigationId, cfsqltype="cf_sql_numeric")
                                       .execute()
                                       .getResult();
-
+        
+        var counter = 0;
         for(var i = 1; i <= qGetTopLevel.getRecordCount(); i++) {
-            hierarchy[i] = {};
-            hierarchy[i].linkname = qGetTopLevel.linkName[i];
-            hierarchy[i].sesLink  = qGetTopLevel.sesLink[i];
-            hierarchy[i].title    = qGetTopLevel.title[i];
-            hierarchy[i].children = this.getHierarchy(position=arguments.position, language=arguments.language, parentNavigationId=qGetTopLevel.navigationId[i]);
+            var permission = true;
+            if(qGetTopLevel.permissionGroupId[i] != '' && qGetTopLevel.permissionRoleId[i] != '') {
+                var groupName = oPermissionCRUD.getGroupName(groupId = qGetTopLevel.permissionGroupId[i]);
+                var roleName  = oPermissionCRUD.getRoleName(roleId   = qGetTopLevel.permissionRoleId[i]);
+                
+                permission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(datasource   = variables.datasource,
+                                                                                                                 tablePrefix  = variables.tablePrefix)
+                                                                                                           .hasPermission(userName  = arguments.userName,
+                                                                                                                          groupName = groupName,
+                                                                                                                          roleName  = roleName);
+            }
+            
+            if(permission) {
+                counter++;
+                
+                hierarchy[counter] = {};
+                hierarchy[counter].linkname = qGetTopLevel.linkName[i];
+                hierarchy[counter].sesLink  = qGetTopLevel.sesLink[i];
+                hierarchy[counter].title    = qGetTopLevel.title[i];
+                
+                if(qGetTopLevel.children[i] > 0) {
+                    hierarchy[counter].children = this.getHierarchy(position           = arguments.position,
+                                                                    language           = arguments.language,
+                                                                    parentNavigationId = qGetTopLevel.navigationId[i],
+                                                                    userName           = arguments.userName);   
+                }
+                else {
+                    hierarchy[counter].children = [];
+                }
+            }
         }
 
         return hierarchy;

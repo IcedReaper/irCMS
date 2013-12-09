@@ -1,5 +1,5 @@
-<cfset footerNavigation = application.cms.navigationCRUD.getHierarchy(position='footer', language=request.language, parentNavigationId=0)>
-<cfset headerNavigation = application.cms.navigationCRUD.getHierarchy(position='header', language=request.language, parentNavigationId=0)>
+<cfset footerNavigation = application.cms.navigationCRUD.getHierarchy(position='footer', language=request.language, parentNavigationId=0, userName=request.userName)>
+<cfset headerNavigation = application.cms.navigationCRUD.getHierarchy(position='header', language=request.language, parentNavigationId=0, userName=request.userName)>
 <cfoutput>
     <footer>
         <nav class="navbar navbar-inverse navbar-static-bottom">
