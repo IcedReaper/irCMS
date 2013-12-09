@@ -29,7 +29,7 @@
             }
         }
         
-        location(url="/Admin/Pages", addToken=false);
+        location(url=attributes.sesLink, addToken=false);
     }
     else {
         throw(type="permissionInsufficient", message="The required permission isn't assigned", detail="irEditor;Editor");
