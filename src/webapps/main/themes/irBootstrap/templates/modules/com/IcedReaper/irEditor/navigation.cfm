@@ -7,7 +7,7 @@
                     <li><a href="/Admin/Pages/newPage"><cf_translation keyName='modules.com.IcedReaper.irEditor.navigation.newPage'></a></li>
                 <cfelse>
                     <li><a href="/Admin/Pages/#attributes.navigationId#/newMajor"><cf_translation keyName='modules.com.IcedReaper.irEditor.navigation.newMajorVersion'></a></li>
-                    <li><a href="/Admin/Pages/#attributes.navigationId#/newMinor/#attributes.version#"><cf_translation keyName='modules.com.IcedReaper.irEditor.navigation.newMinorVersion'></a></li>
+                    <li><a href="/Admin/Pages/#attributes.navigationId#/newMinor/#attributes.majorVersion#"><cf_translation keyName='modules.com.IcedReaper.irEditor.navigation.newMinorVersion'></a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="##">
                             <cf_translation keyName='modules.com.IcedReaper.irEditor.navigation.versions'> <span class="caret"></span>
@@ -16,10 +16,10 @@
                             <cfset versions = attributes.navigationCRUD.getVersions(navigationId=attributes.navigationId)>
                             <cfset lastVersion = 0>
                             <cfloop from="1" to="#versions.len()#" index="versionIndex">
-                                <cfif lastVersion NEQ 0 AND lastVersion NEQ versions[versionIndex].major>
+                                <cfif lastVersion NEQ 0 AND lastVersion NEQ versions[versionIndex].majorVersion>
                                     <li class="divider"></li>
                                 </cfif>
-                                <li><a href="/Admin/Pages/#attributes.navigationId#/#versions[versionIndex].major#.#versions[versionIndex].minor#">#versions[versionIndex].major#.#versions[versionIndex].minor# (#versions[versionIndex].status#)</a></li>
+                                <li><a href="/Admin/Pages/#attributes.navigationId#/#versions[versionIndex].majorVersion#/#versions[versionIndex].minorVersion#">#versions[versionIndex].majorVersion#.#versions[versionIndex].minorVersion# (#versions[versionIndex].status#)</a></li>
                             </cfloop>
                         </ul>
                     </li>

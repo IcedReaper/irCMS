@@ -28,30 +28,41 @@
                 switch(attributes.entities[2]) {
                     case 'newMajor': {
                         // create new version of the page
-                        attributes.validation = attributes.navigationCRUD.createNewMajorVersion(coreNavigation = application.cms.navigationCRUD, userId = 1, navigationId = attributes.entities[1]);
+                        attributes.validation = attributes.navigationCRUD.createNewMajorVersion(coreNavigation = application.cms.navigationCRUD,
+                                                                                                userId         = request.actualUser.getUserId(),
+                                                                                                navigationId   = attributes.entities[1]);
                         
                         if(attributes.validation.success) {
-                            location(url="/Admin/Pages/#attributes.entities[1]#/#attributes.validation.majorVersion#.0", addToken=false);
+                            location(url="/Admin/Pages/#attributes.entities[1]#/#attributes.validation.majorVersion#/#attributes.validation.minorVersion#", addToken=false);
                         }
-                        else {
-                            // TODO: show error
-                        }
-                        break;
-                    }
-                    case 'newMinor': {
-                        // create new version of the page
-                        break;
-                    }
-                    default: {
-                        // e.g. */navigationId+D/1.0
-                        include "showVersion.cfm";
                         break;
                     }
                 }
                 break;
             }
             case 3: {
-                // e.g. */navigationId+/1.0/Delete
+                switch(attributes.entities[2]) {
+                    case 'newMinor': {
+                        // create new version of the page
+                        attributes.validation = attributes.navigationCRUD.createNewMinorVersion(coreNavigation = application.cms.navigationCRUD,
+                                                                                                userId         = request.actualUser.getUserId(),
+                                                                                                navigationId   = attributes.entities[1],
+                                                                                                majorVersion   = attributes.entities[3]);
+                        
+                        if(attributes.validation.success) {
+                            location(url="/Admin/Pages/#attributes.entities[1]#/#attributes.validation.majorVersion#/#attributes.validation.minorVersion#", addToken=false);
+                        }
+                        break;
+                    }
+                    default: {
+                        include "showVersion.cfm";
+                        break;
+                    }
+                }
+                break;
+            }
+            case 4: {
+                // e.g. */navigationId+/Delete/1/0
                 include "action.cfm";
                 break;
             }

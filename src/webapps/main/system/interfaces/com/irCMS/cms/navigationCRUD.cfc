@@ -8,28 +8,28 @@
      * Navigation header
      **/
     public boolean function addNavigation(required struct navigationData);
-    public boolean function editNavigation(required numeric navigationId, required numeric version, required struct navigationData);
+    public boolean function editNavigation(required numeric navigationId, required numeric majorVersion, required numeric minorVersion, required struct navigationData);
     public boolean function deleteNavigation(required numeric navigationId);
     
     /**
      * Content Version
      **/
-    public boolean function approveContentVersion(required numeric navigationId, required numeric version);
-    public boolean function rejectContentVersion(required numeric navigationId, required numeric version);
+    public boolean function approveContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion);
+    public boolean function rejectContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion);
     
-    public struct function addContentVersion(required numeric navigationId, required numeric userId, required numeric version, required struct versionData);
-    public struct function updateContentVersion(required numeric navigationId, required numeric userId, required numeric version, required struct versionData);
+    public struct function addContentVersion(required numeric navigationId, required numeric userId, required numeric majorVersion, required numeric minorVersion, required struct versionData);
+    public struct function updateContentVersion(required numeric navigationId, required numeric userId, required numeric majorVersion, required numeric minorVersion, required struct versionData);
     
-    public boolean function releaseContentVersion(required numeric navigationId, required numeric version);
-    public boolean function revokeContentVersion(required numeric navigationId, required numeric version);
+    public boolean function releaseContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion);
+    public boolean function revokeContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion);
     
-    public boolean function deleteContentVersion(required numeric navigationId, required numeric version);
+    public boolean function deleteContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion);
     /**
      * Helper Functions
      **/
     public boolean function navigationIdExists(required numeric navigationId);
     public boolean function statusExists(required numeric contentStatusId);
-    public boolean function versionAvailable(required numeric navigationId, required numeric version);
+    public boolean function versionAvailable(required numeric navigationId, required numeric majorVersion, required numeric minorVersion);
     public boolean function linkNameAvailable(required numeric navigationId, required string linkName);
     public boolean function sesLinkAvailable(required numeric navigationId, required string sesLink);
     

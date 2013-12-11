@@ -12,7 +12,7 @@
     public boolean function loadNavigation() {
 	    variables.actualMenu = new Query().setDatasource(variables.datasource)
                                           .setSQL("         SELECT cv.navigationId, cv.contentVersionId, cv.moduleId, "
-                                                 &"                cv.version, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
+                                                 &"                cv.majorVersion, cv.minorVersion, cv.content, m.path, m.moduleName, cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, "
                                                  &"                cv.title, cv.description, cv.keywords, cv.showContentForEntity, n.nameOfNavigationToShow "
                                                  &"           FROM #variables.tablePrefix#_navigation     n "
                                                  &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "

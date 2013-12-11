@@ -1,9 +1,10 @@
 component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
-    public navigationVersion function init(required string tablePrefix, required string datasource, required numeric navigationId, required numeric version) {
+    public navigationVersion function init(required string tablePrefix, required string datasource, required numeric navigationId, required numeric majorVersion, required numeric minorVersion) {
         variables.tablePrefix  = arguments.tablePrefix;
         variables.datasource   = arguments.datasource;
         variables.navigationId = arguments.navigationId;
-        variables.version      = arguments.version;
+        variables.majorVersion = arguments.majorVersion;
+        variables.minorVersion = arguments.minorVersion;
 
         return this;
     }
@@ -11,7 +12,7 @@ component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
     public boolean function load() {
         variables.actualMenu = new Query().setDatasource(variables.datasource)
                                           .setSQL("         SELECT n.nameOfNavigationToShow, n.active, "
-                                                 &"                cv.navigationId, cv.contentVersionId, cv.moduleId, cv.version, cv.content, "
+                                                 &"                cv.navigationId, cv.contentVersionId, cv.moduleId, cv.majorVersion, cv.minorVersion, cv.content, "
                                                  &"                cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, cv.title, "
                                                  &"                cv.description, cv.keywords, cv.showContentForEntity, cv.versionComment, "
                                                  &"                cs.online, cs.editable, cs.readyToRelease, cs.contentStatusId, cs.statusName, "
@@ -23,10 +24,12 @@ component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
                                                  &"LEFT OUTER JOIN #variables.tablePrefix#_permissionRole  r  ON cv.permissionRoleId  = r.permissionRoleId "
                                                  &"LEFT OUTER JOIN #variables.tablePrefix#_permissionGroup g  ON cv.permissionGroupId = g.permissionGroupId "
                                                  &"          WHERE cv.navigationId = :navigationId "
-                                                 &"            AND cv.version      = :version"
+                                                 &"            AND cv.majorVersion = :majorVersion"
+                                                 &"            AND cv.minorVersion = :minorVersion"
                                                  &"       ORDER BY n.sortOrder ASC")
                                           .addParam(name="navigationId", value=variables.navigationId, cfsqltype="cf_sql_numeric")
-                                          .addParam(name="version",      value=variables.version,      cfsqltype="cf_sql_float",  scale="2")
+                                          .addParam(name="majorVersion", value=variables.majorVersion, cfsqltype="cf_sql_numeric")
+                                          .addParam(name="minorVersion", value=variables.minorVersion, cfsqltype="cf_sql_numeric")
                                           .execute()
                                           .getResult();
         

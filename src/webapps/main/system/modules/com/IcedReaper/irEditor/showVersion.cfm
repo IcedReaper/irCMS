@@ -1,6 +1,7 @@
 <cfscript>
     attributes.navigationId = attributes.entities[1];
-    attributes.version      = attributes.entities[2];
+    attributes.majorVersion = attributes.entities[2];
+    attributes.minorVersion = attributes.entities[3];
     
     attributes.groups = application.security.permissionCRUD.getGroupList();
     attributes.roles  = application.security.permissionCRUD.getRoleList();
@@ -10,28 +11,39 @@
             case 'save': {
                 attributes.contentUpdate = application.cms.navigationCRUD.updateContentVersion(navigationId = attributes.navigationId
                                                                                               ,userId       = request.actualUser.getUserId()
-                                                                                              ,version      = attributes.version
+                                                                                              ,majorVersion = attributes.majorVersion
+                                                                                              ,minorVersion = attributes.minorVersion
                                                                                               ,versionData  = form);
                 break;
             }
             case 'release': {
-                application.cms.navigationCRUD.releaseContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                application.cms.navigationCRUD.releaseContentVersion(navigationId = attributes.navigationId,
+                                                                     majorVersion = attributes.majorVersion,
+                                                                     minorVersion = attributes.minorVersion);
                 break;
             }
             case 'approve': {
-                application.cms.navigationCRUD.approveContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                application.cms.navigationCRUD.approveContentVersion(navigationId = attributes.navigationId,
+                                                                     majorVersion = attributes.majorVersion,
+                                                                     minorVersion = attributes.minorVersion);
                 break;
             }
             case 'reject': {
-                application.cms.navigationCRUD.rejectContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                application.cms.navigationCRUD.rejectContentVersion(navigationId = attributes.navigationId,
+                                                                    majorVersion = attributes.majorVersion,
+                                                                    minorVersion = attributes.minorVersion);
                 break;
             }
             case 'delete': {
-                application.cms.navigationCRUD.deleteContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                application.cms.navigationCRUD.deleteContentVersion(navigationId = attributes.navigationId,
+                                                                    majorVersion = attributes.majorVersion,
+                                                                    minorVersion = attributes.minorVersion);
                 break;
             }
             case 'revoke': {
-                application.cms.navigationCRUD.revokeContentVersion(navigationId = attributes.navigationId, version = attributes.version);
+                application.cms.navigationCRUD.revokeContentVersion(navigationId = attributes.navigationId,
+                                                                    majorVersion = attributes.majorVersion,
+                                                                    minorVersion = attributes.minorVersion);
                 break;
             }
             default: {
@@ -40,10 +52,11 @@
         }
     }
 
-    attributes.pageToShow = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationVersion").init(tablePrefix  = application.tablePrefix
-                                                                                                                          ,datasource   = application.datasource.user
-                                                                                                                          ,navigationId = attributes.navigationId
-                                                                                                                          ,version      = attributes.version);
+    attributes.pageToShow = createObject("component", "system.cfc.com.IcedReaper.modules.irEditor.navigationVersion").init(tablePrefix  = application.tablePrefix,
+                                                                                                                           datasource   = application.datasource.user,
+                                                                                                                           navigationId = attributes.navigationId,
+                                                                                                                           majorVersion = attributes.majorVersion,
+                                                                                                                           minorVersion = attributes.minorVersion);
     
     if(attributes.pageToShow.load()) {
         include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irEditor/showVersionOfPage.cfm";
