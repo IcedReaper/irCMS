@@ -7,17 +7,17 @@
                                                .include('/js/vendor/jquery_plugins/jquery.sortable.js');
 
         var jsTranslation = {};
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval']        = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause']           = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap']            = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path']        = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title']       = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline']    = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval']        = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval',        language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause']           = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause',           language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap']            = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.wrap',            language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path']        = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.path',        language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title']       = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.title',       language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline']    = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.headline',    language=request.language);
         jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.description'] = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.actualSlide.description', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path']           = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description']    = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height']         = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height', language=request.language);
-        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop']      = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop', language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path']           = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.path',           language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description']    = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.description',    language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height']         = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.height',         language=request.language);
+        jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop']      = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.heroImage.options.marginTop',      language=request.language);
 
         application.themes.irBootstrap.cfstatic.includeData(jsTranslation);
         
@@ -244,12 +244,72 @@
                             </div>
                         </div>
                     </fieldset>
-
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <hr>
+                    
+                    <fieldset>
+                        <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.permission'></legend>
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.permission>has-error</cfif>"">
+                            <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.group'></label>
+                            <div class="col-lg-9">
+                                <cfif attributes.pageToShow.isEditable()>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="permissionGroupId" value="" <cfif attributes.pageToShow.getPermissionGroupId() EQ "">checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.noGroup'>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <cfloop from="1" to="#attributes.groups.len()#" index="groupIndex">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="radio" name="permissionGroupId" value="#attributes.groups[groupIndex].id#" <cfif attributes.pageToShow.getPermissionGroupId() EQ attributes.groups[groupIndex].id>checked="checked"</cfif>>
+                                                    </span>
+                                                    <input type="text" class="form-control" disabled="disabled" value="#attributes.groups[groupIndex].name#">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </cfloop>
+                                <cfelse>
+                                    <p class="form-control-static">#attributes.pageToShow.getPermissionGroupName()#</p>
+                                </cfif>
+                            </div>
                         </div>
-                    </div>
+                        <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.permission>has-error</cfif>"">
+                            <label class="col-lg-3 control-label" id="role-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.role'></label>
+                            <div class="col-lg-9" id="role-select">
+                                <cfif attributes.pageToShow.isEditable()>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="radio" name="permissionRoleId" value="" <cfif attributes.pageToShow.getPermissionRoleId() EQ "">checked="checked"</cfif>>
+                                                </span>
+                                                <input type="text" class="form-control" disabled="disabled" value="<cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.noRole'>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <cfloop from="1" to="#attributes.roles.len()#" index="roleIndex">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="radio" name="permissionRoleId" value="#attributes.roles[roleIndex].id#" <cfif attributes.pageToShow.getPermissionRoleId() EQ attributes.roles[roleIndex].id>checked="checked"</cfif>>
+                                                    </span>
+                                                    <input type="text" class="form-control" disabled="disabled" value="#attributes.roles[roleIndex].name#">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </cfloop>
+                                <cfelse>
+                                    <p class="form-control-static">#attributes.pageToShow.getPermissionRoleName()#</p>
+                                </cfif>
+                            </div>
+                        </div>
+                    </fieldset>
                 </section>
             </div>
         </div>
