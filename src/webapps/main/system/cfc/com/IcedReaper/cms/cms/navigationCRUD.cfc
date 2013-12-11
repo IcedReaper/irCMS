@@ -159,7 +159,7 @@
         formValidation.navigationId = this.navigationIdExists(navigationId = arguments.navigationId);
         formValidation.version      = this.versionAvailable(navigationId   = arguments.navigationId, version  = arguments.version);
         formValidation.linkName     = this.linkNameAvailable(navigationId  = arguments.navigationId, linkName = arguments.versionData.linkName);
-        formValidation.sesLink      = this.sesLinkAvailable(navigationId   = arguments.navigationId, sesLink  = arguments.versionData.sesLink); 
+        formValidation.sesLink      = this.sesLinkAvailable(navigationId   = arguments.navigationId, sesLink  = arguments.versionData.sesLink);
         
         formValidation.success = this.allSuccessfull(formValidation);
 
@@ -180,7 +180,9 @@
                               &"              description, "
                               &"              keywords, "
                               &"              userId, "
-                              &"              showContentForEntity "
+                              &"              showContentForEntity, "
+                              &"              permissionGroupId, "
+                              &"              permissionRoleId "
                               &"            ) "
                               &"     VALUES ( "
                               &"              :navigationId, "
@@ -196,7 +198,9 @@
                               &"              :description, "
                               &"              :keywords, "
                               &"              :userId, "
-                              &"              :showContentForEntity "
+                              &"              :showContentForEntity, "
+                              &"              :permissionGroupId, "
+                              &"              :permissionRoleId "
                               &"            ) ")
                        .addParam(name="navigationId",         value=arguments.navigationId,                     cfsqltype="cf_sql_numeric")
                        .addParam(name="version",              value=arguments.version,                          cfsqltype="cf_sql_float",   scale="2")
@@ -212,6 +216,8 @@
                        .addParam(name="keywords",             value=arguments.versionData.keywords,             cfsqltype="cf_sql_varchar", null="#arguments.versionData.keywords             == '' ? true : false#")
                        .addParam(name="userId",               value=arguments.userId,                           cfsqltype="cf_sql_numeric")
                        .addParam(name="showContentForEntity", value=arguments.versionData.showContentForEntity, cfsqltype="cf_sql_bit")
+                       .addParam(name="permissionGroupId",    value=arguments.versionData.permissionGroupId,    cfsqltype="cf_sql_numeric", null="#arguments.versionData.permissionGroupId    == '' ? true : false#")
+                       .addParam(name="permissionRoleId",     value=arguments.versionData.permissionRoleId,     cfsqltype="cf_sql_numeric", null="#arguments.versionData.permissionRoleId     == '' ? true : false#")
                        .execute();
         }
         
@@ -242,7 +248,9 @@
                               &"       description          = :description, "
                               &"       keywords             = :keywords, "
                               &"       userId               = :userId, "
-                              &"       showContentForEntity = :showContentForEntity "
+                              &"       showContentForEntity = :showContentForEntity, "
+                              &"       permissionGroupId    = :permissionGroupId, "
+                              &"       permissionRoleId     = :permissionRoleId "
                               &" WHERE navigationId = :navigationId "
                               &"   AND Version      = :version ")
                        .addParam(name="navigationId",         value=arguments.navigationId,                     cfsqltype="cf_sql_numeric")
@@ -258,6 +266,8 @@
                        .addParam(name="keywords",             value=arguments.versionData.keywords,             cfsqltype="cf_sql_varchar", null="#arguments.versionData.keywords             == '' ? true : false#")
                        .addParam(name="userId",               value=arguments.userId,                           cfsqltype="cf_sql_numeric")
                        .addParam(name="showContentForEntity", value=arguments.versionData.showContentForEntity, cfsqltype="cf_sql_bit")
+                       .addParam(name="permissionGroupId",    value=arguments.versionData.permissionGroupId,    cfsqltype="cf_sql_numeric", null="#arguments.versionData.permissionGroupId    == '' ? true : false#")
+                       .addParam(name="permissionRoleId",     value=arguments.versionData.permissionRoleId,     cfsqltype="cf_sql_numeric", null="#arguments.versionData.permissionRoleId     == '' ? true : false#")
                        .execute();
         }
 
@@ -276,6 +286,13 @@
         formValidation.title                = isDefined("arguments.versionData.title")                ? variables.formValidator.validate(content=arguments.versionData.title,                ruleName='String',        mandatory=false) : false;
         formValidation.description          = isDefined("arguments.versionData.description")          ? variables.formValidator.validate(content=arguments.versionData.description,          ruleName='String',        mandatory=false) : false;
         formValidation.keywords             = isDefined("arguments.versionData.keywords")             ? variables.formValidator.validate(content=arguments.versionData.keywords,             ruleName='String',        mandatory=false) : false;
+        
+        if(arguments.versionData.permissionGroupId == "" && arguments.versionData.permissionRoleId == "") {
+            formValidation.permission = true;
+        }
+        else {
+            formValidation.permission = arguments.versionData.permissionGroupId != "" && arguments.versionData.permissionRoleId != "";
+        }
         
         return formValidation;
     }
