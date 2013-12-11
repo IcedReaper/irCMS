@@ -106,7 +106,7 @@
                         </div>
                     </fieldset>
 
-                    <fieldset>
+                    <fieldset class="toggleable">
                         <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.moduleSettings'></legend>
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.moduleId>has-error</cfif>">
                             <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.module'></label>
@@ -209,7 +209,7 @@
                         </div>
                     </fieldset>
 
-                    <fieldset>
+                    <fieldset class="toggleable">
                         <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.options'></legend>
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.description>has-error</cfif>">
                             <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.description'></label>
@@ -245,7 +245,7 @@
                         </div>
                     </fieldset>
                     
-                    <fieldset>
+                    <fieldset class="toggleable">
                         <legend><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.permission'></legend>
                         <div class="form-group <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.permission>has-error</cfif>"">
                             <label class="col-lg-3 control-label"><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.group'></label>

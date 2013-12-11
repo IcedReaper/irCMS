@@ -293,4 +293,9 @@
 	        </div>
 	    </div>
 	</script>
+    
+    <script type="html/text" id="fieldset_toggleable">
+        <div class="toggle close" id="show"><span class="glyphicon glyphicon-chevron-down"></span></div>
+        <div class="toggle close" id="hide"><span class="glyphicon glyphicon-chevron-up"></span></div>
+    </script>
 </cfoutput>

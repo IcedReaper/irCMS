@@ -7,6 +7,25 @@ $(function() {
     if($('.content.editable').length === 1) {
         var editor = new irEditor($('.content.editable'));
     }
+    
+    $('fieldset.toggleable').each(function() {
+        var $fieldset = $(this);
+        $('legend', $fieldset).after($($('#fieldset_toggleable').html()));
+        
+        $('div.toggle.close#show', $fieldset).on('click', function() {
+            $(this).hide();
+            $('div.toggle.close#hide', $fieldset).show();
+            
+            $('.form-group', $fieldset).slideDown(500);
+        });
+        
+        $('div.toggle.close#hide', $fieldset).on('click', function() {
+            $(this).hide();
+            $('div.toggle.close#show', $fieldset).show();
+            
+            $('.form-group', $fieldset).slideUp(500);
+        }).hide().trigger('click');
+    });
 
     $(window).on('scroll', function() {
         if($(window).scrollTop() <= ($('.row#pageOptions').offset().top + $('.row#pageOptions').height())) {
