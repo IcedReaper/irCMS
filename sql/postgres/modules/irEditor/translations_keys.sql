@@ -34,6 +34,11 @@ INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedRe
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.noModule', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.yes', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.no', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.group', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.role', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.noGroup', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.noRole', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.permission', true, 1);
 
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause', true, 1);

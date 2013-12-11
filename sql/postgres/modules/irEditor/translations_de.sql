@@ -34,6 +34,11 @@ INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SEL
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.noModule'), 'de', 'Kein Modul');
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.yes'), 'de', 'Ja');
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.no'), 'de', 'Nein');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.group'), 'de', 'Berechtigungsgruppe');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.role'), 'de', 'Rolle');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.noGroup'), 'de', 'Keine Berechtigungsgruppe');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.noRole'), 'de', 'Keine Rolle');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.permission'), 'de', 'Berechtigung');
 
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval'), 'de', 'Interval');
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause'), 'de', 'Pause');
