@@ -7,16 +7,18 @@
         return this;
     }
 
-    public struct function getNavigationInformation(required string sesLink, required string language) {
+    public struct function getNavigationInformation(required string sesLink, required string language, required string userName) {
         var qGetNavigationInformation = new Query().setDatasource(variables.datasource)
-                                                   .setSQL("     SELECT cv.navigationId, cv.sesLink, "
-                                                          &"            regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"
-                                                          &"       FROM #variables.tablePrefix#_ContentVersion cv "
-                                                          &" INNER JOIN #variables.tablePrefix#_navigation     n  ON cv.navigationId=n.navigationId "
-                                                          &" INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
-                                                          &"      WHERE cs.online  = :online "
-                                                          &"        AND n.active   = :active "
-                                                          &"        AND n.language = :language ")
+                                                   .setSQL("         SELECT cv.navigationId, cv.sesLink, r.roleName, g.groupName, "
+                                                          &"                regExp_matches(:sesLink, '^(' || cv.sesLink || ')/*' || cv.entityRegExp || '$') sesMatches"
+                                                          &"           FROM #variables.tablePrefix#_ContentVersion  cv "
+                                                          &"     INNER JOIN #variables.tablePrefix#_navigation      n  ON cv.navigationId=n.navigationId "
+                                                          &"     INNER JOIN #variables.tablePrefix#_contentStatus   cs ON cv.contentStatusId   = cs.contentStatusId "
+                                                          &"LEFT OUTER JOIN #variables.tablePrefix#_permissionRole  r  ON cv.permissionRoleId  = r.permissionRoleId "
+                                                          &"LEFT OUTER JOIN #variables.tablePrefix#_permissionGroup g  ON cv.permissionGroupId = g.permissionGroupId "
+                                                          &"          WHERE cs.online  = :online "
+                                                          &"            AND n.active   = :active "
+                                                          &"            AND n.language = :language ")
                                                    .addParam(name="sesLink",  value=arguments.sesLink,  cfsqltype="cf_sql_varchar")
                                                    .addParam(name="language", value=arguments.language, cfsqltype="cf_sql_varchar")
                                                    .addParam(name="online",   value=true,               cfsqltype="cf_sql_bit")
@@ -25,6 +27,15 @@
                                                    .getResult();
 
         if(qGetNavigationInformation.recordCount == 1) {
+            if(qGetNavigationInformation.roleName[1] != "" && qGetNavigationInformation.groupName[1] != "") {
+                var user = createObject("component", "system.cfc.com.IcedReaper.cms.user.user").init(tablePrefix = variables.tablePrefix,
+                                                                                                     datasource  = variables.datasource,
+                                                                                                     userName    = request.userName);
+                if(! user.hasPermission(roleName=qGetNavigationInformation.roleName[1], groupName=qGetNavigationInformation.groupName[1])) {
+                    throw(type="permissionInsufficient", message="The required permission isn't assigned", detail=qGetNavigationInformation.groupName[1]&";"&qGetNavigationInformation.roleName[1]);
+                }
+            }
+            
             return {
                 entityMatches: this.cleanEntityMatches(arrayMerge([], qGetNavigationInformation.sesMatches[1])),
                 navigationId:  qGetNavigationInformation.navigationId[1],
