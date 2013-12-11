@@ -44,7 +44,8 @@ INSERT INTO irCMS_contentStatus (statusName, sortOrder, readyToRelease, online, 
 CREATE TABLE irCMS_contentVersion (
     contentVersionId     serial,
     navigationId         integer       NOT NULL,
-    version              numeric(10,2) NOT NULL DEFAULT 1,
+    majorVersion         integer NOT NULL DEFAULT 1,
+    minorVersion         integer NOT NULL DEFAULT 0,
     contentStatusId      integer       NOT NULL DEFAULT 1,
     content              text,
     moduleId             integer,
@@ -63,7 +64,7 @@ CREATE TABLE irCMS_contentVersion (
     permissionRoleId     integer,
 
     CONSTRAINT "PK_irCMS_contentVersion_contentVersionId"  PRIMARY KEY (contentVersionId),
-    CONSTRAINT "UK_irCMS_contentVersion_navigationVersion" UNIQUE      (navigationId, version),
+    CONSTRAINT "UK_irCMS_contentVersion_navigationVersion" UNIQUE      (navigationId, majorVersion, minorVersion),
     CONSTRAINT "FK_irCMS_contentVersion_navigationId"      FOREIGN KEY (navigationid)          REFERENCES ircms_navigation      (navigationid)      MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
     CONSTRAINT "FK_irCMS_contentVersion_userId"            FOREIGN KEY (userId)                REFERENCES ircms_user            (userId)            MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
     CONSTRAINT "FK_irCMS_contentVersion_contentStatusId"   FOREIGN KEY (contentStatusId)       REFERENCES ircms_contentStatus   (contentStatusId)   MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -73,7 +74,7 @@ CREATE TABLE irCMS_contentVersion (
 COMMENT ON COLUMN irCMS_contentVersion.showContentForEntity IS 'Should the content be shown before the module when a module has an entity? E.g. When we have an overview we maybe want to show some text before it, but not in the entities.';
 COMMENT ON COLUMN irCMS_contentVersion.moduleAttributes     IS 'These mModule attributes can be a subdivision for the original module. E.g. The review module can be separated into CD, DVD/BluRay, Games, concert and so on and so on reviews which shouldn''t be mixed up.';
 
-CREATE INDEX "IDX_irCMS_contentVersion_contentVersion"  ON irCMS_contentVersion USING btree (navigationid, version);
+CREATE INDEX "IDX_irCMS_contentVersion_contentVersion"  ON irCMS_contentVersion USING btree (navigationid, majorVersion, minorVersion);
 CREATE INDEX "FKI_irCMS_contentVersion_userId"          ON irCMS_contentVersion USING btree (userId);
 CREATE INDEX "FKI_irCMS_contentVersion_navigationId"    ON irCMS_contentVersion USING btree (navigationId);
 CREATE INDEX "FKI_irCMS_contentVersion_contentStatusId" ON irCMS_contentVersion USING btree (contentStatusId);
