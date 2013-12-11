@@ -69,7 +69,9 @@
     }
 
     public navigationPoint function getActualNavigation(required struct navigationInformation) {
-        if(! isNull(arguments.navigationInformation.entityMatches) && ! isNull(arguments.navigationInformation.navigationId) && ! isNull(arguments.navigationInformation.sesLink)) {
+        if(! isNull(arguments.navigationInformation.entityMatches) && 
+           ! isNull(arguments.navigationInformation.navigationId)  && 
+           ! isNull(arguments.navigationInformation.sesLink)) {
             return new navigationPoint(variables.tablePrefix, variables.datasource, arguments.navigationInformation);
         }
         else {
@@ -148,7 +150,7 @@
         return true;
     }
 
-    public boolean function editNavigation(required numeric navigationId, required numeric version, required struct navigationData) {
+    public boolean function editNavigation(required numeric navigationId, required numeric majorVersion, required numeric minorVersion, required struct navigationData) {
         return true;
     }
     
@@ -159,18 +161,23 @@
     /**
      *  Content Version
      **/
-    public struct function addContentVersion(required numeric navigationId, required numeric userId, required numeric version, required struct versionData) {
+    public struct function addContentVersion(required numeric navigationId, required numeric userId, required numeric majorVersion, required numeric minorVersion, required struct versionData) {
         var formValidation = this.validateVersionData(arguments.versionData);
         
-        formValidation.navigationId = isDefined("arguments.navigationId")                ? variables.formValidator.validate(content=arguments.navigationId,                ruleName='Id')      : false;
-        formValidation.version      = isDefined("arguments.version")                     ? variables.formValidator.validate(content=arguments.version,                     ruleName='Version') : false;
-        formValidation.status       = isDefined("arguments.versionData.contentStatusId") ? variables.formValidator.validate(content=arguments.versionData.contentStatusId, ruleName='Id')      : false; 
+        formValidation.navigationId = isDefined("arguments.navigationId")                ? variables.formValidator.validate(content=arguments.navigationId,                ruleName='Id') : false;
+        formValidation.majorVersion = isDefined("arguments.majorVersion")                ? variables.formValidator.validate(content=arguments.majorVersion,                ruleName='Id') : false;
+        formValidation.minorVersion = isDefined("arguments.minorVersion")                ? variables.formValidator.validate(content=arguments.minorVersion,                ruleName='Id') : false;
+        formValidation.status       = isDefined("arguments.versionData.contentStatusId") ? variables.formValidator.validate(content=arguments.versionData.contentStatusId, ruleName='Id') : false; 
         
         formValidation.status       = this.statusExists(contentStatusId    = arguments.versionData.contentStatusId);
         formValidation.navigationId = this.navigationIdExists(navigationId = arguments.navigationId);
-        formValidation.version      = this.versionAvailable(navigationId   = arguments.navigationId, version  = arguments.version);
-        formValidation.linkName     = this.linkNameAvailable(navigationId  = arguments.navigationId, linkName = arguments.versionData.linkName);
-        formValidation.sesLink      = this.sesLinkAvailable(navigationId   = arguments.navigationId, sesLink  = arguments.versionData.sesLink);
+        formValidation.linkName     = this.linkNameAvailable(navigationId = arguments.navigationId,
+                                                             linkName     = arguments.versionData.linkName);
+        formValidation.sesLink      = this.sesLinkAvailable(navigationId = arguments.navigationId,
+                                                            sesLink      = arguments.versionData.sesLink);
+        formValidation.majorVersion = formValidation.minorVersion = this.versionAvailable(navigationId = arguments.navigationId,
+                                                                                          majorVersion = arguments.majorVersion,
+                                                                                          minorVersion = arguments.minorVersion);
         
         formValidation.success = this.allSuccessfull(formValidation);
 
@@ -179,7 +186,8 @@
                        .setSQL("INSERT INTO #variables.tablePrefix#_contentVersion "
                               &"            ( "
                               &"              navigationId, "
-                              &"              version, "
+                              &"              majorVersion, "
+                              &"              minorVersion, "
                               &"              contentStatusId, "
                               &"              content, "
                               &"              moduleId, "
@@ -197,7 +205,8 @@
                               &"            ) "
                               &"     VALUES ( "
                               &"              :navigationId, "
-                              &"              :version, "
+                              &"              :majorVersion, "
+                              &"              :minorVersion, "
                               &"              :contentStatusId, "
                               &"              :content, "
                               &"              :moduleId, "
@@ -214,7 +223,8 @@
                               &"              :permissionRoleId "
                               &"            ) ")
                        .addParam(name="navigationId",         value=arguments.navigationId,                     cfsqltype="cf_sql_numeric")
-                       .addParam(name="version",              value=arguments.version,                          cfsqltype="cf_sql_float",   scale="2")
+                       .addParam(name="majorVersion",         value=arguments.majorVersion,                     cfsqltype="cf_sql_numeric")
+                       .addParam(name="minorVersion",         value=arguments.minorVersion,                     cfsqltype="cf_sql_numeric")
                        .addParam(name="contentStatusId",      value=arguments.versionData.contentstatusId,      cfsqltype="cf_sql_numeric")
                        .addParam(name="content",              value=arguments.versionData.content,              cfsqltype="cf_sql_varchar", null="#arguments.versionData.content              == '' ? true : false#")
                        .addParam(name="moduleId",             value=arguments.versionData.moduleId,             cfsqltype="cf_sql_numeric", null="#arguments.versionData.moduleId             == '' ? true : false#")
@@ -235,7 +245,7 @@
         return formValidation;
     }
 
-    public struct function updateContentVersion(required numeric navigationId, required numeric userId, required numeric version, required struct versionData) {
+    public struct function updateContentVersion(required numeric navigationId, required numeric userId, required numeric majorVersion, required numeric minorVersion, required struct versionData) {
         var formValidation = this.validateVersionData(arguments.versionData);
         
         formValidation.navigationId = isDefined("arguments.navigationId") ? variables.formValidator.validate(content=arguments.navigationId, ruleName='Id') : false;
@@ -263,9 +273,11 @@
                               &"       permissionGroupId    = :permissionGroupId, "
                               &"       permissionRoleId     = :permissionRoleId "
                               &" WHERE navigationId = :navigationId "
-                              &"   AND Version      = :version ")
+                              &"   AND majorVersion = :majorVersion "
+                              &"   AND minorVersion = :minorVersion ")
                        .addParam(name="navigationId",         value=arguments.navigationId,                     cfsqltype="cf_sql_numeric")
-                       .addParam(name="version",              value=arguments.version,                          cfsqltype="cf_sql_float",   scale="2")
+                       .addParam(name="majorVersion",         value=arguments.majorVersion,                     cfsqltype="cf_sql_numeric")
+                       .addParam(name="minorVersion",         value=arguments.minorVersion,                     cfsqltype="cf_sql_numeric")
                        .addParam(name="content",              value=arguments.versionData.content,              cfsqltype="cf_sql_varchar", null="#arguments.versionData.content              == '' ? true : false#")
                        .addParam(name="moduleId",             value=arguments.versionData.moduleId,             cfsqltype="cf_sql_numeric", null="#arguments.versionData.moduleId             == '' ? true : false#")
                        .addParam(name="moduleAttributes",     value=arguments.versionData.moduleAttributes,     cfsqltype="cf_sql_varchar", null="#arguments.versionData.moduleAttributes     == '' ? true : false#")
@@ -308,7 +320,7 @@
         return formValidation;
     }
     
-    public boolean function approveContentVersion(required numeric navigationId, required numeric version) {
+    public boolean function approveContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion) {
         var nextStatusId = new Query().setDatasource(variables.datasource)
                                       .setSQL("  SELECT contentStatusId "
                                              &"    FROM #variables.tablePrefix#_contentStatus "
@@ -316,11 +328,13 @@
                                              &"                            FROM #variables.tablePrefix#_contentVersion cv "
                                              &"                      INNER JOIN #variables.tablePrefix#_contentStatus cs ON cv.contentStatusId = cs.contentStatusId "
                                              &"                           WHERE navigationId = :navigationId "
-                                             &"                             AND version      = :version) "
+                                             &"                             AND majorVersion = :majorVersion "
+                                             &"                             AND minorVersion = :minorVersion ) "
                                              &"ORDER BY sortOrder ASC "
                                              &"   LIMIT 1 ")
-                                      .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_numeric")
                                       .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                                      .addParam(name="majorVersion", value=arguments.majorVersion, cfsqltype="cf_sql_numeric")
+                                      .addParam(name="minorVersion", value=arguments.minorVersion, cfsqltype="cf_sql_numeric")
                                       .execute()
                                       .getResult()
                                       .contentStatusId[1];
@@ -328,17 +342,19 @@
         new Query().setDatasource(variables.datasource)
                    .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
                           &"   SET contentStatusId = :online "
-                          &" WHERE navigationId    = :navigationId "
-                          &"   AND version         = :version ")
-                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_numeric")
+                          &" WHERE navigationId = :navigationId "
+                          &"   AND majorVersion = :majorVersion "
+                          &"   AND minorVersion = :minorVersion ")
                    .addParam(name="online",       value=nextStatusId,           cfsqltype="cf_sql_numeric")
                    .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                   .addParam(name="majorVersion", value=arguments.majorVersion, cfsqltype="cf_sql_numeric")
+                   .addParam(name="minorVersion", value=arguments.minorVersion, cfsqltype="cf_sql_numeric")
                    .execute();
         
         return true;
     }
     
-    public boolean function rejectContentVersion(required numeric navigationId, required numeric version) {
+    public boolean function rejectContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion) {
         var reworkStatusId = new Query().setDatasource(variables.datasource)
                                         .setSQL("  SELECT contentStatusId "
                                                &"    FROM #variables.tablePrefix#_contentStatus "
@@ -353,17 +369,19 @@
         new Query().setDatasource(variables.datasource)
                    .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
                           &"   SET contentStatusId = :online "
-                          &" WHERE navigationId    = :navigationId "
-                          &"   AND version         = :version ")
-                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_numeric")
+                          &" WHERE navigationId = :navigationId "
+                          &"   AND majorVersion = :majorVersion "
+                          &"   AND minorVersion = :minorVersion ")
                    .addParam(name="online",       value=reworkStatusId,         cfsqltype="cf_sql_numeric")
                    .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                   .addParam(name="majorVersion", value=arguments.majorVersion, cfsqltype="cf_sql_numeric")
+                   .addParam(name="minorVersion", value=arguments.minorVersion, cfsqltype="cf_sql_numeric")
                    .execute();
         
         return true;
     }
     
-    public boolean function releaseContentVersion(required numeric navigationId, required numeric version) {
+    public boolean function releaseContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion) {
         var onlineStatusId  = this.getOnlineStatusId();
         var offlineStatusId = this.getOfflineStatusId();
 
@@ -380,43 +398,49 @@
         new Query().setDatasource(variables.datasource)
                    .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
                           &"   SET contentStatusId = :online "
-                          &" WHERE navigationId    = :navigationId "
-                          &"   AND version         = :version")
-                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_numeric")
+                          &" WHERE navigationId = :navigationId "
+                          &"   AND majorVersion = :majorVersion "
+                          &"   AND minorVersion = :minorVersion ")
                    .addParam(name="online",       value=onlineStatusId,         cfsqltype="cf_sql_numeric")
                    .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
+                   .addParam(name="majorVersion", value=arguments.majorVersion, cfsqltype="cf_sql_numeric")
+                   .addParam(name="minorVersion", value=arguments.minorVersion, cfsqltype="cf_sql_numeric")
                    .execute();
 
         return true;
     }
     
-    public boolean function revokeContentVersion(required numeric navigationId, required numeric version) {
+    public boolean function revokeContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion) {
         var offineStatusId = this.getOnlineStatusId();
 
         new Query().setDatasource(variables.datasource)
                    .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
                           &"   SET contentStatusId = :offline "
-                          &" WHERE navigationId    = :navigationId "
-                          &"   AND version         = :version ")
+                          &" WHERE navigationId = :navigationId "
+                          &"   AND majorVersion = :majorVersion "
+                          &"   AND minorVersion = :minorVersion ")
                    .addParam(name="offline",      value=offlineStatusId,        cfsqltype="cf_sql_numeric")
                    .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
-                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_float", scale="2")
+                   .addParam(name="majorVersion", value=arguments.majorVersion, cfsqltype="cf_sql_numeric")
+                   .addParam(name="minorVersion", value=arguments.minorVersion, cfsqltype="cf_sql_numeric")
                    .execute();
 
         return true;
     }
     
-    public boolean function deleteContentVersion(required numeric navigationId, required numeric version) {
+    public boolean function deleteContentVersion(required numeric navigationId, required numeric majorVersion, required numeric minorVersion) {
         var deletedStatusId = this.getDeletedStatusId();
 
         new Query().setDatasource(variables.datasource)
                    .setSQL("UPDATE #variables.tablePrefix#_contentVersion "
                           &"   SET contentStatusId = :deleted "
-                          &" WHERE navigationId    = :navigationId "
-                          &"   AND version         = :version ")
+                          &" WHERE navigationId = :navigationId "
+                          &"   AND majorVersion = :majorVersion "
+                          &"   AND minorVersion = :minorVersion ")
                    .addParam(name="deleted",      value=deletedStatusId,        cfsqltype="cf_sql_numeric")
                    .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
-                   .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_float", scale="2")
+                   .addParam(name="majorVersion", value=arguments.majorVersion, cfsqltype="cf_sql_numeric")
+                   .addParam(name="minorVersion", value=arguments.minorVersion, cfsqltype="cf_sql_numeric")
                    .execute();
 
         return true;
@@ -485,14 +509,16 @@
                           .getRecordCount() == 1;
     }
     
-    public boolean function versionAvailable(required numeric navigationId, required numeric version) {
+    public boolean function versionAvailable(required numeric navigationId, required numeric majorVersion, required numeric minorVersion) {
         return new Query().setDatasource(variables.datasource)
                           .setSQL("SELECT contentVersionId "
                                  &"  FROM #variables.tablePrefix#_contentVersion "
                                  &" WHERE navigationId = :navigationId "
-                                 &"   AND version      = :version ")
+                                 &"   AND majorVersion = :majorVersion "
+                                 &"   AND minorVersion = :minorVersion ")
                           .addParam(name="navigationId", value=arguments.navigationId, cfsqltype="cf_sql_numeric")
-                          .addParam(name="version",      value=arguments.version,      cfsqltype="cf_sql_float", scale="2")
+                          .addParam(name="majorVersion", value=arguments.majorVersion, cfsqltype="cf_sql_numeric")
+                          .addParam(name="minorVersion", value=arguments.minorVersion, cfsqltype="cf_sql_numeric")
                           .execute()
                           .getResult()
                           .getRecordCount() == 0;

@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-md-12">
                 <header class="widget">
-                    <h2>#attributes.pageToShow.getLinkname()#<small><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.version'>: #attributes.version#</small></h2>
+                    <h2>#attributes.pageToShow.getLinkname()#<small><cf_translation keyName='modules.com.IcedReaper.irEditor.pageEdit.version'>: #attributes.majorVersion#.#attributes.minorVersion#</small></h2>
                 </header>
             </div>
         </div>
