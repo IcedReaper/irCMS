@@ -151,9 +151,10 @@ component implements="system.interfaces.com.irCMS.user.user" {
             return false;
         }
 
-        var oPermission = createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(datasource   = variables.datasource
-                                                                                                             ,tablePrefix  = variables.tablePrefix);
-
-       return oPermission.hasPermission(userName=variables.userName, groupName=arguments.groupName, roleName=arguments.roleName);
+        return createObject("component", "system.cfc.com.IcedReaper.cms.security.permission").init(datasource   = variables.datasource
+                                                                                                  ,tablePrefix  = variables.tablePrefix)
+                                                                                             .hasPermission(userName  = variables.userName
+                                                                                                           ,groupName = arguments.groupName
+                                                                                                           ,roleName  = arguments.roleName);
     }
 }

@@ -1,6 +1,9 @@
 <cfscript>
     attributes.navigationId = attributes.entities[1];
     attributes.version      = attributes.entities[2];
+    
+    attributes.groups = application.security.permissionCRUD.getGroupList();
+    attributes.roles  = application.security.permissionCRUD.getRoleList();
 
     if(isDefined("form") && ! form.isEmpty() && application.security.permission.hasPermission(userName=request.userName, groupName='irEditor', roleName='Editor')) {
         switch(form.action) {

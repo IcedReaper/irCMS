@@ -1,7 +1,7 @@
 ﻿interface {
     public navigationCRUD function init(required validator formValidator, required string tablePrefix, required string datasource);
 
-    public struct function getNavigationInformation(required string sesLink, required string language);
+    public struct function getNavigationInformation(required string sesLink, required string language, required string userName);
     public navigationPoint function getActualNavigation(required struct navigationInformation);
     
     /**
@@ -33,5 +33,5 @@
     public boolean function linkNameAvailable(required numeric navigationId, required string linkName);
     public boolean function sesLinkAvailable(required numeric navigationId, required string sesLink);
     
-    public array function getHierarchy(required string position, required string language, required numeric parentNavigationId);
+    public array function getHierarchy(required string position, required string language, required numeric parentNavigationId, required string userName);
 }

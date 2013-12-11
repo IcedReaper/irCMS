@@ -158,14 +158,12 @@
         catch('permissionInsufficient' var permInsufficient) {
             application.error.errorHandler.logError(errorType='Permission Insufficient', errorData=permInsufficient);
             
-            saveContent variable="request.content" {
-                module template  = "/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm"
-                       message   = permInsufficient.message
-                       groupName = listFirst(permInsufficient.detail, ';')
-                       roleName  = listLast(permInsufficient.detail, ';');
-            }
+            module template  = "/themes/#request.themeName#/templates/core/permissionIsNotSufficient.cfm"
+                   message   = permInsufficient.message
+                   groupName = listFirst(permInsufficient.detail, ';')
+                   roleName  = listLast(permInsufficient.detail, ';');
             
-            return true;
+            return false;
         }
         catch(any var error) {
             application.error.errorHandler.processError(themeName=application.cms.core.getDefaultThemeName(), errorStruct=error);
@@ -264,7 +262,9 @@
     }
 
     private boolean function handleSes() {
-        var navigationInformation = application.cms.navigationCRUD.getNavigationInformation(sesLink=request.sesLink, language=request.language);
+        var navigationInformation = application.cms.navigationCRUD.getNavigationInformation(sesLink  = request.sesLink,
+                                                                                            language = request.language,
+                                                                                            userName = request.userName);
 
         request.actualMenu = application.cms.navigationCRUD.getActualNavigation(navigationInformation);
         

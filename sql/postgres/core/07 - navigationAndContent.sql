@@ -59,12 +59,16 @@ CREATE TABLE irCMS_contentVersion (
     creationDate         timestamp with time zone DEFAULT now(),
     versionComment       text,
     showContentForEntity boolean       NOT NULL DEFAULT false,
+    permissionGroupId    integer,
+    permissionRoleId     integer,
 
     CONSTRAINT "PK_irCMS_contentVersion_contentVersionId"  PRIMARY KEY (contentVersionId),
     CONSTRAINT "UK_irCMS_contentVersion_navigationVersion" UNIQUE      (navigationId, version),
-    CONSTRAINT "FK_irCMS_contentVersion_navigationId"      FOREIGN KEY (navigationid)          REFERENCES ircms_navigation    (navigationid)    MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT "FK_irCMS_contentVersion_userId"            FOREIGN KEY (userId)                REFERENCES ircms_user          (userId)          MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT "FK_irCMS_contentVersion_contentStatusId"   FOREIGN KEY (contentStatusId)       REFERENCES ircms_contentStatus (contentStatusId) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+    CONSTRAINT "FK_irCMS_contentVersion_navigationId"      FOREIGN KEY (navigationid)          REFERENCES ircms_navigation      (navigationid)      MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT "FK_irCMS_contentVersion_userId"            FOREIGN KEY (userId)                REFERENCES ircms_user            (userId)            MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT "FK_irCMS_contentVersion_contentStatusId"   FOREIGN KEY (contentStatusId)       REFERENCES ircms_contentStatus   (contentStatusId)   MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT "FK_irCMS_contentVersion_permissionGroupId" FOREIGN KEY (permissionGroupId)     REFERENCES ircms_permissionGroup (permissionGroupId) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT "FK_irCMS_contentVersion_permissionRoleId"  FOREIGN KEY (permissionRoleId)      REFERENCES ircms_permissionRole  (permissionRoleId)  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 COMMENT ON COLUMN irCMS_contentVersion.showContentForEntity IS 'Should the content be shown before the module when a module has an entity? E.g. When we have an overview we maybe want to show some text before it, but not in the entities.';
 COMMENT ON COLUMN irCMS_contentVersion.moduleAttributes     IS 'These mModule attributes can be a subdivision for the original module. E.g. The review module can be separated into CD, DVD/BluRay, Games, concert and so on and so on reviews which shouldn''t be mixed up.';
