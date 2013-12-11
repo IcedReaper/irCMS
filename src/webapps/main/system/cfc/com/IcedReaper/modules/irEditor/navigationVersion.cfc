@@ -15,11 +15,13 @@ component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
                                                  &"                cv.moduleAttributes, cv.linkname, cv.sesLink, cv.entityRegExp, cv.title, "
                                                  &"                cv.description, cv.keywords, cv.showContentForEntity, cv.versionComment, "
                                                  &"                cs.online, cs.editable, cs.readyToRelease, cs.contentStatusId, cs.statusName, "
-                                                 &"                m.path, m.moduleName "
-                                                 &"           FROM #variables.tablePrefix#_navigation     n "
-                                                 &"     INNER JOIN #variables.tablePrefix#_contentVersion cv ON n.navigationId     = cv.navigationId "
-                                                 &"     INNER JOIN #variables.tablePrefix#_contentStatus  cs ON cv.contentStatusId = cs.contentStatusId "
-                                                 &"LEFT OUTER JOIN #variables.tablePrefix#_module         m  ON cv.moduleId        = m.moduleId "
+                                                 &"                m.path, m.moduleName, cv.permissionRoleId, cv.permissionGroupId, r.roleName, g.groupName "
+                                                 &"           FROM #variables.tablePrefix#_navigation      n "
+                                                 &"     INNER JOIN #variables.tablePrefix#_contentVersion  cv ON n.navigationId       = cv.navigationId "
+                                                 &"     INNER JOIN #variables.tablePrefix#_contentStatus   cs ON cv.contentStatusId   = cs.contentStatusId "
+                                                 &"LEFT OUTER JOIN #variables.tablePrefix#_module          m  ON cv.moduleId          = m.moduleId "
+                                                 &"LEFT OUTER JOIN #variables.tablePrefix#_permissionRole  r  ON cv.permissionRoleId  = r.permissionRoleId "
+                                                 &"LEFT OUTER JOIN #variables.tablePrefix#_permissionGroup g  ON cv.permissionGroupId = g.permissionGroupId "
                                                  &"          WHERE cv.navigationId = :navigationId "
                                                  &"            AND cv.version      = :version"
                                                  &"       ORDER BY n.sortOrder ASC")
@@ -125,5 +127,21 @@ component extends="system.cfc.com.IcedReaper.cms.cms.navigationPoint" {
                           .execute()
                           .getResult()
                           .statusName[1];
+    }
+    
+    public numeric function getPermissionGroupId() {
+        return variables.actualMenu.permissionGroupId[1];
+    }
+    
+    public numeric function getPermissionRoleId() {
+        return variables.actualMenu.permissionRoleId[1];
+    }
+    
+    public string function getPermissionGroupName() {
+        return variables.actualMenu.groupName[1];
+    }
+    
+    public string function getPermissionRoleName() {
+        return variables.actualMenu.roleName[1];
     }
 }
