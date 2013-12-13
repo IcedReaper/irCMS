@@ -360,7 +360,11 @@
         <cfinclude template="templates.cfm">
 
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
-            #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
+            <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.success>
+                #attributes.pageToShow.buildSkeleton(themeName=request.actualUser.getTheme(), skeleton=form.content)#
+            <cfelse>
+                #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
+            </cfif>
         </div>
     </form>
 </cfoutput>
