@@ -44,6 +44,15 @@
         <div class="row" id="pageOptions">
             <div class="col-md-12">
                 <section class="widget">
+                    <cfif isDefined("url.showSuccessMessage")>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-success">
+                                    <cf_translation keyName='modules.com.IcedReaper.irEditor.pageNew.saveSuccessfull'>
+                                </div>
+                            </div>
+                        </div>
+                    </cfif>
                     <cfif isDefined('attributes.contentUpdate')>
                         <cfif attributes.contentUpdate.success>
                             <div class="row">
