@@ -3,9 +3,9 @@
     application.themes.irBootstrap.cfstatic.include('/css/modules/com/IcedReaper/irEditor/');
 
     if(attributes.pageToShow.isEditable()) {
-        application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/')
+        application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/editor.js')
                                                .include('/js/vendor/jquery_plugins/jquery.sortable.js');
-
+        
         var jsTranslation = {};
         jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval']        = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval',        language=request.language);
         jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause']           = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause',           language=request.language);
