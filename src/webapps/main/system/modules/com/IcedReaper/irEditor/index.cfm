@@ -17,8 +17,11 @@
             case 1: {
                 switch(attributes.entities[1]) {
                     case 'newPage': {
-                        // create a new page
                         include "newPage.cfm";
+                        break;
+                    }
+                    case 'sort': {
+                        include "sort.cfm";
                         break;
                     }
                 }
@@ -27,7 +30,6 @@
             case 2: {
                 switch(attributes.entities[2]) {
                     case 'newMajor': {
-                        // create new version of the page
                         attributes.validation = attributes.navigationCRUD.createNewMajorVersion(coreNavigation = application.cms.navigationCRUD,
                                                                                                 userId         = request.actualUser.getUserId(),
                                                                                                 navigationId   = attributes.entities[1]);
@@ -43,7 +45,6 @@
             case 3: {
                 switch(attributes.entities[2]) {
                     case 'newMinor': {
-                        // create new version of the page
                         attributes.validation = attributes.navigationCRUD.createNewMinorVersion(coreNavigation = application.cms.navigationCRUD,
                                                                                                 userId         = request.actualUser.getUserId(),
                                                                                                 navigationId   = attributes.entities[1],
@@ -62,7 +63,6 @@
                 break;
             }
             case 4: {
-                // e.g. */navigationId+/Delete/1/0
                 include "action.cfm";
                 break;
             }
