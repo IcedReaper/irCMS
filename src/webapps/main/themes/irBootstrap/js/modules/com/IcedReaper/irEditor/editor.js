@@ -59,6 +59,20 @@ var irEditor = function($editor) {
     var $fixBtn  = $('.btn#fix');
     var $sortBtn = $('.btn#sort');
     
+    $('input[name="Linkname"]').on('input', function() {
+        var newSes = $('input[name="sesLink"]').val().replace(/\/\w*$/, '/'+$(this).val());
+        $('input[name="sesLink"]').val(newSes);
+    });
+    
+    $('#pageOptions input').on('keypress', function(e) {
+        if(e.which === 13) {
+            e.preventDefault();
+        
+            $('#save').trigger('click');
+            return false;
+        }
+    });
+    
     $('form#irEditor').on('submit', function() {
         try {
             if(bEditable) {
