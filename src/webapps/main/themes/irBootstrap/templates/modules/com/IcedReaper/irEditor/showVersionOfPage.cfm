@@ -3,9 +3,9 @@
     application.themes.irBootstrap.cfstatic.include('/css/modules/com/IcedReaper/irEditor/');
 
     if(attributes.pageToShow.isEditable()) {
-        application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/')
+        application.themes.irBootstrap.cfstatic.include('/js/modules/com/IcedReaper/irEditor/editor.js')
                                                .include('/js/vendor/jquery_plugins/jquery.sortable.js');
-
+        
         var jsTranslation = {};
         jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval']        = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.Interval',        language=request.language);
         jsTranslation['modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause']           = application.tools.i18n.getTranslation(keyName='modules.com.IcedReaper.irEditor.pageEdit.js.carousel.options.pause',           language=request.language);
@@ -44,6 +44,15 @@
         <div class="row" id="pageOptions">
             <div class="col-md-12">
                 <section class="widget">
+                    <cfif isDefined("url.showSuccessMessage")>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-success">
+                                    <cf_translation keyName='modules.com.IcedReaper.irEditor.pageNew.saveSuccessfull'>
+                                </div>
+                            </div>
+                        </div>
+                    </cfif>
                     <cfif isDefined('attributes.contentUpdate')>
                         <cfif attributes.contentUpdate.success>
                             <div class="row">
@@ -360,7 +369,11 @@
         <cfinclude template="templates.cfm">
 
         <div class="content <cfif attributes.pageToShow.isEditable()>editable</cfif>">
-            #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
+            <cfif isDefined('attributes.contentUpdate') AND NOT attributes.contentUpdate.success>
+                #attributes.pageToShow.buildSkeleton(themeName=request.actualUser.getTheme(), skeleton=form.content)#
+            <cfelse>
+                #attributes.pageToShow.getContent(themeName=request.actualUser.getTheme(), cleanArticle=true)#
+            </cfif>
         </div>
     </form>
 </cfoutput>

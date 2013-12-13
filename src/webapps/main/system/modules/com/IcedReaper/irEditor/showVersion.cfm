@@ -62,6 +62,6 @@
         include "/themes/#request.themeName#/templates/modules/com/Icedreaper/irEditor/showVersionOfPage.cfm";
     }
     else {
-        throw(type="notFound", message="Navigation was found", detail=arguments.sesLink);
+        throw(type="notFound", message="Navigation was found", detail=attributes.sesLink);
     }
 </cfscript>

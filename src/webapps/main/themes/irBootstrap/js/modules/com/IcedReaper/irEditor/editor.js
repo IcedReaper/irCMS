@@ -547,6 +547,9 @@ var irEditor = function($editor) {
         
         $('> .row', $('.content.editable')).after(createRowAddHandler());
         $('> .row:first-child', $('.content.editable')).before(createRowAddHandler());
+        if($('.content.editable .row').length === 0) {
+            $('.content.editable').append(createRowAddHandler());
+        }
     };
     var cleanupAddHandler = function() {
         $('.addHandler').remove();

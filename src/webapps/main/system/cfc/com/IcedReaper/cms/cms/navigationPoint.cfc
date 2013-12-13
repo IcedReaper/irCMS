@@ -140,7 +140,7 @@
         return content;
     }
 
-    private string function buildSkeleton(required string themeName, required string skeleton) {
+    public string function buildSkeleton(required string themeName, required string skeleton) cachedWithin="#createTimespan(0,1,0,0)#" {
         if(isJson(arguments.skeleton)) {
             var jsonSkeleton = deserializeJSON(arguments.skeleton);
             return this.buildSubSkeleton(themeName=arguments.themeName, modules=jsonSkeleton);

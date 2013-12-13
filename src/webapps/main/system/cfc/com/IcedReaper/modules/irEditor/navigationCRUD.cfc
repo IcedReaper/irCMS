@@ -42,42 +42,26 @@ component {
                                            .getResult();
 
         var majorVersion = qryGetLastVersion.majorVersion[1] + 1;
-
-        var draftStatus = new Query().setDatasource(variables.datasource)
-                                     .setSQL("  SELECT contentStatusId "
-                                            &"    FROM #variables.tablePrefix#_contentStatus "
-                                            &"   WHERE sortOrder = :sortOrder "
-                                            &"     AND rework    = :rework "
-                                            &"ORDER BY sortOrder ASC "
-                                            &"   LIMIT 1")
-                                     .addParam(name="sortOrder", value = 1,     cfsqltype="cf_sql_numeric")
-                                     .addParam(name="rework",    value = false, cfsqltype="cf_sql_bit")
-                                     .execute()
-                                     .getResult()
-                                     .contentStatusId[1];
-        
-        var contentVersionData = {
-            contentStatusId:      draftStatus,
-            content:              qryGetLastVersion.content[1],
-            moduleId:             qryGetLastVersion.moduleId[1],
-            moduleAttributes:     qryGetLastVersion.moduleAttributes[1],
-            linkName:             qryGetLastVersion.linkName[1],
-            sesLink:              qryGetLastVersion.sesLink[1],
-            entityRegExp:         qryGetLastVersion.entityRegExp[1],
-            title:                qryGetLastVersion.title[1],
-            description:          qryGetLastVersion.description[1],
-            keywords:             qryGetLastVersion.keywords[1],
-            canonical:            qryGetLastVersion.canonical[1],
-            showContentForEntity: qryGetLastVersion.showContentForEntity[1] == 1,
-            permissionGroupId:    qryGetLastVersion.permissionGroupId[1],
-            permissionRoleId:     qryGetLastVersion.permissionRoleId[1]
-        };
         
         var validation = arguments.coreNavigation.addContentVersion(navigationId = arguments.navigationId, 
                                                                     userId       = arguments.userId,
                                                                     majorVersion = majorVersion,
                                                                     minorVersion = 0,
-                                                                    versionData  = contentVersionData);
+                                                                    versionData  = {
+                                                                                       contentStatusId:      arguments.coreNavigation.getDraftStatus(),
+                                                                                       content:              qryGetLastVersion.content[1],
+                                                                                       moduleId:             qryGetLastVersion.moduleId[1],
+                                                                                       moduleAttributes:     qryGetLastVersion.moduleAttributes[1],
+                                                                                       linkName:             qryGetLastVersion.linkName[1],
+                                                                                       sesLink:              qryGetLastVersion.sesLink[1],
+                                                                                       entityRegExp:         qryGetLastVersion.entityRegExp[1],
+                                                                                       title:                qryGetLastVersion.title[1],
+                                                                                       description:          qryGetLastVersion.description[1],
+                                                                                       keywords:             qryGetLastVersion.keywords[1],
+                                                                                       showContentForEntity: qryGetLastVersion.showContentForEntity[1] == 1,
+                                                                                       permissionGroupId:    qryGetLastVersion.permissionGroupId[1],
+                                                                                       permissionRoleId:     qryGetLastVersion.permissionRoleId[1]
+                                                                                   });
         
         if(validation.success) {
             validation.majorVersion = majorversion;

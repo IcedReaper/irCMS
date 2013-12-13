@@ -7,9 +7,7 @@
     /**
      * Navigation header
      **/
-    public boolean function addNavigation(required struct navigationData);
-    public boolean function editNavigation(required numeric navigationId, required numeric majorVersion, required numeric minorVersion, required struct navigationData);
-    public boolean function deleteNavigation(required numeric navigationId);
+    public struct function addNavigation(required struct navigationData, required numeric userId);
     
     /**
      * Content Version
@@ -34,4 +32,5 @@
     public boolean function sesLinkAvailable(required numeric navigationId, required string sesLink);
     
     public array function getHierarchy(required string position, required string language, required numeric parentNavigationId, required string userName);
+    public numeric function getDraftStatus();
 }

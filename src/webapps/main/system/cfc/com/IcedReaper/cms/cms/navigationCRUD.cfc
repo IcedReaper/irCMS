@@ -146,16 +146,155 @@
     /**
      * Navigation header
      **/
-    public boolean function addNavigation(required struct navigationData) {
-        return true;
-    }
-
-    public boolean function editNavigation(required numeric navigationId, required numeric majorVersion, required numeric minorVersion, required struct navigationData) {
-        return true;
-    }
-    
-    public boolean function deleteNavigation(required numeric navigationId) {
-        return true;
+    public struct function addNavigation(required struct navigationData, required numeric userId) {
+        var validation = {};
+        
+        validation.language = isDefined("arguments.navigationData.language") ? variables.formValidator.validate(content=arguments.navigationData.language, ruleName='Language') : false;
+        if(isDefined("arguments.navigationData.position")) {
+            if(arguments.navigationData.position == "") {
+                if(arguments.navigationData.newPosition != "") {
+                    validation.position = new Query().setDatasource(variables.datasource)
+                                                     .setSQL("SELECT navigationId "
+                                                            &"  FROM #variables.tablePrefix#_navigation "
+                                                            &" WHERE position = :newPosition")
+                                                     .addParam(name="newPosition", value=arguments.navigationData.newPosition, cfsqltype="cf_sql_varchar")
+                                                     .execute()
+                                                     .getResult()
+                                                     .getRecordCount() == 0;
+                }
+                else {
+                    validation.position = false;
+                }
+            }
+            else {
+                validation.position = new Query().setDatasource(variables.datasource)
+                                                 .setSQL("SELECT navigationId "
+                                                        &"  FROM #variables.tablePrefix#_navigation "
+                                                        &" WHERE position = :position")
+                                                 .addParam(name="position", value=arguments.navigationData.position, cfsqltype="cf_sql_varchar")
+                                                 .execute()
+                                                 .getResult()
+                                                 .getRecordCount() > 1;
+            }
+        }
+        else {
+            validation.position = false;
+        }
+        
+        if(isDefined("arguments.navigationData.navigationToShow")) {
+            if(arguments.navigationData.navigationToShow == arguments.navigationData.newPosition) {
+                validation.navigationToShow = true;
+            }
+            else {
+                validation.navigationToShow = new Query().setDatasource(variables.datasource)
+                                                         .setSQL("SELECT navigationId "
+                                                                &"  FROM #variables.tablePrefix#_navigation "
+                                                                &" WHERE position = :position")
+                                                         .addParam(name="position", value=arguments.navigationData.navigationToShow, cfsqltype="cf_sql_varchar")
+                                                         .execute()
+                                                         .getResult()
+                                                         .getRecordCount() > 1;
+            }
+        }
+        else {
+            validation.navigationToShow = false;
+        }
+        
+        formValidation.success = this.allSuccessfull(formValidation);
+        
+        if(formValidation.success) {
+            if(arguments.navigationData.position == "") {
+                arguments.navigationData.position = arguments.navigationData.newPosition;
+                sortOrder = 1;
+            }
+            else {
+                var qSortOrder = new Query().setDatasource(variables.datasource)
+                                            .setSQL("SELECT MAX(sortOrder) maxSortOrder "
+                                                   &"  FROM #variables.tablePrefix#_navigation "
+                                                   &" WHERE position = :position "
+                                                   &"   AND parentNavigationId IS NULL")
+                                            .addParam(name="position", value=arguments.navigationData.position, cfsqltype="cf_sql_varchar")
+                                            .execute()
+                                            .getResult();
+                
+                if(qSortOrder.getRecordCount() != 0) {
+                    sortOrder = qSortOrder.maxSortOrder[1] + 1;
+                }
+                else {
+                    throw(type="notFound", message="Navigation was not found", detail=arguments.navigationData.position);
+                }
+            }
+            
+            transaction {
+                try {
+                    new Query().setDatasource(variables.datasource)
+                               .setSQL("INSERT INTO #variables.tablePrefix#_navigation "
+                                      &"            ( "
+                                      &"                 language, "
+                                      &"                 position, "
+                                      &"                 sortOrder, "
+                                      &"                 nameofNavigationToShow, "
+                                      &"                 active "
+                                      &"            ) "
+                                      &"     VALUES ( "
+                                      &"                 :language, "
+                                      &"                 :position, "
+                                      &"                 :sortOrder, "
+                                      &"                 :nameofNavigationToShow, "
+                                      &"                 :active "
+                                      &"            ) ")
+                               .addParam(name="language",               value=arguments.navigationData.language,         cfsqltype="cf_sql_varchar")
+                               .addParam(name="position",               value=arguments.navigationData.position,         cfsqltype="cf_sql_varchar")
+                               .addParam(name="sortOrder",              value=sortOrder,                                 cfsqltype="cf_sql_numeric")
+                               .addParam(name="nameofNavigationToShow", value=arguments.navigationData.navigationToShow, cfsqltype="cf_sql_varchar")
+                               .addParam(name="active",                 value=true,                                      cfsqltype="cf_sql_bit")
+                               .execute();
+                        
+                    formValidation.navigationId = new Query().setDatasource(variables.datasource)
+                                                             .setSQL("SELECT MAX(navigationId) lastId "
+                                                                    &"  FROM #variables.tablePrefix#_navigation ")
+                                                             .execute()
+                                                             .getResult()
+                                                             .lastId[1];
+                    
+                    var contentVersion = this.addContentVersion(navigationId = formValidation.navigationId,
+                                                                userId       = arguments.userId,
+                                                                majorVersion = 1,
+                                                                minorVersion = 0,
+                                                                versionData  = {
+                                                                    contentStatusId:      this.getDraftStatus(),
+                                                                    content:              '',
+                                                                    moduleId:             '',
+                                                                    moduleAttributes:     '',
+                                                                    linkName:             'New '&formValidation.navigationId&' - please edit',
+                                                                    sesLink:              '/New'&formValidation.navigationId&' - please edit',
+                                                                    entityRegExp:         '',
+                                                                    title:                '',
+                                                                    description:          '',
+                                                                    keywords:             '',
+                                                                    showContentForEntity: false,
+                                                                    permissionGroupId:    '',
+                                                                    permissionRoleId:     ''
+                                                                });
+                    
+                    if(contentVersion.success) {
+                        transaction action="commit";
+                    }
+                    else {
+                        transaction action="rollback";
+                        throw(type="error", message="Error while adding contentVersion");
+                    }
+                    
+                    transaction action="commit";
+                }
+                catch(any e) {
+                    transaction action="rollback";
+                    rethrow;
+                }    
+            }
+        }
+        
+        return formValidation;
     }
     
     /**
@@ -299,10 +438,10 @@
 
     private struct function validateVersionData(required struct versionData) {
         var formValidation                  = {};
-        formValidation.content              = isDefined("arguments.versionData.content")              ? variables.formValidator.validate(content=arguments.versionData.content,              ruleName='String')  : false;
         formValidation.linkName             = isDefined("arguments.versionData.linkName")             ? variables.formValidator.validate(content=arguments.versionData.linkName,             ruleName='String')  : false;
         formValidation.sesLink              = isDefined("arguments.versionData.sesLink")              ? variables.formValidator.validate(content=arguments.versionData.sesLink,              ruleName='SesLink') : false;
         formValidation.showContentForEntity = isDefined("arguments.versionData.showContentForEntity") ? variables.formValidator.validate(content=arguments.versionData.showContentForEntity, ruleName='Boolean') : false;
+        formValidation.content              = isDefined("arguments.versionData.content")              ? variables.formValidator.validate(content=arguments.versionData.content,              ruleName='String',        mandatory=false)  : false;
         formValidation.moduleId             = isDefined("arguments.versionData.moduleId")             ? variables.formValidator.validate(content=arguments.versionData.moduleId,             ruleName='Id',            mandatory=false) : false;
         formValidation.moduleAttributes     = isDefined("arguments.versionData.moduleAttributes")     ? variables.formValidator.validate(content=arguments.versionData.moduleAttributes,     ruleName='SimpleJson',    mandatory=false) : false;
         formValidation.entityRegExp         = isDefined("arguments.versionData.entityRegExp")         ? variables.formValidator.validate(content=arguments.versionData.entityRegExp,         ruleName='RegExpression', mandatory=false) : false;
@@ -554,6 +693,21 @@
                           .execute()
                           .getResult()
                           .getRecordCount() == 0;
+    }
+    
+    public numeric function getDraftStatus() {
+        return new Query().setDatasource(variables.datasource)
+                          .setSQL("  SELECT contentStatusId "
+                                 &"    FROM #variables.tablePrefix#_contentStatus "
+                                 &"   WHERE sortOrder = :sortOrder "
+                                 &"     AND rework    = :rework "
+                                 &"ORDER BY sortOrder ASC "
+                                 &"   LIMIT 1")
+                          .addParam(name="sortOrder", value = 1,     cfsqltype="cf_sql_numeric")
+                          .addParam(name="rework",    value = false, cfsqltype="cf_sql_bit")
+                          .execute()
+                          .getResult()
+                          .contentStatusId[1];
     }
     
     /**
