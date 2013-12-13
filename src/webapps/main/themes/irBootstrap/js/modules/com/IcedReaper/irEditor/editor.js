@@ -59,6 +59,11 @@ var irEditor = function($editor) {
     var $fixBtn  = $('.btn#fix');
     var $sortBtn = $('.btn#sort');
     
+    $('input[name="Linkname"]').on('input', function() {
+        var newSes = $('input[name="sesLink"]').val().replace(/\/\w*$/, '/'+$(this).val());
+        $('input[name="sesLink"]').val(newSes);
+    });
+    
     $('form#irEditor').on('submit', function() {
         try {
             if(bEditable) {
