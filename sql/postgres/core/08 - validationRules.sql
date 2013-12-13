@@ -23,3 +23,6 @@ INSERT INTO irCMS_validationRule (ruleName, rule) VALUES ('Password',      '.*')
 INSERT INTO irCMS_validationRule (ruleName, rule) VALUES ('SimpleJson',    '^\{(\s*"\w*":\s*"\w*",{0,1})*\s*\}$');
 INSERT INTO irCMS_validationRule (ruleName, rule) VALUES ('SesLink',       '^(/|(/.+)*)$');
 INSERT INTO irCMS_validationRule (ruleName, rule) VALUES ('RegExpression', '.*');
+INSERT INTO irCMS_validationRule (ruleName, rule) VALUES ('Language',      '^[a-z]{2}$');
+INSERT INTO irCMS_validationRule (ruleName, rule) VALUES ('Country',       '^[A-Z]{2}$');
+INSERT INTO irCMS_validationRule (ruleName, rule) VALUES ('Locale',        '^[a-z]{2}-[A-Z]{2}$');
