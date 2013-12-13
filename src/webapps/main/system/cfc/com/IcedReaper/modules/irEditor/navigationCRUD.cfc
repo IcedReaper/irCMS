@@ -174,4 +174,24 @@ component {
         
         return dashboardData;
     }
+    
+    public array function getCompleteSitemap(required navigationCRUD coreNavigation, required string language) {
+        var qGetNavigationCategory = new Query().setDatasource(variables.datasource)
+                                                .setSQL("SELECT DISTINCT position "
+                                                       &"     FROM #variables.tablePrefix#_navigation "
+                                                       &" ORDER BY position ASC")
+                                                .execute()
+                                                .getResult();
+        
+        var sitemap = [];
+        
+        for(var i = 1; i <= qGetNavigationCategory.getRowCount(); i++) {
+            sitemap[i] = {
+                'name': qGetNavigationCategory.position[i],
+                'data': arguments.coreNavigation.getHierarchy(position=qGetNavigationCategory.position[i], language=arguments.language, parentNavigationId=0, userName=0, usePermissions=false)
+            };
+        }
+        
+        return sitemap;
+    }
 }
