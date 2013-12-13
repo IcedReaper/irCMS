@@ -34,4 +34,5 @@
     public boolean function sesLinkAvailable(required numeric navigationId, required string sesLink);
     
     public array function getHierarchy(required string position, required string language, required numeric parentNavigationId, required string userName);
+    public numeric function getDraftStatus();
 }

@@ -556,6 +556,21 @@
                           .getRecordCount() == 0;
     }
     
+    public numeric function getDraftStatus() {
+        return new Query().setDatasource(variables.datasource)
+                          .setSQL("  SELECT contentStatusId "
+                                 &"    FROM #variables.tablePrefix#_contentStatus "
+                                 &"   WHERE sortOrder = :sortOrder "
+                                 &"     AND rework    = :rework "
+                                 &"ORDER BY sortOrder ASC "
+                                 &"   LIMIT 1")
+                          .addParam(name="sortOrder", value = 1,     cfsqltype="cf_sql_numeric")
+                          .addParam(name="rework",    value = false, cfsqltype="cf_sql_bit")
+                          .execute()
+                          .getResult()
+                          .contentStatusId[1];
+    }
+    
     /**
      * PRIVATE FUNCTIONS
      */
