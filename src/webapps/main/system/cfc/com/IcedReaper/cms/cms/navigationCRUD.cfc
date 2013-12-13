@@ -149,14 +149,6 @@
     public boolean function addNavigation(required struct navigationData) {
         return true;
     }
-
-    public boolean function editNavigation(required numeric navigationId, required numeric majorVersion, required numeric minorVersion, required struct navigationData) {
-        return true;
-    }
-    
-    public boolean function deleteNavigation(required numeric navigationId) {
-        return true;
-    }
     
     /**
      *  Content Version

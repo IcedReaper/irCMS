@@ -8,8 +8,6 @@
      * Navigation header
      **/
     public boolean function addNavigation(required struct navigationData);
-    public boolean function editNavigation(required numeric navigationId, required numeric majorVersion, required numeric minorVersion, required struct navigationData);
-    public boolean function deleteNavigation(required numeric navigationId);
     
     /**
      * Content Version
