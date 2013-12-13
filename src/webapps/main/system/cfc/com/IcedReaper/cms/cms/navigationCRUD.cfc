@@ -79,7 +79,7 @@
         }
     }
     
-    public array function getHierarchy(required string position, required string language, required numeric parentNavigationId, required string userName) cachedWithin = "#createTimespan(0, 0, 1, 0)#" {
+    public array function getHierarchy(required string position, required string language, required numeric parentNavigationId, required string userName, boolean usePermissions = true) cachedWithin = "#createTimespan(0, 0, 1, 0)#" {
         var hierarchy = [];
         var oPermissionCRUD = createObject("component", "system.cfc.com.IcedReaper.cms.security.permissionCRUD").init(tablePrefix = variables.tablePrefix,
                                                                                                                       datasource  = variables.datasource);
@@ -109,7 +109,7 @@
         var counter = 0;
         for(var i = 1; i <= qGetTopLevel.getRecordCount(); i++) {
             var permission = true;
-            if(qGetTopLevel.permissionGroupId[i] != '' && qGetTopLevel.permissionRoleId[i] != '') {
+            if(arguments.usePermissions && qGetTopLevel.permissionGroupId[i] != '' && qGetTopLevel.permissionRoleId[i] != '') {
                 var groupName = oPermissionCRUD.getGroupName(groupId = qGetTopLevel.permissionGroupId[i]);
                 var roleName  = oPermissionCRUD.getRoleName(roleId   = qGetTopLevel.permissionRoleId[i]);
                 
