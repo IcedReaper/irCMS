@@ -92,6 +92,7 @@ INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedRe
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.newMajorVersion', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.newMinorVersion', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.versions', true, 1);
+INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.navigation.sort', true, 1);
 
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageNew.pageTitle', true, 1);
 INSERT INTO irCMS_i18nKey (i18nName, active, userId) VALUES ('modules.com.IcedReaper.irEditor.pageNew.headline', true, 1);

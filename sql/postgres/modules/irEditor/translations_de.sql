@@ -92,6 +92,7 @@ INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SEL
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.navigation.newMajorVersion'), 'de', 'Neue Majorversion');
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.navigation.newMinorVersion'), 'de', 'Neue Minorversion');
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.navigation.versions'), 'de', 'Versionen');
+INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.navigation.sort'), 'de', 'Menüpunkte sortieren');
 
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageNew.pageTitle'), 'de', 'Erstellen einer neuen Seite');
 INSERT INTO irCMS_i18nTranslation(i18nKeyId, language, translation) VALUES ((SELECT i18nKeyId FROM irCMS_i18nKey WHERE i18nName = 'modules.com.IcedReaper.irEditor.pageNew.headline'), 'de', 'Erstellen einer neuen Seite');
