@@ -7,7 +7,7 @@
     /**
      * Navigation header
      **/
-    public boolean function addNavigation(required struct navigationData);
+    public struct function addNavigation(required struct navigationData, required numeric userId);
     
     /**
      * Content Version
